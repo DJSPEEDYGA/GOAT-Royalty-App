@@ -1,0 +1,61 @@
+{
+  "name": "goat-royalty-app",
+  "version": "1.0.0",
+  "description": "GOAT-Royalty-App is a comprehensive royalty management application for tracking payments and distributions for artists and content creators.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "concurrently &quot;npm run server&quot; &quot;npm run client&quot;",
+    "server": "nodemon src/server.js",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git"
+  },
+  "keywords": [
+    "royalty",
+    "management",
+    "payments",
+    "artists",
+    "content-creators",
+    "distribution"
+  ],
+  "author": "DJSPEEDYGA",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DJSPEEDYGA/GOAT-Royalty-App/issues"
+  },
+  "homepage": "https://github.com/DJSPEEDYGA/GOAT-Royalty-App#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "compression": "^1.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^9.0.0",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "nodemailer": "^7.0.11",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.1",
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.7.3",
+    "supertest": "^7.1.4"
+  }
+}
