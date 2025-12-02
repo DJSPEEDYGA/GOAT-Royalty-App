@@ -13,6 +13,7 @@ const royaltyRoutes = require('./routes/royalties');
 const paymentRoutes = require('./routes/payments');
 const reportRoutes = require('./routes/reports');
 const agentRoutes = require('./routes/agent');
+const hostingerRoutes = require('./routes/hostinger');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -60,6 +61,7 @@ app.use('/api/royalties', royaltyRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/agent', agentRoutes);
+app.use('/api/hostinger', hostingerRoutes);
 
 // 404 Handler - handled by express router
 

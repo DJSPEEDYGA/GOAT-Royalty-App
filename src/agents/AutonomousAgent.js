@@ -13,6 +13,7 @@
 
 const OpenAI = require('openai');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const HostingerTools = require('./tools/hostingerTools');
 
 class AutonomousAgent {
   constructor(config = {}) {
@@ -26,6 +27,9 @@ class AutonomousAgent {
     // Initialize AI providers
     this.openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     this.gemini = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+    // Initialize Hostinger tools
+    this.hostingerTools = new HostingerTools();
 
     // Tool registry
     this.tools = this.initializeTools();
@@ -388,8 +392,32 @@ class AutonomousAgent {
           required: ['workflowName']
         },
         execute: async (params) => await this.executeWorkflow(params)
-      }
+      },
+
+      // Hostinger Management Tools
+      ...this.getHostingerTools()
     };
+  }
+
+  /**
+   * Get Hostinger tools from HostingerTools class
+   */
+  getHostingerTools() {
+    const hostingerTools = this.hostingerTools.getTools();
+    const toolsObject = {};
+    
+    hostingerTools.forEach(tool => {
+      // Convert tool name to camelCase for consistency
+      const toolKey = tool.name.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
+      toolsObject[toolKey] = {
+        name: tool.name,
+        description: tool.description,
+        parameters: tool.parameters,
+        execute: tool.execute
+      };
+    });
+    
+    return toolsObject;
   }
 
   /**
