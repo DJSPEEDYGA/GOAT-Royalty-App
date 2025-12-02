@@ -11,13 +11,15 @@ import {
   Music, 
   CreditCard,
   Menu,
-  X
+  X,
+  Bot
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
+  { name: 'AI Agent', href: '/agent', icon: Bot },
   { name: 'Artists', href: '/artists', icon: Users },
   { name: 'Royalties', href: '/royalties', icon: DollarSign },
   { name: 'Payments', href: '/payments', icon: CreditCard },
