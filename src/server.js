@@ -15,6 +15,7 @@ const reportRoutes = require('./routes/reports');
 const agentRoutes = require('./routes/agent');
 const hostingerRoutes = require('./routes/hostinger');
 const chatRoutes = require('./routes/chat');
+const ragRoutes = require('./routes/rag');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -64,6 +65,7 @@ app.use('/api/reports', reportRoutes);
 app.use('/api/agent', agentRoutes);
 app.use('/api/hostinger', hostingerRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/rag', ragRoutes);
 
 // 404 Handler - handled by express router
 
