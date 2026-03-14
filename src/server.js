@@ -16,6 +16,9 @@ const agentRoutes = require('./routes/agent');
 const hostingerRoutes = require('./routes/hostinger');
 const chatRoutes = require('./routes/chat');
 const ragRoutes = require('./routes/rag');
+const ragEnhancedRoutes = require('./routes/ragEnhanced');
+const localLLMRoutes = require('./routes/localLLM');
+const llmRouterRoutes = require('./routes/llmRouter');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -66,6 +69,9 @@ app.use('/api/agent', agentRoutes);
 app.use('/api/hostinger', hostingerRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/rag', ragRoutes);
+app.use('/api/rag-enhanced', ragEnhancedRoutes);
+app.use('/api/local-llm', localLLMRoutes);
+app.use('/api/llm-router', llmRouterRoutes);
 
 // 404 Handler - handled by express router
 
