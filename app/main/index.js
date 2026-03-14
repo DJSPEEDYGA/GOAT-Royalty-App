@@ -20,12 +20,14 @@ const fs = require('fs').promises;
 // Import core systems
 const SelfHealingSystem = require('./self-healing');
 const SelfBuildingSystem = require('./self-building');
+const BuiltInTools = require('./builtin-tools');
 
 class GOATRoyaltyApp {
   constructor() {
     this.window = null;
     this.selfHealingSystem = null;
     this.selfBuildingSystem = null;
+    this.builtInTools = null;
     this.isReady = false;
     
     // Application paths
@@ -78,6 +80,10 @@ class GOATRoyaltyApp {
         logFile: path.join(this.paths.logs, 'self-building.log'),
         enableConsole: true
       });
+      
+      // Initialize built-in tools
+      console.log('🛠️  Initializing Built-in Development Tools...');
+      this.builtInTools = new BuiltInTools();
       
       // Register IPC handlers
       this.registerIPCHandlers();
@@ -158,6 +164,14 @@ class GOATRoyaltyApp {
       return {
         healing: this.selfHealingSystem?.getSystemStatus(),
         building: this.selfBuildingSystem?.getSystemStatus(),
+        tools: {
+          codeEditor: true,
+          terminal: true,
+          gitClient: true,
+          fileExplorer: true,
+          processManager: true,
+          systemMonitor: true
+        },
         paths: this.paths,
         isReady: this.isReady
       };
