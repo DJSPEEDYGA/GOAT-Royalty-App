@@ -4,22 +4,24 @@
  * Part of the GOAT Royalty App's universal platform
  */
 
-const BaseAgent = require('../agentBase');
+const BaseAgent = require('./baseAgent');
 
 class FashionDesignerAgent extends BaseAgent {
   constructor(config) {
-    super(config);
-    this.name = config.name || 'Fashion Designer Expert';
-    this.capabilities = [
-      'clothing_design_generation',
-      'style_transfer',
-      'fabric_selection',
-      'trend_analysis',
-      'sustainability_consulting',
-      'collection_development',
-      'technical_specifications',
-      'visual_concept_creation'
-    ];
+    super(
+      config.name || 'Fashion Designer Expert',
+      config.industry || 'Fashion',
+      config.capabilities || [
+        'clothing_design_generation',
+        'style_transfer',
+        'fabric_selection',
+        'trend_analysis',
+        'sustainability_consulting',
+        'collection_development',
+        'technical_specifications',
+        'visual_concept_creation'
+      ]
+    );
   }
 
   getSystemPrompt() {
@@ -36,6 +38,26 @@ class FashionDesignerAgent extends BaseAgent {
     You have deep knowledge of fashion history, contemporary trends, sustainable practices,
     technical design, and the business of fashion. You provide creative, practical,
     and commercially viable fashion solutions.`;
+  }
+
+  async performCapability(capability, params) {
+    switch (capability) {
+      case 'clothing_design_generation':
+      case 'design_generation':
+        return await this.generateFashionDesign(params, {});
+      case 'trend_analysis':
+        return await this.analyzeFashionTrends(params, {});
+      case 'collection_development':
+        return await this.createFashionCollection(params, {});
+      case 'style_consultation':
+        return await this.provideStyleConsultation(params, {});
+      case 'sustainability_consulting':
+        return await this.reviewSustainability(params, {});
+      case 'technical_specifications':
+        return await this.createTechnicalSpecs(params, {});
+      default:
+        return await this.generateFashionDesign(params, {});
+    }
   }
 
   async processTask(task, context, options) {

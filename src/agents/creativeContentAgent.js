@@ -4,7 +4,7 @@
  * Perfect for managing social media, marketing campaigns, and brand development
  */
 
-const BaseAgent = require('../agentBase');
+const BaseAgent = require('./baseAgent');
 
 class CreativeContentAgent extends BaseAgent {
   constructor(config) {

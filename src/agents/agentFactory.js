@@ -45,7 +45,7 @@ class AgentFactory {
         this.registerAgentType('Writer', () => new WriterAgent());
         
         // Fashion Industry Agents
-        this.registerAgentType('FashionDesigner', () => new FashionDesignerAgent());
+        this.registerAgentType('FashionDesigner', () => new FashionDesignerAgent({ name: 'Fashion Designer Expert' }));
         this.registerAgentType('PersonalStylist', () => new PersonalStylistAgent());
         this.registerAgentType('FashionBusiness', () => new FashionBusinessAgent());
     }

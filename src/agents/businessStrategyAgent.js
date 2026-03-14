@@ -4,7 +4,7 @@
  * Perfect for managing business operations, partnerships, and expansion strategies
  */
 
-const BaseAgent = require('../agentBase');
+const BaseAgent = require('./baseAgent');
 
 class BusinessStrategyAgent extends BaseAgent {
   constructor(config) {

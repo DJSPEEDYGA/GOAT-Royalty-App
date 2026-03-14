@@ -4,7 +4,7 @@
  * Perfect for managing tech stack, development projects, and digital infrastructure
  */
 
-const BaseAgent = require('../agentBase');
+const BaseAgent = require('./baseAgent');
 
 class TechDevelopmentAgent extends BaseAgent {
   constructor(config) {

@@ -10,7 +10,7 @@
  * - Proofreading and editing
  */
 
-const BaseAgent = require('../agentBase');
+const BaseAgent = require('./baseAgent');
 
 class WriterAgent extends BaseAgent {
   constructor(config) {

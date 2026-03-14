@@ -23,6 +23,32 @@ class FashionBusinessAgent extends BaseAgent {
     }
 
     /**
+     * Perform a capability
+     */
+    async performCapability(capability, params) {
+        switch (capability) {
+            case 'business_planning':
+                return await this.createBusinessPlan(params.brandData, params.marketGoals);
+            case 'market_analysis':
+                return await this.analyzeMarket(params.targetMarket);
+            case 'financial_projections':
+                return await this.createFinancialProjections(params.brandData, params.marketGoals);
+            case 'supply_chain_optimization':
+                return await this.optimizeSupplyChain(params);
+            case 'brand_strategy':
+                return await this.createBrandStrategy(params);
+            case 'retail_analytics':
+                return await this.analyzeRetailMetrics(params);
+            case 'inventory_management':
+                return await this.manageInventory(params);
+            case 'pricing_strategy':
+                return await this.developPricingStrategy(params);
+            default:
+                return await this.createBusinessPlan(params.brandData || params, params.marketGoals || {});
+        }
+    }
+
+    /**
      * Create comprehensive business plan for fashion brand
      */
     async createBusinessPlan(brandData, marketGoals) {

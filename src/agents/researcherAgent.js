@@ -8,7 +8,7 @@
  * - Research planning and execution
  */
 
-const BaseAgent = require('../agentBase');
+const BaseAgent = require('./baseAgent');
 
 class ResearcherAgent extends BaseAgent {
   constructor(config) {

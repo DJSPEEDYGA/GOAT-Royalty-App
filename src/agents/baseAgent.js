@@ -5,10 +5,10 @@
 
 class BaseAgent {
     constructor(name, industry, capabilities) {
-        this.id = this.generateId();
         this.name = name;
         this.industry = industry;
         this.capabilities = capabilities || [];
+        this.id = this.generateId();
         this.isActive = true;
         this.createdAt = new Date();
         this.operations = [];

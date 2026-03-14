@@ -4,7 +4,7 @@
  * Perfect for handling legal documents, compliance requirements, and risk mitigation
  */
 
-const BaseAgent = require('../agentBase');
+const BaseAgent = require('./baseAgent');
 
 class LegalComplianceAgent extends BaseAgent {
   constructor(config) {

@@ -4,7 +4,7 @@
  * Perfect for managing music catalogs, royalty tracking, and industry partnerships
  */
 
-const BaseAgent = require('../agentBase');
+const BaseAgent = require('./baseAgent');
 
 class MusicIndustryAgent extends BaseAgent {
   constructor(config) {

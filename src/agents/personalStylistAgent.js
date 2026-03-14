@@ -4,7 +4,7 @@
  */
 
 const BaseAgent = require('./baseAgent');
-const VirtualTryOnService = require('../fashion/virtualTryOnService');
+const VirtualTryOnService = require('../services/fashion/virtualTryOnService');
 
 class PersonalStylistAgent extends BaseAgent {
     constructor() {
@@ -88,6 +88,10 @@ class PersonalStylistAgent extends BaseAgent {
      * Determine clothing category
      */
     determineCategory(item) {
+        if (!item || !item.name) {
+            return 'accessories';
+        }
+        
         const keywords = {
             tops: ['shirt', 'blouse', 'top', 'tee', 'sweater', 'blazer', 'jacket'],
             bottoms: ['pants', 'jeans', 'skirt', 'shorts', 'trousers'],
@@ -113,6 +117,7 @@ class PersonalStylistAgent extends BaseAgent {
     analyzeColorUsage(wardrobeData) {
         const colorCounts = {};
         wardrobeData.items.forEach(item => {
+            if (!item || !item.color) return;
             const color = item.color.toLowerCase();
             colorCounts[color] = (colorCounts[color] || 0) + 1;
         });
@@ -150,6 +155,7 @@ class PersonalStylistAgent extends BaseAgent {
         
         const styleScores = {};
         wardrobeData.items.forEach(item => {
+            if (!item || !item.name) return;
             const nameLower = item.name.toLowerCase();
             for (const [style, keywords] of Object.entries(styleIndicators)) {
                 if (keywords.some(keyword => nameLower.includes(keyword))) {
@@ -181,7 +187,7 @@ class PersonalStylistAgent extends BaseAgent {
             footwear: ['white sneakers', 'dress shoes', 'casual shoes']
         };
         
-        const ownedItems = wardrobeData.items.map(item => item.name.toLowerCase());
+        const ownedItems = wardrobeData.items.filter(item => item && item.name).map(item => item.name.toLowerCase());
         
         for (const [category, essentialItems] of Object.entries(essentials)) {
             essentialItems.forEach(essential => {
@@ -417,7 +423,7 @@ class PersonalStylistAgent extends BaseAgent {
             'beach': 'casual'
         };
         
-        return formalityMap[occasion.toLowerCase()] || 'casual';
+        return formalityMap[occasion?.toLowerCase()] || 'casual';
     }
 
     /**
