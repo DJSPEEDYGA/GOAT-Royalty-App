@@ -15,6 +15,9 @@ const reportRoutes = require('./routes/reports');
 const agentRoutes = require('./routes/agent');
 const hostingerRoutes = require('./routes/hostinger');
 const chatRoutes = require('./routes/chat');
+const loyaltyRoutes = require('./routes/loyalty');
+const activationRoutes = require('./routes/activation');
+const { logger, intrusionCheck } = require('./middleware/loyalty');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,6 +46,9 @@ app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Intrusion detection – applied globally before all API routes
+app.use('/api/', intrusionCheck);
+
 // Static files
 app.use('/uploads', express.static('uploads'));
 
@@ -64,12 +70,14 @@ app.use('/api/reports', reportRoutes);
 app.use('/api/agent', agentRoutes);
 app.use('/api/hostinger', hostingerRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/loyalty', loyaltyRoutes);
+app.use('/api/activation', activationRoutes);
 
 // 404 Handler - handled by express router
 
 // Global Error Handler
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  logger.error({ message: err.message, stack: err.stack });
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Internal Server Error',
@@ -79,9 +87,9 @@ app.use((err, req, res, next) => {
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔗 Health Check: http://localhost:${PORT}/health`);
+  logger.info(`🚀 Server running on port ${PORT}`);
+  logger.info(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+  logger.info(`🔗 Health Check: http://localhost:${PORT}/health`);
 });
 
 module.exports = app;
