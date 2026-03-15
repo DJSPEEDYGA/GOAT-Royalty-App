@@ -18,6 +18,7 @@ const chatRoutes = require('./routes/chat');
 const loyaltyRoutes = require('./routes/loyalty');
 const activationRoutes = require('./routes/activation');
 const { logger, intrusionCheck } = require('./middleware/loyalty');
+const ragRoutes = require('./routes/rag');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -72,6 +73,7 @@ app.use('/api/hostinger', hostingerRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/loyalty', loyaltyRoutes);
 app.use('/api/activation', activationRoutes);
+app.use('/api/rag', ragRoutes);
 
 // 404 Handler - handled by express router
 
