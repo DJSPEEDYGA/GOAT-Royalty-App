@@ -364,8 +364,20 @@ npm test
 npm run test:coverage
 
 # Run specific test suite
-npm test -- artists.test.js
+npm test -- --testPathPatterns="agent-api"
+npm test -- --testPathPatterns="core-loyalty"
+npm test -- --testPathPatterns="middleware-loyalty"
 ```
+
+### Test Suites
+
+| Suite | Description | Tests |
+|-------|-------------|-------|
+| `core-loyalty.test.js` | Encryption, LoyaltyGuard token & member verification | 7 |
+| `middleware-loyalty.test.js` | Intrusion detection, IP whitelist middleware | 9 |
+| `agent-api.test.js` | Agent capabilities, chat, tasks, stop endpoints | 10 |
+
+All tests mock external dependencies (MongoDB, OpenAI API) so they run without any live services.
 
 ---
 
@@ -528,19 +540,19 @@ This project is licensed under the ISC License - see the [LICENSE](./LICENSE) fi
 
 ## 🗺️ **Roadmap**
 
-### Q1 2025
+### Near-Term
 - [ ] Voice interface for AI agent
 - [ ] Mobile apps (iOS/Android)
 - [ ] Advanced ML models for predictions
 - [ ] Multi-language support
 
-### Q2 2025
+### Mid-Term
 - [ ] Blockchain integration for payments
 - [ ] NFT royalty tracking
 - [ ] Advanced analytics with AI insights
 - [ ] White-label solution
 
-### Q3 2025
+### Long-Term
 - [ ] Multi-agent collaboration
 - [ ] Custom workflow builder
 - [ ] Advanced reporting templates
@@ -550,11 +562,11 @@ This project is licensed under the ISC License - see the [LICENSE](./LICENSE) fi
 
 ## 🎯 **Key Metrics**
 
-- **15+ AI Agent Tools** for autonomous operations
-- **7 Major Integrations** (FashionForge, NVIDIA, Native Instruments, etc.)
+- **23+ AI Agent Tools** for autonomous operations
+- **13 API Route Modules** (Auth, Artists, Royalties, Payments, Reports, Agent, Chat, Hostinger, Loyalty, Activation, RAG, Offline, Pipeline)
 - **5 Core Modules** (Artists, Royalties, Payments, Contracts, Reports)
-- **100% Test Coverage** (target)
-- **Production Ready** with enterprise features
+- **26 Automated Tests** across 3 test suites (all passing ✅)
+- **Production Ready** with enterprise-grade security features
 
 ---
 
