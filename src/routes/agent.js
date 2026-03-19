@@ -204,11 +204,11 @@ router.post('/chat',
     }
 
     // Get or create agent for this conversation
-    let agent = activeAgents.get(conversationId);
+    const resolvedConversationId = conversationId || `conv-${Date.now()}`;
+    let agent = activeAgents.get(resolvedConversationId);
     if (!agent) {
       agent = new AutonomousAgent();
-      const newConversationId = conversationId || `conv-${Date.now()}`;
-      activeAgents.set(newConversationId, agent);
+      activeAgents.set(resolvedConversationId, agent);
     }
 
     // Process message and get response
@@ -217,14 +217,14 @@ router.post('/chat',
     const result = await agent.run(task, {
       userId: req.user.id,
       userRole: req.user.role,
-      conversationId
+      conversationId: resolvedConversationId
     });
 
     res.json({
       success: true,
       data: {
         response: result.summary,
-        conversationId: conversationId || `conv-${Date.now()}`,
+        conversationId: resolvedConversationId,
         actions: result.results
       }
     });

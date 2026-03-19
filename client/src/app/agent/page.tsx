@@ -25,11 +25,13 @@ interface Message {
 }
 
 interface AgentTask {
-  id: string;
-  name: string;
-  description: string;
+  agentId: string;
+  name?: string;
+  description?: string;
   status: 'idle' | 'running' | 'completed' | 'failed';
-  result?: any;
+  currentTask?: string;
+  iterations?: number;
+  result?: Record<string, unknown>;
 }
 
 export default function AgentPage() {
@@ -177,6 +179,31 @@ export default function AgentPage() {
     }
   };
 
+  const stopAgent = async (agentId: string) => {
+    try {
+      const response = await fetch(`/api/agent/stop/${agentId}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        loadActiveAgents();
+        const agentMessage: Message = {
+          id: Date.now().toString(),
+          role: 'agent',
+          content: `🛑 Agent ${agentId} has been stopped.`,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, agentMessage]);
+      }
+    } catch (error) {
+      console.error('Failed to stop agent:', error);
+    }
+  };
+
   const predefinedTasks = [
     { name: 'monthly-close', label: 'Monthly Close', icon: '📊', description: 'Execute monthly close process' },
     { name: 'quarterly-reports', label: 'Quarterly Reports', icon: '📈', description: 'Generate quarterly reports' },
@@ -269,7 +296,7 @@ export default function AgentPage() {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                    onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                     placeholder="Ask me anything or give me a task..."
                     className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:text-white"
                     disabled={isLoading}
@@ -332,20 +359,31 @@ export default function AgentPage() {
                 ) : (
                   activeAgents.map((agent) => (
                     <div
-                      key={agent.id}
+                      key={agent.agentId}
                       className="p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {agent.name || agent.id}
+                        <span className="text-sm font-medium text-gray-900 dark:text-white truncate max-w-[120px]">
+                          {agent.name || agent.agentId}
                         </span>
-                        <span className={`px-2 py-1 rounded-full text-xs ${
-                          agent.status === 'running' 
-                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                            : 'bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-200'
-                        }`}>
-                          {agent.status}
-                        </span>
+                        <div className="flex items-center space-x-2">
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            agent.status === 'running' 
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                              : 'bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-200'
+                          }`}>
+                            {agent.status}
+                          </span>
+                          {agent.status === 'running' && (
+                            <button
+                              onClick={() => stopAgent(agent.agentId)}
+                              title="Stop agent"
+                              className="p-1 text-red-500 hover:text-red-700 transition-colors"
+                            >
+                              <Square className="h-4 w-4" />
+                            </button>
+                          )}
+                        </div>
                       </div>
                       <p className="text-xs text-gray-500 dark:text-gray-400">
                         Iteration: {agent.iterations || 0}
