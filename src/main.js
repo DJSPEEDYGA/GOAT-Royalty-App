@@ -406,6 +406,27 @@ ipcMain.handle('get-system-info', () => {
 });
 
 // ============================================================
+// Axiom Browser Automation Engine (Main Process)
+// ============================================================
+const AxiomBrowserAutomation = require('./axiom/browser-automation');
+const axiomEngine = new AxiomBrowserAutomation();
+
+// Axiom IPC Handlers — bridge between renderer UI and main-process engine
+ipcMain.handle('axiom-create-bot', (event, name, description) => axiomEngine.createBot(name, description));
+ipcMain.handle('axiom-get-bots', () => axiomEngine.bots);
+ipcMain.handle('axiom-delete-bot', (event, botId) => axiomEngine.deleteBot(botId));
+ipcMain.handle('axiom-duplicate-bot', (event, botId) => axiomEngine.duplicateBot(botId));
+ipcMain.handle('axiom-add-step', (event, botId, step) => axiomEngine.addStep(botId, step));
+ipcMain.handle('axiom-remove-step', (event, botId, stepId) => axiomEngine.removeStep(botId, stepId));
+ipcMain.handle('axiom-run-bot', async (event, botId) => axiomEngine.runBot(botId));
+ipcMain.handle('axiom-stop-bot', () => axiomEngine.stopBot());
+ipcMain.handle('axiom-get-templates', () => axiomEngine.templates);
+ipcMain.handle('axiom-get-run-status', () => ({
+  running: axiomEngine.runningBot !== null,
+  botId: axiomEngine.runningBot?.id || null
+}));
+
+// ============================================================
 // App Lifecycle
 // ============================================================
 

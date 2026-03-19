@@ -21,14 +21,14 @@
       </div>
 
       <!-- Model Indicator -->
-      <div class="model-indicator" id="modelIndicator" onclick="openTool('modelhub')" title="Click to open Model Hub">
+      <div class="model-indicator" id="modelIndicator" data-tool="modelhub" title="Click to open Model Hub">
         <div class="mi-provider">NVIDIA NIM</div>
         <div class="mi-model">meta/llama-3.1-405b-instruct</div>
         <div class="mi-meta">405B params &bull; 128K context</div>
       </div>
 
       <!-- GOAT Brain Toggle -->
-      <div class="goat-brain-toggle" id="goatBrainToggle" onclick="toggleGOATBrain()">
+      <div class="goat-brain-toggle" id="goatBrainToggle" data-action="toggleGOATBrain">
         <div class="gb-header">
           <span class="gb-icon">🧠</span>
           <span class="gb-title">GOAT Brain</span>
@@ -38,7 +38,7 @@
       </div>
 
       <!-- New Chat Button -->
-      <button class="new-chat-btn" onclick="newChat()">
+      <button class="new-chat-btn" data-action="newChat">
         <span>+</span> New Chat
       </button>
 
@@ -51,91 +51,91 @@
       <div class="sidebar-tools">
         <h3>🛠️ Tools</h3>
         <div class="tool-grid">
-          <button class="tool-btn" onclick="openTool('terminal')" title="Terminal">
+          <button class="tool-btn" data-tool="terminal" title="Terminal">
             <span class="tool-icon">⌨</span>
             <span class="tool-label">Terminal</span>
           </button>
-          <button class="tool-btn" onclick="openTool('filemanager')" title="Files">
+          <button class="tool-btn" data-tool="filemanager" title="Files">
             <span class="tool-icon">📁</span>
             <span class="tool-label">Files</span>
           </button>
-          <button class="tool-btn" onclick="openTool('codeeditor')" title="Code">
+          <button class="tool-btn" data-tool="codeeditor" title="Code">
             <span class="tool-icon">💻</span>
             <span class="tool-label">Code</span>
           </button>
-          <button class="tool-btn" onclick="openTool('webbrowser')" title="Web">
+          <button class="tool-btn" data-tool="webbrowser" title="Web">
             <span class="tool-icon">🌐</span>
             <span class="tool-label">Web</span>
           </button>
-          <button class="tool-btn" onclick="openTool('imagetools')" title="Images">
+          <button class="tool-btn" data-tool="imagetools" title="Images">
             <span class="tool-icon">🎨</span>
             <span class="tool-label">Images</span>
           </button>
-          <button class="tool-btn" onclick="openTool('audiotools')" title="Audio">
+          <button class="tool-btn" data-tool="audiotools" title="Audio">
             <span class="tool-icon">🎵</span>
             <span class="tool-label">Audio</span>
           </button>
-          <button class="tool-btn" onclick="openTool('pdftools')" title="PDF">
+          <button class="tool-btn" data-tool="pdftools" title="PDF">
             <span class="tool-icon">📄</span>
             <span class="tool-label">PDF</span>
           </button>
-          <button class="tool-btn" onclick="openTool('dataanalysis')" title="Data">
+          <button class="tool-btn" data-tool="dataanalysis" title="Data">
             <span class="tool-icon">📊</span>
             <span class="tool-label">Data</span>
           </button>
-          <button class="tool-btn" onclick="openTool('musicprod')" title="Music">
+          <button class="tool-btn" data-tool="musicprod" title="Music">
             <span class="tool-icon">🎹</span>
             <span class="tool-label">Music</span>
           </button>
-          <button class="tool-btn" onclick="openTool('royaltycalc')" title="Royalties">
+          <button class="tool-btn" data-tool="royaltycalc" title="Royalties">
             <span class="tool-icon">💰</span>
             <span class="tool-label">Royalties</span>
           </button>
-          <button class="tool-btn" onclick="openTool('modelhub')" title="Model Hub" style="border-color:#76B900">
+          <button class="tool-btn" data-tool="modelhub" title="Model Hub" style="border-color:#76B900">
             <span class="tool-icon">🤖</span>
             <span class="tool-label">Models</span>
           </button>
-          <button class="tool-btn" onclick="openTool('goatbrain')" title="GOAT Brain" style="border-color:var(--accent)">
+          <button class="tool-btn" data-tool="goatbrain" title="GOAT Brain" style="border-color:var(--accent)">
             <span class="tool-icon">🧠</span>
             <span class="tool-label">Brain</span>
           </button>
-          <button class="tool-btn" onclick="openTool('axiom')" title="Axiom AI" style="border-color:var(--cyan)">
+          <button class="tool-btn" data-tool="axiom" title="Axiom AI" style="border-color:var(--cyan)">
             <span class="tool-icon">🤖</span>
             <span class="tool-label">Axiom</span>
           </button>
-          <button class="tool-btn" onclick="openTool('uecopilot')" title="Ultimate Engine CoPilot — FAB Featured UE5 AI" style="border-color:#e8530a">
+          <button class="tool-btn" data-tool="uecopilot" title="Ultimate Engine CoPilot — FAB Featured UE5 AI" style="border-color:#e8530a">
             <span class="tool-icon">🎮</span>
             <span class="tool-label">UE CoPilot</span>
           </button>
-          <button class="tool-btn" onclick="openTool('goatconnect')" title="GOAT Connect — Worldwide Artist & Fan Platform" style="border-color:#f59e0b">
+          <button class="tool-btn" data-tool="goatconnect" title="GOAT Connect — Worldwide Artist & Fan Platform" style="border-color:#f59e0b">
             <span class="tool-icon">💛</span>
             <span class="tool-label">GOAT Connect</span>
           </button>
-          <button class="tool-btn" onclick="openTool('faceshield')" title="GOAT FaceShield™ — Facial Recognition & Identity Verification" style="border-color:#22c55e">
+          <button class="tool-btn" data-tool="faceshield" title="GOAT FaceShield™ — Facial Recognition & Identity Verification" style="border-color:#22c55e">
             <span class="tool-icon">👁️</span>
             <span class="tool-label">FaceShield</span>
           </button>
-          <button class="tool-btn" onclick="openTool('avatarstudio')" title="GOAT Avatar Studio — MetaHuman, DAZ3D, Hollywood Cameras, FiveM, C++" style="border-color:#8b5cf6">
+          <button class="tool-btn" data-tool="avatarstudio" title="GOAT Avatar Studio — MetaHuman, DAZ3D, Hollywood Cameras, FiveM, C++" style="border-color:#8b5cf6">
             <span class="tool-icon">🎭</span>
             <span class="tool-label">Avatar Studio</span>
           </button>
-          <button class="tool-btn" onclick="openTool('promptengine')" title="GOAT Power Prompting Engine — ReAct, Quantum, Senior Dev, CEO Mode" style="border-color:#6366f1">
+          <button class="tool-btn" data-tool="promptengine" title="GOAT Power Prompting Engine — ReAct, Quantum, Senior Dev, CEO Mode" style="border-color:#6366f1">
             <span class="tool-icon">🧠</span>
             <span class="tool-label">Prompting</span>
           </button>
-          <button class="tool-btn" onclick="openTool('worldwide')" title="GOAT Worldwide — Live Map, Global Feed, Music DNA, Events, Analytics" style="border-color:#0ea5e9">
+          <button class="tool-btn" data-tool="worldwide" title="GOAT Worldwide — Live Map, Global Feed, Music DNA, Events, Analytics" style="border-color:#0ea5e9">
             <span class="tool-icon">🌍</span>
             <span class="tool-label">Worldwide</span>
           </button>
-          <button class="tool-btn" onclick="openTool('agentbuilder')" title="GOAT AI Agent Builder — Build Custom AI Agents" style="border-color:#6366f1">
+          <button class="tool-btn" data-tool="agentbuilder" title="GOAT AI Agent Builder — Build Custom AI Agents" style="border-color:#6366f1">
             <span class="tool-icon">🤖</span>
             <span class="tool-label">AI Agents</span>
           </button>
-          <button class="tool-btn" onclick="openTool('ue5scene')" title="GOAT UE5 Scene Generator — Text-to-Scene Pipeline" style="border-color:#e8530a">
+          <button class="tool-btn" data-tool="ue5scene" title="GOAT UE5 Scene Generator — Text-to-Scene Pipeline" style="border-color:#e8530a">
             <span class="tool-icon">🎮</span>
             <span class="tool-label">UE5 Scene</span>
           </button>
-          <button class="tool-btn" onclick="openTool('scriptstudio')" title="GOAT Script Studio — Hollywood Screenwriting Engine" style="border-color:#dc2626">
+          <button class="tool-btn" data-tool="scriptstudio" title="GOAT Script Studio — Hollywood Screenwriting Engine" style="border-color:#dc2626">
             <span class="tool-icon">🎬</span>
             <span class="tool-label">Script Studio</span>
           </button>
@@ -159,7 +159,7 @@
     <main class="main-content">
       <!-- Top Bar -->
       <div class="top-bar">
-        <button class="toggle-sidebar-btn" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+        <button class="toggle-sidebar-btn" data-action="toggleSidebar" title="Toggle Sidebar">☰</button>
         
         <!-- Model Selector Dropdown -->
         <select class="model-selector" id="modelSelector" onchange="changeModel(this.value)">
@@ -254,7 +254,7 @@
 
         <div class="status-indicator" id="statusIndicator" title="Connected"></div>
         
-        <button class="toggle-sidebar-btn" onclick="openSettings()" title="Settings">⚙</button>
+        <button class="toggle-sidebar-btn" data-action="openSettings" title="Settings">⚙</button>
       </div>
 
       <!-- Chat Area -->
@@ -270,107 +270,107 @@
           </p>
           
           <div class="quick-actions">
-            <button class="quick-action" onclick="quickAction('Analyze my music catalog and generate a comprehensive performance report')">
+            <button class="quick-action" data-quick="Analyze my music catalog and generate a comprehensive performance report">
               <div class="qa-icon">🎵</div>
               <div class="qa-title">Music Analytics</div>
               <div class="qa-desc">Analyze your catalog and generate performance reports</div>
             </button>
-            <button class="quick-action" onclick="quickAction('Help me write and debug code for my project')">
+            <button class="quick-action" data-quick="Help me write and debug code for my project">
               <div class="qa-icon">💻</div>
               <div class="qa-title">Code Assistant</div>
               <div class="qa-desc">Write, debug, and optimize code in any language</div>
             </button>
-            <button class="quick-action" onclick="quickAction('Search the web for the latest music industry trends')">
+            <button class="quick-action" data-quick="Search the web for the latest music industry trends">
               <div class="qa-icon">🌐</div>
               <div class="qa-title">Web Research</div>
               <div class="qa-desc">Search and analyze information from the web</div>
             </button>
-            <button class="quick-action" onclick="quickAction('Calculate my royalties across all streaming platforms')">
+            <button class="quick-action" data-quick="Calculate my royalties across all streaming platforms">
               <div class="qa-icon">💰</div>
               <div class="qa-title">Royalty Calculator</div>
               <div class="qa-desc">Calculate earnings across Spotify, Apple Music, YouTube & more</div>
             </button>
-            <button class="quick-action" onclick="openTool('modelhub')">
+            <button class="quick-action" data-tool="modelhub">
               <div class="qa-icon" style="color:#76B900">🤖</div>
               <div class="qa-title">Model Hub</div>
               <div class="qa-desc">Browse 1000+ LLMs from NVIDIA, OpenAI, Google & more</div>
             </button>
-            <button class="quick-action" onclick="openTool('goatbrain')">
+            <button class="quick-action" data-tool="goatbrain">
               <div class="qa-icon" style="color:var(--accent)">🧠</div>
               <div class="qa-title">GOAT Brain</div>
               <div class="qa-desc">Multi-model orchestration with 7 intelligence modes</div>
             </button>
-            <button class="quick-action" onclick="quickAction('Open the terminal and show system information')">
+            <button class="quick-action" data-quick="Open the terminal and show system information">
               <div class="qa-icon">⌨</div>
               <div class="qa-title">Terminal</div>
               <div class="qa-desc">Execute commands and manage your system</div>
             </button>
-            <button class="quick-action" onclick="quickAction('Help me analyze a CSV data file with charts')">
+            <button class="quick-action" data-quick="Help me analyze a CSV data file with charts">
               <div class="qa-icon">📊</div>
               <div class="qa-title">Data Analysis</div>
               <div class="qa-desc">Process CSV, JSON, Excel files with visualizations</div>
             </button>
-            <button class="quick-action" onclick="openTool('axiom')">
+            <button class="quick-action" data-tool="axiom">
               <div class="qa-icon" style="color:var(--cyan)">🤖</div>
               <div class="qa-title">Axiom AI Automation</div>
               <div class="qa-desc">No-code browser bots, web scraping, and AI-powered automation</div>
             </button>
-            <button class="quick-action" onclick="quickAction('Scrape data from a website and export to CSV')">
+            <button class="quick-action" data-quick="Scrape data from a website and export to CSV">
               <div class="qa-icon">🕷</div>
               <div class="qa-title">Web Scraping</div>
               <div class="qa-desc">Extract data from any website with AI-powered scraping</div>
             </button>
-            <button class="quick-action" onclick="quickAction('Generate a professional cover art image for my new single')">
+            <button class="quick-action" data-quick="Generate a professional cover art image for my new single">
               <div class="qa-icon">🎨</div>
               <div class="qa-title">Image Generation</div>
               <div class="qa-desc">Create cover art, visuals, and promotional images</div>
             </button>
-            <button class="quick-action" onclick="quickAction('Help me write lyrics for a new hip-hop track with clever wordplay')">
+            <button class="quick-action" data-quick="Help me write lyrics for a new hip-hop track with clever wordplay">
               <div class="qa-icon">🎤</div>
               <div class="qa-title">Lyric Writer</div>
               <div class="qa-desc">AI-powered songwriting and lyric generation</div>
             </button>
-            <button class="quick-action" onclick="openTool('uecopilot')" style="border-color:#e8530a">
+            <button class="quick-action" data-tool="uecopilot" style="border-color:#e8530a">
               <div class="qa-icon" style="color:#e8530a">🎮</div>
               <div class="qa-title" style="color:#e8530a">UE5 CoPilot</div>
               <div class="qa-desc">Generate Blueprints, C++, scenes & UI for Unreal Engine 5 — FAB Featured</div>
             </button>
-            <button class="quick-action" onclick="openTool('goatconnect')" style="border-color:#f59e0b">
+            <button class="quick-action" data-tool="goatconnect" style="border-color:#f59e0b">
               <div class="qa-icon" style="color:#f59e0b">💛</div>
               <div class="qa-title" style="color:#f59e0b">GOAT Connect</div>
               <div class="qa-desc">Worldwide Artist & Fan Platform — Matchmaking, Security, Banking Protection & More</div>
             </button>
-            <button class="quick-action" onclick="openTool('faceshield')" style="border-color:#22c55e">
+            <button class="quick-action" data-tool="faceshield" style="border-color:#22c55e">
               <div class="qa-icon" style="color:#22c55e">👁️</div>
               <div class="qa-title" style="color:#22c55e">FaceShield™</div>
               <div class="qa-desc">AI Facial Recognition, Liveness Detection, Age Gate, Catfish Detector & Identity Verification</div>
             </button>
-            <button class="quick-action" onclick="openTool('avatarstudio')" style="border-color:#8b5cf6">
+            <button class="quick-action" data-tool="avatarstudio" style="border-color:#8b5cf6">
               <div class="qa-icon" style="color:#8b5cf6">🎭</div>
               <div class="qa-title" style="color:#8b5cf6">Avatar Studio</div>
               <div class="qa-desc">MetaHuman Creator • DAZ3D • ReadyPlayerMe • Hollywood Cameras • FiveM • C++ Mastery</div>
             </button>
-            <button class="quick-action" onclick="openTool('promptengine')" style="border-color:#6366f1">
+            <button class="quick-action" data-tool="promptengine" style="border-color:#6366f1">
               <div class="qa-icon" style="color:#6366f1">🧠</div>
               <div class="qa-title" style="color:#6366f1">Power Prompting</div>
               <div class="qa-desc">ReAct • Chain-of-Thought • Quantum Engineer • Senior Dev Review • CEO Mode • Adversarial Testing</div>
             </button>
-            <button class="quick-action" onclick="openTool('worldwide')" style="border-color:#0ea5e9">
+            <button class="quick-action" data-tool="worldwide" style="border-color:#0ea5e9">
               <div class="qa-icon" style="color:#0ea5e9">🌍</div>
               <div class="qa-title" style="color:#0ea5e9">GOAT Worldwide</div>
               <div class="qa-desc">Live Map • Global Feed • Music DNA Matchmaking • Events • Analytics Dashboard • Leaderboards • Fan Clubs • Discovery</div>
             </button>
-            <button class="quick-action" onclick="openTool('agentbuilder')" style="border-color:#6366f1">
+            <button class="quick-action" data-tool="agentbuilder" style="border-color:#6366f1">
               <div class="qa-icon" style="color:#6366f1">🤖</div>
               <div class="qa-title" style="color:#6366f1">AI Agent Builder</div>
               <div class="qa-desc">Build Custom AI Agents • Music Scout • Royalty Tracker • Fan Engagement • Security Agent • Multi-Agent Pipelines • Marketplace</div>
             </button>
-            <button class="quick-action" onclick="openTool('ue5scene')" style="border-color:#e8530a">
+            <button class="quick-action" data-tool="ue5scene" style="border-color:#e8530a">
               <div class="qa-icon" style="color:#e8530a">🎮</div>
               <div class="qa-title" style="color:#e8530a">UE5 Scene Generator</div>
               <div class="qa-desc">Text-to-Scene Pipeline • Lumen • Nanite • MetaHuman • Niagara VFX • PCG • World Partition • Sequencer • 8 Scene Presets</div>
             </button>
-            <button class="quick-action" onclick="openTool('scriptstudio')" style="border-color:#dc2626">
+            <button class="quick-action" data-tool="scriptstudio" style="border-color:#dc2626">
               <div class="qa-icon" style="color:#dc2626">🎬</div>
               <div class="qa-title" style="color:#dc2626">Script Studio</div>
               <div class="qa-desc">Hollywood Screenwriting Engine • 12 Formats • 14 Genres • 24 Legendary Writers • AI Scene Gen • Beat Board • Production Tools</div>
@@ -412,32 +412,32 @@
         <div class="file-chips" id="fileChips"></div>
         <div class="input-container">
           <div class="input-toolbar">
-            <button onclick="attachFile()" title="Attach File">📎</button>
-            <button onclick="openTool('terminal')" title="Terminal">⌨</button>
-            <button onclick="openTool('codeeditor')" title="Code">💻</button>
-            <button onclick="openTool('webbrowser')" title="Web Search">🔍</button>
+            <button data-action="attachFile" title="Attach File">📎</button>
+            <button data-tool="terminal" title="Terminal">⌨</button>
+            <button data-tool="codeeditor" title="Code">💻</button>
+            <button data-tool="webbrowser" title="Web Search">🔍</button>
             <div class="separator"></div>
-            <button onclick="openTool('imagetools')" title="Image Tools">🎨</button>
-            <button onclick="openTool('audiotools')" title="Audio Tools">🎵</button>
-            <button onclick="openTool('pdftools')" title="PDF Tools">📄</button>
+            <button data-tool="imagetools" title="Image Tools">🎨</button>
+            <button data-tool="audiotools" title="Audio Tools">🎵</button>
+            <button data-tool="pdftools" title="PDF Tools">📄</button>
             <div class="separator"></div>
-            <button onclick="openTool('modelhub')" title="Model Hub" style="color:#76B900">🤖</button>
-            <button onclick="toggleGOATBrain()" title="Toggle GOAT Brain" id="inputGoatBrainBtn" style="color:var(--accent)">🧠</button>
-            <button onclick="openTool('uecopilot')" title="Ultimate Engine CoPilot" style="color:#e8530a">🎮</button>
-            <button onclick="openTool('goatconnect')" title="GOAT Connect — Artist & Fan Platform" style="color:#f59e0b">💛</button>
-            <button onclick="openTool('faceshield')" title="GOAT FaceShield™ — Facial Recognition" style="color:#22c55e">👁️</button>
-            <button onclick="openTool('avatarstudio')" title="Avatar Studio — MetaHuman & DAZ3D" style="color:#8b5cf6">🎭</button>
-            <button onclick="openTool('promptengine')" title="Power Prompting Engine — ReAct, Quantum, CEO Mode" style="color:#6366f1">🧠</button>
-            <button onclick="openTool('worldwide')" title="GOAT Worldwide — Live Map, Feed, DNA, Events, Analytics" style="color:#0ea5e9">🌍</button>
-            <button onclick="openTool('agentbuilder')" title="AI Agent Builder — Custom Agents & Pipelines" style="color:#6366f1">🤖</button>
-            <button onclick="openTool('ue5scene')" title="UE5 Scene Generator — Text to Full Scene" style="color:#e8530a">🎮</button>
-            <button onclick="openTool('scriptstudio')" title="Script Studio — Hollywood Screenwriting" style="color:#dc2626">🎬</button>
+            <button data-tool="modelhub" title="Model Hub" style="color:#76B900">🤖</button>
+            <button data-action="toggleGOATBrain" title="Toggle GOAT Brain" id="inputGoatBrainBtn" style="color:var(--accent)">🧠</button>
+            <button data-tool="uecopilot" title="Ultimate Engine CoPilot" style="color:#e8530a">🎮</button>
+            <button data-tool="goatconnect" title="GOAT Connect — Artist & Fan Platform" style="color:#f59e0b">💛</button>
+            <button data-tool="faceshield" title="GOAT FaceShield™ — Facial Recognition" style="color:#22c55e">👁️</button>
+            <button data-tool="avatarstudio" title="Avatar Studio — MetaHuman & DAZ3D" style="color:#8b5cf6">🎭</button>
+            <button data-tool="promptengine" title="Power Prompting Engine — ReAct, Quantum, CEO Mode" style="color:#6366f1">🧠</button>
+            <button data-tool="worldwide" title="GOAT Worldwide — Live Map, Feed, DNA, Events, Analytics" style="color:#0ea5e9">🌍</button>
+            <button data-tool="agentbuilder" title="AI Agent Builder — Custom Agents & Pipelines" style="color:#6366f1">🤖</button>
+            <button data-tool="ue5scene" title="UE5 Scene Generator — Text to Full Scene" style="color:#e8530a">🎮</button>
+            <button data-tool="scriptstudio" title="Script Studio — Hollywood Screenwriting" style="color:#dc2626">🎬</button>
             <div class="separator"></div>
-            <button onclick="clearChat()" title="Clear Chat">🗑</button>
+            <button data-action="clearChat" title="Clear Chat">🗑</button>
           </div>
           <div class="input-row">
             <textarea id="message-input" placeholder="Ask Super GOAT anything... 1000+ LLMs at your command (Ctrl+Enter to send)" rows="1" onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
-            <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send">➤</button>
+            <button class="send-btn" id="sendBtn" data-action="sendMessage" title="Send">➤</button>
           </div>
         </div>
         <div class="input-hint">
@@ -450,7 +450,7 @@
     <div class="tool-panel" id="toolPanel">
       <div class="tool-panel-header">
         <h3 id="toolPanelTitle">Tool</h3>
-        <button class="tool-panel-close" onclick="closeToolPanel()">&times;</button>
+        <button class="tool-panel-close" data-action="closeToolPanel">&times;</button>
       </div>
       <div class="tool-panel-content" id="toolPanelContent">
         <!-- Dynamic tool content rendered by app.js -->
@@ -462,7 +462,7 @@
       <div class="modal">
         <div class="modal-header">
           <h2>⚙ Settings</h2>
-          <button class="tool-panel-close" onclick="closeSettings()">&times;</button>
+          <button class="tool-panel-close" data-action="closeSettings">&times;</button>
         </div>
         <div class="modal-body">
 
@@ -698,5 +698,7 @@
   <script src="../ue5/ue5-scene-generator.js"></script>
   <script src="../script-studio/script-studio.js"></script>
   <script src="app.js"></script>
+  <script src="goat-shield.js"></script>
+  <script src="event-delegator.js"></script>
 </body>
 </html>

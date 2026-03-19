@@ -259,13 +259,13 @@ function deleteChat(chatId, event) {
 function renderChatHistory() {
   const container = document.getElementById('chatHistory');
   container.innerHTML = state.chats.map(chat => `
-    <div class="chat-item ${chat.id === state.currentChatId ? 'active' : ''}" onclick="selectChat('${chat.id}')">
+    <div class="chat-item ${chat.id === state.currentChatId ? 'active' : ''}" data-chat-select="${chat.id}">
       <span class="chat-icon">💬</span>
       <div style="flex:1;min-width:0">
         <div class="chat-title">${escapeHtml(chat.title)}</div>
         <div class="chat-date">${formatDate(chat.createdAt)}</div>
       </div>
-      <button onclick="deleteChat('${chat.id}', event)" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:4px" title="Delete">&times;</button>
+      <button data-chat-delete="${chat.id}" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:4px" title="Delete">&times;</button>
     </div>
   `).join('');
 }
@@ -581,7 +581,7 @@ function renderModelHub(container) {
   const catIcons = { all: '🌐', 'text-generation': '💬', code: '💻', reasoning: '🧠', vision: '👁️', safety: '🛡️' };
   container.innerHTML = `
     <div class="model-hub-search"><input type="text" id="modelHubSearch" placeholder="Search ${Object.keys(NVIDIA_MODELS).length}+ NVIDIA models..." oninput="filterModelHub(this.value)"></div>
-    <div class="category-chips">${categories.map(c => `<span class="category-chip ${c===state.categoryFilter?'active':''}" onclick="filterModelHubCategory('${c}')">${catIcons[c]||''} ${c==='all'?'All':c.replace('-',' ')}</span>`).join('')}</div>
+    <div class="category-chips">${categories.map(c => `<span class="category-chip ${c===state.categoryFilter?'active':''}" data-model-category="${c}">${catIcons[c]||''} ${c==='all'?'All':c.replace('-',' ')}</span>`).join('')}</div>
     <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px;display:flex;justify-content:space-between"><span>🟢 NVIDIA NIM — build.nvidia.com</span><span id="modelHubCount">${Object.keys(NVIDIA_MODELS).length} models</span></div>
     <div id="modelHubList">${renderModelCards()}</div>
   `;
@@ -591,7 +591,7 @@ function renderModelCards(query, category) {
   if (query) { const q = query.toLowerCase(); entries = entries.filter(([id,m]) => id.includes(q)||m.name.toLowerCase().includes(q)||m.provider.toLowerCase().includes(q)||(m.category&&m.category.includes(q))); }
   if (category && category !== 'all') entries = entries.filter(([id,m]) => m.category === category);
   return entries.map(([id,m]) => `
-    <div class="model-card ${state.activeModel===id?'active':''}" onclick="selectModelFromHub('${id}')">
+    <div class="model-card ${state.activeModel===id?'active':''}" data-model-select="${id}">
       <div class="mc-header"><span class="mc-provider">${m.provider}</span><span class="mc-name">${m.name}</span><span class="mc-params">${m.params}</span></div>
       <div class="mc-meta"><span>📊 ${m.category||'general'}</span><span>📝 ${(m.context||0).toLocaleString()} ctx</span></div>
     </div>
@@ -619,13 +619,13 @@ function renderGOATBrainPanel(container) {
       <p style="font-size:12px;color:var(--text-muted);margin-top:4px">Combine 215+ LLMs into one super intelligence</p>
     </div>
     <div style="margin-bottom:16px">
-      <button onclick="toggleGOATBrain()" class="axiom-run-btn" style="background:${state.goatBrainEnabled?'linear-gradient(135deg,var(--accent),#6d28d9)':'var(--bg-tertiary)'};color:${state.goatBrainEnabled?'white':'var(--text-secondary)'};border:1px solid ${state.goatBrainEnabled?'var(--accent)':'var(--border)'}">
+      <button data-action="toggleGOATBrain" class="axiom-run-btn" style="background:${state.goatBrainEnabled?'linear-gradient(135deg,var(--accent),#6d28d9)':'var(--bg-tertiary)'};color:${state.goatBrainEnabled?'white':'var(--text-secondary)'};border:1px solid ${state.goatBrainEnabled?'var(--accent)':'var(--border)'}">
         ${state.goatBrainEnabled ? '🧠 GOAT Brain ACTIVE' : 'Enable GOAT Brain'}
       </button>
     </div>
     <h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px">ORCHESTRATION MODE</h4>
     ${modes.map(m => `
-      <div class="goat-mode-card ${state.goatBrainMode===m.id?'active':''}" onclick="setGOATBrainMode('${m.id}');document.querySelectorAll('.goat-mode-card').forEach(c=>c.classList.remove('active'));this.classList.add('active')">
+      <div class="goat-mode-card ${state.goatBrainMode===m.id?'active':''}" data-goat-mode="${m.id}">
         <span class="gm-icon">${m.icon}</span>
         <div><div class="gm-name">${m.name}</div><div class="gm-desc">${m.desc}</div></div>
       </div>
@@ -657,29 +657,29 @@ function renderConfiguredProviders() {
 }
 
 // ── TERMINAL ─────────────────────────────────────────────────
-function renderTerminal(c){c.innerHTML=`<div class="terminal-output" id="terminalOutput">${state.terminalOutput||'Super GOAT Royalty Terminal Ready...\n$ '}</div><div class="terminal-input-row"><input type="text" class="terminal-input" id="terminalInput" placeholder="Enter command..." onkeydown="if(event.key==='Enter')runTerminalCommand()"><button class="terminal-run-btn" onclick="runTerminalCommand()">Run</button></div><div style="margin-top:12px"><h4 style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Quick Commands</h4><div style="display:flex;flex-wrap:wrap;gap:6px">${['ls -la','pwd','df -h','free -h','git status','node -v','npm -v'].map(c=>`<button class="tool-btn" onclick="quickTerminal('${c}')" style="padding:6px 10px;flex-direction:row;gap:4px"><span style="font-size:12px">${c}</span></button>`).join('')}</div></div>`;document.getElementById('terminalInput').focus();}
+function renderTerminal(c){c.innerHTML=`<div class="terminal-output" id="terminalOutput">${state.terminalOutput||'Super GOAT Royalty Terminal Ready...\n$ '}</div><div class="terminal-input-row"><input type="text" class="terminal-input" id="terminalInput" placeholder="Enter command..." onkeydown="if(event.key==='Enter')runTerminalCommand()"><button class="terminal-run-btn" data-action="runTerminalCommand">Run</button></div><div style="margin-top:12px"><h4 style="font-size:12px;color:var(--text-muted);margin-bottom:8px">Quick Commands</h4><div style="display:flex;flex-wrap:wrap;gap:6px">${['ls -la','pwd','df -h','free -h','git status','node -v','npm -v'].map(c=>`<button class="tool-btn" data-quick-terminal="${c}" style="padding:6px 10px;flex-direction:row;gap:4px"><span style="font-size:12px">${c}</span></button>`).join('')}</div></div>`;document.getElementById('terminalInput').focus();}
 async function runTerminalCommand(){const i=document.getElementById('terminalInput');const cmd=i.value.trim();if(!cmd)return;i.value='';await executeTerminalCommand(cmd);}
 function quickTerminal(cmd){document.getElementById('terminalInput').value=cmd;runTerminalCommand();}
 async function executeTerminalCommand(command){const o=document.getElementById('terminalOutput');state.terminalOutput+=`\n$ ${command}\n`;if(o)o.textContent=state.terminalOutput;try{const r=await window.superNinja.executeCommand(command);const t=r.stdout||r.stderr||(r.error?`Error: ${r.error}`:'Done');state.terminalOutput+=t+'\n';if(state.currentChatId){const m={role:'assistant',content:`**Terminal** (\`${command}\`):\n\`\`\`\n${t}\n\`\`\``,timestamp:new Date().toISOString(),isTool:true};state.messages.push(m);renderMessage(m);}}catch(e){state.terminalOutput+=`Error: ${e.message}\n`;}if(o){o.textContent=state.terminalOutput;o.scrollTop=o.scrollHeight;}}
 
 // ── OTHER TOOLS (compact) ────────────────────────────────────
-function renderFileManager(c){c.innerHTML=`<div style="margin-bottom:12px"><input type="text" class="terminal-input" id="filePathInput" placeholder="Enter path..." style="width:100%" onkeydown="if(event.key==='Enter')browseDirectory()"></div><button class="terminal-run-btn" onclick="browseDirectory()" style="margin-bottom:16px;width:100%">Browse</button><div id="fileList" style="font-family:var(--font-mono);font-size:13px"><p style="color:var(--text-muted)">Enter a path to browse</p></div>`;}
-async function browseDirectory(){const p=document.getElementById('filePathInput').value.trim();const f=document.getElementById('fileList');try{const r=await window.superNinja.listDirectory(p);if(r.success){f.innerHTML=r.items.map(i=>`<div style="padding:6px 8px;border-bottom:1px solid var(--border);cursor:pointer" onclick="${i.isDirectory?`document.getElementById('filePathInput').value='${i.path.replace(/\\/g,'\\\\')}';browseDirectory()`:''}"><span>${i.isDirectory?'📁':'📄'}</span> <span style="color:${i.isDirectory?'var(--accent)':'var(--text-primary)'}">${i.name}</span></div>`).join('');}else f.innerHTML=`<p style="color:var(--red)">${r.error}</p>`;}catch(e){f.innerHTML=`<p style="color:var(--red)">${e.message}</p>`;}}
-function renderCodeEditor(c){c.innerHTML=`<div style="margin-bottom:8px;display:flex;gap:8px"><input type="text" class="terminal-input" id="codeEditorPath" placeholder="File path..." style="flex:1"><button class="terminal-run-btn" onclick="loadFileInEditor()">Open</button><button class="terminal-run-btn" onclick="saveFileFromEditor()" style="background:var(--accent)">Save</button></div><textarea id="codeEditorArea" style="width:100%;min-height:400px;background:var(--bg-primary);color:var(--text-primary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;font-family:var(--font-mono);font-size:13px;line-height:1.5;resize:vertical;outline:none" spellcheck="false" placeholder="// Write or paste code..."></textarea><div style="margin-top:8px;display:flex;gap:8px"><button class="terminal-run-btn" onclick="runCodeFromEditor()" style="background:var(--green)">▶ Run</button><button class="tool-btn" onclick="navigator.clipboard.writeText(document.getElementById('codeEditorArea').value)" style="padding:8px 12px;flex-direction:row">Copy</button></div>`;}
+function renderFileManager(c){c.innerHTML=`<div style="margin-bottom:12px"><input type="text" class="terminal-input" id="filePathInput" placeholder="Enter path..." style="width:100%" onkeydown="if(event.key==='Enter')browseDirectory()"></div><button class="terminal-run-btn" data-action="browseDirectory" style="margin-bottom:16px;width:100%">Browse</button><div id="fileList" style="font-family:var(--font-mono);font-size:13px"><p style="color:var(--text-muted)">Enter a path to browse</p></div>`;}
+async function browseDirectory(){const p=document.getElementById('filePathInput').value.trim();const f=document.getElementById('fileList');try{const r=await window.superNinja.listDirectory(p);if(r.success){f.innerHTML=r.items.map(i=>`<div style="padding:6px 8px;border-bottom:1px solid var(--border);cursor:pointer" ${i.isDirectory?`data-browse-path="${i.path.replace(/\\/g,'\\\\').replace(/"/g,'"')}"`:''}><span>${i.isDirectory?'\ud83d\udcc1':'\ud83d\udcc4'}</span> <span style="color:${i.isDirectory?'var(--accent)':'var(--text-primary)'}">${i.name}</span></div>`).join('');}else f.innerHTML=`<p style="color:var(--red)">${r.error}</p>`;}catch(e){f.innerHTML=`<p style="color:var(--red)">${e.message}</p>`;}}
+function renderCodeEditor(c){c.innerHTML=`<div style="margin-bottom:8px;display:flex;gap:8px"><input type="text" class="terminal-input" id="codeEditorPath" placeholder="File path..." style="flex:1"><button class="terminal-run-btn" data-action="loadFileInEditor">Open</button><button class="terminal-run-btn" data-action="saveFileFromEditor" style="background:var(--accent)">Save</button></div><textarea id="codeEditorArea" style="width:100%;min-height:400px;background:var(--bg-primary);color:var(--text-primary);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;font-family:var(--font-mono);font-size:13px;line-height:1.5;resize:vertical;outline:none" spellcheck="false" placeholder="// Write or paste code..."></textarea><div style="margin-top:8px;display:flex;gap:8px"><button class="terminal-run-btn" data-action="runCodeFromEditor" style="background:var(--green)">▶ Run</button><button class="tool-btn" data-action="copyCodeEditor" style="padding:8px 12px;flex-direction:row">Copy</button></div>`;}
 async function loadFileInEditor(){const p=document.getElementById('codeEditorPath').value.trim();if(!p)return;const r=await window.superNinja.readFile(p);if(r.success)document.getElementById('codeEditorArea').value=r.content;}
 async function saveFileFromEditor(){const p=document.getElementById('codeEditorPath').value.trim();const c=document.getElementById('codeEditorArea').value;if(!p){const r=await window.superNinja.saveDialog({filters:[{name:'All',extensions:['*']}]});if(!r.canceled){document.getElementById('codeEditorPath').value=r.filePath;await window.superNinja.writeFile(r.filePath,c);}return;}await window.superNinja.writeFile(p,c);}
 async function runCodeFromEditor(){const p=document.getElementById('codeEditorPath').value.trim();if(p.endsWith('.js'))await executeTerminalCommand(`node "${p}"`);else if(p.endsWith('.py'))await executeTerminalCommand(`python3 "${p}"`);else{await window.superNinja.writeFile('/tmp/goat_run.js',document.getElementById('codeEditorArea').value);await executeTerminalCommand('node /tmp/goat_run.js');}}
-function renderWebBrowser(c){c.innerHTML=`<div style="margin-bottom:12px;display:flex;gap:8px"><input type="text" class="terminal-input" id="webSearchInput" placeholder="Search or enter URL..." style="flex:1" onkeydown="if(event.key==='Enter')webSearch()"><button class="terminal-run-btn" onclick="webSearch()">Search</button></div><div id="webResults"><p style="color:var(--text-muted)">Enter a query to search</p></div>`;}
+function renderWebBrowser(c){c.innerHTML=`<div style="margin-bottom:12px;display:flex;gap:8px"><input type="text" class="terminal-input" id="webSearchInput" placeholder="Search or enter URL..." style="flex:1" onkeydown="if(event.key==='Enter')webSearch()"><button class="terminal-run-btn" data-action="webSearch">Search</button></div><div id="webResults"><p style="color:var(--text-muted)">Enter a query to search</p></div>`;}
 function webSearch(){const q=document.getElementById('webSearchInput').value.trim();if(!q)return;document.getElementById('message-input').value=`Search the web for: "${q}"`;closeToolPanel();sendMessage();}
-function renderImageTools(c){c.innerHTML=`<h4 style="margin-bottom:12px;color:var(--text-secondary)">Image Generation & Editing</h4><textarea id="imagePrompt" class="terminal-input" style="width:100%;min-height:100px;resize:vertical;margin-bottom:12px" placeholder="Describe the image..."></textarea><button class="terminal-run-btn" onclick="document.getElementById('message-input').value='Generate image: '+document.getElementById('imagePrompt').value;closeToolPanel();sendMessage()" style="width:100%;background:linear-gradient(135deg,var(--accent),var(--cyan))">Generate Image</button>`;}
-function renderAudioTools(c){c.innerHTML=`<h4 style="margin-bottom:12px">Audio Processing</h4><button class="terminal-run-btn" style="width:100%;margin-bottom:12px" onclick="openAudioFile()">Open Audio File</button><button class="terminal-run-btn" style="width:100%;margin-bottom:12px;background:var(--green)" onclick="document.getElementById('message-input').value='Transcribe the attached audio';closeToolPanel();sendMessage()">Transcribe</button>`;}
+function renderImageTools(c){c.innerHTML=`<h4 style="margin-bottom:12px;color:var(--text-secondary)">Image Generation & Editing</h4><textarea id="imagePrompt" class="terminal-input" style="width:100%;min-height:100px;resize:vertical;margin-bottom:12px" placeholder="Describe the image..."></textarea><button class="terminal-run-btn" data-action="generateImage" style="width:100%;background:linear-gradient(135deg,var(--accent),var(--cyan))">Generate Image</button>`;}
+function renderAudioTools(c){c.innerHTML=`<h4 style="margin-bottom:12px">Audio Processing</h4><button class="terminal-run-btn" style="width:100%;margin-bottom:12px" data-action="openAudioFile">Open Audio File</button><button class="terminal-run-btn" style="width:100%;margin-bottom:12px;background:var(--green)" data-action="transcribeAudio">Transcribe</button>`;}
 async function openAudioFile(){const r=await window.superNinja.openDialog({filters:[{name:'Audio',extensions:['mp3','wav','flac','aac','m4a']}]});if(!r.canceled)r.filePaths.forEach(f=>addAttachedFile(f));}
-function renderPDFTools(c){c.innerHTML=`<h4 style="margin-bottom:12px">PDF Processing</h4><button class="terminal-run-btn" style="width:100%;margin-bottom:12px" onclick="openPDFFile()">Open PDF</button><button class="terminal-run-btn" style="width:100%;margin-bottom:12px;background:var(--green)" onclick="document.getElementById('message-input').value='Extract text from attached PDF';closeToolPanel();sendMessage()">Extract Text</button><button class="terminal-run-btn" style="width:100%;background:var(--blue)" onclick="document.getElementById('message-input').value='Summarize attached PDF';closeToolPanel();sendMessage()">Summarize</button>`;}
+function renderPDFTools(c){c.innerHTML=`<h4 style="margin-bottom:12px">PDF Processing</h4><button class="terminal-run-btn" style="width:100%;margin-bottom:12px" data-action="openPDFFile">Open PDF</button><button class="terminal-run-btn" style="width:100%;margin-bottom:12px;background:var(--green)" data-action="extractPDF">Extract Text</button><button class="terminal-run-btn" style="width:100%;background:var(--blue)" data-action="summarizePDF">Summarize</button>`;}
 async function openPDFFile(){const r=await window.superNinja.openDialog({filters:[{name:'PDF',extensions:['pdf']}]});if(!r.canceled)r.filePaths.forEach(f=>addAttachedFile(f));}
-function renderDataAnalysis(c){c.innerHTML=`<h4 style="margin-bottom:12px">Data Analysis</h4><button class="terminal-run-btn" style="width:100%;margin-bottom:12px" onclick="openDataFile()">Open Data File</button><button class="terminal-run-btn" style="width:100%;margin-bottom:12px;background:var(--green)" onclick="document.getElementById('message-input').value='Analyze attached data file';closeToolPanel();sendMessage()">Analyze</button><button class="terminal-run-btn" style="width:100%;background:var(--blue)" onclick="document.getElementById('message-input').value='Create visualizations from attached data';closeToolPanel();sendMessage()">Visualize</button>`;}
+function renderDataAnalysis(c){c.innerHTML=`<h4 style="margin-bottom:12px">Data Analysis</h4><button class="terminal-run-btn" style="width:100%;margin-bottom:12px" data-action="openDataFile">Open Data File</button><button class="terminal-run-btn" style="width:100%;margin-bottom:12px;background:var(--green)" data-action="analyzeData">Analyze</button><button class="terminal-run-btn" style="width:100%;background:var(--blue)" data-action="visualizeData">Visualize</button>`;}
 async function openDataFile(){const r=await window.superNinja.openDialog({filters:[{name:'Data',extensions:['csv','json','xlsx','xml']}]});if(!r.canceled)r.filePaths.forEach(f=>addAttachedFile(f));}
-function renderMusicProd(c){c.innerHTML=`<h4 style="margin-bottom:16px">Music Production</h4><div style="display:grid;gap:8px">${[['Catalog Analysis','var(--accent)'],['Beat Ideas','var(--blue)'],['Lyric Writer','var(--green)'],['Industry Trends','var(--orange)'],['Release Marketing','var(--cyan)']].map(([n,bg])=>`<button class="terminal-run-btn" style="background:${bg}" onclick="document.getElementById('message-input').value='${n==='Catalog Analysis'?'Analyze my track catalog':'Help me with '+n.toLowerCase()}';closeToolPanel();sendMessage()">${n}</button>`).join('')}</div>`;}
-function renderRoyaltyCalc(c){c.innerHTML=`<h4 style="margin-bottom:16px">Royalty Calculator</h4><div style="margin-bottom:16px"><label style="font-size:13px;color:var(--text-secondary);display:block;margin-bottom:6px">Total Streams</label><input type="number" class="terminal-input" id="royaltyStreams" value="1000000" style="width:100%"></div><div style="margin-bottom:16px"><label style="font-size:13px;color:var(--text-secondary);display:block;margin-bottom:6px">Platform</label><select class="terminal-input" id="royaltyPlatform" style="width:100%"><option value="all">All Platforms</option><option value="spotify">Spotify ($0.00437)</option><option value="apple">Apple Music ($0.00783)</option><option value="youtube">YouTube ($0.00274)</option><option value="tiktok">TikTok ($0.00069)</option><option value="tidal">Tidal ($0.01284)</option><option value="amazon">Amazon ($0.00402)</option></select></div><button class="terminal-run-btn" onclick="calculateRoyalty()" style="width:100%;background:linear-gradient(135deg,var(--green),var(--cyan))">Calculate</button><div id="royaltyResult" style="margin-top:16px"></div>`;}
+function renderMusicProd(c){c.innerHTML=`<h4 style="margin-bottom:16px">Music Production</h4><div style="display:grid;gap:8px">${[['Catalog Analysis','var(--accent)'],['Beat Ideas','var(--blue)'],['Lyric Writer','var(--green)'],['Industry Trends','var(--orange)'],['Release Marketing','var(--cyan)']].map(([n,bg])=>`<button class="terminal-run-btn" style="background:${bg}" data-music-action="${n}">${n}</button>`).join('')}</div>`;}
+function renderRoyaltyCalc(c){c.innerHTML=`<h4 style="margin-bottom:16px">Royalty Calculator</h4><div style="margin-bottom:16px"><label style="font-size:13px;color:var(--text-secondary);display:block;margin-bottom:6px">Total Streams</label><input type="number" class="terminal-input" id="royaltyStreams" value="1000000" style="width:100%"></div><div style="margin-bottom:16px"><label style="font-size:13px;color:var(--text-secondary);display:block;margin-bottom:6px">Platform</label><select class="terminal-input" id="royaltyPlatform" style="width:100%"><option value="all">All Platforms</option><option value="spotify">Spotify ($0.00437)</option><option value="apple">Apple Music ($0.00783)</option><option value="youtube">YouTube ($0.00274)</option><option value="tiktok">TikTok ($0.00069)</option><option value="tidal">Tidal ($0.01284)</option><option value="amazon">Amazon ($0.00402)</option></select></div><button class="terminal-run-btn" data-action="calculateRoyalty" style="width:100%;background:linear-gradient(135deg,var(--green),var(--cyan))">Calculate</button><div id="royaltyResult" style="margin-top:16px"></div>`;}
 function calculateRoyalty(){const streams=parseInt(document.getElementById('royaltyStreams').value)||0;const platform=document.getElementById('royaltyPlatform').value;const rates={spotify:0.00437,apple:0.00783,youtube:0.00274,tiktok:0.00069,tidal:0.01284,amazon:0.00402};let html='';if(platform==='all'){html='<div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:16px;border:1px solid var(--border)">';html+=`<h4 style="margin-bottom:12px;color:var(--accent)">Estimate for ${streams.toLocaleString()} streams</h4>`;let total=0;Object.entries(rates).forEach(([p,r])=>{const rev=streams*r;total+=rev;html+=`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)"><span style="text-transform:capitalize">${p}</span><span style="color:var(--green);font-weight:600">$${rev.toFixed(2)}</span></div>`;});html+=`<div style="display:flex;justify-content:space-between;padding:10px 0;margin-top:8px;font-weight:700;font-size:16px"><span>Average</span><span style="color:var(--green)">$${(total/6).toFixed(2)}</span></div></div>`;}else{const rev=streams*rates[platform];html=`<div style="text-align:center;background:var(--bg-primary);padding:16px;border-radius:var(--radius-sm);border:1px solid var(--border)"><div style="font-size:32px;font-weight:700;color:var(--green)">$${rev.toFixed(2)}</div><div style="font-size:12px;color:var(--text-muted)">${streams.toLocaleString()} × $${rates[platform]}</div></div>`;}document.getElementById('royaltyResult').innerHTML=html;}
 
 // ── UI RENDERING ─────────────────────────────────────────────
@@ -707,14 +707,14 @@ function renderMessage(message) {
 function renderMarkdown(text) {
   if (!text) return '';
   return text
-    .replace(/```(\w*)\n([\s\S]*?)```/g, (m, lang, code) => `<pre><code class="language-${lang}">${escapeHtml(code.trim())}</code><button class="copy-code-btn" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent)">Copy</button></pre>`)
+    .replace(/```(\w*)\n([\s\S]*?)```/g, (m, lang, code) => `<pre><code class="language-${lang}">${escapeHtml(code.trim())}</code><button class="copy-code-btn" data-action="copyCodeBlock">Copy</button></pre>`)
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/^### (.+)$/gm, '<h4>$1</h4>')
     .replace(/^## (.+)$/gm, '<h3>$1</h3>')
     .replace(/^# (.+)$/gm, '<h2>$1</h2>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" onclick="event.preventDefault();window.superNinja.openExternal(\'$2\')">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" data-external="$2">$1</a>')
     .replace(/^- (.+)$/gm, '<li>$1</li>')
     .replace(/\n\n/g, '</p><p>')
     .replace(/\n/g, '<br>');
@@ -732,7 +732,7 @@ async function attachFile(){const r=await window.superNinja.openDialog({properti
 function addAttachedFile(fp){if(!state.attachedFiles.includes(fp)){state.attachedFiles.push(fp);renderFileChips();}}
 function removeAttachedFile(i){state.attachedFiles.splice(i,1);renderFileChips();}
 function clearAttachedFiles(){state.attachedFiles=[];renderFileChips();}
-function renderFileChips(){const c=document.getElementById('fileChips');c.innerHTML=state.attachedFiles.map((fp,i)=>`<span class="file-chip">📎 ${fp.split('/').pop().split('\\').pop()} <span class="remove-chip" onclick="removeAttachedFile(${i})">&times;</span></span>`).join('');}
+function renderFileChips(){const c=document.getElementById('fileChips');c.innerHTML=state.attachedFiles.map((fp,i)=>`<span class="file-chip">📎 ${fp.split('/').pop().split('\\').pop()} <span class="remove-chip" data-remove-file="${i}">&times;</span></span>`).join('');}
 
 // ── HELPERS ──────────────────────────────────────────────────
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('collapsed');state.sidebarOpen=!state.sidebarOpen;}
@@ -896,39 +896,39 @@ function renderUECoPilot(container) {
         </div>
       </div>
       <div class="ue-tabs">
-        <button class="ue-tab ${ueState.activeTab==='generate'?'active':''}" onclick="setUETab('generate')">⚡ Generate</button>
-        <button class="ue-tab ${ueState.activeTab==='context'?'active':''}" onclick="setUETab('context')">📋 Context</button>
-        <button class="ue-tab ${ueState.activeTab==='history'?'active':''}" onclick="setUETab('history')">🕘 History</button>
-        <button class="ue-tab ${ueState.activeTab==='guide'?'active':''}" onclick="setUETab('guide')">📘 Setup</button>
+        <button class="ue-tab ${ueState.activeTab==='generate'?'active':''}" data-ue-tab="generate">⚡ Generate</button>
+        <button class="ue-tab ${ueState.activeTab==='context'?'active':''}" data-ue-tab="context">📋 Context</button>
+        <button class="ue-tab ${ueState.activeTab==='history'?'active':''}" data-ue-tab="history">🕘 History</button>
+        <button class="ue-tab ${ueState.activeTab==='guide'?'active':''}" data-ue-tab="guide">📘 Setup</button>
       </div>
       <div class="ue-tab-content ${ueState.activeTab==='generate'?'active':''}" id="ueTabGenerate">
         <div class="ue-section-label">Mode</div>
         <div class="ue-mode-grid">
-          ${UE_MODES.map(m => `<button class="ue-mode-card ${ueState.mode===m.id?'active':''}" onclick="setUEMode('${m.id}')" title="${m.desc}"><span class="ue-mode-icon">${m.label.split(' ')[0]}</span><span class="ue-mode-name">${m.label.split(' ').slice(1).join(' ')}</span></button>`).join('')}
+          ${UE_MODES.map(m => `<button class="ue-mode-card ${ueState.mode===m.id?'active':''}" data-ue-mode="${m.id}" title="${m.desc}"><span class="ue-mode-icon">${m.label.split(' ')[0]}</span><span class="ue-mode-name">${m.label.split(' ').slice(1).join(' ')}</span></button>`).join('')}
         </div>
         <div class="ue-mode-desc" id="ueModeDesc"><strong>${currentMode.label}</strong> — ${currentMode.desc}</div>
         <div class="ue-section-label" style="margin-top:12px">Your Request</div>
         <textarea id="uePromptInput" class="ue-textarea" placeholder="Describe what you want to build in plain English...&#10;Example: Create a double-jump mechanic that plays an animation and spawns a particle effect on the second jump" rows="4"></textarea>
         <div class="ue-context-badge" id="ueContextBadge" style="display:${ueState.context?'flex':'none'}">
           📋 Blueprint context attached (${ueState.context.length} chars)
-          <button onclick="clearUEContext()" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;margin-left:6px">×</button>
+          <button data-action="clearUEContext" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;margin-left:6px">×</button>
         </div>
         <div class="ue-actions">
-          <button class="ue-btn-primary" onclick="runUECoPilot()">⚡ Generate</button>
-          <button class="ue-btn-secondary" onclick="setUETab('context')">📋 Add Context</button>
-          <button class="ue-btn-secondary" onclick="runUECoPilotToChat()">💬 Ask in Chat</button>
+          <button class="ue-btn-primary" data-action="runUECoPilot">⚡ Generate</button>
+          <button class="ue-btn-secondary" data-ue-tab="context">📋 Add Context</button>
+          <button class="ue-btn-secondary" data-action="runUECoPilotToChat">💬 Ask in Chat</button>
         </div>
         <div class="ue-section-label" style="margin-top:14px">Quick Prompts — ${currentMode.label.split(' ').slice(1).join(' ')}</div>
         <div class="ue-quick-prompts" id="ueQuickPrompts">
-          ${quickPrompts.map(p => `<button class="ue-quick-prompt" onclick="useUEQuickPrompt(this.dataset.p)" data-p="${p.replace(/"/g,'"')}">${p}</button>`).join('')}
+          ${quickPrompts.map(p => `<button class="ue-quick-prompt" data-action="useUEQuickPrompt" data-p="${p.replace(/"/g,'"')}">${p}</button>`).join('')}
         </div>
         <div id="ueOutputArea" style="display:${ueState.lastOutput?'block':'none'}">
           <div class="ue-output-header">
             <span class="ue-section-label" style="margin:0">Output</span>
             <div style="display:flex;gap:6px">
-              <button class="ue-btn-xs" onclick="copyUEOutput()">📋 Copy</button>
-              <button class="ue-btn-xs" onclick="sendUEOutputToChat()">💬 Continue in Chat</button>
-              <button class="ue-btn-xs" onclick="saveUESnippet()">⭐ Save Snippet</button>
+              <button class="ue-btn-xs" data-action="copyUEOutput">📋 Copy</button>
+              <button class="ue-btn-xs" data-action="sendUEOutputToChat">💬 Continue in Chat</button>
+              <button class="ue-btn-xs" data-action="saveUESnippet">⭐ Save Snippet</button>
             </div>
           </div>
           <div class="ue-output" id="ueOutput">${ueState.lastOutput ? renderMarkdown(ueState.lastOutput) : ''}</div>
@@ -947,15 +947,15 @@ function renderUECoPilot(container) {
         <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
           <span style="font-size:12px;color:var(--text-muted)" id="ueContextCharCount">${ueState.context.length} chars</span>
           <div style="display:flex;gap:8px">
-            <button class="ue-btn-secondary" onclick="clearUEContext()">Clear</button>
-            <button class="ue-btn-primary" onclick="setUETab('generate')">✓ Done — Go Generate</button>
+            <button class="ue-btn-secondary" data-action="clearUEContext">Clear</button>
+            <button class="ue-btn-primary" data-ue-tab="generate">✓ Done — Go Generate</button>
           </div>
         </div>
       </div>
       <div class="ue-tab-content ${ueState.activeTab==='history'?'active':''}" id="ueTabHistory">
         <div class="ue-section-label">Saved Snippets & Session History</div>
         <div id="ueHistoryList">${renderUEHistory()}</div>
-        ${ueState.history.length > 0 ? '<button class="ue-btn-secondary" style="margin-top:12px;width:100%" onclick="clearUEHistory()">🗑️ Clear History</button>' : ''}
+        ${ueState.history.length > 0 ? '<button class="ue-btn-secondary" style="margin-top:12px;width:100%" data-action="clearUEHistory">🗑️ Clear History</button>' : ''}
       </div>
       <div class="ue-tab-content ${ueState.activeTab==='guide'?'active':''}" id="ueTabGuide">
         <div class="ue-guide">
@@ -1123,8 +1123,8 @@ function renderUEHistory() {
           <span class="ue-snippet-time">${new Date(item.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>
         </div>
         <div style="display:flex;gap:4px">
-          <button class="ue-btn-xs" onclick="loadUESnippet(${i})">Load</button>
-          <button class="ue-btn-xs" onclick="copyUESnippetOutput(${i})">Copy</button>
+          <button class="ue-btn-xs" data-ue-load-snippet="${i}">Load</button>
+          <button class="ue-btn-xs" data-ue-copy-snippet="${i}">Copy</button>
         </div>
       </div>
       <div class="ue-snippet-prompt">${item.prompt.slice(0,100).replace(/</g,'<').replace(/>/g,'>')}${item.prompt.length > 100 ? '...' : ''}</div>

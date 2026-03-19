@@ -25,6 +25,18 @@ contextBridge.exposeInMainWorld('superNinja', {
   getSystemInfo: () => ipcRenderer.invoke('get-system-info'),
   openExternal: (url) => ipcRenderer.invoke('open-external', url),
 
+  // Axiom Browser Automation
+  axiomCreateBot: (name, desc) => ipcRenderer.invoke('axiom-create-bot', name, desc),
+  axiomGetBots: () => ipcRenderer.invoke('axiom-get-bots'),
+  axiomDeleteBot: (botId) => ipcRenderer.invoke('axiom-delete-bot', botId),
+  axiomDuplicateBot: (botId) => ipcRenderer.invoke('axiom-duplicate-bot', botId),
+  axiomAddStep: (botId, step) => ipcRenderer.invoke('axiom-add-step', botId, step),
+  axiomRemoveStep: (botId, stepId) => ipcRenderer.invoke('axiom-remove-step', botId, stepId),
+  axiomRunBot: (botId) => ipcRenderer.invoke('axiom-run-bot', botId),
+  axiomStopBot: () => ipcRenderer.invoke('axiom-stop-bot'),
+  axiomGetTemplates: () => ipcRenderer.invoke('axiom-get-templates'),
+  axiomGetRunStatus: () => ipcRenderer.invoke('axiom-get-run-status'),
+
   // Event listeners from main process
   on: (channel, callback) => {
     const validChannels = [
