@@ -7,6 +7,7 @@ import { RoyaltyChart } from '@/components/charts/RoyaltyChart';
 import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { QuickActions } from '@/components/dashboard/QuickActions';
 import { IntegrationsHub } from '@/components/integrations/IntegrationsHub';
+import { TikTokIntegration } from '@/components/integrations/TikTokIntegration';
 
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +58,9 @@ export default function Dashboard() {
 
         {/* Recent Activity */}
         <RecentActivity />
+
+        {/* TikTok Integration */}
+        <TikTokIntegration />
 
         {/* Integrations Hub */}
         <IntegrationsHub />

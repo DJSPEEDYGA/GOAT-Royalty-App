@@ -27,6 +27,16 @@ interface Integration {
 
 const integrations: Integration[] = [
   {
+    id: 'tiktok',
+    name: 'TikTok (TikAPI)',
+    description: 'Creator analytics, video tracking & hashtag search',
+    icon: <Music className="h-6 w-6" />,
+    status: 'connected',
+    category: 'Social',
+    features: ['Profile analytics', 'Video tracking', 'Hashtag search', 'Royalty insights'],
+    lastSync: 'Just now'
+  },
+  {
     id: 'fashionforge',
     name: 'FashionForge Studio',
     description: 'Complete fashion & entertainment integration',
@@ -124,6 +134,7 @@ function getStatusBadge(status: Integration['status']) {
 }
 
 const categoryColors: Record<string, string> = {
+  'Social': 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
   'Creative': 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
   'AI/ML': 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
   'Music': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
