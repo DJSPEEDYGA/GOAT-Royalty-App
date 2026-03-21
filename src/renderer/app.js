@@ -1,5 +1,5 @@
 // ============================================================
-// Super GOAT Royalty 3.0 - Renderer Application Logic
+// Super GOAT Royalty 3.1 - Renderer Application Logic
 // NVIDIA NIM + Hugging Face + OpenRouter + GOAT Brain
 // Built for Harvey Miller (DJ Speedy)
 // ============================================================
@@ -113,6 +113,30 @@ function getTotalModelCount() {
   return count;
 }
 
+
+// ── STREAMING RESPONSE SUPPORT ──────────────────────────────────────
+async function callNvidiaStreaming(messages, model, apiKey, onChunk) {
+  if (!apiKey) throw new Error("NVIDIA API key not configured. Get one free at build.nvidia.com");
+  const body = { model, messages: [{ role: "system", content: getSystemPrompt() }, ...messages.map(m => ({ role: m.role, content: m.content }))], max_tokens: 4096, temperature: 0.7, stream: true };
+  const resp = await fetch(`${PROVIDER_ENDPOINTS.nvidia}/chat/completions`, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` }, body: JSON.stringify(body) });
+  if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.detail || e.error?.message || `NVIDIA NIM error: ${resp.status}`); }
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  let fullContent = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    const lines = chunk.split("\n").filter(l => l.startsWith("data: "));
+    for (const line of lines) {
+      const data = line.slice(6);
+      if (data === "[DONE]") continue;
+      try { const parsed = JSON.parse(data); const delta = parsed.choices?.[0]?.delta?.content || ""; if (delta) { fullContent += delta; if (onChunk) onChunk(delta, fullContent); } } catch(e) {}
+    }
+  }
+  return { content: fullContent, model, provider: "nvidia" };
+}
+
 // ── INITIALIZATION ───────────────────────────────────────────
 async function init() {
   state.settings = await window.superNinja.getSettings();
@@ -127,7 +151,7 @@ async function init() {
   updateModelIndicator();
   buildModelSelector();
   document.getElementById('message-input').focus();
-  console.log('🐐 Super GOAT Royalty 3.0 initialized — ' + getTotalModelCount() + ' models ready');
+  console.log('🐐 Super GOAT Royalty 3.1 initialized — ' + getTotalModelCount() + ' models ready');
 }
 
 function setupMainProcessListeners() {
@@ -338,9 +362,9 @@ async function getAIResponse(messages) {
 }
 
 function getSystemPrompt() {
-  return `You are SuperNinja AI (GOAT Royalty Edition v3.0), powered by 215+ LLMs via NVIDIA NIM, Hugging Face, OpenRouter, and multiple inference providers. Built for Harvey Miller (DJ Speedy).
+  return `You are SuperNinja AI (GOAT Royalty Edition v3.0), powered by 1000+ LLMs via NVIDIA NIM, Hugging Face, OpenRouter, and multiple inference providers. Built for Harvey Miller (DJ Speedy).
 
-You are a full-spectrum autonomous assistant: code, terminal, files, web, music production, royalty calculations, data analysis, images, audio, PDF processing, and more.
+You are a full-spectrum autonomous assistant: code, terminal, files, web, music production, royalty calculations, data analysis, images, audio, PDF processing, distribution hub (50+ DSPs), beat maker, blockchain crypto royalties, secure vault, and more.
 
 When asked to run a command, format it as: \`\`\`terminal\ncommand\n\`\`\`
 When writing code, specify the language. Be concise, helpful, proactive. Use Markdown.`;
@@ -397,7 +421,7 @@ async function callOpenAICompatible(baseUrl, messages, model, apiKey, providerNa
 // ── OPENROUTER ───────────────────────────────────────────────
 async function callOpenRouter(messages, model, apiKey) {
   if (!apiKey) throw new Error('OpenRouter API key not configured. Get one at openrouter.ai');
-  const resp = await fetch(`${PROVIDER_ENDPOINTS.openrouter}/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}`, 'HTTP-Referer': 'https://github.com/DJSPEEDYGA/GOAT-Royalty-App.', 'X-Title': 'Super GOAT Royalty 3.0' }, body: JSON.stringify({ model, messages: [{ role: 'system', content: getSystemPrompt() }, ...messages.map(m => ({ role: m.role, content: m.content }))], max_tokens: 4096, temperature: 0.7 }) });
+  const resp = await fetch(`${PROVIDER_ENDPOINTS.openrouter}/chat/completions`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}`, 'HTTP-Referer': 'https://github.com/DJSPEEDYGA/GOAT-Royalty-App.', 'X-Title': 'Super GOAT Royalty 3.1' }, body: JSON.stringify({ model, messages: [{ role: 'system', content: getSystemPrompt() }, ...messages.map(m => ({ role: m.role, content: m.content }))], max_tokens: 4096, temperature: 0.7 }) });
   if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.error?.message || `OpenRouter error: ${resp.status}`); }
   const data = await resp.json();
   return { content: data.choices[0].message.content, model: data.model || model, provider: 'openrouter', usage: data.usage };
@@ -551,7 +575,7 @@ function openTool(toolName) {
     filemanager: { title: '📁 File Manager', render: renderFileManager },
     codeeditor: { title: '💻 Code Editor', render: renderCodeEditor },
     webbrowser: { title: '🌐 Web Browser', render: renderWebBrowser },
-    modelhub: { title: '🟢 Model Hub (215+ LLMs)', render: renderModelHub },
+    modelhub: { title: '🟢 Model Hub (1000+ LLMs)', render: renderModelHub },
     goatbrain: { title: '🧠 GOAT Brain Orchestrator', render: renderGOATBrainPanel },
     imagetools: { title: '🎨 Image Tools', render: renderImageTools },
     audiotools: { title: '🎵 Audio Tools', render: renderAudioTools },
@@ -569,6 +593,10 @@ function openTool(toolName) {
     agentbuilder: { title: '🤖 GOAT AI Agent Builder — Build • Deploy • Orchestrate Custom AI Agents', render: renderAIAgentBuilder },
     ue5scene: { title: '🎮 GOAT UE5 Scene Generator — Text-to-Scene • Lumen • Nanite • MetaHuman • PCG', render: renderUE5SceneGenerator },
     scriptstudio: { title: '🎬 GOAT Script Studio — Hollywood Screenwriting • Final Draft-Level • 24 Legendary Writers • AI Scene Gen', render: renderScriptStudio },
+    distribution: { title: '🚀 GOAT Distribution Hub — 50+ DSPs • Release Management • Revenue Calculator', render: renderDistributionHub },
+    beatmaker: { title: '🎹 GOAT Beat Maker — 16-Step Sequencer • 6 Drum Kits • Web Audio Synthesis', render: renderBeatMaker },
+    crypto: { title: '⛓️ GOAT Crypto Royalty — Blockchain Music Rights • NFTs • Smart Contracts', render: renderCryptoRoyalty },
+    vault: { title: '🔐 GOAT Secure Vault — AES-256-GCM Encrypted Storage', render: renderSecureVault },
     datasets: { title: '🤗 HuggingFace Datasets — 41 AI Datasets • No API Key • Download & Go', render: renderHFDatasets }
   };
   const tool = tools[toolName];
@@ -617,7 +645,7 @@ function renderGOATBrainPanel(container) {
     <div style="text-align:center;margin-bottom:16px">
       <div style="font-size:48px;margin-bottom:8px">🧠</div>
       <h3 style="font-size:18px;background:linear-gradient(135deg,var(--accent),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent">GOAT Brain</h3>
-      <p style="font-size:12px;color:var(--text-muted);margin-top:4px">Combine 215+ LLMs into one super intelligence</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px">Combine 1000+ LLMs into one super intelligence</p>
     </div>
     <div style="margin-bottom:16px">
       <button data-action="toggleGOATBrain" class="axiom-run-btn" style="background:${state.goatBrainEnabled?'linear-gradient(135deg,var(--accent),#6d28d9)':'var(--bg-tertiary)'};color:${state.goatBrainEnabled?'white':'var(--text-secondary)'};border:1px solid ${state.goatBrainEnabled?'var(--accent)':'var(--border)'}">
@@ -748,6 +776,30 @@ function scrollToBottom(){const c=document.getElementById('chatArea');c.scrollTo
 function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
 function formatDate(d){if(!d)return'';const dt=new Date(d);const diff=Date.now()-dt;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return dt.toLocaleDateString();}
 function formatTime(d){if(!d)return'';return new Date(d).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
+
+
+// ── STREAMING RESPONSE SUPPORT ──────────────────────────────────────
+async function callNvidiaStreaming(messages, model, apiKey, onChunk) {
+  if (!apiKey) throw new Error("NVIDIA API key not configured. Get one free at build.nvidia.com");
+  const body = { model, messages: [{ role: "system", content: getSystemPrompt() }, ...messages.map(m => ({ role: m.role, content: m.content }))], max_tokens: 4096, temperature: 0.7, stream: true };
+  const resp = await fetch(`${PROVIDER_ENDPOINTS.nvidia}/chat/completions`, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${apiKey}` }, body: JSON.stringify(body) });
+  if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.detail || e.error?.message || `NVIDIA NIM error: ${resp.status}`); }
+  const reader = resp.body.getReader();
+  const decoder = new TextDecoder();
+  let fullContent = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    const chunk = decoder.decode(value, { stream: true });
+    const lines = chunk.split("\n").filter(l => l.startsWith("data: "));
+    for (const line of lines) {
+      const data = line.slice(6);
+      if (data === "[DONE]") continue;
+      try { const parsed = JSON.parse(data); const delta = parsed.choices?.[0]?.delta?.content || ""; if (delta) { fullContent += delta; if (onChunk) onChunk(delta, fullContent); } } catch(e) {}
+    }
+  }
+  return { content: fullContent, model, provider: "nvidia" };
+}
 
 // ── INIT ─────────────────────────────────────────────────────
 

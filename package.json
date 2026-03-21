@@ -1,7 +1,7 @@
 {
   "name": "super-goat-royalty",
-  "version": "3.0.0",
-  "description": "Super GOAT Royalty 3.0 - AI-Powered Music Production & Royalty Management Command Center with 215+ LLM Integration via NVIDIA NIM, Hugging Face, and Multi-Provider Super Brain",
+  "version": "3.1.0",
+  "description": "Super GOAT Royalty 3.1 — AI-Powered Music Production & Royalty Management Command Center with 1000+ LLM Integration, Distribution Hub, Beat Maker, Crypto Royalties, Secure Vault, and 22+ Professional Tools",
   "main": "src/main.js",
   "repository": {
     "type": "git",
@@ -41,22 +41,12 @@
       "package.json"
     ],
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": ["x64"]
-        }
-      ],
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
       "icon": "assets/icon.ico",
       "artifactName": "Super-GOAT-Royalty-${version}-Setup.${ext}"
     },
     "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": ["x64", "arm64"]
-        }
-      ],
+      "target": [{ "target": "dmg", "arch": ["x64", "arm64"] }],
       "icon": "assets/icon.icns",
       "category": "public.app-category.music",
       "artifactName": "Super-GOAT-Royalty-${version}.${ext}"
@@ -76,13 +66,7 @@
       "uninstallerIcon": "assets/icon.ico",
       "license": "LICENSE"
     },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "DJSPEEDYGA",
-        "repo": "GOAT-Royalty-App."
-      }
-    ]
+    "publish": [{ "provider": "github", "owner": "DJSPEEDYGA", "repo": "GOAT-Royalty-App." }]
   },
   "author": {
     "name": "Harvey Miller (DJ Speedy)",

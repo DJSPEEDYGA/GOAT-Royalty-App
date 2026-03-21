@@ -1,5 +1,5 @@
 // ============================================================
-// Super GOAT Royalty 3.0 - Preload Script
+// Super GOAT Royalty 3.1 - Preload Script
 // Secure bridge between renderer and main process
 // ============================================================
 
@@ -24,6 +24,13 @@ contextBridge.exposeInMainWorld('superNinja', {
   // System
   getSystemInfo: () => ipcRenderer.invoke('get-system-info'),
   openExternal: (url) => ipcRenderer.invoke('open-external', url),
+
+  // Crypto / Hashing (for Chain of Custody & Vault)
+  hashFile: (filePath) => ipcRenderer.invoke('hash-file', filePath),
+  hashString: (content) => ipcRenderer.invoke('hash-string', content),
+
+  // Notifications
+  showNotification: (title, body) => ipcRenderer.invoke('show-notification', title, body),
 
   // Axiom Browser Automation
   axiomCreateBot: (name, desc) => ipcRenderer.invoke('axiom-create-bot', name, desc),
@@ -53,7 +60,8 @@ contextBridge.exposeInMainWorld('superNinja', {
       'new-chat', 'save-chat', 'export-pdf', 'export-md',
       'open-settings', 'open-tool', 'files-opened',
       'model-changed', 'goat-brain-toggled',
-      'theme-changed', 'toggle-sidebar'
+      'theme-changed', 'toggle-sidebar',
+      'update-available', 'update-downloaded'
     ];
     if (validChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, ...args) => callback(...args));
