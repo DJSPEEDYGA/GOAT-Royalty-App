@@ -10,6 +10,16 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 
+// HuggingFace Datasets Engine
+let hfDatasets = null;
+try {
+  const HFDatasetsEngine = require('./datasets/hf-datasets');
+  hfDatasets = new HFDatasetsEngine({ downloadDir: path.join(app.getPath('userData'), 'datasets') });
+  console.log('\x1b[33m🤗 HuggingFace Datasets Engine loaded — 41 datasets, NO API key\x1b[0m');
+} catch(e) {
+  console.warn('HFDatasets not loaded:', e.message);
+}
+
 // ── Settings Store ───────────────────────────────────────────
 const Store = class {
   constructor(opts) {
@@ -465,6 +475,41 @@ ipcMain.handle('axiom-get-run-status', () => ({
 // ============================================================
 // App Lifecycle
 // ============================================================
+
+
+// ── HuggingFace Datasets IPC Handlers ──────────────────────────
+ipcMain.handle('get-hf-datasets', async () => {
+  if (!hfDatasets) return { datasets: [] };
+  try { return hfDatasets.getCatalog(); } catch(e) { return { error: e.message }; }
+});
+ipcMain.handle('get-hf-dataset-info', async (_, id) => {
+  if (!hfDatasets) return { error: 'Engine not loaded' };
+  try { return await hfDatasets.getDatasetInfo(id); } catch(e) { return { error: e.message }; }
+});
+ipcMain.handle('search-hf-datasets', async (_, query, limit) => {
+  if (!hfDatasets) return { results: [] };
+  try { return await hfDatasets.searchHFHub(query, limit || 20); } catch(e) { return { error: e.message }; }
+});
+ipcMain.handle('list-hf-files', async (_, id) => {
+  if (!hfDatasets) return { files: [] };
+  try { return await hfDatasets.listFiles(id); } catch(e) { return { error: e.message }; }
+});
+ipcMain.handle('download-hf-readme', async (_, id) => {
+  if (!hfDatasets) return { error: 'Engine not loaded' };
+  try { return await hfDatasets.downloadFile(id, 'README.md'); } catch(e) { return { error: e.message }; }
+});
+ipcMain.handle('download-hf-file', async (_, dataset, filename) => {
+  if (!hfDatasets) return { error: 'Engine not loaded' };
+  try { return await hfDatasets.downloadFile(dataset, filename); } catch(e) { return { error: e.message }; }
+});
+ipcMain.handle('get-hf-local', async () => {
+  if (!hfDatasets) return { datasets: [] };
+  try { return hfDatasets.getLocalDatasets(); } catch(e) { return { error: e.message }; }
+});
+ipcMain.handle('get-hf-stats', async () => {
+  if (!hfDatasets) return {};
+  try { return hfDatasets.getStats(); } catch(e) { return { error: e.message }; }
+});
 
 app.whenReady().then(() => {
   createWindow();

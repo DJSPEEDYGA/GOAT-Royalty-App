@@ -44,6 +44,16 @@ contextBridge.exposeInMainWorld('superNinja', {
   axiomGetTemplates: () => ipcRenderer.invoke('axiom-get-templates'),
   axiomGetRunStatus: () => ipcRenderer.invoke('axiom-get-run-status'),
 
+  // HuggingFace Datasets
+  getHFDatasets: () => ipcRenderer.invoke('get-hf-datasets'),
+  getHFDatasetInfo: (id) => ipcRenderer.invoke('get-hf-dataset-info', id),
+  searchHFDatasets: (query, limit) => ipcRenderer.invoke('search-hf-datasets', query, limit),
+  listHFFiles: (id) => ipcRenderer.invoke('list-hf-files', id),
+  downloadHFReadme: (id) => ipcRenderer.invoke('download-hf-readme', id),
+  downloadHFFile: (dataset, filename) => ipcRenderer.invoke('download-hf-file', dataset, filename),
+  getHFLocal: () => ipcRenderer.invoke('get-hf-local'),
+  getHFStats: () => ipcRenderer.invoke('get-hf-stats'),
+
   // Event listeners from main process
   on: (channel, callback) => {
     const validChannels = [
