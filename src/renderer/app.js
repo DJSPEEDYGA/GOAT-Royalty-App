@@ -568,7 +568,8 @@ function openTool(toolName) {
     worldwide: { title: '🌍 GOAT Worldwide — Live Map • Global Feed • Music DNA • Events • Analytics • Leaderboards', render: renderWorldwidePlatform },
     agentbuilder: { title: '🤖 GOAT AI Agent Builder — Build • Deploy • Orchestrate Custom AI Agents', render: renderAIAgentBuilder },
     ue5scene: { title: '🎮 GOAT UE5 Scene Generator — Text-to-Scene • Lumen • Nanite • MetaHuman • PCG', render: renderUE5SceneGenerator },
-    scriptstudio: { title: '🎬 GOAT Script Studio — Hollywood Screenwriting • Final Draft-Level • 24 Legendary Writers • AI Scene Gen', render: renderScriptStudio }
+    scriptstudio: { title: '🎬 GOAT Script Studio — Hollywood Screenwriting • Final Draft-Level • 24 Legendary Writers • AI Scene Gen', render: renderScriptStudio },
+    datasets: { title: '🤗 HuggingFace Datasets — 41 AI Datasets • No API Key • Download & Go', render: renderHFDatasets }
   };
   const tool = tools[toolName];
   if (tool) { title.innerHTML = tool.title; tool.render(content); panel.classList.add('open'); state.toolPanelOpen = true; }
@@ -1168,3 +1169,176 @@ function clearUEHistory() {
 })();
 
 document.addEventListener('DOMContentLoaded', init);
+
+// ── HUGGINGFACE DATASETS PANEL ──────────────────────────────────
+let hfDsAllData = [];
+let hfDsFiltered = [];
+
+function renderHFDatasets(container) {
+  container.innerHTML = `
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:48px;margin-bottom:8px">\U0001f917</div>
+      <h3 style="font-size:18px;background:linear-gradient(135deg,#FFD700,#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent">HuggingFace Datasets</h3>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px">41 AI Datasets \u2022 No API Key \u2022 Download & Go</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+      <div style="background:var(--bg-tertiary);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border)">
+        <div style="font-size:22px;font-weight:800;color:#FFD700" id="hfds-stat-total">41</div>
+        <div style="font-size:10px;color:var(--text-muted)">Datasets</div>
+      </div>
+      <div style="background:var(--bg-tertiary);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border)">
+        <div style="font-size:22px;font-weight:800;color:#4CAF50" id="hfds-stat-cats">8</div>
+        <div style="font-size:10px;color:var(--text-muted)">Categories</div>
+      </div>
+      <div style="background:var(--bg-tertiary);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border)">
+        <div style="font-size:22px;font-weight:800;color:#2196F3" id="hfds-stat-local">0</div>
+        <div style="font-size:10px;color:var(--text-muted)">Downloaded</div>
+      </div>
+    </div>
+    <input type="text" id="hfds-search" placeholder="\U0001f50d Search datasets..." oninput="hfdsSearch()"
+      style="width:100%;padding:10px 14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;color:var(--text-primary);font-size:13px;outline:none;box-sizing:border-box;margin-bottom:10px">
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <select id="hfds-sort" onchange="hfdsSort()" style="flex:1;padding:8px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);font-size:12px">
+        <option value="name">Sort: Name</option>
+        <option value="downloads">Sort: Downloads</option>
+        <option value="trending">Sort: Trending</option>
+      </select>
+      <select id="hfds-cat" onchange="hfdsCatFilter()" style="flex:1;padding:8px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);font-size:12px">
+        <option value="all">All Categories</option>
+      </select>
+      <button onclick="hfdsLiveSearch()" style="padding:8px 14px;background:linear-gradient(135deg,#FFD700,#FFA500);border:none;border-radius:8px;color:#000;font-weight:700;font-size:12px;cursor:pointer">\U0001f917 Live</button>
+    </div>
+    <div id="hfds-grid" style="max-height:calc(100vh - 400px);overflow-y:auto">
+      <div style="text-align:center;padding:30px;color:var(--text-muted)">Loading datasets...</div>
+    </div>
+  `;
+  hfdsLoadCatalog();
+}
+
+async function hfdsLoadCatalog() {
+  // Load the built-in catalog via IPC bridge
+  try {
+    let data;
+    if (window.superNinja && window.superNinja.getHFDatasets) {
+      data = await window.superNinja.getHFDatasets();
+    }
+    if (data && (data.datasets || Array.isArray(data))) {
+      hfDsAllData = data.datasets || data || [];
+    } else {
+      // Fallback: use HF API directly
+      const resp = await fetch('https://huggingface.co/api/datasets?sort=downloads&direction=-1&limit=41');
+      const apiData = await resp.json();
+      hfDsAllData = apiData.map(d => ({ id: d.id, name: d.id.split('/').pop(), description: d.description || '', downloads: d.downloads || 0, likes: d.likes || 0, category: (d.tags && d.tags[0]) || 'General' }));
+    }
+    hfDsFiltered = [...hfDsAllData];
+    hfdsRender();
+    const cats = [...new Set(hfDsAllData.map(d => d.category).filter(Boolean))];
+    const sel = document.getElementById('hfds-cat');
+    if (sel) sel.innerHTML = '<option value="all">All Categories</option>' + cats.map(c => '<option value="' + c + '">' + c + '</option>').join('');
+    const el = document.getElementById('hfds-stat-total');
+    if (el) el.textContent = hfDsAllData.length;
+    const catEl = document.getElementById('hfds-stat-cats');
+    if (catEl) catEl.textContent = cats.length;
+  } catch(e) {
+    const grid = document.getElementById('hfds-grid');
+    if (grid) grid.innerHTML = '<div style="text-align:center;padding:30px;color:#ff4444">Error loading: ' + e.message + '</div>';
+  }
+}
+
+function hfdsRender() {
+  const grid = document.getElementById('hfds-grid');
+  if (!grid) return;
+  if (hfDsFiltered.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-muted)">No datasets found</div>';
+    return;
+  }
+  grid.innerHTML = hfDsFiltered.map(d => {
+    const name = d.name || d.id.split('/').pop();
+    const desc = (d.description || '').substring(0, 80) + ((d.description||'').length > 80 ? '...' : '');
+    const dl = d.downloads ? d.downloads.toLocaleString() : 'N/A';
+    return `<div style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer" onclick="hfdsDetail('${d.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--text-primary)">${name}</div>
+        <div style="font-size:11px;color:#FFD700;margin-top:2px">${d.id}</div></div>
+        <span style="font-size:9px;padding:2px 8px;background:rgba(255,215,0,.15);color:#FFD700;border-radius:6px;font-weight:600">${d.category || 'General'}</span></div>
+      <div style="font-size:11px;color:var(--text-muted);margin-top:6px;line-height:1.4">${desc}</div>
+      <div style="display:flex;gap:12px;margin-top:8px">
+        <span style="font-size:10px;color:var(--text-muted)">\u2b07 ${dl}</span>
+        <span style="font-size:10px;color:var(--text-muted)">\u2764 ${d.likes || 'N/A'}</span>
+      </div></div>`;
+  }).join('');
+}
+
+function hfdsSearch() {
+  const q = (document.getElementById('hfds-search')?.value || '').toLowerCase();
+  hfDsFiltered = hfDsAllData.filter(d =>
+    (d.id||'').toLowerCase().includes(q) || (d.name||'').toLowerCase().includes(q) ||
+    (d.description||'').toLowerCase().includes(q) || (d.category||'').toLowerCase().includes(q));
+  hfdsRender();
+}
+
+function hfdsSort() {
+  const v = document.getElementById('hfds-sort')?.value || 'name';
+  if (v === 'downloads') hfDsFiltered.sort((a,b) => (b.downloads||0) - (a.downloads||0));
+  else if (v === 'trending') hfDsFiltered.sort((a,b) => (b.likes||0) - (a.likes||0));
+  else hfDsFiltered.sort((a,b) => (a.name||a.id).localeCompare(b.name||b.id));
+  hfdsRender();
+}
+
+function hfdsCatFilter() {
+  const cat = document.getElementById('hfds-cat')?.value || 'all';
+  hfDsFiltered = cat === 'all' ? [...hfDsAllData] : hfDsAllData.filter(d => d.category === cat);
+  hfdsRender();
+}
+
+function hfdsDetail(id) {
+  const d = hfDsAllData.find(x => x.id === id);
+  if (!d) return;
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.onclick = function(e) { if (e.target === modal) modal.remove(); };
+  modal.innerHTML = `
+    <div style="background:var(--bg-secondary);border-radius:16px;max-width:500px;width:100%;max-height:80vh;overflow-y:auto;padding:24px;border:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:16px">
+        <div><div style="font-size:18px;font-weight:800;color:var(--text-primary)">${d.name || d.id.split('/').pop()}</div>
+        <div style="font-size:12px;color:#FFD700;margin-top:4px">${d.id}</div></div>
+        <div onclick="this.closest('div[style*=fixed]').remove()" style="font-size:20px;cursor:pointer;color:var(--text-muted)">&times;</div></div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px">${d.description || 'No description'}</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+        <div style="background:var(--bg-tertiary);border-radius:10px;padding:10px;text-align:center;border:1px solid var(--border)"><div style="font-size:16px;font-weight:800;color:#FFD700">${d.downloads ? d.downloads.toLocaleString() : 'N/A'}</div><div style="font-size:10px;color:var(--text-muted)">Downloads</div></div>
+        <div style="background:var(--bg-tertiary);border-radius:10px;padding:10px;text-align:center;border:1px solid var(--border)"><div style="font-size:16px;font-weight:800;color:#e91e63">${d.likes || 'N/A'}</div><div style="font-size:10px;color:var(--text-muted)">Likes</div></div>
+        <div style="background:var(--bg-tertiary);border-radius:10px;padding:10px;text-align:center;border:1px solid var(--border)"><div style="font-size:16px;font-weight:800;color:#4CAF50">${d.category || 'General'}</div><div style="font-size:10px;color:var(--text-muted)">Category</div></div></div>
+      <div style="display:flex;gap:8px">
+        <a href="https://huggingface.co/datasets/${d.id}" target="_blank" style="flex:1;padding:10px;background:linear-gradient(135deg,#FFD700,#FFA500);border:none;border-radius:10px;color:#000;font-size:12px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none">View on HuggingFace</a>
+        <button onclick="hfdsDownloadReadme('${d.id}')" style="flex:1;padding:10px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;color:var(--text-primary);font-size:12px;font-weight:600;cursor:pointer">Download README</button></div></div>`;
+  document.body.appendChild(modal);
+}
+
+async function hfdsDownloadReadme(id) {
+  try {
+    if (window.superNinja && window.superNinja.downloadHFReadme) {
+      const r = await window.superNinja.downloadHFReadme(id);
+      if (r && r.success) { showNotification('README downloaded for ' + id, 'success'); }
+      else { showNotification('Download issue: ' + (r?.error || 'Unknown'), 'warning'); }
+    } else {
+      window.open('https://huggingface.co/datasets/' + id + '/raw/main/README.md', '_blank');
+    }
+  } catch(e) { showNotification('Error: ' + e.message, 'error'); }
+}
+
+function hfdsLiveSearch() {
+  const q = document.getElementById('hfds-search')?.value || '';
+  if (q.length < 2) { showNotification('Type at least 2 characters', 'warning'); return; }
+  const grid = document.getElementById('hfds-grid');
+  if (grid) grid.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-muted)">Searching HuggingFace Hub...</div>';
+  fetch('https://huggingface.co/api/datasets?search=' + encodeURIComponent(q) + '&sort=downloads&direction=-1&limit=20')
+    .then(r => r.json())
+    .then(data => {
+      hfDsFiltered = data.map(d => ({ id: d.id, name: d.id.split('/').pop(), description: d.description || '', downloads: d.downloads || 0, likes: d.likes || 0, category: (d.tags && d.tags[0]) || 'General' }));
+      hfdsRender();
+      showNotification('Found ' + hfDsFiltered.length + ' datasets', 'success');
+    })
+    .catch(e => {
+      if (grid) grid.innerHTML = '<div style="text-align:center;padding:30px;color:#ff4444">Search failed: ' + e.message + '</div>';
+    });
+}
