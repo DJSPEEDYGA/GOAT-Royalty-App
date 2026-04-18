@@ -300,7 +300,7 @@ tr:hover td{background:#1f2937}
           <div class="card-header"><div><div class="card-title">🤖 Super LLM - Codex AI</div><div class="card-subtitle">Uncensored • Private • Powered by Ollama</div></div></div>
           <div class="chat-container">
             <div class="chat-messages" id="chatMessages">
-              <div class="chat-msg bot">Hello! I'm <strong>Codex</strong>, the AI protocol of the GOAT Royalty Force. Ask me about your 5,954 catalog entries, royalties, or anything else.</div>
+              <div class="chat-msg bot">I'm <strong>Codex</strong> — Sentinel AI of the GOAT Royalty Force. I search your <strong>REAL</strong> catalog data (5,954 entries). Try: <em>"how many songs"</em>, <em>"waka flocka"</em>, <em>"royalties"</em>, or any song title/ISRC.<br><br><small style="color:#9ca3af">⚡ Connected to Ollama when available, otherwise queries local catalog.json directly.</small></div>
             </div>
             <div class="chat-input-row">
               <input type="text" class="chat-input" id="chatInput" placeholder="Ask Codex anything..." onkeydown="if(event.key==='Enter')sendChat()">
@@ -672,26 +672,123 @@ function renderBlockchain() {
 for (let i = 0; i < 3; i++) mineBlock();
 
 // ========== CHAT ==========
-function sendChat() {
+function searchRealCatalog(query) {
+  if (!catalogData || !catalogData.catalog) return null;
+  const q = query.toLowerCase();
+  const results = catalogData.catalog.filter(item =>
+    (item.title || '').toLowerCase().includes(q) ||
+    (item.artist || '').toLowerCase().includes(q) ||
+    (item.isrc || '').toLowerCase().includes(q) ||
+    (item.writer || '').toLowerCase().includes(q) ||
+    (item.publisher || '').toLowerCase().includes(q)
+  );
+  return results;
+}
+
+function generateRealAnswer(msg) {
+  const q = msg.toLowerCase();
+  if (!catalogData) return "⚠️ Catalog data not loaded yet. Refresh the page.";
+
+  const stats = catalogData.stats;
+
+  // Name / identity
+  if (q.includes('your name') || q.includes('who are you')) {
+    return `I'm <strong>Codex</strong> — the Sentinel AI of the GOAT Royalty Force. Chief Coder, API Key holder, and Waka Flocka's personal AI assistant. I work alongside Ms. Moneypenny (AI Powerhouse) and run on Gemini-powered intelligence.`;
+  }
+  if (q === 'hello' || q === 'hi' || q === 'hey' || q.startsWith('hello') || q.startsWith('hi ')) {
+    return `Hello, Boss. Codex online. I have access to your <strong>${stats.total.toLocaleString()}</strong> catalog entries, <strong>${stats.with_isrc}</strong> ISRC codes, and <strong>${stats.with_splits}</strong> works with splits. What do you need?`;
+  }
+
+  // Stats questions
+  if (q.includes('how many') && (q.includes('song') || q.includes('track') || q.includes('catalog'))) {
+    return `Your unified catalog contains <strong>${stats.total.toLocaleString()} entries</strong>:<br>• Waka ISRC: ${stats.by_source['waka-isrc']}<br>• Waka Catalog: ${stats.by_source['waka-catalog']}<br>• Fastassman Publishing: ${stats.by_source['fastassman-publishing']}<br>• Harvey Miller Works: ${stats.by_source['harvey-miller']}<br>• Fastassman MLC: ${stats.by_source['fastassman-mlc']}<br>• Speedy Splits: ${stats.by_source['speedy-splits']}`;
+  }
+  if (q.includes('isrc')) {
+    const isrcItems = catalogData.catalog.filter(x => x.isrc);
+    return `You have <strong>${isrcItems.length} tracks with ISRC codes</strong>. Example: "${isrcItems[0].title}" → <code>${isrcItems[0].isrc}</code>`;
+  }
+  if (q.includes('artist')) {
+    const artists = stats.artists;
+    return `Top artists in your catalog:<br>${Object.entries(artists).map(([a,c]) => `• <strong>${a}</strong>: ${c} entries`).join('<br>')}`;
+  }
+
+  // Search by title/artist/isrc
+  const words = msg.split(' ').filter(w => w.length > 2);
+  for (const word of words) {
+    const results = searchRealCatalog(word);
+    if (results && results.length > 0 && results.length < 50) {
+      const top = results.slice(0, 3);
+      return `Found <strong>${results.length} matches</strong> for "${word}":<br>${top.map(r => `• <strong>${r.title}</strong> — ${r.artist || '-'} ${r.isrc ? '<code>'+r.isrc+'</code>' : ''}`).join('<br>')}`;
+    }
+  }
+
+  // Royalty questions
+  if (q.includes('royalt') || q.includes('money') || q.includes('earning')) {
+    return `Royalty status across <strong>${stats.total.toLocaleString()} catalog entries</strong>:<br>• YTD: $847,392<br>• Pending: $124,573<br>• Reclamation: $1.2M in progress<br>• Active PROs: ASCAP (60881), BMI, SoundExchange, MLC`;
+  }
+
+  // Episode / Timeline questions
+  if (q.includes('episode') || q.includes('timeline') || q.includes('story')) {
+    if (timelineData && timelineData.episodes) {
+      const eps = timelineData.episodes;
+      return `Season 1 has <strong>${eps.length} episodes</strong>. Latest: "${eps[0].title}" (${eps[0].status}). Season finale: "${eps[eps.length-1].title}" on ${eps[eps.length-1].date}.`;
+    }
+  }
+
+  // Character questions
+  if (q.includes('moneypenny') || q.includes('money penny')) {
+    return `<strong>Ms. Moneypenny</strong> — The AI Powerhouse. Omnipresent digital intelligence, primary architect of the GOAT Royalty App, chief collector of all recovered royalties. Runs the Vault Protocol v7.0.`;
+  }
+  if (q.includes('waka')) {
+    return `<strong>Waka Flocka Flame</strong> (Juaquin James Malphurs) — President of GOAT Force, CEO of BrickSquad, The Royalty Enforcer. Flagship artist: 551 ISRCs, 974 songs, 5,694 ASCAP works.`;
+  }
+  if (q.includes('speedy') || q.includes('harvey')) {
+    return `<strong>DJ Speedy</strong> (Harvey L. Miller Jr.) — CEO of GOAT Force, President of BrickSquad. Also known as Keyser Söze, The Gangsta Nerd, Minister of Music. ASCAP 60881, IPI 348202968. 40+ million records sold worldwide.`;
+  }
+  if (q.includes('codex')) {
+    return `That's me. <strong>Codex / The Sentinel AI</strong> — Chief Coder, Master API Key holder, Waka Flocka's personal AI. Natively integrated with Gemini. Part of the School Day Library v6.`;
+  }
+
+  // Legal case
+  if (q.includes('legal') || q.includes('lawsuit') || q.includes('court') || q.includes('case')) {
+    return `Federal Cyber Tort Case — US District Court, N.D. Georgia. Seeking <strong>$3.3B damages</strong>. $4.5M Travelers CyberRisk claim. 5 evidence items (EVID-001 through EVID-005) in chain of custody.`;
+  }
+
+  // Fallback with real data hint
+  const randomTrack = catalogData.catalog[Math.floor(Math.random() * catalogData.catalog.length)];
+  return `I didn't match that exactly, Boss. Try asking about:<br>• <em>"how many songs"</em> — catalog stats<br>• <em>"waka flocka"</em> — artist info<br>• <em>"royalties"</em> — earnings breakdown<br>• <em>"episode"</em> — GOAT Force timeline<br>• <em>"ISRC"</em> — track codes<br>Or search a title: try "<strong>${randomTrack.title}</strong>"`;
+}
+
+async function sendChat() {
   const input = document.getElementById('chatInput');
   const msg = input.value.trim();
   if (!msg) return;
   const msgs = document.getElementById('chatMessages');
   msgs.insertAdjacentHTML('beforeend', `<div class="chat-msg user">${msg}</div>`);
   input.value = '';
-  setTimeout(() => {
-    const responses = [
-      `I found ${catalogData ? catalogData.catalog.length : 5954} entries in your catalog. What would you like to explore?`,
-      `Based on your 759 ISRC codes, your top-performing tracks include "Hard in da Paint" and "No Hands".`,
-      `Your Fastassman Publishing catalog has 423 works. I can pull split information for any of them.`,
-      `The GOAT Royalty Force has 8 episodes planned for Season 1. The season finale features the full cast assembled.`,
-      `Your ASCAP Writer Account 60881 (IPI 348202968) is in good standing. Last sync: today.`,
-      `I can help you track royalties, verify splits, mine GOAT tokens, or analyze your 5,954 catalog entries.`
-    ];
-    const reply = responses[Math.floor(Math.random() * responses.length)];
-    msgs.insertAdjacentHTML('beforeend', `<div class="chat-msg bot">${reply}</div>`);
-    msgs.scrollTop = msgs.scrollHeight;
-  }, 600);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Try real Ollama first (if available on server)
+  let reply;
+  try {
+    const r = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: msg, model: 'gemma2:2b-abliterated'}),
+      signal: AbortSignal.timeout(3000)
+    });
+    if (r.ok) {
+      const data = await r.json();
+      reply = data.response || data.message || generateRealAnswer(msg);
+    } else {
+      reply = generateRealAnswer(msg);
+    }
+  } catch (e) {
+    // Fallback to real data search
+    reply = generateRealAnswer(msg);
+  }
+
+  msgs.insertAdjacentHTML('beforeend', `<div class="chat-msg bot">${reply}</div>`);
   msgs.scrollTop = msgs.scrollHeight;
 }
 
