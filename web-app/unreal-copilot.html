@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Engine CoPilot — Ms Money Penny Store</title>
+  <link rel="stylesheet" href="css/goat-theme.css">
+  <style>
+    .hero-product {
+      padding: 80px 20px 60px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(15,36,64,0.95) 0%, rgba(10,10,18,0.98) 100%);
+      position: relative;
+    }
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 24px;
+    }
+    .badge {
+      background: rgba(212,160,60,0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .badge.epic { background: rgba(212,160,60,0.9); color: #000; font-weight: 700; }
+    .cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #d4a03c, #f0c060);
+      color: #000;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,160,60,0.4); }
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { background: var(--gold); color: #000; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(212,160,60,0.2);
+      border-radius: 14px;
+      padding: 28px 24px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .feature-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .feature-icon { font-size: 2.2rem; margin-bottom: 14px; }
+    .feature-card h3 { color: var(--gold); font-size: 1.05rem; margin-bottom: 10px; }
+    .feature-card p { color: #b0b8c8; font-size: 0.88rem; line-height: 1.6; }
+    .diff-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 20px 50px;
+    }
+    .diff-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .diff-check { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .diff-row h4 { color: var(--gold); margin: 0 0 4px; font-size: 0.95rem; }
+    .diff-row p { color: #9aa3b4; font-size: 0.85rem; line-height: 1.55; margin: 0; }
+    .links-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      padding: 30px 20px 50px;
+    }
+    .link-chip {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,160,60,0.25);
+      color: #c8cdd8;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: border-color 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .link-chip:hover { border-color: var(--gold); color: var(--gold); }
+    .disclaimer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 24px 50px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .disclaimer h3 { color: var(--gold); margin-bottom: 14px; }
+    .disclaimer p { color: #8a93a4; font-size: 0.83rem; line-height: 1.7; margin-bottom: 10px; }
+    .section-label {
+      text-align: center;
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-heading {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      text-align: center;
+      color: #8a93a4;
+      font-size: 0.95rem;
+      max-width: 640px;
+      margin: 0 auto 10px;
+      line-height: 1.6;
+    }
+    .divider { height: 1px; background: rgba(212,160,60,0.12); margin: 10px 0; }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <div class="goat-bg"></div>
+  <div class="goat-overlay"></div>
+
+  <!-- Navigation -->
+  <nav class="top-nav">
+    <a href="index.html" class="logo">
+      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
+      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
+      <img src="logo.png" alt="Ms Money Penny">
+      <span>Ms Money Penny</span>
+      <span class="crown-badge">👑 GOAT</span>
+    </a>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">🏠 Home</a>
+      <a href="models.html">🧠 AI Models</a>
+      <a href="tools.html">🛠️ Tools</a>
+      <a href="downloads.html">📥 Downloads</a>
+      <a href="about.html">👑 About</a>
+      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="music-studio.html">🎵 Music Studio</a>
+      <a href="movie-studio.html">🎬 Movie Studio</a>
+      <a href="catalog.html">📚 Catalog</a>
+      <a href="screenwriting.html">📝 Screenwriting</a>
+      <a href="index.html#store">🛒 Store</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-product">
+    <div style="max-width:820px;margin:0 auto;">
+      <div style="font-size:4rem;margin-bottom:16px;">🤖</div>
+      <div class="badge-row">
+        <span class="badge epic">⭐ Featured on FAB by Epic Games</span>
+        <span class="badge">Feb 5–9, 2026</span>
+        <span class="badge">v0.3.5 Live</span>
+        <span class="badge">Local LLM Support</span>
+      </div>
+      <h1 style="font-size:2.6rem;font-weight:900;color:#fff;margin:0 0 8px;line-height:1.15;">
+        Ultimate Engine CoPilot
+      </h1>
+      <p style="color:var(--gold);font-size:1rem;font-weight:600;margin:0 0 16px;letter-spacing:1px;">
+        formerly Ultimate Blueprint Generator
+      </p>
+      <p style="color:#b0b8c8;font-size:1.05rem;line-height:1.65;max-width:680px;margin:0 auto;">
+        The ultimate AI copilot for Unreal Engine. Go beyond simple code generation — analyze your entire project's architecture, build complex scenes and UI from a single command, and refactor Blueprints conversationally. A deeply integrated development partner that understands your code, your assets, and your context.
+      </p>
+      <div class="cta-row">
+        <a href="https://www.fab.com" target="_blank" class="btn-primary">🛒 Get on FAB Marketplace</a>
+        <a href="https://discord.gg" target="_blank" class="btn-outline">💬 Join Discord</a>
+        <a href="index.html#store" class="btn-outline">← Back to Store</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why It's Different -->
+  <section style="padding:50px 20px 10px;">
+    <p class="section-label">The CoPilot Difference</p>
+    <h2 class="section-heading">Why This Plugin is the Best Value in Unreal</h2>
+    <p class="section-sub">Unlike subscription-based, closed-source "off-FAB" plugins, this plugin is built differently.</p>
+    <div class="diff-section">
+      <div class="diff-row">
+        <div class="diff-check">✅</div>
+        <div>
+          <h4>One-Time Purchase. Lifetime Updates. No Subscriptions. Ever.</h4>
+          <p>You buy it, you own it. No monthly fees, no usage caps, no surprise charges. Full lifetime updates included from day one.</p>
+        </div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-check">✅</div>
+        <div>
+          <h4>You Get the Full C++ Source Code</h4>
+          <p>This isn't a black box. Modify, extend, and learn from the plugin's complete source code. No other co-pilot on FAB offers this level of freedom and transparency.</p>
+        </div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-check">✅</div>
+        <div>
+          <h4>Truly Free & Unlimited Usage Options</h4>
+          <p>Connect to a free API key from Gemini or any other provider. Local LLM support added January 26, 2026. The power is in your hands, not a remote server. Off-FAB plugins charge heavily for usage — not here.</p>
+        </div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-check">✅</div>
+        <div>
+          <h4>Robust & Reliable Multi-Connection Architecture</h4>
+          <p>Other tools rely on a single server — if it goes down, your plugin is useless. This plugin supports multiple connection methods: Desktop Apps (Claude Desktop, Cursor, GitHub Copilot, Google Antigravity) and Web AI (DeepSeek, Gemini via browser extension).</p>
+        </div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-check">✅</div>
+        <div>
+          <h4>Built by a Developer, For Developers</h4>
+          <p>Not a corporate cash grab. A passion project from a solo dev, with direct and transparent support on Discord. Your feedback shapes every update.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Features -->
+  <section style="padding:10px 20px 20px;background:rgba(255,255,255,0.015);">
+    <p class="section-label">Core Capabilities</p>
+    <h2 class="section-heading">A True AI Partner, Not Just a Generator</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Conversational Blueprint Refactoring</h3>
+        <p>Select a node in your graph and ask the AI to add logic directly after it. It feels less like a command line and more like a real collaboration. Got a confusing Blueprint from the marketplace? Add it as context and have the AI explain it precisely.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>Think in Your Language, Create in Unreal</h3>
+        <p>English, Spanish, German, Chinese, and more — see your ideas come to life without mental barriers. The AI understands intent, not just keywords, translating your vision into working Blueprint logic.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>The Fastest Way to Master Blueprints</h3>
+        <p>Like a 24/7 senior developer on your shoulder showing you the right way to build logic. Stop guessing, stop forming bad habits, and finally understand why things work the way they do. Steep learning curve → upward launch.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔌</div>
+        <h3>Unprecedented Flexibility & Power</h3>
+        <p>Your AI, your choice. Connect via Desktop Apps like Claude Desktop, Cursor, GitHub Copilot, and Google Antigravity — or use Browser AI like DeepSeek and Gemini through a browser extension. Local LLM support is live.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏗️</div>
+        <h3>Full Project Architecture Analysis</h3>
+        <p>Go beyond single-file generation. Analyze your entire project's architecture holistically, understand dependencies, and get AI-powered recommendations for structure improvements at scale.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎬</div>
+        <h3>Scene & UI Builder from Single Command</h3>
+        <p>Build complex scenes and full UI systems from a single natural language command. Direct your vision and iterate on core gameplay while the AI handles the boilerplate so brilliant ideas don't fade from your mind.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources & Links -->
+  <section style="padding:40px 20px 10px;">
+    <p class="section-label">Resources</p>
+    <h2 class="section-heading">Everything You Need</h2>
+    <div class="links-section">
+      <a href="https://www.fab.com" target="_blank" class="link-chip">🛒 FAB Marketplace</a>
+      <a href="https://www.youtube.com" target="_blank" class="link-chip">🎬 Video Trailer</a>
+      <a href="https://www.youtube.com" target="_blank" class="link-chip">📹 13-Min Overview Video</a>
+      <a href="https://discord.gg" target="_blank" class="link-chip">💬 Discord Server</a>
+      <a href="#" class="link-chip">📚 Documentation</a>
+      <a href="#" class="link-chip">🗺️ Roadmap & Changelog</a>
+      <a href="#" class="link-chip">❓ FAQ</a>
+      <a href="#" class="link-chip">🔬 Blueprint Analyst (Free)</a>
+      <a href="#" class="link-chip">⚔️ Flexible Combat System</a>
+    </div>
+  </section>
+
+  <!-- Version Info -->
+  <section style="padding:10px 20px 40px;">
+    <div style="max-width:700px;margin:0 auto;text-align:center;">
+      <div style="background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.3);border-radius:12px;padding:24px 28px;">
+        <div style="font-size:1.8rem;margin-bottom:10px;">🚀</div>
+        <h3 style="color:var(--gold);margin:0 0 8px;font-size:1.1rem;">Version 0.3.5 — Live as of January 26, 2026</h3>
+        <p style="color:#9aa3b4;font-size:0.87rem;margin:0;line-height:1.6;">
+          One of the first Co-Pilots in Unreal Engine. Featured on FAB by Epic Games (Feb 5–9, 2026). The fastest growing and most flexible Co-Pilot on the market. Sets the standard in innovation and pushes the boundaries of Unreal Engine. Featured status is the most valuable proof that the plugin has been battle-tested and validated by the community.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <section style="padding:10px 20px 60px;">
+    <div class="disclaimer">
+      <h3>❗ Important Information & Disclaimer</h3>
+      <p><strong style="color:#c0c8d8;">Beta Release:</strong> While core features are stable and powerful, bugs may occur. Your feedback and bug reports are invaluable and will directly shape the future of this tool.</p>
+      <p><strong style="color:#c0c8d8;">Source Code Ownership:</strong> Unlike off-FAB co-pilots where you don't own the plugin code because you pay monthly subscriptions, source code is fully included here and you can modify it for your personal use case.</p>
+      <p><strong style="color:#c0c8d8;">AI is a Co-Pilot, Not an Autopilot:</strong> AI-generated content can sometimes be unpredictable or incorrect. You are responsible for reviewing, testing, and validating all generated Blueprints before use in a production environment.</p>
+      <p><strong style="color:#c0c8d8;">Licensing:</strong> Licensed per-seat. Source code is for your use in projects and for educational purposes. Reselling or redistributing the plugin or its source code in any form is strictly prohibited. The FAB Marketplace is the only legal source for this plugin.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="models.html">🧠 AI Models</a>
+      <a href="tools.html">🛠️ Tools</a>
+      <a href="downloads.html">📥 Downloads</a>
+      <a href="about.html">👑 About</a>
+      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="music-studio.html">🎵 Music Studio</a>
+      <a href="movie-studio.html">🎬 Movie Studio</a>
+      <a href="catalog.html">📚 Catalog</a>
+      <a href="screenwriting.html">📝 Screenwriting</a>
+      <a href="unreal-copilot.html">🎮 UE5 CoPilot</a>
+      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce" target="_blank">⭐ GitHub</a>
+      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases" target="_blank">📦 Releases</a>
+    </div>
+    <p>🐐 Ms Money Penny Store v1.3.0 — Built with ❤️ by <a href="https://lifeimitatesart.org" target="_blank">Life Imitates Art Inc.</a></p>
+    <p style="margin-top:8px;font-size:0.8rem;color:var(--text-muted);">Powered by NVIDIA AI Stack • Lightning AI • HuggingFace • OpenClaw • Electron</p>
+  </footer>
+
+  <script>
+    // Animate cards on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.feature-card, .diff-row').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
