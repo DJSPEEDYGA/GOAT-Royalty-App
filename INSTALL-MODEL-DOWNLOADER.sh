@@ -53,6 +53,7 @@ import subprocess
 import os
 import threading
 import json
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -176,6 +177,77 @@ def installed():
                     size = '?'
                 items.append({'name': name, 'path': path, 'size': size})
     return jsonify(items)
+
+# ========== NVIDIA NIM ENDPOINTS ==========
+nvidia_jobs = {}
+
+def nvidia_pull_worker(job_id, models):
+    """Pull NVIDIA Docker images sequentially."""
+    nvidia_jobs[job_id] = {'status': 'running', 'total': len(models), 'done': 0, 'success': 0, 'failed': 0, 'current': '', 'log': []}
+    ngc_key = os.environ.get('NGC_API_KEY', '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')
+    try:
+        subprocess.run(['docker', 'login', 'nvcr.io', '-u', '$oauthtoken', '--password-stdin'],
+                       input=ngc_key.encode(), check=True, timeout=30)
+    except Exception as e:
+        nvidia_jobs[job_id]['log'].append(f'Login failed: {e}')
+    for m in models:
+        nvidia_jobs[job_id]['current'] = m
+        nvidia_jobs[job_id]['log'].append(f'Pulling {m}')
+        try:
+            r = subprocess.run(['docker', 'pull', m], capture_output=True, text=True, timeout=14400)
+            if r.returncode == 0:
+                nvidia_jobs[job_id]['success'] += 1
+                nvidia_jobs[job_id]['log'].append(f'OK {m}')
+            else:
+                nvidia_jobs[job_id]['failed'] += 1
+                nvidia_jobs[job_id]['log'].append(f'FAIL {m}: {r.stderr[:200]}')
+        except Exception as e:
+            nvidia_jobs[job_id]['failed'] += 1
+            nvidia_jobs[job_id]['log'].append(f'EXCEPTION {m}: {e}')
+        nvidia_jobs[job_id]['done'] += 1
+    nvidia_jobs[job_id]['status'] = 'complete'
+    nvidia_jobs[job_id]['current'] = ''
+
+@app.route('/api/nvidia/download-all', methods=['POST'])
+def nvidia_download_all():
+    data = request.get_json(force=True)
+    models = data.get('models', [])
+    if not models:
+        return jsonify({'error': 'no models provided'}), 400
+    job_id = f'nvidia_{int(time.time())}'
+    threading.Thread(target=nvidia_pull_worker, args=(job_id, models), daemon=True).start()
+    return jsonify({'started': True, 'job_id': job_id, 'total': len(models)})
+
+@app.route('/api/nvidia/pull', methods=['POST'])
+def nvidia_pull_one():
+    data = request.get_json(force=True)
+    model = data.get('model', '')
+    if not model:
+        return jsonify({'error': 'no model'}), 400
+    job_id = f'nvidia_{int(time.time())}'
+    threading.Thread(target=nvidia_pull_worker, args=(job_id, [model]), daemon=True).start()
+    return jsonify({'started': True, 'job_id': job_id, 'model': model})
+
+@app.route('/api/nvidia/status', methods=['GET'])
+def nvidia_status_all():
+    return jsonify(nvidia_jobs)
+
+@app.route('/api/nvidia/status/<job_id>', methods=['GET'])
+def nvidia_status_one(job_id):
+    return jsonify(nvidia_jobs.get(job_id, {'error': 'not found'}))
+
+@app.route('/api/nvidia/installed', methods=['GET'])
+def nvidia_installed():
+    try:
+        r = subprocess.check_output(['docker', 'images', '--format', '{{.Repository}}:{{.Tag}} {{.Size}}'], text=True)
+        items = []
+        for line in r.strip().split('\n'):
+            if 'nvcr.io' in line:
+                parts = line.rsplit(' ', 1)
+                items.append({'name': parts[0], 'size': parts[1] if len(parts) > 1 else '?'})
+        return jsonify(items)
+    except Exception as e:
+        return jsonify({'error': str(e), 'items': []})
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5555, debug=False)

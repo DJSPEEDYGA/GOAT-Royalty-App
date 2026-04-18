@@ -126,10 +126,32 @@
       <div class="category" onclick="downloadAllFoundation()" style="color:var(--accent)">📥 Download All Foundation</div>
       <div class="category" onclick="copyBulkScript()" style="color:var(--accent)">📋 Copy Bulk Script</div>
       <div class="category" onclick="showServerSetup()" style="color:var(--accent)">🖥️ Server Setup Guide</div>
+
+      <div class="divider"></div>
+
+      <h3 style="color:#76b900">🟢 NVIDIA NIM</h3>
+      <div class="category" onclick="downloadAllNvidia()" style="color:#76b900;font-weight:600">🚀 Download ALL NVIDIA (20)</div>
+      <div class="category" onclick="copyNvidiaOneLiner()" style="color:#76b900">📋 Copy NVIDIA 1-Liner</div>
+      <div class="category" onclick="showNvidiaInfo()" style="color:#76b900">ℹ️ NVIDIA Info</div>
     </aside>
 
     <!-- Main Content -->
     <main class="main-content">
+
+      <!-- NVIDIA NIM Section -->
+      <div class="section-header" id="section-nvidia" style="background:linear-gradient(135deg,rgba(118,185,0,0.15),rgba(0,0,0,0.3));border-left:4px solid #76b900;padding:20px;border-radius:8px;margin-bottom:20px">
+        <h2 style="color:#76b900">🟢 NVIDIA NIM — 20 Enterprise Models</h2>
+        <p style="color:#cce9a0">Docker-based NVIDIA Inference Microservices. Meta Llama, Google Gemma, Mistral, Mixtral, Nemotron, Qwen 2.5, DeepSeek V3, StarCoder, CodeLlama & more.</p>
+        <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn" style="background:#76b900;color:#000;font-weight:700;padding:12px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px" onclick="downloadAllNvidia()">🚀 Download ALL 20 NVIDIA Models</button>
+          <button class="btn" style="background:rgba(118,185,0,0.2);color:#76b900;padding:12px 24px;border-radius:8px;border:1px solid #76b900;cursor:pointer;font-size:14px" onclick="copyNvidiaOneLiner()">📋 Copy 1-Line Installer</button>
+          <button class="btn" style="background:rgba(118,185,0,0.2);color:#76b900;padding:12px 24px;border-radius:8px;border:1px solid #76b900;cursor:pointer;font-size:14px" onclick="showNvidiaInfo()">ℹ️ View Model List</button>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:#8fbc5f">💾 Total: ~2.8 TB &nbsp;•&nbsp; 🔑 NGC API Key: configured &nbsp;•&nbsp; 🖥️ Requires: Docker + NVIDIA GPU</div>
+      </div>
+      <div class="models-grid" id="nvidiaGrid" style="margin-bottom:30px"></div>
+
+      <br>
 
       <!-- Foundation Models Section -->
       <div class="section-header" id="section-foundation">
@@ -465,12 +487,47 @@
   // POPULATE GRIDS
   // ══════════════════════════════════════════════════════════════════
 
+  function createNvidiaCard(m) {
+    return `
+      <div class="model-card" style="border-left:3px solid #76b900">
+        <div class="model-header">
+          <div class="model-name" style="color:#76b900">🟢 ${m.name}</div>
+          <span class="badge-small" style="background:#76b900;color:#000">${m.size}</span>
+        </div>
+        <div class="model-desc" style="font-size:12px">
+          <code style="word-break:break-all;font-size:10px">${m.repo}</code>
+        </div>
+        <div class="card-actions" style="margin-top:10px">
+          <button class="btn btn-primary" style="background:#76b900;color:#000" onclick="downloadSingleNvidia('${m.repo}','${m.name}')">📥 Pull</button>
+          <button class="btn btn-secondary" onclick="copyCmd('docker pull ${m.repo}')">📋 Copy</button>
+        </div>
+      </div>`;
+  }
+
+  async function downloadSingleNvidia(repo, name) {
+    try {
+      const r = await fetch('/api/nvidia/pull', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ model: repo })
+      });
+      if (r.ok) {
+        alert('📥 Pulling ' + name + ' on server...\nMonitor with: docker images | grep ' + repo.split('/').pop());
+        return;
+      }
+    } catch (e) { }
+    copyCmd('docker pull ' + repo);
+    alert('📋 Copied Docker pull command for ' + name + '\n\nPaste in terminal to download.');
+  }
+
   function renderAll() {
     document.getElementById('foundationGrid').innerHTML = MODELS.foundation.map(createFoundationCard).join('');
     document.getElementById('loraGrid').innerHTML = MODELS.loraStyles.map(createLoraCard).join('');
     document.getElementById('characterGrid').innerHTML = MODELS.characters.map(createCharacterCard).join('');
     document.getElementById('editingGrid').innerHTML = MODELS.editing.map(createEditingCard).join('');
     document.getElementById('lightningGrid').innerHTML = MODELS.lightning.map(createLightningCard).join('');
+    var ng = document.getElementById('nvidiaGrid');
+    if (ng) ng.innerHTML = NVIDIA_MODELS.map(createNvidiaCard).join('');
   }
 
   renderAll();
@@ -581,6 +638,76 @@
 
   function showServerSetup() {
     alert('🖥️ Server Setup Guide\n\n1. Install Git LFS:\n   sudo apt install git-lfs && git lfs install\n\n2. Create model directory:\n   mkdir -p /mnt/100tb/huggingface-models\n\n3. Click "Copy Bulk Script" and paste into terminal\n\n4. Install runtimes:\n   pip install diffusers torch transformers\n   git clone https://github.com/comfyanonymous/ComfyUI\n\nNo login or API keys needed for any public model!');
+  }
+
+  // ========== NVIDIA NIM (20 MODELS) ==========
+  const NVIDIA_MODELS = [
+    // Meta Llama (4)
+    {name:'Llama 3.1 8B',  repo:'nvcr.io/nim/meta/llama-3.1-8b-instruct:latest',  size:'16 GB'},
+    {name:'Llama 3.1 70B', repo:'nvcr.io/nim/meta/llama-3.1-70b-instruct:latest', size:'140 GB'},
+    {name:'Llama 3.2 1B',  repo:'nvcr.io/nim/meta/llama-3.2-1b-instruct:latest',  size:'2 GB'},
+    {name:'Llama 3.2 3B',  repo:'nvcr.io/nim/meta/llama-3.2-3b-instruct:latest',  size:'6 GB'},
+    // Google Gemma (2)
+    {name:'Gemma 2 9B',    repo:'nvcr.io/nim/google/gemma-2-9b-it:latest',   size:'18 GB'},
+    {name:'Gemma 2 27B',   repo:'nvcr.io/nim/google/gemma-2-27b-it:latest',  size:'54 GB'},
+    // Mistral (3)
+    {name:'Mistral 7B',    repo:'nvcr.io/nim/mistralai/mistral-7b-instruct:latest',       size:'14 GB'},
+    {name:'Mixtral 8x7B',  repo:'nvcr.io/nim/mistralai/mixtral-8x7b-instruct-v0.1:latest', size:'90 GB'},
+    {name:'Mixtral 8x22B', repo:'nvcr.io/nim/mistralai/mixtral-8x22b-instruct-v0.1:latest', size:'280 GB'},
+    // Microsoft Phi (2)
+    {name:'Phi-3 Mini',    repo:'nvcr.io/nim/microsoft/phi-3-mini-128k-instruct:latest',   size:'8 GB'},
+    {name:'Phi-3 Medium',  repo:'nvcr.io/nim/microsoft/phi-3-medium-128k-instruct:latest', size:'28 GB'},
+    // NVIDIA Nemotron (3)
+    {name:'Nemotron 4 340B',  repo:'nvcr.io/nim/nvidia/nemotron-4-340b-instruct:latest',      size:'700 GB'},
+    {name:'Nemotron Embed',   repo:'nvcr.io/nim/nvidia/llama-nemotron-embed-1b-v2:latest',    size:'2 GB'},
+    {name:'Nemotron Rerank',  repo:'nvcr.io/nim/nvidia/llama-nemotron-rerank-1b-v2:latest',   size:'2 GB'},
+    // NVIDIA Embedding (1)
+    {name:'NV-EmbedQA E5',    repo:'nvcr.io/nim/nvidia/nv-embedqa-e5-v5:latest', size:'2 GB'},
+    // Qwen (1)
+    {name:'Qwen 2.5 72B',     repo:'nvcr.io/nim/qwen/qwen2.5-72b-instruct:latest', size:'145 GB'},
+    // DeepSeek (2)
+    {name:'DeepSeek V3',         repo:'nvcr.io/nim/deepseek-ai/deepseek-v3:latest',                  size:'1.2 TB'},
+    {name:'DeepSeek Coder 33B',  repo:'nvcr.io/nim/deepseek-ai/deepseek-coder-33b-instruct:latest',  size:'66 GB'},
+    // Code (2)
+    {name:'StarCoder 2 15B',  repo:'nvcr.io/nim/bigcode/starcoder2-15b:latest',         size:'30 GB'},
+    {name:'CodeLlama 34B',    repo:'nvcr.io/nim/codellama/codellama-34b-instruct:latest', size:'68 GB'}
+  ];
+
+  async function downloadAllNvidia() {
+    const confirmed = confirm('🚀 Download ALL 20 NVIDIA NIM Models?\n\nTotal size: ~2.8 TB\nRequires: Docker + NVIDIA GPU + NGC API Key\n\nThis will start the bulk Docker pull on your server.\nContinue?');
+    if (!confirmed) return;
+
+    // Try real backend first
+    try {
+      const r = await fetch('/api/nvidia/download-all', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ models: NVIDIA_MODELS.map(m => m.repo) })
+      });
+      if (r.ok) {
+        const data = await r.json();
+        alert('✅ NVIDIA bulk download STARTED on server!\n\nJob ID: ' + (data.job_id || 'n/a') + '\nCheck progress: /api/nvidia/status\n\nDownloading ' + NVIDIA_MODELS.length + ' models...');
+        return;
+      }
+    } catch (e) { /* fall through */ }
+
+    // Fallback: copy the 1-liner
+    copyNvidiaOneLiner();
+    alert('⚠️ Backend not installed yet.\n\nThe 1-line NVIDIA installer was copied to your clipboard.\nPaste it in your server terminal to download all 20 models.\n\nOr install the backend: bash INSTALL-MODEL-DOWNLOADER.sh');
+  }
+
+  function copyNvidiaOneLiner() {
+    const cmd = 'curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/NVIDIA-1-CLICK-DOWNLOAD.sh | bash';
+    copyCmd(cmd);
+  }
+
+  function showNvidiaInfo() {
+    let info = '🟢 NVIDIA NIM — 20 Models Available\n\n';
+    NVIDIA_MODELS.forEach((m, i) => {
+      info += (i+1).toString().padStart(2,' ') + '. ' + m.name + ' (' + m.size + ')\n';
+    });
+    info += '\n💾 Total: ~2.8 TB\n🔑 Requires: NGC API Key (already configured)\n🖥️ Requires: Docker + NVIDIA GPU\n\n▶️ Run:\ncurl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/NVIDIA-1-CLICK-DOWNLOAD.sh | bash';
+    alert(info);
   }
 
   </script>
