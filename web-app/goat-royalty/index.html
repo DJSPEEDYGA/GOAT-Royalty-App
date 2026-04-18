@@ -770,16 +770,29 @@ async function sendChat() {
 
   // Try real Ollama first (if available on server)
   let reply;
+  const stats = catalogData ? catalogData.stats : null;
+  const systemContext = stats ? `You are Codex, the Sentinel AI of the GOAT Royalty Force. Your user is DJ Speedy (Harvey L. Miller Jr., ASCAP 60881). You have access to a catalog of ${stats.total} entries: ${stats.with_isrc} ISRCs, ${stats.with_splits} with splits. Artists: Waka Flocka Flame (${stats.artists['Waka Flocka Flame']}), Fastassman Publishing (${stats.artists['Fastassman Publishing']}), Harvey Miller (${stats.artists['Harvey Miller']}). Respond as Codex - direct, concise, street-smart, knowledgeable about music royalties.` : 'You are Codex AI.';
+
   try {
     const r = await fetch('/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: msg, model: 'gemma2:2b-abliterated'}),
-      signal: AbortSignal.timeout(3000)
+      body: JSON.stringify({
+        model: 'gemma2:2b',
+        messages: [
+          {role: 'system', content: systemContext},
+          {role: 'user', content: msg}
+        ],
+        stream: false
+      }),
+      signal: AbortSignal.timeout(30000)
     });
     if (r.ok) {
       const data = await r.json();
-      reply = data.response || data.message || generateRealAnswer(msg);
+      // Ollama returns {message: {content: "..."}}
+      reply = (data.message && data.message.content) || data.response || generateRealAnswer(msg);
+      // Add indicator this is real AI
+      reply = reply + '<br><small style="color:#10b981;opacity:0.7">✓ Real Ollama AI</small>';
     } else {
       reply = generateRealAnswer(msg);
     }
