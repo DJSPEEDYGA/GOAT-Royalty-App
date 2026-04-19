@@ -33,3 +33,29 @@ client/release/
 .browser_data/
 summarized_conversations/
 tmp/
+
+# Workspace tool outputs & screenshots
+outputs/
+.screenshots/
+.psiphon_data/
+
+# Large binary / archive files
+*.exe
+*.zip
+*.tar.gz
+*.heic
+*.epub
+*.pdf
+*.xlsx
+*.ods
+*.csv
+*.png
+*.PNG
+*.jpg
+*.JPG
+
+# Misc workspace junk
+SUPER\ GOAT\ ROYALTY\ APP\ ENDGAME
+*.bak
+gnome-terminal.desktop
+cuda-gdb-*.md5

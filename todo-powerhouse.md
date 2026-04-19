@@ -1,29 +1,25 @@
-# GOAT Royalty App — Full Integration Build
+# GOAT Royalty App — Phase 11 Build Plan
 
-## Phase 1 — Keys & Config [DONE]
-- [x] Google AI Studio API Key extracted
-- [x] OpenAI Key extracted
-- [x] Read all concept docs (GOAT Force v6, Moneypenny, Codex, ODT)
-- [x] No-key local intel server built (yt-dlp, iTunes, YouTube, TikTok)
+## Phase 11.1 — Spotify Developer Key Setup Guide
+- [ ] web-app/spotify-setup.html — Step-by-step guide
+- [ ] Paste-in box saves to local_keys.json
+- [ ] Wire Spotify OAuth into goat_intel.py
 
-## Phase 2 — Fix Intel Server + Platform Feeds
-- [ ] Fix Spotify fallback to use iTunes fully
-- [ ] Test all endpoints (YouTube search, iTunes charts, TikTok)
-- [ ] Add yt-dlp TikTok video info endpoint
+## Phase 11.2 — Spotify For Artists Bridge
+- [ ] goat_intel.py: /spotify/artist-real + /spotify/audio-features + /spotify/related
+- [ ] web-app/spotify-dashboard.html — Real-time stats
 
-## Phase 3 — Intel Dashboard Page
-- [ ] Create web-app/intel.html — live charts, YouTube search, artist lookup
-- [ ] Wire to goat-intel-server port 5500
+## Phase 11.3 — Fan Capture Toolkit
+- [ ] goat_intel.py: SQLite fan_database + /fans endpoints
+- [ ] web-app/smart-links.html — Smart link generator
+- [ ] web-app/fan-db.html — Fan database viewer
+- [ ] web-app/pre-save.html — Pre-save flow
+- [ ] web-app/campaigns.html — Email campaign mgr
 
-## Phase 4 — Moneypenny AI Chat Page
-- [ ] Create web-app/moneypenny.html — Gemini + OpenAI powered chat
-- [ ] GOAT Talk personality, royalty advice, music industry intel
-- [ ] Store keys locally (no external auth required)
+## Phase 11.4 — TikTok → Email Funnel
+- [ ] web-app/funnel.html — Branded landing page
 
-## Phase 5 — Wire Keys into API Vault + Server
-- [ ] Save Gemini + OpenAI keys to api-server/.env
-- [ ] Update goat_intel.py with AI endpoints
-
-## Phase 6 — Commit & Push Everything
-- [ ] Commit all new pages to GitHub DJSPEEDYGA/GOAT-Royalty-App
-- [ ] Verify all pages live
+## Phase 11.5 — Deploy + Commit
+- [ ] All pages HTTP 200
+- [ ] powerhouse.html updated with new cards
+- [ ] Commit + push

@@ -1,764 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ms Money Penny — 🐐👑 The GOAT Royalty Store by Life Imitates Art Inc.</title>
-  <meta name="description" content="AI-Powered Commerce Platform — 2.7M+ AI Models, 29 Uncensored Local LLMs, No API Keys Required. The Greatest Of All Time.">
-  <meta name="theme-color" content="#d4a03c">
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="css/goat-theme.css">
-  <link rel="stylesheet" href="css/goat-brand.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐐 GOAT Royalty — The Ultimate Music Business Platform</title>
+<meta name="description" content="GOAT Royalty — AI-powered music production, royalty tracking, distribution, and business intelligence for independent artists.">
+<link rel="icon" href="favicon.ico">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/goat-theme.css">
+<link rel="stylesheet" href="css/goat-brand.css">
+<style>
+:root {
+  --bg:#040608; --panel:#0d1117; --panel2:#161b22;
+  --gold:#d4a03c; --gold2:#f0c040; --gold3:#ffd700;
+  --red:#c1121f; --red2:#e63946;
+  --ink:#f0ece4; --dim:#8b949e; --line:#21262d;
+  --ok:#3fb950; --warn:#d29922; --info:#58a6ff;
+  --glow:rgba(212,160,60,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(4,6,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:0 24px;height:64px;display:flex;align-items:center;gap:16px;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo img{width:36px;height:36px;border-radius:8px;}
+.nav-logo span{font-size:20px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-links{display:flex;gap:4px;margin-left:20px;flex:1;}
+.nav-links a{padding:6px 12px;border-radius:6px;text-decoration:none;color:var(--dim);font-size:14px;transition:all .2s;}
+.nav-links a:hover{color:var(--ink);background:var(--panel2);}
+.nav-links a.active{color:var(--gold);}
+.nav-right{display:flex;gap:8px;margin-left:auto;}
+.nav-btn{padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;border:none;}
+.nav-btn.ghost{background:transparent;border:1px solid var(--line);color:var(--dim);}
+.nav-btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;}
+@media(max-width:768px){.nav-links{display:none;}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 20px 60px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(212,160,60,.12) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 80% 80%,rgba(193,18,31,.08) 0%,transparent 60%);pointer-events:none;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:60px 60px;opacity:.3;pointer-events:none;}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(212,160,60,.1);border:1px solid rgba(212,160,60,.3);border-radius:20px;font-size:13px;color:var(--gold);margin-bottom:24px;}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.hero h1{font-size:clamp(42px,8vw,88px);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:16px;position:relative;}
+.hero h1 .line1{display:block;color:var(--ink);}
+.hero h1 .line2{display:block;background:linear-gradient(135deg,var(--gold),var(--gold2),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:clamp(16px,2.5vw,22px);color:var(--dim);max-width:640px;line-height:1.6;margin-bottom:40px;}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:60px;}
+.btn-hero{padding:16px 36px;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:all .2s;}
+.btn-hero.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;box-shadow:0 0 40px var(--glow);}
+.btn-hero.primary:hover{transform:translateY(-2px);box-shadow:0 8px 50px var(--glow);}
+.btn-hero.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--ink);}
+.btn-hero.secondary:hover{border-color:var(--gold);color:var(--gold);}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;}
+.hstat{text-align:center;}
+.hstat .num{font-size:28px;font-weight:800;color:var(--gold);}
+.hstat .lbl{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;}
+
+/* MARQUEE */
+.marquee-wrap{padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;background:rgba(212,160,60,.03);}
+.marquee{display:inline-flex;animation:marquee 30s linear infinite;}
+.marquee span{padding:0 32px;font-size:13px;color:var(--dim);}
+.marquee span b{color:var(--gold);}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+section{padding:80px 20px;max-width:1300px;margin:0 auto;}
+.sec-label{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:12px;}
+.sec-title{font-size:clamp(28px,4vw,44px);font-weight:800;margin-bottom:16px;letter-spacing:-1px;}
+.sec-sub{color:var(--dim);font-size:17px;max-width:600px;line-height:1.6;margin-bottom:48px;}
+
+/* TOOL GRID */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.tool-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;text-decoration:none;color:var(--ink);transition:all .2s;position:relative;overflow:hidden;}
+.tool-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.02));pointer-events:none;}
+.tool-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 12px 40px rgba(212,160,60,.15);}
+.tool-card .icon{font-size:32px;margin-bottom:14px;}
+.tool-card h3{font-size:18px;font-weight:700;margin-bottom:8px;}
+.tool-card p{font-size:13px;color:var(--dim);line-height:1.6;}
+.tool-card .tag{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;margin-top:12px;}
+.tag-red{background:rgba(193,18,31,.2);color:var(--red2);}
+.tag-gold{background:rgba(212,160,60,.15);color:var(--gold);}
+.tag-green{background:rgba(63,185,80,.15);color:var(--ok);}
+.tag-blue{background:rgba(88,166,255,.15);color:var(--info);}
+.tag-purple{background:rgba(139,92,246,.15);color:#a78bfa;}
+.tool-card.featured{border-color:rgba(212,160,60,.4);background:linear-gradient(135deg,#0f1a0a,var(--panel));}
+.tool-card.wide{grid-column:span 2;}
+@media(max-width:600px){.tool-card.wide{grid-column:span 1;}}
+
+/* STATS STRIP */
+.stats-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:60px 0;}
+.sstat{background:var(--panel);padding:28px 20px;text-align:center;}
+.sstat .n{font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sstat .l{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+
+/* FEATURE HIGHLIGHT */
+.feature-hl{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:60px 0;}
+.feature-hl.rev{direction:rtl;}
+.feature-hl.rev>*{direction:ltr;}
+.feature-visual{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:32px;aspect-ratio:4/3;display:flex;flex-direction:column;gap:8px;overflow:hidden;}
+@media(max-width:768px){.feature-hl{grid-template-columns:1fr;}.feature-hl.rev{direction:ltr;}}
+.fv-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold2));animation:grow 3s ease-in-out infinite;}
+@keyframes grow{0%,100%{width:30%;}50%{width:90%;}}
+.fv-row{display:flex;gap:8px;align-items:center;}
+.fv-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.fv-line{flex:1;height:6px;border-radius:3px;background:var(--line);}
+.fv-val{font-size:12px;color:var(--gold);font-weight:700;width:50px;text-align:right;}
+.feature-text h2{font-size:clamp(24px,3vw,38px);font-weight:800;margin-bottom:16px;letter-spacing:-1px;}
+.feature-text p{color:var(--dim);line-height:1.8;margin-bottom:20px;}
+.feature-list{list-style:none;}
+.feature-list li{padding:8px 0;border-bottom:1px solid var(--line);color:var(--dim);font-size:14px;display:flex;gap:10px;}
+.feature-list li::before{content:'✓';color:var(--ok);font-weight:700;}
+
+/* AI SECTION */
+.ai-section{background:linear-gradient(135deg,rgba(88,166,255,.05),rgba(212,160,60,.05));border:1px solid var(--line);border-radius:20px;padding:48px;margin:40px 0;}
+.agents-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:32px;}
+.agent-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s;text-decoration:none;color:var(--ink);}
+.agent-card:hover{border-color:var(--gold);background:var(--panel);}
+.agent-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.agent-name{font-weight:600;font-size:14px;}
+.agent-role{font-size:12px;color:var(--dim);}
+
+/* TOUCH SECTION */
+.touch-section{background:linear-gradient(135deg,#0a1628,var(--bg));border:1px solid var(--line);border-radius:20px;padding:48px;margin:40px 0;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+@media(max-width:768px){.touch-section{grid-template-columns:1fr;}}
+.touch-preview{background:var(--panel);border:1px solid rgba(212,160,60,.2);border-radius:16px;padding:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.tp-pad{aspect-ratio:1;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1px solid var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:all .1s;}
+.tp-pad:hover{background:var(--gold);transform:scale(.95);}
+
+/* FOOTER */
+footer{background:var(--panel);border-top:1px solid var(--line);padding:60px 20px 30px;margin-top:80px;}
+.footer-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:2fr repeat(3,1fr);gap:40px;margin-bottom:40px;}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}}
+.footer-brand p{color:var(--dim);font-size:14px;line-height:1.7;margin-top:12px;max-width:280px;}
+.footer-col h4{font-size:13px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+.footer-col a{display:block;color:var(--dim);text-decoration:none;font-size:14px;padding:4px 0;transition:color .2s;}
+.footer-col a:hover{color:var(--ink);}
+.footer-bottom{max-width:1300px;margin:0 auto;padding-top:20px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{color:var(--dim);font-size:13px;}
+</style>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
 <body>
 
-  <!-- Backgrounds -->
-  <div class="goat-bg"></div>
-  <div class="goat-bg-overlay"></div>
-  <canvas id="particles-canvas"></canvas>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="goat-logo.png" onerror="this.style.display='none'">
+    <span>GOAT Royalty</span>
+  </a>
+  <div class="nav-links">
+    <a href="studio.html">Studio</a>
+    <a href="powerhouse.html">Powerhouse</a>
+    <a href="touch-hub.html">Touch</a>
+    <a href="agents-brain.html">AI Brain</a>
+    <a href="catalog.html">Catalog</a>
+    <a href="distribution.html">Distribute</a>
+    <a href="film-score.html">Film</a>
+  </div>
+  <div class="nav-right">
+    <a href="touch-hub.html" class="nav-btn ghost">📱 Touch Mode</a>
+    <a href="powerhouse.html" class="nav-btn gold">🚀 Launch App</a>
+  </div>
+</nav>
 
-  <!-- Navigation -->
-  <nav class="top-nav">
-    <a href="index.html" class="logo">
-      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
-      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
-      <img src="logo.png" alt="Ms Money Penny">
-      <span>Ms Money Penny</span>
-      <span class="crown-badge">👑 GOAT</span>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="badge"><span class="dot"></span> AI-Powered Music Business Platform</div>
+  <h1>
+    <span class="line1">Own Your Music.</span>
+    <span class="line2">Own Your Money.</span>
+  </h1>
+  <p class="hero-sub">The world's most complete music business platform. Production, royalties, distribution, AI, and business intelligence — all in one place, all yours.</p>
+  <div class="hero-cta">
+    <a href="powerhouse.html" class="btn-hero primary">🚀 Open Powerhouse</a>
+    <a href="touch-hub.html" class="btn-hero secondary">📱 Touch Interface</a>
+    <a href="studio.html" class="btn-hero secondary">🎛️ Go to Studio</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="num">65+</div><div class="lbl">Studio Tools</div></div>
+    <div class="hstat"><div class="num">11</div><div class="lbl">AI Agents</div></div>
+    <div class="hstat"><div class="num">30+</div><div class="lbl">Pages</div></div>
+    <div class="hstat"><div class="num">∞</div><div class="lbl">Your Potential</div></div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span><b>Beat Maker</b> · FL Studio Style</span>
+    <span><b>SSL Mixer</b> · 32-Channel Console</span>
+    <span><b>Auto-Tune</b> · Pro 11 Style</span>
+    <span><b>MPC Pads</b> · 64 Velocity Pads</span>
+    <span><b>Plugin Rack</b> · 20 Pro Plugins</span>
+    <span><b>Mastering</b> · AI + Ozone Style</span>
+    <span><b>Film Score</b> · Hollywood Orchestra</span>
+    <span><b>Royalty Tracking</b> · BMI + ASCAP</span>
+    <span><b>Distribution</b> · All DSPs</span>
+    <span><b>AI Brain</b> · 11 Agents</span>
+    <span><b>Touch UI</b> · iPad + Surface</span>
+    <span><b>Sound Library</b> · NI + EastWest + Waves</span>
+    <span><b>Beat Maker</b> · FL Studio Style</span>
+    <span><b>SSL Mixer</b> · 32-Channel Console</span>
+    <span><b>Auto-Tune</b> · Pro 11 Style</span>
+    <span><b>MPC Pads</b> · 64 Velocity Pads</span>
+    <span><b>Plugin Rack</b> · 20 Pro Plugins</span>
+    <span><b>Mastering</b> · AI + Ozone Style</span>
+    <span><b>Film Score</b> · Hollywood Orchestra</span>
+    <span><b>Royalty Tracking</b> · BMI + ASCAP</span>
+  </div>
+</div>
+
+<!-- STATS STRIP -->
+<div style="max-width:1300px;margin:0 auto;padding:0 20px;">
+  <div class="stats-strip">
+    <div class="sstat"><div class="n">65+</div><div class="l">Studio Tools</div></div>
+    <div class="sstat"><div class="n">11</div><div class="l">AI Agents</div></div>
+    <div class="sstat"><div class="n">20</div><div class="l">Pro Plugins</div></div>
+    <div class="sstat"><div class="n">32ch</div><div class="l">SSL Mixer</div></div>
+    <div class="sstat"><div class="n">64</div><div class="l">MPC Pads</div></div>
+    <div class="sstat"><div class="n">∞</div><div class="l">Sound Library</div></div>
+  </div>
+</div>
+
+<!-- MUSIC PRODUCTION -->
+<section>
+  <div class="sec-label">🎛️ Music Production Suite</div>
+  <h2 class="sec-title">Everything You Need to Make Hits</h2>
+  <p class="sec-sub">From beat making to mastering — a complete professional studio inside your browser.</p>
+  <div class="tool-grid">
+    <a href="studio.html" class="tool-card featured wide">
+      <div class="icon">🎙️</div>
+      <h3>Recording Studio</h3>
+      <p>Professional multi-track recording with real-time monitoring, routing, and takes management. SSL-quality signal chain.</p>
+      <span class="tag tag-red">FLAGSHIP</span>
     </a>
-    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html" class="active">🏠 Home</a>
-      <a href="goat-royalty/">👑 GOAT Royalty</a>
-      <a href="videos.html">🎬 Videos</a>
-      <a href="unreal-copilot.html">🎮 Unreal Copilot</a>
-      <a href="models.html">🧠 AI Models</a>
-      <a href="agents.html">🤖 11 Agents</a>
-      <a href="royalty-calc.html">💰 Royalty Calc</a>
-      <a href="ssl-mixer.html">🎚️ SSL 148 Mixer</a>
-      <a href="studio.html">🎛️ Studio DAW</a>
-      <a href="beat-maker.html">🥁 Beat Maker</a>
-      <a href="powerhouse.html" style="background:linear-gradient(135deg,#c1121f,#8b0000);color:#fff;padding:6px 12px;border-radius:6px;font-weight:700">🐐 Powerhouse</a>
-      <a href="mastering.html">💎 Master</a>
-      <a href="vocal-studio.html">🎤 Vocal</a>
-      <a href="ai-producer.html">🤖 AI Producer</a>
-      <a href="sync-catalog.html">🎬 Sync Catalog</a>
-      <a href="sample-library.html">📦 Samples</a>
-      <a href="film-score.html">🎥 Film Score</a>
-      <a href="plugins.html">🔌 Plugins</a>
-      <a href="dsp.html">🎵 DSP</a>
-      <a href="shop.html">🛍️ Shop</a>
-      <a href="music-studio.html">🎚️ Music Studio</a>
-      <a href="downloads.html">📥 Downloads</a>
-      <a href="about.html">👑 About</a>
-    </div>
-  </nav>
+    <a href="beat-maker.html" class="tool-card">
+      <div class="icon">🎵</div>
+      <h3>Beat Maker</h3>
+      <p>FL Studio-inspired beat creation with step sequencer, piano roll, 16 channels, and pattern blocks.</p>
+      <span class="tag tag-gold">PRO</span>
+    </a>
+    <a href="ssl-mixer.html" class="tool-card">
+      <div class="icon">🎚️</div>
+      <h3>SSL Mixer</h3>
+      <p>32-channel SSL 9000 console with aux sends, groups, compression, EQ, and automation.</p>
+      <span class="tag tag-gold">PRO</span>
+    </a>
+    <a href="goat-mpc.html" class="tool-card">
+      <div class="icon">🥁</div>
+      <h3>GOAT MPC</h3>
+      <p>64 velocity pads, 8 banks, piano roll, step sequencer, pattern chain — full MPC X workflow.</p>
+      <span class="tag tag-red">NEW</span>
+    </a>
+    <a href="goat-sampler.html" class="tool-card">
+      <div class="icon">🎛️</div>
+      <h3>GOAT Sampler</h3>
+      <p>Serato Sample × Koala × MPC in one. Slice, stretch, AI stems, pitch shift, WAV export.</p>
+      <span class="tag tag-red">NEW</span>
+    </a>
+    <a href="mastering.html" class="tool-card">
+      <div class="icon">💿</div>
+      <h3>Mastering Suite</h3>
+      <p>AI mastering with Ozone-style dynamics, stereo imaging, loudness targeting, and codec preview.</p>
+      <span class="tag tag-gold">PRO</span>
+    </a>
+    <a href="vocal-studio.html" class="tool-card">
+      <div class="icon">🎤</div>
+      <h3>Vocal Studio</h3>
+      <p>Complete vocal chain: recording, Auto-Tune, harmony, compression, de-essing, reverb, delay.</p>
+      <span class="tag tag-gold">PRO</span>
+    </a>
+    <a href="goat-autotune.html" class="tool-card">
+      <div class="icon">🎼</div>
+      <h3>GOAT Auto-Tune</h3>
+      <p>Full Auto-Tune Pro 11 style — live pitch, graph mode, harmony engine, formant, effects.</p>
+      <span class="tag tag-red">NEW</span>
+    </a>
+    <a href="goat-plugin-rack.html" class="tool-card">
+      <div class="icon">🔌</div>
+      <h3>Plugin Rack</h3>
+      <p>20 pro plugin emulations: 1176, LA-2A, SSL G-Bus, Pultec, API, EMT 140, Ozone and more.</p>
+      <span class="tag tag-red">NEW</span>
+    </a>
+    <a href="goat-channel-strip.html" class="tool-card">
+      <div class="icon">🎚️</div>
+      <h3>Channel Strip</h3>
+      <p>SSL/Neve/API VMR with HPF, 3-band EQ, compressor, de-esser, saturation, reverb, delay.</p>
+      <span class="tag tag-red">NEW</span>
+    </a>
+    <a href="goat-sound-library.html" class="tool-card">
+      <div class="icon">📚</div>
+      <h3>Sound Library</h3>
+      <p>Browse your entire NI Kontakt, EastWest, and Waves library from one unified interface.</p>
+      <span class="tag tag-green">SCANNER</span>
+    </a>
+    <a href="sample-library.html" class="tool-card">
+      <div class="icon">📦</div>
+      <h3>Sample Library</h3>
+      <p>Curated sample packs, drum kits, loops, and one-shots organized by genre and key.</p>
+      <span class="tag tag-blue">LIBRARY</span>
+    </a>
+  </div>
+</section>
 
-  <!-- Hero Section -->
-  <section class="hero" style="position:relative;overflow:hidden">
-    <video autoplay muted loop playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.35;z-index:0">
-      <source src="/public/videos/branding/main-goat-video-2.mp4" type="video/mp4">
-    </video>
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content animate-in" style="position:relative;z-index:2">
-      <div class="hero-crown">👑</div>
-      <p class="tagline">Life Imitates Art Inc. Presents</p>
-      <h1>Ms Money Penny<br>The GOAT Royalty Store</h1>
-      <p class="subtitle">The most ambitious AI-powered commerce platform ever built. 2.7 million models, 29 uncensored local LLMs, NO API keys required, 3 platforms — one crown to rule them all.</p>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="number" data-count="2700000">2.7M+</span>
-          <span class="label">AI Models</span>
-        </div>
-        <div class="hero-stat">
-          <span class="number">653+</span>
-          <span class="label">Lightning APIs</span>
-        </div>
-        <div class="hero-stat">
-          <span class="number">29</span>
-          <span class="label">🔓 Free Local LLMs</span>
-        </div>
-        <div class="hero-stat">
-          <span class="number">3</span>
-          <span class="label">Platforms</span>
-        </div>
-        <div class="hero-stat">
-          <span class="status-badge status-healthy"><span class="status-dot"></span> OpenClaw Live</span>
-          <span class="label" style="margin-top:6px;">Gateway</span>
-        </div>
-      </div>
-      <div class="cta-group">
-        <a href="goat-royalty/" class="btn btn-primary">👑 Enter GOAT Royalty App</a>
-        <a href="unreal-copilot.html" class="btn btn-secondary">🎮 Meet the MetaHumans</a>
-        <a href="agents.html" class="btn btn-secondary">🤖 Chat w/ 11 Agents</a>
-        <a href="ssl-mixer.html" class="btn btn-secondary" style="background:linear-gradient(135deg,#ffa500,#cc7700);color:#000;border:none;">🎚️ SSL 148-Ch Mixer</a>
-        <a href="studio.html" class="btn btn-secondary" style="background:linear-gradient(135deg,#00ccff,#0066cc);color:#000;border:none;">🎛️ Studio DAW</a>
-        <a href="beat-maker.html" class="btn btn-secondary" style="background:linear-gradient(135deg,#ff00cc,#6600ff);color:#fff;border:none;">🥁 Beat Maker</a>
-        <a href="plugins.html" class="btn btn-secondary" style="background:linear-gradient(135deg,#00ff66,#009944);color:#000;border:none;">🔌 Plugin Suite</a>
-        <a href="videos.html" class="btn btn-outline">🎬 Video Vault</a>
-        <a href="royalty-calc.html" class="btn btn-outline">💰 Royalty Calculator</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Social Proof / Testimonials -->
-  <section class="section" id="testimonials">
-    <div class="section-divider"></div>
-    <h2 class="section-title">💬 What Builders Are Saying</h2>
-    <p class="section-subtitle">Join thousands of developers, artists, and entrepreneurs using the GOAT platform</p>
-    <div class="testimonials-track">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Ms Money Penny gave me 29 uncensored LLMs running on my external drive with zero API keys. I replaced ChatGPT, Claude, and NVIDIA NIM in one command. Nothing else comes close."</p>
-        <div class="testimonial-author">Alex Chen</div>
-        <div class="testimonial-role">Senior ML Engineer, FAANG</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"2.7 million HuggingFace models accessible from one dashboard? With LoRA styles for FLUX and SDXL? This is the future of AI commerce."</p>
-        <div class="testimonial-author">Sarah Kim</div>
-        <div class="testimonial-role">AI Artist & Creator</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"The Ultimate Engine CoPilot changed how I build in Unreal. Full C++ source, local LLM support, one-time purchase. It's the GOAT."</p>
-        <div class="testimonial-author">Marcus Rodriguez</div>
-        <div class="testimonial-role">Indie Game Developer</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Lightning AI's 653-model router gives me access to GPT, Gemini, DeepSeek, and Nemotron through a single unified API. Unbeatable."</p>
-        <div class="testimonial-author">Priya Patel</div>
-        <div class="testimonial-role">CTO, AI Startup</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"OpenClaw gateway + NemoClaw sandbox = the most secure AI agent runtime I've ever used. Running on DGX Spark is pure power."</p>
-        <div class="testimonial-author">James Wright</div>
-        <div class="testimonial-role">DevOps Lead, Enterprise</div>
+<!-- TOUCH INTERFACE SECTION -->
+<div style="max-width:1300px;margin:0 auto;padding:0 20px;">
+  <div class="touch-section">
+    <div>
+      <div class="sec-label">📱 Touch Interface</div>
+      <h2 style="font-size:clamp(24px,3vw,38px);font-weight:800;margin-bottom:16px;letter-spacing:-1px;">Designed for iPad, Surface & Touchscreens</h2>
+      <p style="color:var(--dim);line-height:1.8;margin-bottom:24px;">A world-class touch-first interface inspired by Touch Portal, TouchOSC, and FL Studio's touch mode. 44px+ touch targets, haptic feedback, multi-touch gestures.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="touch-hub.html" style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);">
+          <span style="font-size:24px">🏠</span><div><div style="font-weight:600">Touch Hub</div><div style="font-size:12px;color:var(--dim)">Home launcher for all touch tools</div></div>
+        </a>
+        <a href="touch-pads.html" style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);">
+          <span style="font-size:24px">🥁</span><div><div style="font-weight:600">Touch Pads</div><div style="font-size:12px;color:var(--dim)">16 MPC velocity pads + step sequencer</div></div>
+        </a>
+        <a href="touch-mixer.html" style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);">
+          <span style="font-size:24px">🎚️</span><div><div style="font-weight:600">Touch Mixer</div><div style="font-size:12px;color:var(--dim)">8-channel fader mixer with EQ & sends</div></div>
+        </a>
+        <a href="touch-keys.html" style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);">
+          <span style="font-size:24px">🎹</span><div><div style="font-weight:600">Touch Keys</div><div style="font-size:12px;color:var(--dim)">Multi-touch piano with scale modes</div></div>
+        </a>
       </div>
     </div>
-  </section>
-
-  <!-- AI Stack Section -->
-  <section class="section" id="ai-stack">
-    <div class="section-divider"></div>
-    <h2 class="section-title">🔓 Ms Money Penny AI Stack</h2>
-    <p class="section-subtitle">29 Free local LLMs + 2.7M HuggingFace models + NVIDIA tools — no API keys, no logins, uncensored options</p>
-
-    <!-- FREE AI Hero Card -->
-    <div style="background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(0,0,0,0.4));border:2px solid #10b981;border-radius:16px;padding:30px;margin-bottom:30px">
-      <h3 style="color:#10b981;font-size:1.8rem;margin:0 0 10px 0">🔓 Free AI — No API Keys, No Logins, No Limits</h3>
-      <p style="color:#a7f3d0;font-size:1.1rem;margin-bottom:20px">Download 29 uncensored LLMs directly to your external drive. Same models as NVIDIA NIM (Llama, Gemma, Mistral, Mixtral, Qwen, DeepSeek) — 100% free, 100% local, 100% yours.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="models.html" style="background:#10b981;color:#000;font-weight:700;padding:14px 28px;border-radius:10px;text-decoration:none;display:inline-block">🚀 Browse All Models</a>
-        <a href="goat-royalty/" style="background:rgba(16,185,129,0.2);color:#10b981;padding:14px 28px;border-radius:10px;text-decoration:none;display:inline-block;border:1px solid #10b981">💬 Chat with Codex AI</a>
-        <a href="downloads.html" style="background:rgba(16,185,129,0.2);color:#10b981;padding:14px 28px;border-radius:10px;text-decoration:none;display:inline-block;border:1px solid #10b981">📥 Install 1-Liner</a>
-      </div>
-      <div style="margin-top:15px;display:flex;gap:15px;flex-wrap:wrap;font-size:13px;color:#6ee7b7">
-        <span>✅ Llama 3.1 70B</span>
-        <span>✅ Mixtral 8x7B</span>
-        <span>✅ Qwen 2.5 72B</span>
-        <span>✅ DeepSeek R1</span>
-        <span>🔞 Dolphin Mixtral (uncensored)</span>
-        <span>🔞 WizardLM Uncensored</span>
-      </div>
-    </div>
-    <div class="card-grid">
-
-      <a href="models.html#lightning" class="card" style="text-decoration:none;">
-        <span class="card-icon">⚡</span>
-        <h3>Lightning AI Model APIs</h3>
-        <p>Unified gateway to 653+ AI models from Lightning AI, OpenAI, and Google. Single API key, consolidated billing, real-time usage tracking.</p>
-        <span class="tag tag-lightning">653+ Models</span>
-        <span class="tag tag-lightning">Unified API</span>
-        <span class="tag tag-openai">OpenAI</span>
-        <span class="tag tag-google">Google</span>
-      </a>
-
-      <a href="tools.html#nemo" class="card" style="text-decoration:none;">
-        <span class="card-icon">🤖</span>
-        <h3>NeMo Agent Toolkit 1.5</h3>
-        <p>NVIDIA Agent Toolkit with workflow YAML configs for product search, customer support, analytics, and multi-agent orchestration.</p>
-        <span class="tag tag-nvidia">NVIDIA NAT</span>
-        <span class="tag tag-nvidia">4 Workflows</span>
-        <span class="tag tag-nvidia">Python Agents</span>
-      </a>
-
-      <a href="models.html#nemotron" class="card" style="text-decoration:none;">
-        <span class="card-icon">🧠</span>
-        <h3>NVIDIA Nemotron</h3>
-        <p>Nemotron-3-Nano-30B MoE and Nemotron 3 Super 120B — enterprise-grade reasoning with 256K context and 376 tok/s throughput.</p>
-        <span class="tag tag-nvidia">Nemotron 3</span>
-        <span class="tag tag-nvidia">120B Super</span>
-        <span class="tag tag-nvidia">256K Context</span>
-      </a>
-
-      <a href="tools.html#nemoclaw" class="card" style="text-decoration:none;">
-        <span class="card-icon">🔧</span>
-        <h3>NVIDIA NemoClaw</h3>
-        <p>OpenClaw Plugin for OpenShell — run AI agents in secure sandboxed environments with NVIDIA inference. Docker-based, DGX Spark ready.</p>
-        <span class="tag tag-nvidia">NemoClaw</span>
-        <span class="tag tag-nvidia">OpenClaw</span>
-        <span class="tag tag-new">NEW</span>
-      </a>
-
-      <a href="tools.html#openshell" class="card" style="text-decoration:none;">
-        <span class="card-icon">🐚</span>
-        <h3>NVIDIA OpenShell</h3>
-        <p>Secure Python sandbox runtime v0.0.10 for running autonomous agents safely. Part of NVIDIA Agent Toolkit with network isolation.</p>
-        <span class="tag tag-nvidia">OpenShell</span>
-        <span class="tag tag-nvidia">Sandbox</span>
-        <span class="tag tag-nvidia">Secure</span>
-      </a>
-
-      <a href="tools.html#speech" class="card" style="text-decoration:none;">
-        <span class="card-icon">🗣️</span>
-        <h3>NVIDIA Speech Stack</h3>
-        <p>Full speech pipeline: Parakeet ASR, Magpie TTS, Nemotron Voicechat S2S, and Riva NMT for multilingual voice AI agents.</p>
-        <span class="tag tag-nvidia">ASR</span>
-        <span class="tag tag-nvidia">TTS</span>
-        <span class="tag tag-nvidia">Voice AI</span>
-      </a>
-
-      <a href="models.html#huggingface" class="card" style="text-decoration:none;">
-        <span class="card-icon">🤗</span>
-        <h3>HuggingFace Models</h3>
-        <p>2.7M+ models including top trending text-to-image, LLMs, and multimodal. 30+ LoRA art style models for FLUX/SDXL transfer.</p>
-        <span class="tag tag-hf">2.7M+ Models</span>
-        <span class="tag tag-hf">LoRA Styles</span>
-        <span class="tag tag-hf">FLUX/SDXL</span>
-      </a>
-
-      <div class="card">
-        <span class="card-icon">🔐</span>
-        <h3>OpenClaw Gateway</h3>
-        <p>AI Agent Gateway running live — v2026.3.13. Model: litellm/ninja-cline-complex. WebSocket gateway on port 18789.</p>
-        <span class="status-badge status-healthy"><span class="status-dot"></span> Healthy</span>
-        <span class="tag tag-nvidia">v2026.3.13</span>
-        <span class="tag tag-nvidia">Running</span>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Store Products Section -->
-  <section class="section" id="store">
-    <div class="section-divider"></div>
-    <h2 class="section-title">🛒 GOAT Royalty Store</h2>
-    <p class="section-subtitle">Premium tech products & AI tools by Life Imitates Art Inc.</p>
-
-    <!-- Category Tabs -->
-    <div class="category-tabs">
-      <button class="tab-btn active" onclick="filterProducts('all')">👑 All</button>
-      <button class="tab-btn" onclick="filterProducts('hardware')">🎧 Hardware</button>
-      <button class="tab-btn" onclick="filterProducts('software')">🤖 Software</button>
-      <button class="tab-btn" onclick="filterProducts('featured')">⭐ Featured</button>
-    </div>
-
-    <div class="product-grid" id="productGrid">
-
-      <div class="product-card" data-category="hardware">
-        <div class="product-img">🎧</div>
-        <div class="product-info">
-          <h3>Premium Headphones</h3>
-          <div class="product-price">$299</div>
-          <button class="btn-cart" onclick="addToCart('headphones','Premium Headphones',299,'🎧')">🛒 Add to Cart</button>
+    <div>
+      <div style="background:var(--panel);border:1px solid rgba(212,160,60,.2);border-radius:16px;padding:20px;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+          <div class="tp-pad">🥁</div><div class="tp-pad">🎵</div><div class="tp-pad">🎸</div><div class="tp-pad">🎤</div>
+          <div class="tp-pad">⚡</div><div class="tp-pad">🎼</div><div class="tp-pad">🎹</div><div class="tp-pad">🔥</div>
+          <div class="tp-pad">💜</div><div class="tp-pad">🌊</div><div class="tp-pad">🎺</div><div class="tp-pad">🎻</div>
+          <div class="tp-pad">🤖</div><div class="tp-pad">💡</div><div class="tp-pad">🚀</div><div class="tp-pad">👑</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <div style="flex:1;height:80px;background:linear-gradient(0deg,var(--gold) 40%,transparent 100%);border-radius:4px;position:relative;cursor:pointer;"><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:#000;font-weight:700">FADER</div></div>
+          <div style="flex:1;height:80px;background:linear-gradient(0deg,var(--ok) 70%,transparent 100%);border-radius:4px;position:relative;cursor:pointer;"><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:#000;font-weight:700">FADER</div></div>
+          <div style="flex:1;height:80px;background:linear-gradient(0deg,var(--info) 55%,transparent 100%);border-radius:4px;position:relative;cursor:pointer;"><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:#000;font-weight:700">FADER</div></div>
+          <div style="flex:1;height:80px;background:linear-gradient(0deg,var(--red2) 30%,transparent 100%);border-radius:4px;position:relative;cursor:pointer;"><div style="position:absolute;bottom:4px;left:0;right:0;text-align:center;font-size:10px;color:#fff;font-weight:700">FADER</div></div>
         </div>
       </div>
-
-      <div class="product-card" data-category="hardware">
-        <div class="product-img">⌚</div>
-        <div class="product-info">
-          <h3>Smart Watch Pro</h3>
-          <div class="product-price">$399</div>
-          <button class="btn-cart" onclick="addToCart('watch','Smart Watch Pro',399,'⌚')">🛒 Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="hardware">
-        <div class="product-img">💻</div>
-        <div class="product-info">
-          <h3>Laptop Pro X</h3>
-          <div class="product-price">$1,299</div>
-          <button class="btn-cart" onclick="addToCart('laptop','Laptop Pro X',1299,'💻')">🛒 Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="hardware">
-        <div class="product-img">🖱️</div>
-        <div class="product-info">
-          <h3>Wireless Mouse</h3>
-          <div class="product-price">$79</div>
-          <button class="btn-cart" onclick="addToCart('mouse','Wireless Mouse',79,'🖱️')">🛒 Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="hardware">
-        <div class="product-img">🔌</div>
-        <div class="product-info">
-          <h3>USB-C Hub Pro</h3>
-          <div class="product-price">$49</div>
-          <button class="btn-cart" onclick="addToCart('usbhub','USB-C Hub Pro',49,'🔌')">🛒 Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="hardware">
-        <div class="product-img">📹</div>
-        <div class="product-info">
-          <h3>4K Webcam HD</h3>
-          <div class="product-price">$129</div>
-          <button class="btn-cart" onclick="addToCart('webcam','4K Webcam HD',129,'📹')">🛒 Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="hardware">
-        <div class="product-img">🎙️</div>
-        <div class="product-info">
-          <h3>Studio Microphone</h3>
-          <div class="product-price">$199</div>
-          <button class="btn-cart" onclick="addToCart('mic','Studio Microphone',199,'🎙️')">🛒 Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="product-card" data-category="hardware">
-        <div class="product-img">🎮</div>
-        <div class="product-info">
-          <h3>Gaming Controller</h3>
-          <div class="product-price">$69</div>
-          <button class="btn-cart" onclick="addToCart('controller','Gaming Controller',69,'🎮')">🛒 Add to Cart</button>
-        </div>
-      </div>
-
-      <!-- FEATURED: Ultimate Engine CoPilot -->
-      <div class="product-card featured-card" data-category="software featured">
-        <div style="position:absolute;top:12px;right:12px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#000;font-size:0.65rem;font-weight:700;padding:4px 10px;border-radius:12px;letter-spacing:1px;z-index:2;">⭐ FAB FEATURED</div>
-        <div class="product-img" style="font-size:3.5rem;">🤖🎮</div>
-        <div class="product-info">
-          <h3>Ultimate Engine CoPilot</h3>
-          <p style="font-size:0.78rem;color:var(--text-secondary);margin:4px 0 10px;line-height:1.5;">AI Copilot for Unreal Engine 5 — Analyze architecture, build scenes & UI, refactor Blueprints conversationally. Full C++ source. Local LLM support.</p>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
-            <span class="tag tag-crown">UE5</span>
-            <span class="tag tag-crown">Blueprint AI</span>
-            <span class="tag tag-crown">Local LLM</span>
-          </div>
-          <div class="product-price">One-Time Purchase</div>
-          <div style="display:flex;gap:8px;margin-top:10px;">
-            <a href="unreal-copilot.html" class="btn-cart" style="text-decoration:none;flex:1;text-align:center;background:var(--bg-glass);color:var(--gold);border:1px solid var(--border-hover);">📖 Details</a>
-            <a href="https://www.fab.com" target="_blank" class="btn-cart" style="text-decoration:none;flex:1;text-align:center;">🛒 Get on FAB</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Lightning AI Models Quick View -->
-  <section class="section" id="models-preview">
-    <div class="section-divider"></div>
-    <h2 class="section-title">⚡ Lightning AI Model Router</h2>
-    <p class="section-subtitle">Top models accessible through unified API — <a href="models.html">View Full 653+ Catalog →</a></p>
-    <div style="overflow-x:auto;">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Provider</th>
-            <th style="text-align:right;">Input ⚡/M</th>
-            <th style="text-align:right;">Output ⚡/M</th>
-            <th style="text-align:right;">Throughput</th>
-            <th style="text-align:right;">Context</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="font-weight:600;">GPT OSS 20B</td>
-            <td><span class="tag tag-lightning">Lightning AI</span></td>
-            <td style="text-align:right;color:var(--success);">0.05</td>
-            <td style="text-align:right;">0.20</td>
-            <td style="text-align:right;">6.43</td>
-            <td style="text-align:right;">128K</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">GPT OSS 120B</td>
-            <td><span class="tag tag-lightning">Lightning AI</span></td>
-            <td style="text-align:right;color:var(--success);">0.10</td>
-            <td style="text-align:right;">0.40</td>
-            <td style="text-align:right;color:var(--gold);">177.56</td>
-            <td style="text-align:right;">128K</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">DeepSeek V3.1</td>
-            <td><span class="tag tag-lightning">Lightning AI</span></td>
-            <td style="text-align:right;">0.32</td>
-            <td style="text-align:right;">1.10</td>
-            <td style="text-align:right;">90.23</td>
-            <td style="text-align:right;">164K</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Nemotron 3 Super 120B</td>
-            <td><span class="tag tag-nvidia">NVIDIA</span></td>
-            <td style="text-align:right;">1.40</td>
-            <td style="text-align:right;">3.00</td>
-            <td style="text-align:right;color:var(--gold);">376.15</td>
-            <td style="text-align:right;color:var(--info);">256K</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">GPT 5 nano</td>
-            <td><span class="tag tag-openai">OpenAI</span></td>
-            <td style="text-align:right;color:var(--success);">0.05</td>
-            <td style="text-align:right;">0.40</td>
-            <td style="text-align:right;">107.33</td>
-            <td style="text-align:right;color:var(--info);">400K</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Gemini 3 Flash</td>
-            <td><span class="tag tag-google">Google</span></td>
-            <td style="text-align:right;">0.50</td>
-            <td style="text-align:right;">1.00</td>
-            <td style="text-align:right;color:var(--gold);">159.34</td>
-            <td style="text-align:right;color:var(--info);">1M</td>
-          </tr>
-          <tr>
-            <td style="font-weight:600;">Kimi K2.5</td>
-            <td><span class="tag tag-lightning">Lightning AI</span></td>
-            <td style="text-align:right;">2.32</td>
-            <td style="text-align:right;">12.00</td>
-            <td style="text-align:right;color:var(--gold);">280.46</td>
-            <td style="text-align:right;color:var(--info);">256K</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div style="text-align:center;margin-top:28px;">
-      <a href="models.html" class="btn btn-primary">🧠 View All 653+ Models →</a>
-    </div>
-  </section>
-
-  <!-- Download Section -->
-  <section class="section" id="download">
-    <div class="section-divider"></div>
-    <h2 class="section-title">📥 Download Desktop App</h2>
-    <p class="section-subtitle">Get Ms Money Penny Store as a standalone desktop app — no browser needed</p>
-    <div class="card-grid" style="max-width:1000px;margin:0 auto;">
-      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases/latest" class="card" style="text-decoration:none;text-align:center;" target="_blank" id="downloadWindows">
-        <span class="card-icon">🪟</span>
-        <h3>Windows 10/11</h3>
-        <p>Installer (.exe) or Portable — no admin needed for portable version</p>
-        <span class="btn btn-primary" style="display:inline-flex;margin-top:8px;">Download .exe</span>
-      </a>
-      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases/latest" class="card" style="text-decoration:none;text-align:center;" target="_blank" id="downloadMac">
-        <span class="card-icon">🍎</span>
-        <h3>macOS</h3>
-        <p>Disk Image (.dmg) — drag to Applications and launch</p>
-        <span class="btn btn-primary" style="display:inline-flex;margin-top:8px;">Download .dmg</span>
-      </a>
-      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases/latest" class="card" style="text-decoration:none;text-align:center;" target="_blank" id="downloadLinux">
-        <span class="card-icon">🐧</span>
-        <h3>Linux</h3>
-        <p>AppImage, .deb, or .tar.gz — works on Ubuntu, Debian, Fedora</p>
-        <span class="btn btn-primary" style="display:inline-flex;margin-top:8px;">Download Linux</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- Newsletter Section -->
-  <section class="section">
-    <div class="newsletter-box">
-      <div style="font-size:2rem;margin-bottom:8px;">📬</div>
-      <h3 class="crown-text" style="color:var(--gold);font-size:1.3rem;margin-bottom:8px;">Join the GOAT Royalty Newsletter</h3>
-      <p style="color:var(--text-secondary);font-size:0.92rem;">Get early access to new AI models, tools, and exclusive deals. No spam — just pure GOAT energy.</p>
-      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-        <input type="email" placeholder="your@email.com" required>
-        <button type="submit" class="btn btn-primary">Subscribe 👑</button>
-      </form>
-      <p id="newsletterMsg" style="color:var(--success);font-size:0.85rem;margin-top:12px;display:none;">✅ Welcome to the GOAT family!</p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-brand">🐐👑 Ms Money Penny — The GOAT Royalty Store</div>
-    <div class="footer-links">
-      <a href="index.html">🏠 Home</a>
-      <a href="models.html">🧠 AI Models</a>
-      <a href="tools.html">🛠️ Tools</a>
-      <a href="downloads.html">📥 Downloads</a>
-      <a href="about.html">👑 About</a>
-      <a href="ai-dashboard.html">📊 Dashboard</a>
-      <a href="music-studio.html">🎵 Music Studio</a>
-      <a href="movie-studio.html">🎬 Movie Studio</a>
-      <a href="catalog.html">📚 Catalog</a>
-      <a href="screenwriting.html">📝 Screenwriting</a>
-      <a href="unreal-copilot.html">🎮 UE5 CoPilot</a>
-      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce" target="_blank">⭐ GitHub</a>
-      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases" target="_blank">📦 Releases</a>
-    </div>
-    <p>🐐 Ms Money Penny Store v1.3.0 — Built with ❤️ by <a href="https://lifeimitatesart.org" target="_blank">Life Imitates Art Inc.</a></p>
-    <p style="margin-top:8px;font-size:0.78rem;color:var(--text-muted);">Powered by NVIDIA AI Stack • Lightning AI • HuggingFace • OpenClaw • Electron • The GOAT Energy 👑</p>
-  </footer>
-
-  <!-- Cart Drawer -->
-  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h3>🛒 Your Cart</h3>
-      <button class="cart-close" onclick="closeCart()">✕</button>
-    </div>
-    <div class="cart-items" id="cartItems">
-      <p style="color:var(--text-muted);text-align:center;padding:40px 0;">Your cart is empty 🐐</p>
-    </div>
-    <div class="cart-footer">
-      <div class="cart-total">
-        <span>Total</span>
-        <span class="amount" id="cartTotal">$0.00</span>
-      </div>
-      <button class="btn btn-primary" style="width:100%;" onclick="checkout()">👑 Checkout</button>
     </div>
   </div>
+</div>
 
-  <!-- Scroll to Top -->
-  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-  <!-- SCRIPTS -->
-  <script>
-  // === GOLD PARTICLE SYSTEM ===
-  (function() {
-    const canvas = document.getElementById('particles-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    const PARTICLE_COUNT = 50;
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = -Math.random() * 0.4 - 0.1;
-        this.size = Math.random() * 2 + 0.5;
-        this.opacity = Math.random() * 0.4 + 0.1;
-        this.life = Math.random() * 200 + 100;
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.life--;
-        if (this.life <= 0 || this.y < -10) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(212, 160, 60, ${this.opacity * (this.life / 200)})`;
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animate);
-    }
-    animate();
-  })();
-
-  // === MOBILE MENU ===
-  function toggleMenu() {
-    document.getElementById('navLinks').classList.toggle('open');
-  }
-
-  // === CART SYSTEM with LocalStorage ===
-  let cart = JSON.parse(localStorage.getItem('goat-cart') || '[]');
-  updateCartUI();
-
-  function addToCart(id, name, price, icon) {
-    const existing = cart.find(i => i.id === id);
-    if (existing) { existing.qty++; }
-    else { cart.push({ id, name, price, icon, qty: 1 }); }
-    saveCart();
-    updateCartUI();
-
-    // Button feedback
-    const btn = event.target;
-    const orig = btn.textContent;
-    btn.textContent = '✅ Added!';
-    btn.style.background = 'var(--success)';
-    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 1200);
-  }
-
-  function removeFromCart(id) {
-    cart = cart.filter(i => i.id !== id);
-    saveCart();
-    updateCartUI();
-  }
-
-  function saveCart() {
-    localStorage.setItem('goat-cart', JSON.stringify(cart));
-  }
-
-  function updateCartUI() {
-    const badge = document.getElementById('cartBadge');
-    const count = cart.reduce((s, i) => s + i.qty, 0);
-    const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-
-    if (badge) {
-      badge.style.display = count > 0 ? 'flex' : 'none';
-      badge.textContent = count;
-    }
-
-    const itemsEl = document.getElementById('cartItems');
-    if (itemsEl) {
-      if (cart.length === 0) {
-        itemsEl.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px 0;">Your cart is empty 🐐</p>';
-      } else {
-        itemsEl.innerHTML = cart.map(i => `
-          <div class="cart-item">
-            <span class="cart-item-icon">${i.icon}</span>
-            <span class="cart-item-name">${i.name} ${i.qty > 1 ? '×'+i.qty : ''}</span>
-            <span class="cart-item-price">$${(i.price * i.qty).toLocaleString()}</span>
-            <button class="cart-item-remove" onclick="removeFromCart('${i.id}')">🗑</button>
-          </div>
-        `).join('');
-      }
-    }
-
-    const totalEl = document.getElementById('cartTotal');
-    if (totalEl) totalEl.textContent = '$' + total.toLocaleString(undefined, {minimumFractionDigits:2});
-  }
-
-  function openCart() {
-    document.getElementById('cartOverlay').classList.add('open');
-    document.getElementById('cartDrawer').classList.add('open');
-  }
-
-  function closeCart() {
-    document.getElementById('cartOverlay').classList.remove('open');
-    document.getElementById('cartDrawer').classList.remove('open');
-  }
-
-  function checkout() {
-    if (cart.length === 0) return alert('Your cart is empty!');
-    alert('👑 Thank you for your GOAT order! Total: ' + document.getElementById('cartTotal').textContent);
-    cart = [];
-    saveCart();
-    updateCartUI();
-    closeCart();
-  }
-
-  // Open cart on badge click
-  document.querySelector('a[href="#store"]')?.addEventListener('click', function(e) {
-    if (cart.length > 0) { e.preventDefault(); openCart(); }
-  });
-
-  // === PRODUCT FILTER ===
-  function filterProducts(cat) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-    document.querySelectorAll('.product-card').forEach(card => {
-      const cats = card.dataset.category || '';
-      card.style.display = (cat === 'all' || cats.includes(cat)) ? '' : 'none';
-    });
-  }
-
-  // === NEWSLETTER ===
-  function subscribeNewsletter(e) {
-    e.preventDefault();
-    document.getElementById('newsletterMsg').style.display = 'block';
-    e.target.reset();
-    setTimeout(() => document.getElementById('newsletterMsg').style.display = 'none', 4000);
-  }
-
-  // === SCROLL EFFECTS ===
-  const scrollBtn = document.getElementById('scrollTop');
-  window.addEventListener('scroll', () => {
-    scrollBtn.classList.toggle('visible', window.scrollY > 400);
-  });
-
-  // Animate cards on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        entry.target.style.animationDelay = `${i * 0.08}s`;
-        entry.target.classList.add('animate-in');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-
-  document.querySelectorAll('.card, .product-card, .testimonial-card, .hero-stat').forEach(el => observer.observe(el));
-
-  // === OS AUTO-DETECT for download section ===
-  (function() {
-    const ua = navigator.userAgent.toLowerCase();
-    let os = 'windows';
-    if (ua.includes('mac')) os = 'mac';
-    else if (ua.includes('linux')) os = 'linux';
-    const el = document.getElementById('download' + os.charAt(0).toUpperCase() + os.slice(1));
-    if (el) {
-      el.style.border = '2px solid var(--gold)';
-      el.style.boxShadow = '0 0 30px rgba(212,160,60,0.2)';
-    }
-  })();
-  </script>
-
-
-  <!-- POWERHOUSE_HERO_MARKER -->
-  <section style="background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, rgba(30,0,0,0.95) 100%); padding: 80px 20px; position: relative; z-index: 5;">
-    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+<!-- AI AGENTS -->
+<section>
+  <div class="sec-label">🤖 AI Intelligence</div>
+  <h2 class="sec-title">11 AI Agents Working For You</h2>
+  <p class="sec-sub">Every agent is specialized — from music production to legal, A&R, finance, and autopilot.</p>
+  <div class="ai-section">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
       <div>
-        <div style="display: inline-block; padding: 6px 14px; border-radius: 20px; background: linear-gradient(135deg,#c1121f,#8b0000); color: white; font-size: 11px; font-weight: 800; letter-spacing: 2px; margin-bottom: 16px;">🔥 NEW · JUST LAUNCHED</div>
-        <h2 style="font-size: clamp(32px, 5vw, 56px); font-weight: 900; margin: 0 0 16px; background: linear-gradient(135deg, #f0c070 0%, #f5e6c8 50%, #ff2d3d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1;">
-          The GOAT Powerhouse<br>Production Center
-        </h2>
-        <p style="font-size: 17px; color: #c0c0c0; margin: 0 0 24px; line-height: 1.6;">
-          Everything a producer needs in ONE powerhouse — combining the best of
-          <strong style="color:#f0c070">Antares Auto-Tune</strong>,
-          <strong style="color:#f0c070">iZotope Ozone</strong>,
-          <strong style="color:#f0c070">FabFilter</strong>,
-          <strong style="color:#f0c070">LANDR</strong>,
-          <strong style="color:#f0c070">Waves</strong>, and
-          <strong style="color:#f0c070">Ableton</strong> into one original platform.
-        </p>
-        <ul style="list-style: none; padding: 0; margin: 0 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px; color: #f5e6c8;">
-          <li>✅ 148-Channel SSL Mixer + AutoMix AI</li>
-          <li>✅ GOAT Mastering (Ozone-killer)</li>
-          <li>✅ Vocal Studio (Antares-killer)</li>
-          <li>✅ 9 Pro JUCE Plugins (VST3/AU/AAX)</li>
-          <li>✅ AI Producer + Stem Separation</li>
-          <li>✅ Multi-track Studio DAW</li>
-          <li>✅ Sync & Licensing Catalog</li>
-          <li>✅ Film Score Studio</li>
-        </ul>
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <a href="powerhouse.html" style="display:inline-flex; gap:8px; padding: 14px 28px; border-radius: 10px; background: linear-gradient(135deg,#ff2d3d,#c1121f,#8b0000); color: white; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 10px 30px rgba(193,18,31,0.5);">🐐 Enter Powerhouse</a>
-          <a href="plugins.html" style="display:inline-flex; gap:8px; padding: 14px 28px; border-radius: 10px; border: 2px solid #f0c070; color: #f0c070; font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;">🔌 Shop Plugins</a>
-        </div>
+        <p style="color:var(--dim);line-height:1.8;margin-bottom:16px;">Your personal AI team handles everything from writing lyrics to analyzing royalty statements, scouting trends, and managing your publishing catalog. Powered by Ollama (local), NVIDIA, and Gemini.</p>
+        <a href="agents-brain.html" class="btn-hero primary" style="display:inline-block;padding:12px 24px;font-size:15px;">Open AI Brain →</a>
       </div>
-      <div style="text-align: center; position: relative;">
-        <img src="img/goat-hero.png" alt="GOAT Superhero" style="max-width: 100%; width: 420px; filter: drop-shadow(0 0 80px rgba(193,18,31,0.7)); animation: floatLogo 4s ease-in-out infinite;">
+      <div style="font-size:13px;color:var(--dim);background:var(--panel2);border-radius:10px;padding:16px;font-family:monospace;">
+        <div style="color:var(--ok);margin-bottom:8px">● Ollama: Connected</div>
+        <div style="color:var(--warn);margin-bottom:8px">● NVIDIA: Standby</div>
+        <div style="color:var(--info);margin-bottom:8px">● Gemini: Ready</div>
+        <div style="color:var(--dim);border-top:1px solid var(--line);padding-top:8px;margin-top:8px;">11 agents · Autopilot available</div>
       </div>
     </div>
-    <style>
-      @keyframes floatLogo { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
-      @media (max-width: 768px) {
-        section[style*="POWERHOUSE"] div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
-      }
-    </style>
-  </section>
+    <div class="agents-grid">
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(212,160,60,.15)">💼</div><div><div class="agent-name">Moneypenny</div><div class="agent-role">Executive Assistant</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(88,166,255,.15)">💻</div><div><div class="agent-name">Codex</div><div class="agent-role">Developer</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(139,92,246,.15)">⚖️</div><div><div class="agent-name">Legal</div><div class="agent-role">Music Law</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(63,185,80,.15)">🎛️</div><div><div class="agent-name">Producer</div><div class="agent-role">Music Production</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(255,100,100,.15)">🎤</div><div><div class="agent-name">A&R</div><div class="agent-role">Artist & Repertoire</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(212,160,60,.15)">💰</div><div><div class="agent-name">CFO</div><div class="agent-role">Finance</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(255,150,50,.15)">👗</div><div><div class="agent-name">Stylist</div><div class="agent-role">Brand & Image</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(88,166,255,.15)">🔍</div><div><div class="agent-name">Researcher</div><div class="agent-role">Intelligence</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(139,92,246,.15)">✍️</div><div><div class="agent-name">Lyricist</div><div class="agent-role">Songwriting</div></div></a>
+      <a href="autopilot.html" class="agent-card"><div class="agent-icon" style="background:rgba(63,185,80,.15)">🤖</div><div><div class="agent-name">Autopilot</div><div class="agent-role">Full Automation</div></div></a>
+      <a href="api-vault.html" class="agent-card"><div class="agent-icon" style="background:rgba(212,160,60,.15)">🔐</div><div><div class="agent-name">Vault</div><div class="agent-role">API Keys & Secrets</div></div></a>
+    </div>
+  </div>
+</section>
 
+<!-- BUSINESS TOOLS -->
+<section>
+  <div class="sec-label">💼 Business & Royalties</div>
+  <h2 class="sec-title">Run Your Music Business Like a CEO</h2>
+  <p class="sec-sub">Royalty tracking, catalog management, distribution, fan analytics, and financial intelligence.</p>
+  <div class="tool-grid">
+    <a href="royalty-calc.html" class="tool-card featured">
+      <div class="icon">💰</div>
+      <h3>Royalty Calculator</h3>
+      <p>Calculate earnings across every DSP, sync deal, and mechanical license with precision.</p>
+      <span class="tag tag-gold">MONEY</span>
+    </a>
+    <a href="catalog.html" class="tool-card">
+      <div class="icon">📁</div>
+      <h3>Catalog Manager</h3>
+      <p>Full ISRC, ISWC, UPC tracking with metadata editor, ownership splits, and CWR export.</p>
+      <span class="tag tag-blue">CATALOG</span>
+    </a>
+    <a href="distribution.html" class="tool-card">
+      <div class="icon">🌍</div>
+      <h3>Distribution</h3>
+      <p>Submit to Spotify, Apple, Tidal, Amazon, YouTube, and 50+ DSPs with one dashboard.</p>
+      <span class="tag tag-green">DSP</span>
+    </a>
+    <a href="sync-catalog.html" class="tool-card">
+      <div class="icon">🎬</div>
+      <h3>Sync Licensing</h3>
+      <p>Pitch your catalog to TV, film, ads, and games. Track pitches and manage sync deals.</p>
+      <span class="tag tag-purple">SYNC</span>
+    </a>
+    <a href="fan-db.html" class="tool-card">
+      <div class="icon">👥</div>
+      <h3>Fan Database</h3>
+      <p>CRM-style fan management with email capture, segment targeting, and engagement analytics.</p>
+      <span class="tag tag-blue">FANS</span>
+    </a>
+    <a href="intel.html" class="tool-card">
+      <div class="icon">📊</div>
+      <h3>Business Intel</h3>
+      <p>Revenue analytics, trend detection, competitor intelligence, and market opportunity scoring.</p>
+      <span class="tag tag-gold">INTEL</span>
+    </a>
+    <a href="network.html" class="tool-card">
+      <div class="icon">🌐</div>
+      <h3>Industry Network</h3>
+      <p>Connect with producers, A&Rs, managers, attorneys, and sync supervisors worldwide.</p>
+      <span class="tag tag-blue">NETWORK</span>
+    </a>
+    <a href="release.html" class="tool-card">
+      <div class="icon">🚀</div>
+      <h3>Release Manager</h3>
+      <p>Full release workflow: metadata, artwork, DSP submission, promo planning, and analytics.</p>
+      <span class="tag tag-green">RELEASE</span>
+    </a>
+  </div>
+</section>
+
+<!-- FILM & MOVIE STUDIO -->
+<section>
+  <div class="sec-label">🎬 Film & Movie Studio</div>
+  <h2 class="sec-title">Score & Produce for Screen</h2>
+  <p class="sec-sub">Hollywood-quality tools for scoring films, composing TV cues, and producing music videos.</p>
+  <div class="tool-grid">
+    <a href="film-score.html" class="tool-card featured wide">
+      <div class="icon">🎼</div>
+      <h3>Film Score Composer</h3>
+      <p>Orchestral scoring with EastWest Hollywood Orchestra integration, MIDI export, cue sheet generation, and sync licensing workflow.</p>
+      <span class="tag tag-red">CINEMATIC</span>
+    </a>
+    <a href="movie-studio.html" class="tool-card">
+      <div class="icon">🎬</div>
+      <h3>Movie Studio</h3>
+      <p>AI-powered video editor with timeline, cuts, effects, transitions, and FFmpeg export.</p>
+      <span class="tag tag-purple">VIDEO</span>
+    </a>
+    <a href="screenwriting.html" class="tool-card">
+      <div class="icon">📝</div>
+      <h3>Screenwriting</h3>
+      <p>Industry-standard screenplay format with AI co-writer, scene breakdown, and PDF export.</p>
+      <span class="tag tag-blue">SCRIPT</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">🐐 GOAT Royalty</div>
+      <p>The ultimate music business platform for independent artists who refuse to leave money on the table.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Studio</h4>
+      <a href="studio.html">Recording Studio</a>
+      <a href="beat-maker.html">Beat Maker</a>
+      <a href="ssl-mixer.html">SSL Mixer</a>
+      <a href="mastering.html">Mastering</a>
+      <a href="vocal-studio.html">Vocal Studio</a>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <a href="goat-mpc.html">GOAT MPC</a>
+      <a href="goat-sampler.html">Sampler</a>
+      <a href="goat-autotune.html">Auto-Tune</a>
+      <a href="goat-plugin-rack.html">Plugin Rack</a>
+      <a href="goat-sound-library.html">Sound Library</a>
+    </div>
+    <div class="footer-col">
+      <h4>Business</h4>
+      <a href="catalog.html">Catalog</a>
+      <a href="distribution.html">Distribution</a>
+      <a href="royalty-calc.html">Royalties</a>
+      <a href="film-score.html">Film Score</a>
+      <a href="agents-brain.html">AI Brain</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 GOAT Royalty · DJ Speedy / Harvey L. Miller Jr. · All Rights Reserved</p>
+    <p style="color:var(--gold)">Built with 🐐 energy</p>
+  </div>
+</footer>
+
+<script>
+// Live brain status check
+async function checkBrain(){
+  try {
+    const r = await fetch('http://localhost:5500/health', {signal: AbortSignal.timeout(1500)});
+    if (r.ok) {
+      document.querySelectorAll('.brain-status').forEach(el => el.style.color = 'var(--ok)');
+    }
+  } catch(e) {}
+}
+checkBrain();
+
+// Animate stats on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, {threshold: 0.1});
+
+document.querySelectorAll('.tool-card, .agent-card, .sstat').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity .4s ease, transform .4s ease';
+  observer.observe(el);
+});
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
 </body>
 </html>
