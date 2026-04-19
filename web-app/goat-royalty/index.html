@@ -483,17 +483,20 @@ document.querySelectorAll('.nav-item').forEach(item => {
 let catalogData = null;
 let timelineData = null;
 let releasesData = null;
+let loreData = null;
 
 async function loadData() {
   try {
-    const [cat, tl, rel] = await Promise.all([
+    const [cat, tl, rel, lore] = await Promise.all([
       fetch('catalog.json').then(r => r.ok ? r.json() : null).catch(() => null),
       fetch('timelines.json').then(r => r.ok ? r.json() : null).catch(() => null),
-      fetch('releases.json').then(r => r.ok ? r.json() : null).catch(() => null)
+      fetch('releases.json').then(r => r.ok ? r.json() : null).catch(() => null),
+      fetch('lore.json').then(r => r.ok ? r.json() : null).catch(() => null)
     ]);
     catalogData = cat;
     timelineData = tl;
     releasesData = rel;
+    loreData = lore;
     renderCatalog();
     renderTimeline();
     renderCharacters();
@@ -784,7 +787,17 @@ async function sendChat() {
   // Try real Ollama first (if available on server)
   let reply;
   const stats = catalogData ? catalogData.stats : null;
-  const systemContext = stats ? `You are Codex, the Sentinel AI of the GOAT Royalty Force. Your user is DJ Speedy (Harvey L. Miller Jr., ASCAP 60881). You have access to a catalog of ${stats.total} entries: ${stats.with_isrc} ISRCs, ${stats.with_splits} with splits. Artists: Waka Flocka Flame (${stats.artists['Waka Flocka Flame']}), Fastassman Publishing (${stats.artists['Fastassman Publishing']}), Harvey Miller (${stats.artists['Harvey Miller']}). Respond as Codex - direct, concise, street-smart, knowledgeable about music royalties.` : 'You are Codex AI.';
+
+  // Load character-specific system prompt from lore
+  const charPrompt = (loreData && loreData.characters[voiceProfile])
+    ? loreData.characters[voiceProfile].system_prompt
+    : 'You are Codex, the Sentinel AI.';
+
+  const catalogContext = stats
+    ? ` You have access to DJ Speedy's catalog: ${stats.total} entries, ${stats.with_isrc} ISRCs, ${stats.with_splits} with splits. Artists: Waka Flocka Flame (${stats.artists['Waka Flocka Flame']} songs), Fastassman Publishing (${stats.artists['Fastassman Publishing']}), Harvey Miller (${stats.artists['Harvey Miller']}).`
+    : '';
+
+  const systemContext = charPrompt + catalogContext + ' Keep responses conversational (2-4 sentences unless asked for detail). Stay in character always.';
 
   try {
     const r = await fetch('/api/chat', {

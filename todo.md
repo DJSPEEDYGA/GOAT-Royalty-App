@@ -1,18 +1,26 @@
-# NVIDIA Full Integration
+# 🐐 GOAT App "Best Ever" Build Plan
 
-## Task 1: Expand Download Script to 20 Models ✅
-- [x] Add Qwen 2.5 72B, DeepSeek V3, DeepSeek Coder 33B
-- [x] Add Nemotron Embed + Rerank models
-- [ ] Push updated script to GitHub
+## Phase 1: Make the Characters Come Alive
+- [ ] Parse GOAT Lore PDFs into character personality profiles (JSON)
+- [ ] Inject lore into goat-royalty chat so characters speak in-universe
+- [ ] Build real unreal-copilot.html: avatar viewer + voice-to-voice + MetaHuman info
+- [ ] Build videos.html: cinematic gallery of all 15 branding MP4s
+- [ ] Add hero video to index.html homepage
 
-## Task 2: Wire Real Download Button to Models Page ✅
-- [x] Add "Download All NVIDIA" sidebar section
-- [x] Add prominent NVIDIA section card with buttons
-- [x] Add NVIDIA_MODELS JS array (20 models)
-- [x] Add downloadAllNvidia, downloadSingleNvidia, copyNvidiaOneLiner, showNvidiaInfo
-- [x] Add /api/nvidia/* endpoints to Flask backend
-- [ ] Push to GitHub
+## Phase 2: Expose Hidden Features
+- [ ] Build agents.html: chat with all 11 specialist AI agents
+- [ ] Build shop.html: Shopify storefront page
+- [ ] Build royalty-calc.html: live calculator using real catalog
+- [ ] Build dsp.html: DSP distribution dashboard
+- [ ] Build mining.html: mining + wallet dashboard
 
-## Task 3: Deploy Everything to Server 1
-- [ ] Create DEPLOY-SERVER-1-FULL.sh (port 80 + Ollama + NVIDIA + Model Downloader)
-- [ ] Push to GitHub with 1-line deploy command
+## Phase 3: Polish & Navigation
+- [ ] Audit sidebar nav — ensure all pages are reachable
+- [ ] Add footer with links to all sections
+- [ ] Upgrade home hero with flying goat video
+
+## Phase 4: Deploy
+- [ ] Commit everything to GitHub
+- [ ] Push to main branch
+- [ ] Create DEPLOY-ALL-NEW-FEATURES.sh script
+- [ ] Verify all pages load
