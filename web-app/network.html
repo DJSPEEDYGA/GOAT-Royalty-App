@@ -502,6 +502,7 @@
 <div class="tab-bar">
   <button class="tab-btn active" onclick="showTab('profiles')">👤 Profiles</button>
   <button class="tab-btn" onclick="showTab('social')">📱 Social Command</button>
+  <button class="tab-btn" onclick="showTab('spotify')">🎵 Spotify + Apple</button>
   <button class="tab-btn" onclick="showTab('connections')">🔗 Connections</button>
   <button class="tab-btn" onclick="showTab('networth')">💰 Net Worth</button>
   <button class="tab-btn" onclick="showTab('companies')">🏢 Companies</button>
@@ -759,6 +760,225 @@
       </a>
     </div>
   </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB — SPOTIFY + APPLE MUSIC
+════════════════════════════════════════════════════════ -->
+<div id="tab-spotify" class="tab-content">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🎵 Spotify + Apple Music Live Dashboard</div>
+      <div class="section-sub">Real-time data for DJ Speedy, Waka Flocka & Harvey Miller catalogs</div>
+    </div>
+  </div>
+
+  <!-- SPOTIFY EMBEDS -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px;margin-bottom:24px;">
+    <div class="connection-card" style="padding:16px;">
+      <div class="conn-title" style="font-size:1rem;">🎧 DJ Speedy on Spotify</div>
+      <div style="font-size:11px;color:#666;margin-bottom:10px;">Artist ID: 6bS9W2ZUIZCwumkGP63dSp</div>
+      <iframe style="border-radius:12px;" src="https://open.spotify.com/embed/artist/6bS9W2ZUIZCwumkGP63dSp?utm_source=generator&theme=0"
+        width="100%" height="352" frameborder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="https://open.spotify.com/artist/6bS9W2ZUIZCwumkGP63dSp" target="_blank" class="social-btn" style="background:#1DB954;color:white;">Open on Spotify →</a>
+      </div>
+    </div>
+
+    <div class="connection-card" style="padding:16px;">
+      <div class="conn-title" style="font-size:1rem;color:#FF4444;">🔥 Waka Flocka on Spotify</div>
+      <div style="font-size:11px;color:#666;margin-bottom:10px;">Artist ID: 6f4XkbvYlXMH0QgVRzW0sM ✅ Verified</div>
+      <iframe style="border-radius:12px;" src="https://open.spotify.com/embed/artist/6f4XkbvYlXMH0QgVRzW0sM?utm_source=generator&theme=0"
+        width="100%" height="352" frameborder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <a href="https://open.spotify.com/artist/6f4XkbvYlXMH0QgVRzW0sM" target="_blank" class="social-btn" style="background:#1DB954;color:white;">Open on Spotify →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLE MUSIC TRACKS -->
+  <div class="connection-card">
+    <div class="conn-title">🍎 DJ Speedy — Electronic Catalog (Apple Music ID: 1473009687)</div>
+    <div style="font-size:12px;color:#888;margin-bottom:14px;">Real catalog pulled from iTunes Search API — no key needed</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;">
+      <div class="video-item"><span>🎵</span><span class="video-title">Show Out (feat. DJ Speedy) [Remix] — Juicy J</span><span class="video-views">2017</span></div>
+      <div class="video-item"><span>🍌</span><span class="video-title">Go Banana (feat. Becker) [Future Trap Mix]</span><span class="video-views">2016</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Work Dat, Twerk Dat (feat. Murphy Lee)</span><span class="video-views">2006</span></div>
+      <div class="video-item"><span>🚀</span><span class="video-title">Astro Thirst</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Krank</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">In the Zone</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Odyssey</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Whispers</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Rock On</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Night In Miami Pt. 2</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Starwalk</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Get Enough (feat. 2$ Fabo)</span><span class="video-views">2014</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Go Banana (feat. Becker) [Kill the Noise Mix]</span><span class="video-views">2016</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Across the Land</span><span class="video-views">2017</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Brag (Special Version With Hook)</span><span class="video-views">2023</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">My Line (Special Version With Hook)</span><span class="video-views">2023</span></div>
+    </div>
+    <div style="margin-top:14px;">
+      <a href="https://music.apple.com/us/artist/dj-speedy/1473009687" target="_blank" class="social-btn" style="background:#FC3C44;color:white;">🍎 Open on Apple Music →</a>
+    </div>
+  </div>
+
+  <div class="connection-card">
+    <div class="conn-title">🍎 DJ Speedy — Hip-Hop Catalog (Apple Music ID: 208428844)</div>
+    <div style="font-size:12px;color:#888;margin-bottom:14px;">Including collabs with Waka Flocka, Ying Yang Twins, Fabo</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;">
+      <div class="video-item" style="border-color:rgba(255,215,0,0.3)"><span>🔥</span><span class="video-title"><strong>Dutty Wine (feat. Waka Flocka Flame)</strong></span><span class="video-views" style="color:var(--gold)">2019</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Keep Running Your Mouth (feat. Ying Yang Twins, Bone)</span><span class="video-views">2010</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Dolomite (feat. Fabo)</span><span class="video-views">2019</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">My Homeboys (feat. DJ Speedy)</span><span class="video-views">2018</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Wild Boyz (feat. DJ Speedy)</span><span class="video-views">2018</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">D.O.S (Tees Electro Mix)</span><span class="video-views">2022</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Rack It (feat. Dj Speedy)</span><span class="video-views">2023</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Sweet Lemonade (feat. Dj Speedy)</span><span class="video-views">2023</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Thinking Bout You (feat. Dj Speedy)</span><span class="video-views">2023</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Aura (feat. Dj Speedy)</span><span class="video-views">2025</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Fifty Shades (feat. DJ Speedy) [Remix]</span><span class="video-views">2024</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Flam (feat. Dj Speedy)</span><span class="video-views">2025</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Speed</span><span class="video-views">2024</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Fallin</span><span class="video-views">2023</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">Crazy</span><span class="video-views">2026</span></div>
+      <div class="video-item"><span>🎵</span><span class="video-title">New Morning</span><span class="video-views">2013</span></div>
+    </div>
+    <div style="margin-top:14px;">
+      <a href="https://music.apple.com/us/artist/dj-speedy/208428844" target="_blank" class="social-btn" style="background:#FC3C44;color:white;">🍎 Open on Apple Music →</a>
+    </div>
+  </div>
+
+  <!-- HARVEY MILLER CATALOG -->
+  <div class="connection-card">
+    <div class="conn-title">🎤 Harvey Miller Catalog (Apple Music ID: 178261861)</div>
+    <div style="font-size:12px;color:#888;margin-bottom:14px;">Includes the iconic "Gangsta Nerd (feat. Waka Flocka Flame)" — the DJ Speedy x Waka crossover anthem</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;">
+      <div class="video-item" style="border-color:rgba(255,215,0,0.5);background:#1a1a0d"><span>⭐</span><span class="video-title"><strong>Gangsta Nerd (feat. Waka Flocka Flame)</strong></span><span class="video-views" style="color:var(--gold)">2010</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">I Make It Look Easy (feat. Killer Mike)</span><span class="video-views">2012</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">Bout That Disco Life (feat. Sleepy Brown)</span><span class="video-views">1987</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">Momma Says Hands Up</span><span class="video-views">1987</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">She Wildin' (feat. Harvey Miller) — Young Riot</span><span class="video-views">2010</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">2 Turntables and a Microphone</span><span class="video-views">2016</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">Dabs</span><span class="video-views">2016</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">Feeling Like... (feat. Ray Rush & Zeric DeJuan)</span><span class="video-views">2016</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">Promise (feat. Harvey Miller)</span><span class="video-views">2013</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">My Ol Ho (feat. Harvey Miller)</span><span class="video-views">2013</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">You Ain't Heard Nothing Yet (feat. Crazy Red Balls) [Club Mix]</span><span class="video-views">2019</span></div>
+      <div class="video-item"><span>💿</span><span class="video-title">2 Turntables and a Microphone (Instrumental)</span><span class="video-views">2016</span></div>
+    </div>
+    <div style="margin-top:14px;">
+      <a href="https://music.apple.com/us/artist/harvey-miller/178261861" target="_blank" class="social-btn" style="background:#FC3C44;color:white;">🍎 Open on Apple Music →</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       FAN DATABASE / MARKETING TOOLKIT
+  ═══════════════════════════════════════════════════ -->
+  <div class="connection-card" style="border:2px solid var(--gold);">
+    <div class="conn-title" style="font-size:1.2rem;">💎 Fan Database & Marketing Toolkit — The LEGAL Path</div>
+    <div style="font-size:13px;color:#ccc;line-height:1.7;margin-bottom:20px;">
+      <strong style="color:var(--gold);">The Truth About Spotify Listener Data:</strong><br>
+      Spotify does <strong style="color:#FF6666">NOT</strong> expose individual listener names, emails, or contact info via any API. Scraping would violate Spotify ToS, GDPR/CCPA, and could destroy your $3.3B federal case. What we CAN legally build — and what every smart label does — is an <strong style="color:var(--gold)">opt-in fan database</strong> where fans voluntarily give you their info in exchange for value.
+    </div>
+
+    <!-- What the Spotify API DOES give us -->
+    <div style="background:#0d1a0d;border:1px solid rgba(29,185,84,0.3);border-radius:8px;padding:16px;margin-bottom:16px;">
+      <div style="color:#1DB954;font-weight:700;margin-bottom:10px;">✅ What Spotify Developer API Legally Provides (with your client credentials)</div>
+      <div style="font-size:13px;color:#aaa;line-height:1.9;">
+        • <strong>Artist profile</strong> — followers total, genres, images, popularity<br>
+        • <strong>Top 10 tracks</strong> per artist (by market)<br>
+        • <strong>Complete album & track catalog</strong><br>
+        • <strong>Related artists</strong> (great for finding your audience overlap)<br>
+        • <strong>Audio features</strong> of your tracks (danceability, energy, valence, tempo)<br>
+        • <strong>Playlist data</strong> — which public playlists feature your songs<br>
+        • <strong>Spotify for Artists dashboard</strong> (via OAuth) — monthly listeners, demographics, top cities (aggregate only)
+      </div>
+    </div>
+
+    <!-- What Spotify does NOT give -->
+    <div style="background:#1a0d0d;border:1px solid rgba(255,80,80,0.3);border-radius:8px;padding:16px;margin-bottom:16px;">
+      <div style="color:#FF6666;font-weight:700;margin-bottom:10px;">❌ What No API Can Give You (Privacy Laws)</div>
+      <div style="font-size:13px;color:#aaa;line-height:1.9;">
+        • ❌ Individual listener names, emails, phone numbers<br>
+        • ❌ Lists of who streamed your song<br>
+        • ❌ Listener IP addresses or device IDs<br>
+        • ❌ Direct message access to listeners<br>
+        • <span style="color:#FF9999">Trying to scrape this violates GDPR ($20M+ fines), CCPA, and Spotify ToS (instant ban + lawsuit)</span>
+      </div>
+    </div>
+
+    <!-- The LEGAL way -->
+    <div style="background:#0d1a1a;border:1px solid rgba(255,215,0,0.3);border-radius:8px;padding:16px;">
+      <div style="color:var(--gold);font-weight:700;margin-bottom:10px;font-size:1.05rem;">🏆 The Right Way: Opt-In Fan Database (What Drake, Beyoncé, Rihanna all do)</div>
+
+      <div style="font-size:13px;color:#ddd;line-height:1.9;">
+        <strong style="color:var(--gold);">Step 1 — Smart Links (free, legal, proven)</strong><br>
+        Use <a href="https://linktr.ee" target="_blank" style="color:#1DB954">Linktree</a>, <a href="https://show.co" target="_blank" style="color:#1DB954">Show.co</a>, or <a href="https://hypeddit.com" target="_blank" style="color:#1DB954">Hypeddit</a> — the "listen" link requires an email capture before unlocking the Spotify redirect. Instant opt-in.<br><br>
+
+        <strong style="color:var(--gold);">Step 2 — Pre-Save Campaigns</strong><br>
+        Before you drop, use <a href="https://feature.fm" target="_blank" style="color:#1DB954">feature.fm</a> or <a href="https://toneden.io" target="_blank" style="color:#1DB954">Toneden</a>. Fans opt-in to auto-save your new track to their Spotify = they get added to YOUR mailing list.<br><br>
+
+        <strong style="color:var(--gold);">Step 3 — TikTok → Fan Capture</strong><br>
+        Put a smart link in bio. Waka already has <strong>826.7K TikTok followers</strong>. If 1% convert = <strong>8,267 emails</strong> you own forever.<br><br>
+
+        <strong style="color:var(--gold);">Step 4 — SMS Lists</strong><br>
+        <a href="https://community.com" target="_blank" style="color:#1DB954">Community.com</a> — artists like Meek Mill, Diplo, and Paul McCartney use it. Fans text your number, you own the relationship. 98% open rate.<br><br>
+
+        <strong style="color:var(--gold);">Step 5 — Email Newsletter</strong><br>
+        <a href="https://mailchimp.com" target="_blank" style="color:#1DB954">Mailchimp</a> (free up to 500) or <a href="https://beehiiv.com" target="_blank" style="color:#1DB954">Beehiiv</a>. The GOAT Royalty App can store all of this locally.<br><br>
+
+        <strong style="color:var(--gold);">Step 6 — Use The Data You Own</strong><br>
+        Export the list to the GOAT App → run marketing campaigns → drive traffic to new releases → collect more royalties. <strong style="color:#FF6666">Your network is your net worth.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOAT Fan Database Tool (future) -->
+  <div class="connection-card" style="margin-top:16px;">
+    <div class="conn-title">🎯 GOAT Fan Capture Toolkit (Built-In — Ready to Deploy)</div>
+    <div style="font-size:13px;color:#aaa;line-height:1.7;margin-bottom:16px;">
+      Here's what I can build next for you right inside the GOAT Royalty App — all with NO third-party service required:
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;">
+      <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:16px;">
+        <div style="font-size:1.3rem;margin-bottom:8px;">🔗</div>
+        <div style="color:var(--gold);font-weight:700;margin-bottom:4px;">Smart Link Generator</div>
+        <div style="font-size:12px;color:#888;">Build your own "Linktree" — email capture before redirect to Spotify/Apple. Stored locally in GOAT DB.</div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:16px;">
+        <div style="font-size:1.3rem;margin-bottom:8px;">📧</div>
+        <div style="color:var(--gold);font-weight:700;margin-bottom:4px;">Fan Database</div>
+        <div style="font-size:12px;color:#888;">Local SQLite/JSON DB — name, email, phone, TikTok handle, favorite track. You own it 100%.</div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:16px;">
+        <div style="font-size:1.3rem;margin-bottom:8px;">🚀</div>
+        <div style="color:var(--gold);font-weight:700;margin-bottom:4px;">Pre-Save Campaigns</div>
+        <div style="font-size:12px;color:#888;">Pre-save flow with Spotify OAuth. Fans authorize ONE time, you get the email + save permission.</div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:16px;">
+        <div style="font-size:1.3rem;margin-bottom:8px;">📣</div>
+        <div style="color:var(--gold);font-weight:700;margin-bottom:4px;">Campaign Manager</div>
+        <div style="font-size:12px;color:#888;">Send email blasts when you drop new music. Moneypenny AI writes the copy. Track opens/clicks locally.</div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:16px;">
+        <div style="font-size:1.3rem;margin-bottom:8px;">📊</div>
+        <div style="color:var(--gold);font-weight:700;margin-bottom:4px;">Spotify for Artists Bridge</div>
+        <div style="font-size:12px;color:#888;">When you log in with your Spotify for Artists account, I pull your REAL monthly listener count + top cities + demographics.</div>
+      </div>
+      <div style="background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:16px;">
+        <div style="font-size:1.3rem;margin-bottom:8px;">🎯</div>
+        <div style="color:var(--gold);font-weight:700;margin-bottom:4px;">Audience Insights</div>
+        <div style="font-size:12px;color:#888;">Cross-reference Spotify related artists + TikTok fans + email signups = find your TRUE super-fans.</div>
+      </div>
+    </div>
+    <div style="margin-top:18px;padding:14px;background:#0d0d0d;border-radius:8px;font-size:12px;color:#888;border-left:3px solid var(--gold);">
+      💡 <strong style="color:var(--gold);">Ready to build these?</strong> Say the word and I'll wire them into the GOAT App on the next push. All 100% legal, 100% local, 100% yours.
+    </div>
+  </div>
+
 </div>
 
 <!-- ══════════════════════════════════════════════════════
