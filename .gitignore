@@ -27,3 +27,9 @@ uploads/
 # Electron build artifacts
 client/dist/
 client/release/
+
+# Agent/session artifacts
+.agent_hooks/
+.browser_data/
+summarized_conversations/
+tmp/

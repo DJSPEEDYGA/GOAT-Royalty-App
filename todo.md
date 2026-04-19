@@ -1,26 +1,43 @@
-# 🐐 GOAT App "Best Ever" Build Plan
+# GOAT Royalty App — "Do Them All" Execution Plan
 
-## Phase 1: Make the Characters Come Alive
-- [ ] Parse GOAT Lore PDFs into character personality profiles (JSON)
-- [ ] Inject lore into goat-royalty chat so characters speak in-universe
-- [ ] Build real unreal-copilot.html: avatar viewer + voice-to-voice + MetaHuman info
-- [ ] Build videos.html: cinematic gallery of all 15 branding MP4s
-- [ ] Add hero video to index.html homepage
+## Phase A — Custom Plugin UIs
+- [x] GOAT Saturator custom editor
+- [x] BrickSquad 808 custom editor
+- [ ] Waka Vocal Chain custom editor
+- [ ] GOAT Bus custom editor
 
-## Phase 2: Expose Hidden Features
-- [ ] Build agents.html: chat with all 11 specialist AI agents
-- [ ] Build shop.html: Shopify storefront page
-- [ ] Build royalty-calc.html: live calculator using real catalog
-- [ ] Build dsp.html: DSP distribution dashboard
-- [ ] Build mining.html: mining + wallet dashboard
+## Phase B — Live Beat Maker → SSL Routing
+- [x] AudioBridge class in goat-audio-engine.js
+- [x] Beat Maker announces masterGain
+- [x] SSL mixer BEAT button per channel
 
-## Phase 3: Polish & Navigation
-- [ ] Audit sidebar nav — ensure all pages are reachable
-- [ ] Add footer with links to all sections
-- [ ] Upgrade home hero with flying goat video
+## Phase C — Full Studio/DAW Page
+- [x] Create web-app/studio.html
+- [ ] Add studio.html link to homepage nav
+- [ ] Verify studio.html serves via HTTP
 
-## Phase 4: Deploy
-- [ ] Commit everything to GitHub
-- [ ] Push to main branch
-- [ ] Create DEPLOY-ALL-NEW-FEATURES.sh script
-- [ ] Verify all pages load
+## Phase D — Speedy AutoMix (AI Auto-Mix)
+- [x] Basic auto-mix in studio.html
+- [ ] Enhanced AutoMix on SSL mixer (intelligent EQ + comp per channel name)
+
+## Phase E — Stripe Checkout on Plugin Shop
+- [ ] Add Stripe.js integration
+- [ ] Wire Buy buttons on plugins.html
+- [ ] Bundle checkout flow
+
+## Phase F — Remaining 5 Plugins
+- [ ] GOAT Reverb (JUCE)
+- [ ] GOAT Delay (JUCE)
+- [ ] GOAT AutoTune (JUCE)
+- [ ] BrickSquad Kick (JUCE)
+- [ ] Waka AdLib FX (JUCE)
+
+## Phase G — FL Studio Integration
+- [ ] FL Studio install guide + preset docs
+- [ ] FL-specific preset bank
+
+## Phase H — Deploy Everything
+- [ ] Homepage nav updated with all new pages
+- [ ] Commit + push to GitHub
+- [ ] Deploy to Server 2 (72.61.193.184:8080)
+- [ ] Verify all pages live

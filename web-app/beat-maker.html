@@ -239,6 +239,11 @@ function initAudio() {
   // Expose for cross-page routing to SSL mixer
   window.__goatBeatMakerMaster = masterGain;
   window.__goatBeatMakerCtx = ctx;
+
+  // Announce this publisher so the SSL mixer can route from it in the same tab
+  if (window.GoatAudio && window.GoatAudio.bridge) {
+    window.GoatAudio.bridge.announce('beat-maker', masterGain);
+  }
 }
 
 // Route beat-maker output into a specific SSL channel (if open in another tab)

@@ -29,6 +29,8 @@ juce_add_plugin(BrickSquad808
 target_sources(BrickSquad808 PRIVATE
     Source/PluginProcessor.cpp
     Source/PluginProcessor.h
+    Source/PluginEditor.cpp
+    Source/PluginEditor.h
 )
 target_include_directories(BrickSquad808 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../Common)
 target_compile_definitions(BrickSquad808 PUBLIC JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0)

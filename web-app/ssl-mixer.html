@@ -756,6 +756,26 @@
     </div>
 
     <div class="master-block">
+      <div class="master-block-title">🤖 SPEEDY AUTOMIX AI</div>
+      <div class="snapshot-row" style="margin-bottom:6px">
+        <button class="snap-btn store" onclick="SSL.autoMixAll()" style="background:linear-gradient(135deg,#00ccff,#0066aa);color:#000;font-weight:700">AUTO-MIX ALL</button>
+      </div>
+      <div class="snapshot-row" style="margin-bottom:6px">
+        <button class="snap-btn" onclick="SSL.autoMixPreset('trap')">TRAP</button>
+        <button class="snap-btn" onclick="SSL.autoMixPreset('hiphop')">HIPHOP</button>
+        <button class="snap-btn" onclick="SSL.autoMixPreset('pop')">POP</button>
+      </div>
+      <div class="snapshot-row">
+        <button class="snap-btn" onclick="SSL.autoMixPreset('rock')">ROCK</button>
+        <button class="snap-btn" onclick="SSL.autoMixPreset('rnb')">R&B</button>
+        <button class="snap-btn" onclick="SSL.autoMixPreset('edm')">EDM</button>
+      </div>
+      <div style="font-size:8px;color:#888;text-align:center;padding:4px;letter-spacing:0.5px;">
+        Analyzes channel names & auto-sets EQ/Comp/Level
+      </div>
+    </div>
+
+    <div class="master-block">
       <div class="master-block-title">SYSTEM</div>
       <div class="snapshot-row">
         <button class="snap-btn" onclick="SSL.resetAll()">RESET ALL</button>
@@ -937,6 +957,44 @@ const SSL = (function() {
     const isLoop = !chSources[idx].loop;
     chSources[idx].setLoop(isLoop);
     showInfo(`CH ${idx+1} · LOOP ${isLoop ? 'ON' : 'OFF'}`);
+  }
+
+  // ---- Route beat maker output into this channel ----
+  function channelRouteBeatMaker(idx) {
+    initAudio();
+    if (!window.GoatAudio || !window.GoatAudio.bridge) {
+      showInfo('AUDIO BRIDGE NOT LOADED');
+      return;
+    }
+    // Toggle off if already routed
+    if (channels[idx].extRoute === 'beat-maker' && channels[idx]._extNode) {
+      try { channels[idx]._extNode.disconnect(chNodes[idx].input); } catch (e) {}
+      channels[idx].extRoute = null;
+      channels[idx]._extNode = null;
+      buildChannelRack();
+      showInfo(`CH ${idx+1} · BEAT ROUTE OFF`);
+      return;
+    }
+    // Find the beat maker source in same tab
+    const sub = window.GoatAudio.bridge.subscribe('beat-maker');
+    if (sub.type === 'direct' && sub.node) {
+      try {
+        sub.node.connect(chNodes[idx].input);
+        channels[idx].extRoute = 'beat-maker';
+        channels[idx]._extNode = sub.node;
+        channels[idx].name = 'BEAT BUS';
+        buildChannelRack();
+        showInfo(`CH ${idx+1} · LIVE FROM BEAT MAKER`);
+      } catch (e) {
+        showInfo('ROUTE FAILED: ' + e.message);
+      }
+    } else {
+      showInfo('OPEN BEAT MAKER IN A TAB FIRST, THEN CLICK ▶ PLAY THERE');
+      // Offer to open it
+      if (confirm('Open Beat Maker in a new tab to enable routing?')) {
+        window.open('beat-maker.html', 'goat-beat-maker');
+      }
+    }
   }
 
   function buildChannelNodes(idx) {
@@ -1129,9 +1187,12 @@ const SSL = (function() {
           <button class="mini-btn ${hasFile?'active':''}" data-act="load" title="Load audio file">📁</button>
         </div>
         <div class="btn-row">
+          <button class="mini-btn ${(channels[idx].extRoute==='beat-maker')?'active':''}" data-act="routebeat" title="Route Beat Maker here">🥁</button>
+          <button class="mini-btn ${(chSources[idx]&&chSources[idx].loop)?'active':''}" data-act="loop" ${!hasFile?'disabled':''} title="Loop">🔁</button>
+        </div>
+        <div class="btn-row">
           <button class="mini-btn ${hasFile?'green':''}" data-act="play" ${!hasFile?'disabled':''} title="Play">▶</button>
           <button class="mini-btn" data-act="stopclip" ${!hasFile?'disabled':''} title="Stop">⏹</button>
-          <button class="mini-btn ${(chSources[idx]&&chSources[idx].loop)?'active':''}" data-act="loop" ${!hasFile?'disabled':''} title="Loop">🔁</button>
         </div>
       </div>
 
@@ -1280,6 +1341,7 @@ const SSL = (function() {
       case 'play':  channelPlayFile(idx); return;
       case 'stopclip': channelStopFile(idx); return;
       case 'loop':  channelToggleLoop(idx); buildChannelRack(); return;
+      case 'routebeat': channelRouteBeatMaker(idx); return;
     }
     btn.classList.toggle('active');
     applyChannel(idx);
@@ -1768,6 +1830,109 @@ const SSL = (function() {
     showInfo('DEMO SESSION LOADED · BRICKSQUAD MIX TEMPLATE');
   }
 
+  /* ------------- SPEEDY AUTOMIX AI ------------- */
+  function classifyChannel(name) {
+    const n = (name || '').toUpperCase();
+    if (/KICK|BD\b|BASS\s*DRUM/.test(n)) return 'kick';
+    if (/SNARE|SN\b|RIM|CLAP/.test(n)) return 'snare';
+    if (/HIHAT|HAT|HH\b|CYM|CRASH|RIDE|OH\b|OVERHEAD/.test(n)) return 'hat';
+    if (/TOM/.test(n)) return 'tom';
+    if (/808|SUB(?!\s*SNARE)/.test(n)) return '808';
+    if (/BASS|BS\b/.test(n)) return 'bass';
+    if (/LEAD(?!\s*VOX)|MAIN\s*VOX|WAKA\s*LEAD|SPEEDY\s*V/.test(n)) return 'leadvox';
+    if (/AD[- ]?LIB|ADL|HYPE|HRM|HARM|DBL|DOUBLE|BGV|BG\b|BACK|CHANT|SHOUT|FX\s*VOX/.test(n)) return 'bgvox';
+    if (/VOX|VOC|VOCAL/.test(n)) return 'leadvox';
+    if (/GTR|GUITAR/.test(n)) return 'guitar';
+    if (/PIANO|KEYS|RHODES|WURLI|EP\b/.test(n)) return 'keys';
+    if (/SYNTH|PAD/.test(n)) return 'synth';
+    if (/STRING|BRASS|HORN|SAX|TRUMPET|BANJO|MANDO/.test(n)) return 'instr';
+    if (/REVERB|DELAY|FX/.test(n)) return 'fx';
+    return 'other';
+  }
+
+  const AUTOMIX_PRESETS = {
+    trap:{kick:{fader:-3,hpf:[true,30],eq:{lo:+2,lm:-2,hm:+1,hi:+1},comp:[true,-14,4]},snare:{fader:-4,hpf:[true,100],eq:{lo:-1,lm:-3,hm:+2,hi:+4},comp:[true,-16,3]},hat:{fader:-10,hpf:[true,300],eq:{lo:-6,lm:0,hm:+1,hi:+3},comp:[false]},tom:{fader:-7,hpf:[true,60],eq:{lo:+1,lm:-2,hm:+1,hi:+2},comp:[true,-18,3]},'808':{fader:-2,hpf:[false],eq:{lo:+3,lm:-2,hm:0,hi:0},comp:[true,-10,2.5]},bass:{fader:-5,hpf:[true,40],eq:{lo:+2,lm:-1,hm:+1,hi:0},comp:[true,-14,3]},leadvox:{fader:0,hpf:[true,120],eq:{lo:-2,lm:-1,hm:+2,hi:+3},comp:[true,-16,4]},bgvox:{fader:-8,hpf:[true,150],eq:{lo:-3,lm:-2,hm:+1,hi:+2},comp:[true,-18,3]},keys:{fader:-6,hpf:[true,120],eq:{lo:-1,lm:0,hm:+1,hi:+2},comp:[true,-20,2.5]},synth:{fader:-6,hpf:[true,80],eq:{lo:0,lm:-1,hm:+1,hi:+2},comp:[false]},guitar:{fader:-6,hpf:[true,100],eq:{lo:-2,lm:+1,hm:+2,hi:+1},comp:[true,-18,3]},instr:{fader:-7,hpf:[true,100],eq:{lo:-1,lm:0,hm:+1,hi:+1},comp:[false]},fx:{fader:-12,hpf:[true,200],eq:{lo:-3,lm:0,hm:0,hi:+2},comp:[false]},other:{fader:-6,hpf:[true,80],eq:{lo:0,lm:0,hm:0,hi:0},comp:[false]}},
+    hiphop:{kick:{fader:-4,hpf:[true,35],eq:{lo:+2,lm:-1,hm:+1,hi:+1},comp:[true,-14,3.5]},snare:{fader:-5,hpf:[true,90],eq:{lo:-1,lm:-2,hm:+2,hi:+3},comp:[true,-16,3]},hat:{fader:-9,hpf:[true,250],eq:{lo:-5,lm:0,hm:0,hi:+2},comp:[false]},tom:{fader:-7,hpf:[true,60],eq:{lo:+1,lm:-2,hm:+1,hi:+1},comp:[true,-18,3]},'808':{fader:-3,hpf:[false],eq:{lo:+2,lm:-1,hm:0,hi:0},comp:[true,-12,2.5]},bass:{fader:-5,hpf:[true,40],eq:{lo:+2,lm:0,hm:+1,hi:0},comp:[true,-14,3]},leadvox:{fader:+1,hpf:[true,110],eq:{lo:-1,lm:-1,hm:+2,hi:+3},comp:[true,-16,3.5]},bgvox:{fader:-9,hpf:[true,140],eq:{lo:-3,lm:-1,hm:+1,hi:+2},comp:[true,-18,3]},keys:{fader:-6,hpf:[true,100],eq:{lo:-1,lm:0,hm:+1,hi:+1},comp:[true,-20,2.5]},synth:{fader:-6,hpf:[true,80],eq:{lo:0,lm:0,hm:+1,hi:+2},comp:[false]},guitar:{fader:-7,hpf:[true,110],eq:{lo:-2,lm:+1,hm:+2,hi:+1},comp:[true,-18,3]},instr:{fader:-7,hpf:[true,100],eq:{lo:-1,lm:0,hm:+1,hi:+1},comp:[false]},fx:{fader:-12,hpf:[true,200],eq:{lo:-3,lm:0,hm:0,hi:+2},comp:[false]},other:{fader:-6,hpf:[true,80],eq:{lo:0,lm:0,hm:0,hi:0},comp:[false]}},
+    pop:{kick:{fader:-4,hpf:[true,40],eq:{lo:+1,lm:-1,hm:+2,hi:+1},comp:[true,-15,3]},snare:{fader:-5,hpf:[true,100],eq:{lo:0,lm:-2,hm:+3,hi:+2},comp:[true,-17,3]},hat:{fader:-10,hpf:[true,300],eq:{lo:-5,lm:0,hm:0,hi:+2},comp:[false]},tom:{fader:-8,hpf:[true,70],eq:{lo:+1,lm:-2,hm:+1,hi:+1},comp:[true,-19,3]},'808':{fader:-6,hpf:[true,30],eq:{lo:+1,lm:-1,hm:0,hi:0},comp:[true,-14,2.5]},bass:{fader:-6,hpf:[true,45],eq:{lo:+1,lm:0,hm:+2,hi:+1},comp:[true,-16,3]},leadvox:{fader:+1,hpf:[true,130],eq:{lo:-2,lm:-1,hm:+3,hi:+4},comp:[true,-18,4]},bgvox:{fader:-9,hpf:[true,180],eq:{lo:-4,lm:-2,hm:+1,hi:+3},comp:[true,-19,3]},keys:{fader:-5,hpf:[true,100],eq:{lo:-1,lm:0,hm:+2,hi:+2},comp:[true,-20,2.5]},synth:{fader:-6,hpf:[true,90],eq:{lo:-1,lm:0,hm:+1,hi:+2},comp:[false]},guitar:{fader:-6,hpf:[true,120],eq:{lo:-2,lm:0,hm:+2,hi:+2},comp:[true,-18,3]},instr:{fader:-7,hpf:[true,100],eq:{lo:-1,lm:0,hm:+1,hi:+1},comp:[false]},fx:{fader:-11,hpf:[true,200],eq:{lo:-3,lm:0,hm:0,hi:+2},comp:[false]},other:{fader:-6,hpf:[true,80],eq:{lo:0,lm:0,hm:0,hi:0},comp:[false]}},
+    rock:{kick:{fader:-3,hpf:[true,40],eq:{lo:+3,lm:-3,hm:+2,hi:+1},comp:[true,-13,4]},snare:{fader:-3,hpf:[true,110],eq:{lo:+1,lm:-2,hm:+2,hi:+3},comp:[true,-15,3.5]},hat:{fader:-10,hpf:[true,350],eq:{lo:-6,lm:0,hm:0,hi:+2},comp:[false]},tom:{fader:-5,hpf:[true,55],eq:{lo:+2,lm:-3,hm:+2,hi:+2},comp:[true,-17,3]},bass:{fader:-5,hpf:[true,45],eq:{lo:+1,lm:-1,hm:+2,hi:+1},comp:[true,-14,3.5]},leadvox:{fader:0,hpf:[true,100],eq:{lo:-1,lm:0,hm:+2,hi:+3},comp:[true,-16,4]},bgvox:{fader:-8,hpf:[true,150],eq:{lo:-3,lm:-1,hm:+1,hi:+2},comp:[true,-18,3]},keys:{fader:-7,hpf:[true,110],eq:{lo:-1,lm:0,hm:+1,hi:+2},comp:[true,-20,2.5]},synth:{fader:-8,hpf:[true,90],eq:{lo:-1,lm:0,hm:+1,hi:+1},comp:[false]},guitar:{fader:-4,hpf:[true,80],eq:{lo:-1,lm:+1,hm:+3,hi:+2},comp:[true,-16,4]},instr:{fader:-7,hpf:[true,100],eq:{lo:-1,lm:0,hm:+1,hi:+1},comp:[false]},'808':{fader:-8,hpf:[true,40],eq:{lo:0,lm:0,hm:0,hi:0},comp:[false]},fx:{fader:-11,hpf:[true,200],eq:{lo:-3,lm:0,hm:0,hi:+2},comp:[false]},other:{fader:-6,hpf:[true,80],eq:{lo:0,lm:0,hm:0,hi:0},comp:[false]}},
+    rnb:{kick:{fader:-5,hpf:[true,35],eq:{lo:+2,lm:-2,hm:0,hi:+1},comp:[true,-15,3]},snare:{fader:-6,hpf:[true,100],eq:{lo:-1,lm:-2,hm:+1,hi:+2},comp:[true,-17,3]},hat:{fader:-11,hpf:[true,300],eq:{lo:-5,lm:0,hm:0,hi:+1},comp:[false]},tom:{fader:-8,hpf:[true,70],eq:{lo:+1,lm:-2,hm:+1,hi:+1},comp:[true,-19,3]},'808':{fader:-4,hpf:[true,30],eq:{lo:+2,lm:-1,hm:0,hi:0},comp:[true,-13,2.5]},bass:{fader:-5,hpf:[true,40],eq:{lo:+2,lm:0,hm:+1,hi:0},comp:[true,-15,3]},leadvox:{fader:+1,hpf:[true,120],eq:{lo:-2,lm:-1,hm:+2,hi:+4},comp:[true,-17,3.5]},bgvox:{fader:-7,hpf:[true,150],eq:{lo:-3,lm:-1,hm:+1,hi:+3},comp:[true,-18,3]},keys:{fader:-4,hpf:[true,90],eq:{lo:-1,lm:0,hm:+2,hi:+3},comp:[true,-19,2.5]},synth:{fader:-6,hpf:[true,80],eq:{lo:-1,lm:0,hm:+1,hi:+2},comp:[false]},guitar:{fader:-7,hpf:[true,120],eq:{lo:-2,lm:+1,hm:+1,hi:+2},comp:[true,-18,3]},instr:{fader:-6,hpf:[true,100],eq:{lo:-1,lm:0,hm:+1,hi:+2},comp:[false]},fx:{fader:-11,hpf:[true,200],eq:{lo:-3,lm:0,hm:0,hi:+2},comp:[false]},other:{fader:-6,hpf:[true,80],eq:{lo:0,lm:0,hm:0,hi:0},comp:[false]}},
+    edm:{kick:{fader:-2,hpf:[true,30],eq:{lo:+3,lm:-3,hm:+2,hi:+2},comp:[true,-12,4]},snare:{fader:-5,hpf:[true,120],eq:{lo:-1,lm:-2,hm:+3,hi:+4},comp:[true,-15,3.5]},hat:{fader:-8,hpf:[true,400],eq:{lo:-6,lm:0,hm:+1,hi:+3},comp:[false]},tom:{fader:-8,hpf:[true,70],eq:{lo:+1,lm:-2,hm:+1,hi:+1},comp:[true,-18,3]},'808':{fader:-3,hpf:[false],eq:{lo:+3,lm:-2,hm:0,hi:0},comp:[true,-11,2.5]},bass:{fader:-4,hpf:[true,40],eq:{lo:+2,lm:0,hm:+1,hi:+1},comp:[true,-13,3.5]},leadvox:{fader:0,hpf:[true,130],eq:{lo:-3,lm:-1,hm:+2,hi:+4},comp:[true,-16,4]},bgvox:{fader:-8,hpf:[true,180],eq:{lo:-4,lm:-2,hm:+1,hi:+3},comp:[true,-18,3]},keys:{fader:-6,hpf:[true,100],eq:{lo:-2,lm:0,hm:+1,hi:+2},comp:[true,-20,2.5]},synth:{fader:-4,hpf:[true,60],eq:{lo:0,lm:0,hm:+2,hi:+3},comp:[true,-17,3]},guitar:{fader:-8,hpf:[true,120],eq:{lo:-2,lm:+1,hm:+2,hi:+2},comp:[true,-18,3]},instr:{fader:-8,hpf:[true,120],eq:{lo:-2,lm:0,hm:+1,hi:+2},comp:[false]},fx:{fader:-10,hpf:[true,200],eq:{lo:-3,lm:0,hm:+1,hi:+3},comp:[false]},other:{fader:-6,hpf:[true,80],eq:{lo:0,lm:0,hm:0,hi:0},comp:[false]}}
+  };
+
+  function applyAutoMixToChannel(ch, preset) {
+    const cat = classifyChannel(ch.name);
+    const p = preset[cat] || preset.other;
+    if (!p) return cat;
+    if (typeof p.fader === 'number') ch.fader = p.fader;
+    if (p.hpf) { ch.hpfOn = !!p.hpf[0]; if (p.hpf[1]) ch.hpfFreq = p.hpf[1]; }
+    if (p.eq) {
+      ch.eqOn = true;
+      if ('lo' in p.eq) ch.eq.lo.gain = p.eq.lo;
+      if ('lm' in p.eq) ch.eq.lm.gain = p.eq.lm;
+      if ('hm' in p.eq) ch.eq.hm.gain = p.eq.hm;
+      if ('hi' in p.eq) ch.eq.hi.gain = p.eq.hi;
+    }
+    if (p.comp) {
+      ch.compOn = !!p.comp[0];
+      if (p.comp[0]) {
+        if (typeof p.comp[1] === 'number') ch.comp.threshold = p.comp[1];
+        if (typeof p.comp[2] === 'number') ch.comp.ratio = p.comp[2];
+      }
+    }
+    return cat;
+  }
+
+  function autoMixPreset(genre) {
+    const preset = AUTOMIX_PRESETS[genre];
+    if (!preset) { showInfo('UNKNOWN GENRE: ' + genre); return; }
+    try { initAudio(); } catch(e){}
+    let counts = {};
+    for (const ch of channels) {
+      const cat = applyAutoMixToChannel(ch, preset);
+      counts[cat] = (counts[cat] || 0) + 1;
+      try { applyChannelAudio(ch); } catch(e) {}
+    }
+    buildChannelRack();
+    const summary = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([k,v])=>v+' '+k.toUpperCase()).join(' / ');
+    showInfo('AUTOMIX ' + genre.toUpperCase() + ' - ' + summary);
+  }
+
+  function autoMixAll() {
+    let score = { trap:0, hiphop:0, pop:0, rock:0, rnb:0, edm:0 };
+    for (const ch of channels) {
+      const n = (ch.name||'').toUpperCase();
+      if (/808|SUB|BRICK|WAKA|SPEEDY|TRAP/.test(n)) score.trap += 3;
+      if (/RAP|HIP|MC\b/.test(n)) score.hiphop += 2;
+      if (/POP/.test(n)) score.pop += 3;
+      if (/GTR|GUITAR|ROCK|AMP/.test(n)) score.rock += 2;
+      if (/RNB|R&B|RHODES|WURLI/.test(n)) score.rnb += 2;
+      if (/EDM|DROP|SIDECHAIN|PLUCK/.test(n)) score.edm += 2;
+    }
+    let best = 'trap', bestS = -1;
+    for (const [k,v] of Object.entries(score)) if (v > bestS) { best = k; bestS = v; }
+    showInfo('SMART AUTOMIX - DETECTED ' + best.toUpperCase());
+    autoMixPreset(best);
+  }
+
+  function applyChannelAudio(ch) {
+    if (typeof chNodes === 'undefined') return;
+    const n = chNodes[ch.id - 1];
+    if (!n || !ac) return;
+    try {
+      if (n.fader) n.fader.gain.setTargetAtTime(Math.pow(10, ch.fader/20), ac.currentTime, 0.02);
+      if (n.pan && n.pan.pan) n.pan.pan.setTargetAtTime(ch.pan, ac.currentTime, 0.02);
+      if (n.hpf) n.hpf.frequency.setTargetAtTime(ch.hpfOn ? ch.hpfFreq : 20, ac.currentTime, 0.02);
+      if (n.eqHi) n.eqHi.gain.setTargetAtTime(ch.eqOn ? ch.eq.hi.gain : 0, ac.currentTime, 0.02);
+      if (n.eqHm) n.eqHm.gain.setTargetAtTime(ch.eqOn ? ch.eq.hm.gain : 0, ac.currentTime, 0.02);
+      if (n.eqLm) n.eqLm.gain.setTargetAtTime(ch.eqOn ? ch.eq.lm.gain : 0, ac.currentTime, 0.02);
+      if (n.eqLo) n.eqLo.gain.setTargetAtTime(ch.eqOn ? ch.eq.lo.gain : 0, ac.currentTime, 0.02);
+      if (n.comp) {
+        n.comp.threshold.setTargetAtTime(ch.compOn ? ch.comp.threshold : 0, ac.currentTime, 0.02);
+        n.comp.ratio.setTargetAtTime(ch.compOn ? ch.comp.ratio : 1, ac.currentTime, 0.02);
+      }
+    } catch(e) {}
+  }
+
   /* ------------- Public API ------------- */
   // ---- Drag-and-drop file to channel ----
   function wireDragDrop() {
@@ -1869,7 +2034,8 @@ const SSL = (function() {
   return {
     init,
     snapshotStore, snapshotRecall, snapshotExport, snapshotImport,
-    resetAll, panic, loadDemo
+    resetAll, panic, loadDemo,
+    autoMixAll, autoMixPreset
   };
 })();
 

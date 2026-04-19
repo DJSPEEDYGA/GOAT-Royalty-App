@@ -15,7 +15,7 @@ PLUGIN_DEST="/Library/Application Support/Avid/Audio/Plug-Ins"
 AU_DEST="$HOME/Library/Audio/Plug-Ins/Components"
 VST3_DEST="$HOME/Library/Audio/Plug-Ins/VST3"
 
-PLUGINS=("GoatSaturator" "BrickSquad808" "WakaVocalChain" "GoatBus")
+PLUGINS=("GoatSaturator" "BrickSquad808" "WakaVocalChain" "GoatBus" "GoatReverb" "GoatDelay" "GoatAutoTune" "BrickSquadKick" "WakaAdLibFX")
 
 # ---- Colors ----
 G='\033[0;32m'; Y='\033[1;33m'; R='\033[0;31m'; B='\033[1;34m'; N='\033[0m'

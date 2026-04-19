@@ -9,7 +9,7 @@ IF "%JUCE_PATH%"==""    SET JUCE_PATH=%USERPROFILE%\JUCE
 IF "%BUILD_TYPE%"=="" SET BUILD_TYPE=Release
 
 SET DIGISHELL="C:\Program Files\Avid\DigiShell\AAXValidator.exe"
-SET PLUGINS=GoatSaturator BrickSquad808 WakaVocalChain GoatBus
+SET PLUGINS=GoatSaturator BrickSquad808 WakaVocalChain GoatBus GoatReverb GoatDelay GoatAutoTune BrickSquadKick WakaAdLibFX
 
 ECHO ============================================================
 ECHO  GOAT PLUGIN SUITE - WINDOWS BUILD

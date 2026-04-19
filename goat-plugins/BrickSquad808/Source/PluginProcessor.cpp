@@ -2,6 +2,11 @@
   BrickSquad 808 — PluginProcessor.cpp
 */
 #include "PluginProcessor.h"
+#include "PluginEditor.h"
+
+juce::AudioProcessorEditor* BrickSquad808Processor::createEditor() {
+    return new BrickSquad808Editor(*this);
+}
 
 BrickSquad808Processor::BrickSquad808Processor()
     : AudioProcessor(BusesProperties()

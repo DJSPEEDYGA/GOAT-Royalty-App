@@ -506,7 +506,7 @@ const plugins = [
     icon: "🌫️",
     desc: "Plate, hall, chamber, and 'GOAT Cathedral' algorithms. Pre-delay, freeze, shimmer, and ducking. Mix-ready vocal reverb.",
     formats: ["AAX","AU","VST3","STANDALONE"],
-    ready: false,
+    ready: true,
     price: 59, priceOld: 149,
     status: "BETA"
   },
@@ -517,7 +517,7 @@ const plugins = [
     icon: "📡",
     desc: "Tape delay + digital delay + slapback modes. BPM sync, ping-pong, feedback saturation. Ideal for vocals and guitars.",
     formats: ["AAX","AU","VST3","STANDALONE"],
-    ready: false,
+    ready: true,
     price: 49, priceOld: 129,
     status: "BETA"
   },
@@ -528,9 +528,9 @@ const plugins = [
     icon: "🎵",
     desc: "Real-time pitch correction with graph mode. Key/scale lock, humanize, formant preservation, T-Pain hard-tune mode.",
     formats: ["AAX","AU","VST3","STANDALONE"],
-    ready: false,
+    ready: true,
     price: 89, priceOld: 249,
-    status: "COMING SOON"
+    status: "BETA"
   },
   {
     name: "BrickSquad Kick",
@@ -539,9 +539,9 @@ const plugins = [
     icon: "🦵",
     desc: "Layered kick synthesis. Sub layer + mid punch + click top. MIDI-triggered, side-chain ready. Build your signature kick.",
     formats: ["AAX","AU","VST3","STANDALONE"],
-    ready: false,
+    ready: true,
     price: 39, priceOld: 99,
-    status: "COMING SOON"
+    status: "BETA"
   },
   {
     name: "Waka AdLib FX",
@@ -550,9 +550,9 @@ const plugins = [
     icon: "🎙️",
     desc: "Ad-lib FX chain: granular pitch, tape stop, reverse reverb, crowd doubler, phone filter. Inspired by Waka's ad-lib signature.",
     formats: ["AAX","AU","VST3","STANDALONE"],
-    ready: false,
+    ready: true,
     price: 49, priceOld: 129,
-    status: "COMING SOON"
+    status: "BETA"
   }
 ];
 
@@ -584,15 +584,203 @@ function renderPlugins() {
     `;
   }).join('');
 }
-function buy(code) {
-  alert('Cart: ' + code + '\n\n💳 Stripe/PayPal checkout will be wired via the royalty app backend.\n\nFor now: build from source at github.com/DJSPEEDYGA/GOAT-Royalty-App');
+// --- Cart system ---
+const BUNDLES = {
+  ultimate:{ name:'GOAT Ultimate Bundle', price:249, desc:'All 9 plugins (4 now + 5 coming free)' },
+  studio:  { name:'GOAT Studio Bundle',   price:99,  desc:'All 4 shipping plugins' },
+  trap:    { name:'BrickSquad Trap Pack', price:69,  desc:'BrickSquad 808 + GOAT Saturator' },
+  vocal:   { name:'Waka Vocal Bundle',    price:79,  desc:'Waka Vocal Chain + GOAT Bus' }
+};
+
+let CART = JSON.parse(localStorage.getItem('goatCart') || '[]');
+
+function saveCart() { localStorage.setItem('goatCart', JSON.stringify(CART)); updateCartBadge(); }
+
+function updateCartBadge() {
+  const b = document.getElementById('cartBadge');
+  if (b) b.textContent = CART.length;
 }
+
+function buy(code) {
+  let item = null;
+  if (BUNDLES[code]) {
+    item = { code, name: BUNDLES[code].name, price: BUNDLES[code].price, type:'bundle' };
+  } else {
+    const p = plugins.find(x => x.code === code);
+    if (!p) return;
+    if (!p.ready) {
+      openModal('⏳ ' + p.name + ' is launching soon!', 'Reserve your copy now. We will email you when it drops and you will get 20% off launch pricing.\n\nExpected: Q1 2026');
+      return;
+    }
+    item = { code, name: p.name, price: p.price, type:'plugin' };
+  }
+  if (CART.find(x => x.code === code)) {
+    openModal('✅ Already in cart', item.name + ' is already in your cart. Open cart to checkout.');
+    return;
+  }
+  CART.push(item);
+  saveCart();
+  openModal('🛍️ Added to Cart', item.name + ' - $' + item.price + '\n\nClick CHECKOUT below to complete your order.', true);
+}
+
+function removeFromCart(code) {
+  CART = CART.filter(x => x.code !== code);
+  saveCart();
+  renderCart();
+}
+
+function cartTotal() { return CART.reduce((s,i) => s + i.price, 0); }
+
+function openCart() {
+  const modal = document.getElementById('cartModal');
+  if (!modal) return;
+  renderCart();
+  modal.style.display = 'flex';
+}
+
+function closeCart() {
+  const modal = document.getElementById('cartModal');
+  if (modal) modal.style.display = 'none';
+}
+
+function renderCart() {
+  const body = document.getElementById('cartBody');
+  const totalEl = document.getElementById('cartTotal');
+  if (!body) return;
+  if (CART.length === 0) {
+    body.innerHTML = '<p style="color:#888;text-align:center;padding:20px">Your cart is empty. Add some plugins!</p>';
+    if (totalEl) totalEl.textContent = '$0';
+    return;
+  }
+  body.innerHTML = CART.map(i => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #222;">
+      <div>
+        <div style="font-weight:700;color:#ffa500">${i.name}</div>
+        <div style="font-size:11px;color:#666">${i.type.toUpperCase()}</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div style="font-weight:700">$${i.price}</div>
+        <button onclick="removeFromCart('${i.code}')" style="background:#300;color:#f66;border:1px solid #600;padding:4px 10px;cursor:pointer;border-radius:4px">✕</button>
+      </div>
+    </div>`).join('');
+  if (totalEl) totalEl.textContent = '$' + cartTotal();
+}
+
+// --- Stripe checkout ---
+async function checkout() {
+  if (CART.length === 0) { openModal('Cart empty','Add items first'); return; }
+  const email = prompt('Email for license delivery:');
+  if (!email) return;
+  if (!/@/.test(email)) { alert('Invalid email'); return; }
+
+  try {
+    const res = await fetch('/api/stripe/create-checkout-session', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ items: CART, email })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.url) { window.location.href = data.url; return; }
+    }
+  } catch(e) {}
+
+  const LINKS = {
+    ultimate:     'https://buy.stripe.com/test_ultimate',
+    studio:       'https://buy.stripe.com/test_studio',
+    trap:         'https://buy.stripe.com/test_trap',
+    vocal:        'https://buy.stripe.com/test_vocal',
+    'goat-sat':   'https://buy.stripe.com/test_goatsat',
+    'bs808':      'https://buy.stripe.com/test_bs808',
+    'waka-vox':   'https://buy.stripe.com/test_wakavox',
+    'goat-bus':   'https://buy.stripe.com/test_goatbus',
+    'goat-verb':  'https://buy.stripe.com/test_goatverb',
+    'goat-delay': 'https://buy.stripe.com/test_goatdelay',
+    'goat-tune':  'https://buy.stripe.com/test_goattune',
+    'bs-kick':    'https://buy.stripe.com/test_bskick',
+    'waka-adlib': 'https://buy.stripe.com/test_wakaadlib'
+  };
+  if (CART.length === 1 && LINKS[CART[0].code]) {
+    const ok = confirm('Proceed to Stripe checkout for ' + CART[0].name + ' ($' + CART[0].price + ')?\n\nAfter payment, your license will be emailed to ' + email);
+    if (ok) window.open(LINKS[CART[0].code], '_blank');
+    return;
+  }
+  const orderId = 'GR-' + Date.now().toString(36).toUpperCase();
+  const orders = JSON.parse(localStorage.getItem('goatOrders') || '[]');
+  orders.push({ orderId, email, items: CART, total: cartTotal(), status: 'pending', ts: Date.now() });
+  localStorage.setItem('goatOrders', JSON.stringify(orders));
+  openModal('🧾 Order Received: ' + orderId,
+    'Total: $' + cartTotal() + '\nEmail: ' + email + '\n\nYou will receive a Stripe invoice by email within minutes. License keys will be delivered after payment clears.\n\nOrder #: ' + orderId);
+  CART = [];
+  saveCart();
+  renderCart();
+}
+
 function showPlugin(code) {
   const p = plugins.find(x => x.code === code);
   if (!p) return;
-  alert(p.name + '\n' + p.type + '\n\n' + p.desc + '\n\nFormats: ' + p.formats.join(', ') + '\nStatus: ' + p.status);
+  openModal(p.icon + ' ' + p.name,
+    p.type + ' - $' + p.price + '\n\n' + p.desc + '\n\nFormats: ' + p.formats.join(', ') + '\nStatus: ' + p.status,
+    p.ready, () => buy(code));
 }
+
+function openModal(title, body, showAction, actionFn) {
+  const el = document.getElementById('genericModal');
+  if (!el) { alert(title + '\n\n' + body); return; }
+  document.getElementById('gmTitle').textContent = title;
+  document.getElementById('gmBody').textContent = body;
+  const act = document.getElementById('gmAction');
+  if (showAction) {
+    act.style.display = 'inline-block';
+    act.textContent = actionFn ? 'BUY NOW' : 'OPEN CART';
+    act.onclick = actionFn || (() => { closeModal(); openCart(); });
+  } else {
+    act.style.display = 'none';
+  }
+  el.style.display = 'flex';
+}
+function closeModal() {
+  const el = document.getElementById('genericModal');
+  if (el) el.style.display = 'none';
+}
+
 renderPlugins();
+updateCartBadge();
 </script>
+
+<!-- Floating cart button -->
+<button onclick="openCart()" style="position:fixed;bottom:24px;right:24px;z-index:998;background:linear-gradient(135deg,#ffa500,#ff6600);color:#000;border:none;padding:14px 22px;border-radius:40px;font-weight:800;cursor:pointer;box-shadow:0 6px 20px rgba(255,165,0,0.4);font-size:14px;letter-spacing:1px;">
+  🛍️ CART <span id="cartBadge" style="background:#000;color:#ffa500;padding:2px 8px;border-radius:12px;margin-left:6px">0</span>
+</button>
+
+<div id="cartModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;justify-content:center;align-items:center;padding:20px">
+  <div style="background:#0a0a0a;border:2px solid #ffa500;border-radius:12px;padding:28px;max-width:540px;width:100%;max-height:80vh;overflow:auto;box-shadow:0 20px 60px rgba(255,165,0,0.3)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="margin:0;color:#ffa500;letter-spacing:2px">🛍️ YOUR CART</h2>
+      <button onclick="closeCart()" style="background:#222;color:#fff;border:none;padding:6px 12px;cursor:pointer;border-radius:6px;font-size:18px">✕</button>
+    </div>
+    <div id="cartBody"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:2px solid #ffa500">
+      <div style="font-size:18px;color:#888">TOTAL:</div>
+      <div style="font-size:28px;font-weight:800;color:#ffa500" id="cartTotal">$0</div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button onclick="closeCart()" style="flex:1;background:#222;color:#fff;border:1px solid #444;padding:14px;cursor:pointer;border-radius:8px;font-weight:700;letter-spacing:1px">CONTINUE SHOPPING</button>
+      <button onclick="checkout()" style="flex:1;background:linear-gradient(135deg,#00ff66,#009944);color:#000;border:none;padding:14px;cursor:pointer;border-radius:8px;font-weight:800;letter-spacing:1px;font-size:14px">💳 CHECKOUT</button>
+    </div>
+    <div style="text-align:center;color:#555;font-size:10px;margin-top:12px;letter-spacing:1px">SECURED BY STRIPE - 14-DAY MONEY BACK</div>
+  </div>
+</div>
+
+<div id="genericModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;justify-content:center;align-items:center;padding:20px">
+  <div style="background:#0a0a0a;border:2px solid #ffa500;border-radius:12px;padding:28px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(255,165,0,0.3)">
+    <h2 id="gmTitle" style="margin:0 0 16px 0;color:#ffa500">Title</h2>
+    <p id="gmBody" style="color:#ccc;white-space:pre-wrap;line-height:1.6"></p>
+    <div style="display:flex;gap:10px;margin-top:20px;justify-content:flex-end">
+      <button onclick="closeModal()" style="background:#222;color:#fff;border:1px solid #444;padding:10px 20px;cursor:pointer;border-radius:6px;font-weight:700">CLOSE</button>
+      <button id="gmAction" style="display:none;background:linear-gradient(135deg,#ffa500,#ff6600);color:#000;border:none;padding:10px 20px;cursor:pointer;border-radius:6px;font-weight:800">BUY NOW</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

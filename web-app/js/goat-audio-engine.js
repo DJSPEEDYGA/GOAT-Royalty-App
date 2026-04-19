@@ -227,12 +227,57 @@ class Metronome {
   }
 }
 
+// ---- Cross-page live audio bridge (BroadcastChannel + MediaStream) ----
+// The beat maker can publish its master output as a MediaStream.
+// The SSL mixer can subscribe and route it into any channel input.
+class AudioBridge {
+  constructor() {
+    this.bc = ('BroadcastChannel' in window) ? new BroadcastChannel('goat-audio-bridge') : null;
+    this.publishers = {}; // id -> MediaStreamDestination
+    this.subscribers = {};
+    this.listeners = [];
+    if (this.bc) {
+      this.bc.onmessage = (e) => this.listeners.forEach(fn => fn(e.data));
+    }
+  }
+  // Publisher side — creates a destination node, returns it for wiring
+  publish(id, sourceNode) {
+    const dest = ac().createMediaStreamDestination();
+    sourceNode.connect(dest);
+    this.publishers[id] = dest;
+    if (this.bc) this.bc.postMessage({ kind: 'publish', id, at: Date.now() });
+    return dest;
+  }
+  // Subscriber side — returns a Web Audio node carrying the stream
+  subscribe(id) {
+    // Same-tab: use direct node reference if publisher is on window
+    if (window.__goatPublishers && window.__goatPublishers[id]) {
+      const srcNode = window.__goatPublishers[id].sourceNode;
+      if (srcNode) return { type: 'direct', node: srcNode };
+    }
+    return { type: 'none' };
+  }
+  announce(id, sourceNode) {
+    window.__goatPublishers = window.__goatPublishers || {};
+    window.__goatPublishers[id] = { sourceNode, time: Date.now() };
+    if (this.bc) this.bc.postMessage({ kind: 'announce', id });
+  }
+  onMessage(fn) { this.listeners.push(fn); }
+  listPublishers() {
+    return Object.keys(window.__goatPublishers || {});
+  }
+}
+
+const audioBridge = new AudioBridge();
+
 // ---- Export public API ----
 global.GoatAudio = {
   ac,
   MasterRecorder,
   ChannelSource,
   Metronome,
+  AudioBridge,
+  bridge: audioBridge,
   getMicStream,
   loadAudioFile,
   loadAudioUrl,
