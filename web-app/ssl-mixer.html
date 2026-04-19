@@ -316,6 +316,24 @@
     color: #000;
     box-shadow: 0 0 4px rgba(0,255,102,0.6);
   }
+  .mini-btn.green {
+    color: var(--ssl-green);
+  }
+  .mini-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .channel-strip.loaded {
+    border-left: 2px solid var(--ssl-green);
+  }
+  .channel-strip.mic-on {
+    border-left: 2px solid var(--ssl-red);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: inset 3px 0 0 var(--ssl-red); }
+    50%      { box-shadow: inset 3px 0 0 rgba(255,48,48,0.4); }
+  }
   /* Knob */
   .knob-wrap {
     display: flex;
@@ -757,6 +775,17 @@
 <div class="info-bar" id="infoBar"></div>
 <a href="/" class="back-link">← BACK TO GOAT ROYALTY</a>
 
+<!-- Hidden file input used by channel drop/load -->
+<input type="file" id="chFileInput" accept="audio/*" style="display:none">
+
+<!-- Master recorder button (floating) -->
+<div id="masterRecWrap" style="position:fixed;top:12px;right:170px;z-index:250;display:flex;gap:6px;align-items:center">
+  <button id="btnMasterArm" style="padding:6px 12px;background:linear-gradient(180deg,#2a2a2a,#111);border:1px solid #333;color:#ccc;font-size:10px;letter-spacing:1px;border-radius:2px;cursor:pointer;font-family:inherit">🎙 ARM MIX REC</button>
+  <span id="masterRecTime" style="color:#ffa500;font-family:'Courier New',monospace;font-size:11px;min-width:40px"></span>
+  <button id="btnDownloadMix" style="padding:6px 12px;background:linear-gradient(180deg,#2a2a2a,#111);border:1px solid #333;color:#ccc;font-size:10px;letter-spacing:1px;border-radius:2px;cursor:pointer;font-family:inherit">💾 DOWNLOAD</button>
+</div>
+
+<script src="js/goat-audio-engine.js"></script>
 <script>
 /* =========================================================
    SSL 148-CHANNEL DIGITAL MIXING BOARD
@@ -823,10 +852,14 @@ const SSL = (function() {
   let masterAnalyserR = null;
   const chNodes = []; // Web Audio nodes for each channel
 
+  let masterRecorder = null;
+  const chSources = []; // GoatAudio.ChannelSource per channel
+
   function initAudio() {
     if (ac) return;
     try {
-      ac = new (window.AudioContext || window.webkitAudioContext)();
+      // Use the shared GoatAudio context if available, else create
+      ac = (window.GoatAudio && window.GoatAudio.ac()) || new (window.AudioContext || window.webkitAudioContext)();
       masterGain = ac.createGain();
       masterGain.gain.value = dbToGain(0);
       masterSplitter = ac.createChannelSplitter(2);
@@ -838,13 +871,72 @@ const SSL = (function() {
       masterSplitter.connect(masterAnalyserL, 0);
       masterSplitter.connect(masterAnalyserR, 1);
       masterGain.connect(ac.destination);
+
       for (let i = 0; i < TOTAL_CHANNELS; i++) chNodes.push(buildChannelNodes(i));
+
+      // Create a ChannelSource for each channel that connects to the channel's input node
+      if (window.GoatAudio) {
+        for (let i = 0; i < TOTAL_CHANNELS; i++) {
+          chSources.push(new window.GoatAudio.ChannelSource(ac, chNodes[i].input));
+        }
+        // Master recorder taps the master bus
+        masterRecorder = new window.GoatAudio.MasterRecorder();
+        masterRecorder.connect(masterGain);
+        // Expose globally for cross-page access (beat maker → mixer)
+        window.__goatMixerCtx = ac;
+        window.__goatMixerMasterInput = null; // can be set if we want external feed
+      }
+
       showInfo(`ENGINE ONLINE · ${ac.sampleRate} Hz · ${TOTAL_CHANNELS} CHANNELS READY`);
       document.getElementById('engineBtn').classList.add('active');
     } catch (e) {
       console.error('Audio init failed:', e);
       showInfo('AUDIO ENGINE FAILED — CHECK BROWSER');
     }
+  }
+
+  // ---- Per-channel: load mic or file ----
+  async function channelLoadMic(idx) {
+    initAudio();
+    if (!chSources[idx]) return;
+    try {
+      await chSources[idx].connectMic();
+      channels[idx].name = 'MIC IN';
+      channels[idx].record = true;
+      buildChannelRack();
+      showInfo(`CH ${idx+1} · MIC INPUT ACTIVE — speak or play`);
+    } catch (e) {
+      showInfo(`CH ${idx+1} · MIC DENIED — check browser permissions`);
+    }
+  }
+  async function channelLoadFile(idx, file) {
+    initAudio();
+    if (!chSources[idx] || !window.GoatAudio) return;
+    try {
+      const buf = await window.GoatAudio.loadAudioFile(file);
+      chSources[idx].setFile(buf, file.name);
+      channels[idx].name = file.name.replace(/\.[^.]+$/, '').slice(0, 10).toUpperCase();
+      buildChannelRack();
+      showInfo(`CH ${idx+1} · LOADED: ${file.name} (${buf.duration.toFixed(1)}s)`);
+    } catch (e) {
+      showInfo(`CH ${idx+1} · FILE LOAD FAILED: ${e.message}`);
+    }
+  }
+  function channelPlayFile(idx) {
+    if (!chSources[idx]) return;
+    chSources[idx].play();
+    showInfo(`CH ${idx+1} · PLAY`);
+  }
+  function channelStopFile(idx) {
+    if (!chSources[idx]) return;
+    chSources[idx].stop();
+    showInfo(`CH ${idx+1} · STOP`);
+  }
+  function channelToggleLoop(idx) {
+    if (!chSources[idx]) return;
+    const isLoop = !chSources[idx].loop;
+    chSources[idx].setLoop(isLoop);
+    showInfo(`CH ${idx+1} · LOOP ${isLoop ? 'ON' : 'OFF'}`);
   }
 
   function buildChannelNodes(idx) {
@@ -1007,7 +1099,11 @@ const SSL = (function() {
   function buildChannelStrip(idx) {
     const c = channels[idx];
     const strip = document.createElement('div');
-    strip.className = 'channel-strip' + (idx === selectedChannel ? ' selected' : '');
+    const _srcType = (chSources[idx] && chSources[idx].getType && chSources[idx].getType()) || 'none';
+    strip.className = 'channel-strip'
+      + (idx === selectedChannel ? ' selected' : '')
+      + (_srcType === 'file' ? ' loaded' : '')
+      + (_srcType === 'mic'  ? ' mic-on' : '');
     strip.dataset.ch = idx;
     strip.onclick = (e) => {
       if (e.target.tagName === 'BUTTON' || e.target.classList.contains('knob') ||
@@ -1017,9 +1113,27 @@ const SSL = (function() {
       buildChannelRack();
     };
 
+    // Determine source state for this channel
+    const srcType = (chSources[idx] && chSources[idx].getType && chSources[idx].getType()) || 'none';
+    const hasFile = srcType === 'file';
+    const micOn   = srcType === 'mic';
+
     strip.innerHTML = `
       <div class="ch-num">${String(c.id).padStart(3, '0')}</div>
       <div class="ch-name" contenteditable="true" spellcheck="false">${c.name}</div>
+
+      <div class="section">
+        <div class="section-label">SOURCE</div>
+        <div class="btn-row">
+          <button class="mini-btn ${micOn?'red active':''}" data-act="mic" title="Mic input">🎤</button>
+          <button class="mini-btn ${hasFile?'active':''}" data-act="load" title="Load audio file">📁</button>
+        </div>
+        <div class="btn-row">
+          <button class="mini-btn ${hasFile?'green':''}" data-act="play" ${!hasFile?'disabled':''} title="Play">▶</button>
+          <button class="mini-btn" data-act="stopclip" ${!hasFile?'disabled':''} title="Stop">⏹</button>
+          <button class="mini-btn ${(chSources[idx]&&chSources[idx].loop)?'active':''}" data-act="loop" ${!hasFile?'disabled':''} title="Loop">🔁</button>
+        </div>
+      </div>
 
       <div class="section">
         <div class="section-label">INPUT</div>
@@ -1144,6 +1258,28 @@ const SSL = (function() {
       case 'mute': c.mute = !c.mute; applyAll(); break;
       case 'solo': c.solo = !c.solo; applyAll(); break;
       case 'record': c.record = !c.record; break;
+      case 'mic':
+        if (chSources[idx] && chSources[idx].getType() === 'mic') {
+          chSources[idx].stop();
+          buildChannelRack();
+          showInfo(`CH ${c.id} · MIC OFF`);
+        } else {
+          channelLoadMic(idx);
+        }
+        return;
+      case 'load':
+        initAudio();
+        const fi = document.getElementById('chFileInput');
+        fi.onchange = (e) => {
+          const f = e.target.files[0];
+          if (f) channelLoadFile(idx, f);
+          fi.value = '';
+        };
+        fi.click();
+        return;
+      case 'play':  channelPlayFile(idx); return;
+      case 'stopclip': channelStopFile(idx); return;
+      case 'loop':  channelToggleLoop(idx); buildChannelRack(); return;
     }
     btn.classList.toggle('active');
     applyChannel(idx);
@@ -1633,12 +1769,90 @@ const SSL = (function() {
   }
 
   /* ------------- Public API ------------- */
+  // ---- Drag-and-drop file to channel ----
+  function wireDragDrop() {
+    const rack = document.getElementById('channelRack');
+    if (!rack) return;
+    rack.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      rack.style.outline = '2px dashed #ffa500';
+    });
+    rack.addEventListener('dragleave', () => { rack.style.outline = ''; });
+    rack.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      rack.style.outline = '';
+      const strip = e.target.closest('.channel-strip');
+      if (!strip) { showInfo('DROP ONTO A CHANNEL STRIP'); return; }
+      const chIdx = parseInt(strip.dataset.ch);
+      const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('audio/') || /\.(wav|mp3|ogg|m4a|flac|aac|webm)$/i.test(f.name));
+      if (files.length === 0) { showInfo('NO AUDIO FILES IN DROP'); return; }
+      initAudio();
+      for (let i = 0; i < files.length; i++) {
+        const target = chIdx + i;
+        if (target >= TOTAL_CHANNELS) break;
+        await channelLoadFile(target, files[i]);
+      }
+      showInfo(`LOADED ${files.length} FILE(S) STARTING AT CH ${chIdx+1}`);
+    });
+  }
+
+  // ---- Master recorder wiring ----
+  let masterRecTimer = null;
+  let lastMixBlob = null;
+  function wireMasterRecorder() {
+    const btnArm = document.getElementById('btnMasterArm');
+    const btnDL  = document.getElementById('btnDownloadMix');
+    const tEl    = document.getElementById('masterRecTime');
+    if (!btnArm || !btnDL) return;
+    btnArm.onclick = async () => {
+      initAudio();
+      if (!masterRecorder) { showInfo('RECORDER NOT READY'); return; }
+      if (masterRecorder.recording) {
+        const blob = await masterRecorder.stop();
+        lastMixBlob = blob;
+        btnArm.style.background = '';
+        btnArm.style.color = '#ccc';
+        btnArm.textContent = '🎙 ARM MIX REC';
+        clearInterval(masterRecTimer);
+        tEl.textContent = '';
+        showInfo(`MIX RECORDED · ${(blob.size/1024).toFixed(0)} KB - CLICK DOWNLOAD`);
+      } else {
+        if (masterRecorder.start()) {
+          btnArm.style.background = '#ff3030';
+          btnArm.style.color = '#fff';
+          btnArm.textContent = '⏺ STOP MIX REC';
+          masterRecTimer = setInterval(() => {
+            const t = masterRecorder.getElapsedSec();
+            const m = Math.floor(t / 60), s = Math.floor(t % 60);
+            tEl.textContent = m + ':' + String(s).padStart(2,'0');
+          }, 200);
+          showInfo('RECORDING MASTER BUS');
+        } else {
+          showInfo('RECORDER FAILED TO START');
+        }
+      }
+    };
+    btnDL.onclick = () => {
+      if (!lastMixBlob) { showInfo('NO RECORDING YET - ARM AND RECORD FIRST'); return; }
+      const ts = new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
+      const ext = (lastMixBlob.type.includes('webm')) ? 'webm' : 'wav';
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(lastMixBlob);
+      a.download = 'goat-mix-' + ts + '.' + ext;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      showInfo('MIX DOWNLOADED');
+    };
+  }
+
   function init() {
     buildBankButtons();
     buildChannelRack();
     buildMasterSection();
     buildMeterBridge();
     wireTransport();
+    wireDragDrop();
+    wireMasterRecorder();
     tickTimecode();
     updateMeters();
     // Keyboard shortcuts

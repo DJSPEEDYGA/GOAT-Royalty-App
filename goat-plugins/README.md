@@ -1,7 +1,21 @@
-# 🐐 GOAT Plugin Suite for Pro Tools (AAX)
+# 🐐 GOAT Plugin Suite — All DAWs
 
-**Native Pro Tools plugins by DJ Speedy / GOAT Force / BrickSquad**
-Built with JUCE 7+ and Avid AAX SDK 2.9.0 for Pro Tools 2025.12+
+**Native plugins by DJ Speedy / GOAT Force / BrickSquad**
+Built with JUCE 7+ and Avid AAX SDK 2.9.0
+
+## Supported DAWs (ALL from one codebase)
+
+| DAW | Format | Status |
+|---|---|---|
+| **Pro Tools** (2020+) | AAX Native + AAX DSP | ✅ Certified via Avid Developer Program |
+| **Logic Pro** (10.5+) | AU | ✅ Apple Silicon + Intel |
+| **FL Studio** (20+) / Image-Line | VST3 | ✅ Windows + Mac |
+| **Ableton Live** (10+) | VST3 | ✅ Windows + Mac |
+| **Cubase / Nuendo** | VST3 | ✅ Steinberg-certified |
+| **Studio One** | VST3 / AU | ✅ |
+| **Reaper** | VST3 / AU | ✅ |
+| **GarageBand** | AU | ✅ |
+| **Standalone App** | — | ✅ No DAW needed |
 
 ---
 

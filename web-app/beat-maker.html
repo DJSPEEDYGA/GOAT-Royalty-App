@@ -168,6 +168,9 @@ kbd { background: #1a2035; border: 1px solid var(--border); border-bottom: 2px s
         <div class="beat-counter" id="stepCounter">01</div>
       </div>
       <button class="big-btn" onclick="exportWav()">💾 Export WAV</button>
+      <button class="big-btn" onclick="routeToSSLMixer()" style="background:linear-gradient(135deg,#ffa500,#cc7700);color:#000">🎚️ Route to SSL</button>
+      <a class="big-btn" href="ssl-mixer.html" target="_blank" style="background:linear-gradient(135deg,#333,#111);color:#ffa500;text-decoration:none;display:inline-flex;align-items:center;padding:8px 14px">🎚️ Open SSL Mixer</a>
+      <a class="big-btn" href="plugins.html" target="_blank" style="background:linear-gradient(135deg,#333,#111);color:#00ff66;text-decoration:none;display:inline-flex;align-items:center;padding:8px 14px">🔌 Plugins</a>
     </div>
 
     <!-- SEQUENCER -->
@@ -212,6 +215,7 @@ kbd { background: #1a2035; border: 1px solid var(--border); border-bottom: 2px s
   </main>
 </div>
 
+<script src="js/goat-audio-engine.js"></script>
 <script>
 // ========== WEB AUDIO ENGINE ==========
 const AC = window.AudioContext || window.webkitAudioContext;
@@ -220,15 +224,39 @@ let masterGain = null;
 let destination = null;
 let recorder = null;
 let recChunks = [];
+let routedToSSL = false;
 
 function initAudio() {
   if (ctx) return;
-  ctx = new AC();
+  // Share the context with GoatAudio if available (for cross-page routing)
+  ctx = (window.GoatAudio && window.GoatAudio.ac()) || new AC();
   masterGain = ctx.createGain();
   masterGain.gain.value = 0.8;
   destination = ctx.createMediaStreamDestination();
   masterGain.connect(ctx.destination);
   masterGain.connect(destination);
+
+  // Expose for cross-page routing to SSL mixer
+  window.__goatBeatMakerMaster = masterGain;
+  window.__goatBeatMakerCtx = ctx;
+}
+
+// Route beat-maker output into a specific SSL channel (if open in another tab)
+function routeToSSLMixer() {
+  if (!ctx) initAudio();
+  if (routedToSSL) {
+    alert('Already routing to SSL Mixer. Refresh this page to stop.');
+    return;
+  }
+  // Offer MediaStream export for capture by other page (BroadcastChannel / external)
+  try {
+    const bc = new BroadcastChannel('goat-audio-route');
+    bc.postMessage({ type: 'beat-maker-ready', sampleRate: ctx.sampleRate });
+    routedToSSL = true;
+    alert('🎚️ Beat Maker → SSL Mixer routing enabled.\n\nOpen the SSL Mixer in the same browser window/tab and click "📁 LOAD" on any channel, then choose "Beat Maker Live Feed" (coming soon in next build).\n\nFor now: hit "⏺ RECORD" here, then drag the WAV to any SSL Mixer channel.');
+  } catch (e) {
+    alert('Routing requires modern browser with BroadcastChannel API.');
+  }
 }
 
 // ========== SYNTHESIZED DRUM SOUNDS (Web Audio, no samples) ==========
