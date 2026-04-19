@@ -103,6 +103,18 @@
   }
 </style>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+<!-- 🐐 PWA: install as a real app on iPhone/Android/desktop -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GOAT App">
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%230a0e17'/><text x='96' y='130' font-size='120' text-anchor='middle' fill='%23FFD700'>🐐</text></svg>">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+</script>
 </head>
 <body class="bg-icon">
 
@@ -393,6 +405,30 @@
     <span class="icon">💾</span>
     <h3>Install on Mac / PC / Linux</h3>
     <p>One-click installer for every platform. Copy+paste one command, get the full GOAT app running locally with AI Brain, 11 agents, and Gemma 3 local AI.</p>
+  </a>
+
+  <a href="command-center.html" class="tool-card fade-in" style="border-color:var(--gold);background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(0,229,255,0.03));">
+    <div class="badges">
+      <span class="goat-badge hot">🎯 MISSION CONTROL</span>
+    </div>
+    <span class="icon">🎯</span>
+    <h3>Command Center</h3>
+    <p>Mission Control. Every engine, every stat, every tool at a glance. Live AI status, Moneypenny chat, Autopilot runner, TikTok feed, and fan database stats — all on one screen.</p>
+  </a>
+
+  <a href="autopilot.html" class="tool-card fade-in" style="border-color:var(--hot);">
+    <div class="badges">
+      <span class="goat-badge hot">🤖 NEW</span>
+    </div>
+    <span class="icon">🤖</span>
+    <h3>Autopilot — Autonomous Agent</h3>
+    <p>Give it a goal — it plans, calls real tools (TikTok, Spotify, Fan DB, Campaigns, iTunes, YouTube), and executes autonomously. Not just chat: it DOES things.</p>
+  </a>
+
+  <a href="settings.html" class="tool-card fade-in">
+    <span class="icon">⚙️</span>
+    <h3>Settings & API Keys</h3>
+    <p>Paste-in UI for Gemini, Spotify, NVIDIA, YouTube keys. Test each one with a click. No more editing JSON files. Your keys stay on your machine.</p>
   </a>
 
 </div>

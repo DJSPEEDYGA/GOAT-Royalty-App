@@ -34,6 +34,14 @@ except Exception as _e:
     BRAIN_AVAILABLE = False
     print(f"⚠️  goat_brain not loaded: {_e}")
 
+# 🤖 GOAT AUTOPILOT — tool-calling autonomous agent
+try:
+    from goat_agents import run_autopilot, TOOLS, tools_description
+    AUTOPILOT_AVAILABLE = True
+except Exception as _e:
+    AUTOPILOT_AVAILABLE = False
+    print(f"⚠️  goat_agents not loaded: {_e}")
+
 try:
     import yt_dlp
     YT_DLP_OK = True
@@ -758,6 +766,32 @@ def list_agents():
             {"id": k, "name": v["name"], "icon": v["icon"], "task_type": v["task_type"]}
             for k, v in AGENT_PERSONAS.items()
         ]
+    })
+
+
+@app.route("/autopilot/run", methods=["POST"])
+def autopilot_run():
+    """Run Autopilot on a goal — it will plan and execute tools autonomously"""
+    if not AUTOPILOT_AVAILABLE:
+        return jsonify({"error": "goat_agents module not loaded"}), 500
+    data = request.json or {}
+    goal = data.get("goal", "")
+    max_steps = data.get("max_steps", 5)
+    if not goal:
+        return jsonify({"error": "goal required"}), 400
+    result = run_autopilot(goal, max_steps=max_steps)
+    return jsonify(result)
+
+
+@app.route("/autopilot/tools")
+def autopilot_tools():
+    """List all tools Autopilot can use"""
+    if not AUTOPILOT_AVAILABLE:
+        return jsonify({"error": "goat_agents module not loaded"}), 500
+    return jsonify({
+        "count": len(TOOLS),
+        "tools": [{"name": k, "args": v["args"], "desc": v["desc"]} for k, v in TOOLS.items()],
+        "description": tools_description()
     })
 
 
