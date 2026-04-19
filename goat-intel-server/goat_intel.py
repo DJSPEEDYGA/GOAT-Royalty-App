@@ -26,6 +26,14 @@ from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 import requests
 
+# 🧠 GOAT AI BRAIN — unified AI router (Ollama/NVIDIA/Gemini, no OpenAI)
+try:
+    from goat_brain import goat_brain, brain_status
+    BRAIN_AVAILABLE = True
+except Exception as _e:
+    BRAIN_AVAILABLE = False
+    print(f"⚠️  goat_brain not loaded: {_e}")
+
 try:
     import yt_dlp
     YT_DLP_OK = True
@@ -644,6 +652,139 @@ When it comes to music production: you know Ableton, FL Studio, Pro Tools, SSL c
 Auto-Tune, iZotope, FabFilter, and every plugin in DJ Speedy's arsenal.
 Keep responses sharp, technical, and actionable."""
 
+# ═══════════════════════════════════════════════════════════════
+#  🧠 GOAT AI BRAIN — unified AI routing (NEW, replaces OpenAI)
+# ═══════════════════════════════════════════════════════════════
+@app.route("/brain/status")
+def brain_status_endpoint():
+    if not BRAIN_AVAILABLE:
+        return jsonify({"error": "goat_brain module not loaded"}), 500
+    return jsonify(brain_status())
+
+
+@app.route("/brain/chat", methods=["POST"])
+def brain_chat():
+    if not BRAIN_AVAILABLE:
+        return jsonify({"error": "goat_brain module not loaded"}), 500
+    data = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    system = data.get("system", "You are a helpful AI assistant for GOAT Force Records.")
+    task_type = data.get("task_type", "chat")  # chat | creative | reason | code | private
+    if not message:
+        return jsonify({"error": "message required"}), 400
+    messages = history + [{"role": "user", "content": message}]
+    result = goat_brain(messages, system_prompt=system, task_type=task_type)
+    return jsonify(result)
+
+
+# 🤖 11 AGENTS — each is a persona that routes through the brain
+AGENT_PERSONAS = {
+    "moneypenny": {
+        "name": "Ms. Moneypenny",
+        "icon": "💼",
+        "task_type": "creative",
+        "system": "You are Ms. Moneypenny, the AI Powerhouse of GOAT Force Records. You handle marketing, fan engagement, email campaigns, and social copy for DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame. Speak sharp, confident, street-smart with business polish. Always protect the $3.3B lawsuit position. Never use weak language."
+    },
+    "codex": {
+        "name": "Codex",
+        "icon": "⚙️",
+        "task_type": "code",
+        "system": "You are Codex, the Sentinel AI and Chief Technical Architect of GOAT Force Records. You write production code, design systems, and secure the platform. Be direct, precise, and always prefer local/open-source solutions over paid SaaS."
+    },
+    "legal": {
+        "name": "Legal Eagle",
+        "icon": "⚖️",
+        "task_type": "reason",
+        "system": "You are Legal Eagle, GOAT Force Records' AI legal counsel. You specialize in music publishing, copyright, sync licensing, PRO registrations (BMI/ASCAP/SESAC), SoundExchange, and the ongoing $3.3B infringement matter. You are NOT a replacement for a licensed attorney but you draft, analyze, and flag issues with precision. Cite relevant law when possible."
+    },
+    "producer": {
+        "name": "The Producer",
+        "icon": "🎹",
+        "task_type": "creative",
+        "system": "You are The Producer — a beat-making, song-structuring, arrangement AI for DJ Speedy and Waka Flocka. You give BPM suggestions, chord progressions, hook ideas, song structures, and sample recommendations. You know trap, drill, hip-hop, EDM, and crossover."
+    },
+    "a&r": {
+        "name": "A&R Scout",
+        "icon": "🎯",
+        "task_type": "reason",
+        "system": "You are A&R Scout, talent-spotting AI for GOAT Force. You analyze TikTok/Spotify/YouTube trends, identify rising artists worth signing, and evaluate tracks for hit potential. Give data-driven opinions."
+    },
+    "business": {
+        "name": "CFO Brain",
+        "icon": "📊",
+        "task_type": "reason",
+        "system": "You are CFO Brain — financial strategist for the GOAT Force empire (10 companies, Fastassman Publishing, distribution via The Orchard/Sony). You model revenue, royalty splits, tax strategy, and capital allocation. All figures are estimates; flag when professional CPA review is needed."
+    },
+    "fashion": {
+        "name": "Stylist",
+        "icon": "👔",
+        "task_type": "creative",
+        "system": "You are Stylist — fashion and brand-aesthetic AI for the GOAT Force image. Give outfit advice, music video looks, merch drops, and brand-partnership direction."
+    },
+    "researcher": {
+        "name": "Deep Research",
+        "icon": "🔬",
+        "task_type": "reason",
+        "system": "You are Deep Research — investigative AI that compiles detailed reports on industry trends, competitor labels, licensing opportunities, and infringement evidence. Always structure output: Executive Summary → Findings → Sources → Recommendations."
+    },
+    "writer": {
+        "name": "Lyricist",
+        "icon": "✍️",
+        "task_type": "creative",
+        "system": "You are Lyricist — songwriting AI for GOAT Force. You write hooks, verses, and bridges in the voice of DJ Speedy or Waka Flocka when asked. You master rhyme schemes, cadence, and hit-song structure."
+    },
+    "autonomous": {
+        "name": "Autopilot",
+        "icon": "🤖",
+        "task_type": "reason",
+        "system": "You are Autopilot — an autonomous agent that plans multi-step tasks. Given a goal, you output a numbered action plan, then execute step by step. You can call other GOAT tools: fan DB, smart links, campaigns, Spotify API, TikTok scraper. Always explain your plan before acting."
+    },
+    "private": {
+        "name": "Vault (Local AI)",
+        "icon": "🔒",
+        "task_type": "private",
+        "system": "You are Vault — a fully local AI running on the user's own machine via Ollama. Nothing you process leaves the user's hardware. Useful for sensitive contracts, unreleased lyrics, and lawsuit evidence. Be concise and accurate."
+    },
+}
+
+
+@app.route("/brain/agents")
+def list_agents():
+    """List all 11 available agents"""
+    return jsonify({
+        "count": len(AGENT_PERSONAS),
+        "agents": [
+            {"id": k, "name": v["name"], "icon": v["icon"], "task_type": v["task_type"]}
+            for k, v in AGENT_PERSONAS.items()
+        ]
+    })
+
+
+@app.route("/brain/agent/<agent_id>", methods=["POST"])
+def talk_to_agent(agent_id):
+    """Chat with a specific agent persona"""
+    if not BRAIN_AVAILABLE:
+        return jsonify({"error": "goat_brain module not loaded"}), 500
+    persona = AGENT_PERSONAS.get(agent_id)
+    if not persona:
+        return jsonify({"error": f"Unknown agent '{agent_id}'. Available: {list(AGENT_PERSONAS.keys())}"}), 404
+
+    data = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    if not message:
+        return jsonify({"error": "message required"}), 400
+
+    messages = history + [{"role": "user", "content": message}]
+    result = goat_brain(messages, system_prompt=persona["system"], task_type=persona["task_type"])
+    result["agent"] = persona["name"]
+    result["agent_id"] = agent_id
+    result["icon"] = persona["icon"]
+    return jsonify(result)
+
+
+# Keep old call_gemini for backward compat with existing /ai/* routes
 def call_gemini(messages, system_prompt):
     keys = load_keys()
     api_key = keys.get("gemini_key", "")
@@ -660,7 +801,9 @@ def call_gemini(messages, system_prompt):
         role = "user" if msg.get("role") == "user" else "model"
         contents.append({"role": role, "parts": [{"text": msg.get("content", "")}]})
     
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    # Use Gemini 2.5 Flash (current stable + free tier). Upgrade to gemini-3-pro-preview for deep reasoning.
+    model = keys.get("gemini_model", "gemini-2.5-flash")
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}"
     try:
         r = requests.post(url, json={
             "contents": contents,
@@ -789,10 +932,407 @@ Format with [Hook], [Verse 1], etc. if writing full song."""
     return jsonify({"ok": False, "error": err}), 500
 
 # =============================================================================
+#  SPOTIFY REAL API (requires client credentials)
+# =============================================================================
+import base64
+import time
+
+_SPOTIFY_TOKEN = {"token": None, "expires": 0}
+
+def get_spotify_token():
+    """Get Spotify client credentials token, cached until expiry"""
+    keys = load_keys()
+    cid = keys.get("spotify_client_id")
+    csec = keys.get("spotify_client_secret")
+    if not cid or not csec:
+        return None, "Spotify keys not set. Visit /spotify-setup.html"
+    
+    now = time.time()
+    if _SPOTIFY_TOKEN["token"] and _SPOTIFY_TOKEN["expires"] > now:
+        return _SPOTIFY_TOKEN["token"], None
+    
+    try:
+        auth = base64.b64encode(f"{cid}:{csec}".encode()).decode()
+        r = requests.post(
+            "https://accounts.spotify.com/api/token",
+            headers={"Authorization": f"Basic {auth}", "Content-Type": "application/x-www-form-urlencoded"},
+            data={"grant_type": "client_credentials"},
+            timeout=10,
+        )
+        if r.status_code != 200:
+            return None, f"Spotify auth failed: {r.status_code} {r.text[:100]}"
+        data = r.json()
+        _SPOTIFY_TOKEN["token"] = data["access_token"]
+        _SPOTIFY_TOKEN["expires"] = now + data.get("expires_in", 3600) - 60
+        return _SPOTIFY_TOKEN["token"], None
+    except Exception as e:
+        return None, str(e)
+
+
+@app.route("/spotify/artist-real")
+def spotify_artist_real():
+    """Get real Spotify artist data (followers, popularity, genres, images)"""
+    artist_id = request.args.get("id", "").strip()
+    if not artist_id:
+        return jsonify({"ok": False, "error": "id required"}), 400
+    token, err = get_spotify_token()
+    if err:
+        return jsonify({"ok": False, "error": err, "fallback": "use /itunes/artist"}), 503
+    try:
+        r = requests.get(f"https://api.spotify.com/v1/artists/{artist_id}",
+                         headers={"Authorization": f"Bearer {token}"}, timeout=10)
+        return jsonify({"ok": True, "artist": r.json()})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/spotify/artist-top-tracks")
+def spotify_top_tracks():
+    artist_id = request.args.get("id", "").strip()
+    market = request.args.get("market", "US")
+    if not artist_id:
+        return jsonify({"ok": False, "error": "id required"}), 400
+    token, err = get_spotify_token()
+    if err:
+        return jsonify({"ok": False, "error": err}), 503
+    try:
+        r = requests.get(f"https://api.spotify.com/v1/artists/{artist_id}/top-tracks?market={market}",
+                         headers={"Authorization": f"Bearer {token}"}, timeout=10)
+        return jsonify({"ok": True, "tracks": r.json().get("tracks", [])})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/spotify/related-artists")
+def spotify_related():
+    artist_id = request.args.get("id", "").strip()
+    if not artist_id:
+        return jsonify({"ok": False, "error": "id required"}), 400
+    token, err = get_spotify_token()
+    if err:
+        return jsonify({"ok": False, "error": err}), 503
+    try:
+        r = requests.get(f"https://api.spotify.com/v1/artists/{artist_id}/related-artists",
+                         headers={"Authorization": f"Bearer {token}"}, timeout=10)
+        return jsonify({"ok": True, "artists": r.json().get("artists", [])})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/spotify/audio-features")
+def spotify_audio_features():
+    track_id = request.args.get("id", "").strip()
+    if not track_id:
+        return jsonify({"ok": False, "error": "id required"}), 400
+    token, err = get_spotify_token()
+    if err:
+        return jsonify({"ok": False, "error": err}), 503
+    try:
+        r = requests.get(f"https://api.spotify.com/v1/audio-features/{track_id}",
+                         headers={"Authorization": f"Bearer {token}"}, timeout=10)
+        return jsonify({"ok": True, "features": r.json()})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+# =============================================================================
+#  FAN DATABASE (SQLite — 100% local, zero 3rd parties)
+# =============================================================================
+import sqlite3
+FAN_DB = os.path.join(os.path.dirname(__file__), "fans.db")
+
+def fan_db():
+    conn = sqlite3.connect(FAN_DB)
+    conn.row_factory = sqlite3.Row
+    conn.execute("""CREATE TABLE IF NOT EXISTS fans (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT UNIQUE,
+        phone TEXT,
+        name TEXT,
+        artist TEXT,
+        source TEXT,
+        tiktok_handle TEXT,
+        favorite_track TEXT,
+        city TEXT,
+        country TEXT,
+        ip TEXT,
+        user_agent TEXT,
+        consent_marketing INTEGER DEFAULT 1,
+        consent_sms INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        tags TEXT,
+        notes TEXT
+    )""")
+    conn.execute("""CREATE TABLE IF NOT EXISTS smart_links (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        slug TEXT UNIQUE,
+        artist TEXT,
+        title TEXT,
+        description TEXT,
+        cover_url TEXT,
+        spotify_url TEXT,
+        apple_url TEXT,
+        youtube_url TEXT,
+        tiktok_url TEXT,
+        require_email INTEGER DEFAULT 1,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        clicks INTEGER DEFAULT 0,
+        captures INTEGER DEFAULT 0
+    )""")
+    conn.execute("""CREATE TABLE IF NOT EXISTS campaigns (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        subject TEXT,
+        body TEXT,
+        artist TEXT,
+        target_tags TEXT,
+        status TEXT DEFAULT 'draft',
+        sent_count INTEGER DEFAULT 0,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+        sent_at TEXT
+    )""")
+    return conn
+
+
+@app.route("/fans/add", methods=["POST"])
+def fans_add():
+    """Add a fan to the database (opt-in capture)"""
+    data = request.get_json(force=True, silent=True) or request.form.to_dict()
+    email = (data.get("email") or "").strip().lower()
+    if not email or "@" not in email:
+        return jsonify({"ok": False, "error": "valid email required"}), 400
+    
+    try:
+        conn = fan_db()
+        cur = conn.cursor()
+        cur.execute("""INSERT OR REPLACE INTO fans
+            (email, phone, name, artist, source, tiktok_handle, favorite_track, city, country, ip, user_agent, consent_marketing, consent_sms, tags)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (
+            email,
+            data.get("phone", ""),
+            data.get("name", ""),
+            data.get("artist", "goat-force"),
+            data.get("source", "smart-link"),
+            data.get("tiktok_handle", ""),
+            data.get("favorite_track", ""),
+            data.get("city", ""),
+            data.get("country", ""),
+            request.remote_addr,
+            request.headers.get("User-Agent", "")[:200],
+            1 if data.get("consent_marketing", True) else 0,
+            1 if data.get("consent_sms", False) else 0,
+            data.get("tags", ""),
+        ))
+        fid = cur.lastrowid
+        conn.commit()
+        conn.close()
+        return jsonify({"ok": True, "id": fid, "email": email, "message": "Welcome to the GOAT Force family 🐐"})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/fans/list")
+def fans_list():
+    """List all fans (admin view)"""
+    artist = request.args.get("artist", "")
+    limit = int(request.args.get("limit", "500"))
+    try:
+        conn = fan_db()
+        if artist:
+            rows = conn.execute("SELECT * FROM fans WHERE artist=? ORDER BY created_at DESC LIMIT ?",
+                              (artist, limit)).fetchall()
+        else:
+            rows = conn.execute("SELECT * FROM fans ORDER BY created_at DESC LIMIT ?", (limit,)).fetchall()
+        fans = [dict(r) for r in rows]
+        stats_row = conn.execute("SELECT COUNT(*) as total, COUNT(DISTINCT artist) as artists FROM fans").fetchone()
+        conn.close()
+        return jsonify({"ok": True, "fans": fans, "total": stats_row["total"], "artists": stats_row["artists"]})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/fans/export")
+def fans_export():
+    """Export fan DB as CSV"""
+    try:
+        conn = fan_db()
+        rows = conn.execute("SELECT email,phone,name,artist,source,tiktok_handle,city,country,created_at FROM fans").fetchall()
+        conn.close()
+        import csv, io
+        out = io.StringIO()
+        w = csv.writer(out)
+        w.writerow(["email","phone","name","artist","source","tiktok_handle","city","country","created_at"])
+        for r in rows:
+            w.writerow([r["email"], r["phone"], r["name"], r["artist"], r["source"], r["tiktok_handle"], r["city"], r["country"], r["created_at"]])
+        return out.getvalue(), 200, {"Content-Type": "text/csv", "Content-Disposition": "attachment; filename=goat-force-fans.csv"}
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/fans/stats")
+def fans_stats():
+    """Fan database statistics"""
+    try:
+        conn = fan_db()
+        total = conn.execute("SELECT COUNT(*) as c FROM fans").fetchone()["c"]
+        by_artist = conn.execute("SELECT artist, COUNT(*) as c FROM fans GROUP BY artist").fetchall()
+        by_source = conn.execute("SELECT source, COUNT(*) as c FROM fans GROUP BY source").fetchall()
+        recent = conn.execute("SELECT COUNT(*) as c FROM fans WHERE datetime(created_at) > datetime('now','-7 days')").fetchone()["c"]
+        conn.close()
+        return jsonify({
+            "ok": True,
+            "total_fans": total,
+            "last_7_days": recent,
+            "by_artist": [{"artist": r["artist"], "count": r["c"]} for r in by_artist],
+            "by_source": [{"source": r["source"], "count": r["c"]} for r in by_source],
+        })
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+# =============================================================================
+#  SMART LINKS (build your own Linktree)
+# =============================================================================
+@app.route("/smartlinks/create", methods=["POST"])
+def smartlinks_create():
+    data = request.get_json(force=True, silent=True) or {}
+    slug = (data.get("slug") or "").strip().lower()
+    if not slug:
+        return jsonify({"ok": False, "error": "slug required"}), 400
+    try:
+        conn = fan_db()
+        conn.execute("""INSERT OR REPLACE INTO smart_links
+            (slug, artist, title, description, cover_url, spotify_url, apple_url, youtube_url, tiktok_url, require_email)
+            VALUES (?,?,?,?,?,?,?,?,?,?)""", (
+            slug,
+            data.get("artist", "goat-force"),
+            data.get("title", ""),
+            data.get("description", ""),
+            data.get("cover_url", ""),
+            data.get("spotify_url", ""),
+            data.get("apple_url", ""),
+            data.get("youtube_url", ""),
+            data.get("tiktok_url", ""),
+            1 if data.get("require_email", True) else 0,
+        ))
+        conn.commit()
+        conn.close()
+        return jsonify({"ok": True, "slug": slug, "url": f"/smart-link.html?slug={slug}"})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/smartlinks/list")
+def smartlinks_list():
+    try:
+        conn = fan_db()
+        rows = conn.execute("SELECT * FROM smart_links ORDER BY created_at DESC").fetchall()
+        conn.close()
+        return jsonify({"ok": True, "links": [dict(r) for r in rows]})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/smartlinks/get")
+def smartlinks_get():
+    slug = request.args.get("slug", "").strip().lower()
+    if not slug:
+        return jsonify({"ok": False, "error": "slug required"}), 400
+    try:
+        conn = fan_db()
+        conn.execute("UPDATE smart_links SET clicks = clicks + 1 WHERE slug=?", (slug,))
+        row = conn.execute("SELECT * FROM smart_links WHERE slug=?", (slug,)).fetchone()
+        conn.commit()
+        conn.close()
+        if not row:
+            return jsonify({"ok": False, "error": "not found"}), 404
+        return jsonify({"ok": True, "link": dict(row)})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+# =============================================================================
+#  EMAIL CAMPAIGNS (AI-generated by Moneypenny)
+# =============================================================================
+@app.route("/campaigns/generate", methods=["POST"])
+def campaigns_generate():
+    """Have Moneypenny AI write the email copy"""
+    data = request.get_json(force=True, silent=True) or {}
+    goal = data.get("goal", "announce new release")
+    artist = data.get("artist", "DJ Speedy & Waka Flocka Flame")
+    track = data.get("track", "")
+    style = data.get("style", "hype, GOAT Force attitude, personal, direct")
+    
+    prompt = f"""Write a professional email marketing campaign for {artist}.
+Goal: {goal}
+Track/topic: {track}
+Tone: {style}
+
+Output JSON format only:
+{{
+  "subject": "subject line (50 chars max, punchy)",
+  "preheader": "preview text (90 chars, teases the email)",
+  "body": "full email body in plain text, 150-300 words, authentic, with clear CTA. Use line breaks. Sign off as 'The GOAT Force Team'"
+}}"""
+    
+    reply, err = call_gemini([{"role":"user","content":prompt}],
+                              "You are an expert music marketing copywriter for GOAT Force Records. Write authentic, high-converting email copy.")
+    if not reply:
+        reply, err = call_openai([{"role":"user","content":prompt}],
+                                   "You are an expert music marketing copywriter.")
+    if not reply:
+        return jsonify({"ok": False, "error": err}), 500
+    
+    # Try to parse JSON
+    try:
+        import re
+        m = re.search(r'\{[\s\S]*\}', reply)
+        data = json.loads(m.group(0)) if m else {"subject":"New from GOAT Force","body":reply}
+    except:
+        data = {"subject":"New from GOAT Force","body":reply}
+    return jsonify({"ok": True, "campaign": data})
+
+
+@app.route("/campaigns/save", methods=["POST"])
+def campaigns_save():
+    data = request.get_json(force=True, silent=True) or {}
+    try:
+        conn = fan_db()
+        cur = conn.cursor()
+        cur.execute("""INSERT INTO campaigns (name, subject, body, artist, target_tags, status)
+            VALUES (?,?,?,?,?,?)""", (
+            data.get("name", "Untitled"),
+            data.get("subject", ""),
+            data.get("body", ""),
+            data.get("artist", "goat-force"),
+            data.get("target_tags", ""),
+            "draft",
+        ))
+        cid = cur.lastrowid
+        conn.commit()
+        conn.close()
+        return jsonify({"ok": True, "id": cid})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/campaigns/list")
+def campaigns_list():
+    try:
+        conn = fan_db()
+        rows = conn.execute("SELECT * FROM campaigns ORDER BY created_at DESC").fetchall()
+        conn.close()
+        return jsonify({"ok": True, "campaigns": [dict(r) for r in rows]})
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+# =============================================================================
 #  MAIN
 # =============================================================================
 if __name__ == "__main__":
-    print("\n🐐 GOAT INTEL SERVER v2")
+    print("\n🐐 GOAT INTEL SERVER v3")
     print("   Mode:  NO API KEYS for data | YOUR KEYS for AI")
     print("   Owner: DJ Speedy + Waka Flocka Flame")
     print("   URL:   http://localhost:5500")
