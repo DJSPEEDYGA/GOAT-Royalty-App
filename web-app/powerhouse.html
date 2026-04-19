@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐐 GOAT Powerhouse — Production Center</title>
+<link rel="stylesheet" href="css/goat-brand.css">
+<link rel="icon" type="image/png" href="img/goat-hero-icon.png">
+<style>
+  .hub-hero {
+    padding: 80px 24px 40px;
+    text-align: center;
+    position: relative;
+  }
+  .hub-hero .logo-wrap {
+    margin: 0 auto 20px;
+    width: 220px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 80px rgba(193, 18, 31, 0.6));
+  }
+  .hub-hero img { max-width: 100%; height: auto; }
+  .tool-card {
+    background: linear-gradient(145deg, rgba(30,30,30,0.95) 0%, rgba(15,15,15,0.95) 100%);
+    border: 1px solid rgba(193, 18, 31, 0.3);
+    border-radius: 20px;
+    padding: 28px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(193,18,31,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .tool-card:hover {
+    border-color: var(--goat-red-bright);
+    box-shadow: 0 20px 60px rgba(193,18,31,0.3), 0 0 40px rgba(255,45,61,0.2);
+    transform: translateY(-6px);
+  }
+  .tool-card:hover::before { opacity: 1; }
+  .tool-card .icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    display: block;
+    filter: drop-shadow(0 0 20px currentColor);
+  }
+  .tool-card h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--goat-cream);
+  }
+  .tool-card p {
+    margin: 0;
+    color: var(--goat-silver);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .tool-card .badges {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 6px;
+  }
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 30px 24px;
+    border-top: 1px solid rgba(193,18,31,0.2);
+    border-bottom: 1px solid rgba(193,18,31,0.2);
+    margin: 40px 0;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat .num {
+    font-size: 42px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--goat-gold), var(--goat-red-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat .label {
+    font-size: 12px;
+    color: var(--goat-silver);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+</style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body class="bg-icon">
+
+<nav class="goat-nav">
+  <a href="index.html" class="goat-nav-brand">
+    <img src="img/goat-hero-icon.png" alt="GOAT">
+    <span>GOAT POWERHOUSE</span>
+  </a>
+  <div class="goat-nav-links">
+    <a href="index.html">Home</a>
+    <a href="powerhouse.html" class="active">🐐 Powerhouse</a>
+    <a href="beat-maker.html">🥁 Beats</a>
+    <a href="studio.html">🎛️ Studio</a>
+    <a href="ssl-mixer.html">🎚️ Mixer</a>
+    <a href="mastering.html">💎 Master</a>
+    <a href="vocal-studio.html">🎤 Vocals</a>
+    <a href="ai-producer.html">🤖 AI</a>
+    <a href="sample-library.html">📦 Samples</a>
+    <a href="plugins.html">🔌 Plugins</a>
+  </div>
+</nav>
+
+<section class="hub-hero">
+  <div class="logo-wrap">
+    <img src="img/goat-hero.png" alt="GOAT Superhero">
+  </div>
+  <h1 style="font-size: clamp(40px, 7vw, 84px); font-weight: 900; margin: 0 0 16px;
+             background: linear-gradient(135deg, var(--goat-gold), var(--goat-cream), var(--goat-red-bright));
+             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+             text-shadow: 0 0 80px rgba(193,18,31,0.5); letter-spacing: -2px;">
+    GOAT POWERHOUSE
+  </h1>
+  <p style="font-size: clamp(16px, 2vw, 22px); color: var(--goat-silver); max-width: 820px; margin: 0 auto 30px; line-height: 1.5;">
+    The ultimate music production center — combining the best of
+    <span class="text-gold bold">Antares Auto-Tune</span>,
+    <span class="text-gold bold">iZotope Ozone</span>,
+    <span class="text-gold bold">FabFilter</span>,
+    <span class="text-gold bold">LANDR</span>,
+    <span class="text-gold bold">Waves</span>, and
+    <span class="text-gold bold">Ableton</span> — into one all-in-one original powerhouse.
+  </p>
+  <div class="flex flex-wrap" style="justify-content: center; gap: 14px;">
+    <a href="studio.html" class="goat-btn">🎛️ Open Studio</a>
+    <a href="ai-producer.html" class="goat-btn gold">🤖 AI Producer</a>
+    <a href="plugins.html" class="goat-btn outline">🔌 Shop Plugins</a>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat"><div class="num">148</div><div class="label">Mixer Channels</div></div>
+  <div class="stat"><div class="num">9</div><div class="label">Pro Plugins</div></div>
+  <div class="stat"><div class="num">6</div><div class="label">AI Genres</div></div>
+  <div class="stat"><div class="num">15+</div><div class="label">DAW Compatible</div></div>
+  <div class="stat"><div class="num">∞</div><div class="label">Possibilities</div></div>
+</div>
+
+<h2 class="center" style="font-size: 32px; margin: 40px 0 20px; color: var(--goat-gold);">
+  🔥 ALL TOOLS IN ONE PLATFORM
+</h2>
+
+<div class="goat-grid cols-3">
+
+  <a href="beat-maker.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge hot">LIVE</span>
+    </div>
+    <span class="icon">🥁</span>
+    <h3>Beat Maker</h3>
+    <p>16×16 step sequencer with 12 drum kits. Swing, pitch, accent, roll. Trap, Hip-Hop, R&B, Drill patterns ready.</p>
+  </a>
+
+  <a href="studio.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge new">NEW</span>
+    </div>
+    <span class="icon">🎛️</span>
+    <h3>Studio DAW</h3>
+    <p>Multi-track timeline, piano roll, MIDI editor, transport. Ableton-inspired workflow with AI Auto-Mix.</p>
+  </a>
+
+  <a href="ssl-mixer.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge pro">PRO</span>
+      <span class="goat-badge ai">AI</span>
+    </div>
+    <span class="icon">🎚️</span>
+    <h3>SSL 148-Channel Mixer</h3>
+    <p>Full console with EQ, comp, sends. Speedy AutoMix AI with 6 genre presets (Trap/HipHop/Pop/Rock/R&B/EDM).</p>
+  </a>
+
+  <a href="mastering.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge new">NEW</span>
+      <span class="goat-badge ai">AI</span>
+    </div>
+    <span class="icon">💎</span>
+    <h3>GOAT Mastering</h3>
+    <p>Ozone-killer suite: AI Master Assistant, 8-band EQ, multiband comp, maximizer, imager, saturation. LUFS meter.</p>
+  </a>
+
+  <a href="vocal-studio.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge new">NEW</span>
+    </div>
+    <span class="icon">🎤</span>
+    <h3>GOAT Vocal Studio</h3>
+    <p>Auto-Tune with Graph Mode, 4-voice harmony generator, de-esser, formant shifter, doubler. Antares-level vocals.</p>
+  </a>
+
+  <a href="ai-producer.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge hot">HOT</span>
+      <span class="goat-badge ai">AI</span>
+    </div>
+    <span class="icon">🤖</span>
+    <h3>AI Producer</h3>
+    <p>AI mastering (LANDR-style), stem separation (LALAL/Moises), beat generator, chord & melody AI, lyric assistant.</p>
+  </a>
+
+  <a href="sample-library.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge new">NEW</span>
+    </div>
+    <span class="icon">📦</span>
+    <h3>Sample Library</h3>
+    <p>Thousands of drums, 808s, loops, vocal chops. Tag/BPM/key filter. Drag-to-DAW. Splice-killer.</p>
+  </a>
+
+  <a href="plugins.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge pro">PRO</span>
+    </div>
+    <span class="icon">🔌</span>
+    <h3>Plugin Store</h3>
+    <p>9 pro plugins: GoatSaturator, Reverb, Delay, AutoTune, BrickSquadKick, 808, WakaVocals, AdLibFX, GoatBus.</p>
+  </a>
+
+  <a href="film-score.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge new">NEW</span>
+    </div>
+    <span class="icon">🎬</span>
+    <h3>Film & Score</h3>
+    <p>Score-to-picture workspace. Video sync, cue sheets, hit-point markers, orchestral presets. EastWest-inspired.</p>
+  </a>
+
+  <a href="catalog.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge pro">PRO</span>
+    </div>
+    <span class="icon">💰</span>
+    <h3>Royalty Catalog</h3>
+    <p>Track your releases, splits, publishing. Real-time royalty tracking. Stripe payouts.</p>
+  </a>
+
+  <a href="ai-dashboard.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge ai">AI</span>
+    </div>
+    <span class="icon">📊</span>
+    <h3>AI Dashboard</h3>
+    <p>Analytics, predictions, trends. Which songs are trending, where fans are, revenue forecasts.</p>
+  </a>
+
+  <a href="agents.html" class="tool-card fade-in">
+    <div class="badges">
+      <span class="goat-badge hot">HOT</span>
+    </div>
+    <span class="icon">🕴️</span>
+    <h3>AI Agents</h3>
+    <p>Autonomous AI agents that handle A&R, mixing, mastering, promo, social, and label tasks 24/7.</p>
+  </a>
+
+</div>
+
+<section style="padding: 60px 24px; text-align: center; background: linear-gradient(180deg, transparent 0%, rgba(193,18,31,0.1) 100%);">
+  <h2 style="font-size: 32px; margin: 0 0 16px; color: var(--goat-gold);">🐐 BUILT BY PRODUCERS FOR PRODUCERS</h2>
+  <p style="color: var(--goat-silver); max-width: 700px; margin: 0 auto 24px;">
+    Every tool handcrafted. No BS. No subscriptions. One powerhouse. Everything you need to produce, mix, master, and release like the GOAT.
+  </p>
+  <div class="flex flex-wrap" style="justify-content: center; gap: 14px;">
+    <a href="plugins.html" class="goat-btn">🛒 Get The Plugins</a>
+    <a href="studio.html" class="goat-btn gold">🎛️ Start Producing</a>
+  </div>
+</section>
+
+<footer class="goat-footer">
+  <p>🐐 <strong>GOAT ROYALTY APP</strong> — Powered by <a href="https://goatforcerecords.com">Goat Force Records</a> × <a href="https://brick-squad.com">BrickSquad</a> × <a href="https://wakaflockaflame.com">Waka Flocka Flame</a></p>
+  <p class="muted">© 2025 DJ Speedy / Harvey L. Miller Jr. — All rights reserved.</p>
+</footer>
+
+</body>
+</html>
