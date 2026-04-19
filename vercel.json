@@ -4,12 +4,7 @@
   "outputDirectory": "client/.next",
   "installCommand": "cd client && npm install --legacy-peer-deps",
   "framework": "nextjs",
-  "functions": {
-    "client/api/**/*.js": {
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
+  
   "headers": [
     {
       "source": "/(.*)",
