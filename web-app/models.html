@@ -129,27 +129,27 @@
 
       <div class="divider"></div>
 
-      <h3 style="color:#76b900">🟢 NVIDIA NIM</h3>
-      <div class="category" onclick="downloadAllNvidia()" style="color:#76b900;font-weight:600">🚀 Download ALL NVIDIA (20)</div>
-      <div class="category" onclick="copyNvidiaOneLiner()" style="color:#76b900">📋 Copy NVIDIA 1-Liner</div>
-      <div class="category" onclick="showNvidiaInfo()" style="color:#76b900">ℹ️ NVIDIA Info</div>
+      <h3 style="color:#10b981">🔓 FREE AI (No API)</h3>
+      <div class="category" onclick="downloadAllOllama()" style="color:#10b981;font-weight:600">🚀 Download ALL Free (29)</div>
+      <div class="category" onclick="copyFreeAIOneLiner()" style="color:#10b981">📋 Copy 1-Liner</div>
+      <div class="category" onclick="showFreeAIInfo()" style="color:#10b981">ℹ️ Model List</div>
     </aside>
 
     <!-- Main Content -->
     <main class="main-content">
 
-      <!-- NVIDIA NIM Section -->
-      <div class="section-header" id="section-nvidia" style="background:linear-gradient(135deg,rgba(118,185,0,0.15),rgba(0,0,0,0.3));border-left:4px solid #76b900;padding:20px;border-radius:8px;margin-bottom:20px">
-        <h2 style="color:#76b900">🟢 NVIDIA NIM — 20 Enterprise Models</h2>
-        <p style="color:#cce9a0">Docker-based NVIDIA Inference Microservices. Meta Llama, Google Gemma, Mistral, Mixtral, Nemotron, Qwen 2.5, DeepSeek V3, StarCoder, CodeLlama & more.</p>
+      <!-- FREE AI (No API) Section -->
+      <div class="section-header" id="section-freeai" style="background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(0,0,0,0.3));border-left:4px solid #10b981;padding:20px;border-radius:8px;margin-bottom:20px">
+        <h2 style="color:#10b981">🔓 FREE AI — 29 Uncensored Models — NO API, NO LOGIN</h2>
+        <p style="color:#a7f3d0">Same models as NVIDIA NIM but 100% free via Ollama. Uncensored versions included (Dolphin, WizardLM-Uncensored). Works offline. OpenAI-compatible API. Saves to your 10TB external drive.</p>
         <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
-          <button class="btn" style="background:#76b900;color:#000;font-weight:700;padding:12px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px" onclick="downloadAllNvidia()">🚀 Download ALL 20 NVIDIA Models</button>
-          <button class="btn" style="background:rgba(118,185,0,0.2);color:#76b900;padding:12px 24px;border-radius:8px;border:1px solid #76b900;cursor:pointer;font-size:14px" onclick="copyNvidiaOneLiner()">📋 Copy 1-Line Installer</button>
-          <button class="btn" style="background:rgba(118,185,0,0.2);color:#76b900;padding:12px 24px;border-radius:8px;border:1px solid #76b900;cursor:pointer;font-size:14px" onclick="showNvidiaInfo()">ℹ️ View Model List</button>
+          <button class="btn" style="background:#10b981;color:#000;font-weight:700;padding:12px 24px;border-radius:8px;border:none;cursor:pointer;font-size:14px" onclick="downloadAllOllama()">🚀 Download ALL 29 Free Models</button>
+          <button class="btn" style="background:rgba(16,185,129,0.2);color:#10b981;padding:12px 24px;border-radius:8px;border:1px solid #10b981;cursor:pointer;font-size:14px" onclick="copyFreeAIOneLiner()">📋 Copy 1-Line Installer</button>
+          <button class="btn" style="background:rgba(16,185,129,0.2);color:#10b981;padding:12px 24px;border-radius:8px;border:1px solid #10b981;cursor:pointer;font-size:14px" onclick="showFreeAIInfo()">ℹ️ View Model List</button>
         </div>
-        <div style="margin-top:12px;font-size:12px;color:#8fbc5f">💾 Total: ~2.8 TB &nbsp;•&nbsp; 🔑 NGC API Key: configured &nbsp;•&nbsp; 🖥️ Requires: Docker + NVIDIA GPU</div>
+        <div style="margin-top:12px;font-size:12px;color:#6ee7b7">💾 Total: ~400 GB &nbsp;•&nbsp; 🔓 No API Key &nbsp;•&nbsp; 🚫 No Login &nbsp;•&nbsp; 🔞 Uncensored Options &nbsp;•&nbsp; 💻 CPU or GPU</div>
       </div>
-      <div class="models-grid" id="nvidiaGrid" style="margin-bottom:30px"></div>
+      <div class="models-grid" id="freeaiGrid" style="margin-bottom:30px"></div>
 
       <br>
 
@@ -487,37 +487,49 @@
   // POPULATE GRIDS
   // ══════════════════════════════════════════════════════════════════
 
-  function createNvidiaCard(m) {
+  function createFreeAICard(m) {
+    const accent = m.uncensored ? '#f59e0b' : '#10b981';
+    const bgLight = m.uncensored ? 'rgba(245,158,11,0.15)' : 'rgba(16,185,129,0.15)';
+    const icon = m.uncensored ? '🔞' : '🔓';
+    const tag = m.uncensored ? '<span style="background:#f59e0b;color:#000;padding:2px 6px;border-radius:4px;font-size:9px;margin-left:6px">UNCENSORED</span>' : '';
     return `
-      <div class="model-card" style="border-left:3px solid #76b900">
+      <div class="model-card" style="border-left:3px solid ${accent}">
         <div class="model-header">
-          <div class="model-name" style="color:#76b900">🟢 ${m.name}</div>
-          <span class="badge-small" style="background:#76b900;color:#000">${m.size}</span>
+          <div class="model-name" style="color:${accent}">${icon} ${m.name}${tag}</div>
+          <span class="badge-small" style="background:${accent};color:#000">${m.size}</span>
         </div>
         <div class="model-desc" style="font-size:12px">
-          <code style="word-break:break-all;font-size:10px">${m.repo}</code>
+          ${m.desc}<br>
+          <code style="word-break:break-all;font-size:10px;background:${bgLight};padding:2px 4px;border-radius:3px">ollama pull ${m.tag}</code>
         </div>
         <div class="card-actions" style="margin-top:10px">
-          <button class="btn btn-primary" style="background:#76b900;color:#000" onclick="downloadSingleNvidia('${m.repo}','${m.name}')">📥 Pull</button>
-          <button class="btn btn-secondary" onclick="copyCmd('docker pull ${m.repo}')">📋 Copy</button>
+          <button class="btn btn-primary" style="background:${accent};color:#000" onclick="downloadSingleOllama('${m.tag}','${m.name}')">📥 Pull</button>
+          <button class="btn btn-secondary" onclick="copyCmd('ollama pull ${m.tag}')">📋 Copy</button>
+          <button class="btn btn-secondary" onclick="chatWithModel('${m.tag}','${m.name}')">💬 Chat</button>
         </div>
       </div>`;
   }
 
-  async function downloadSingleNvidia(repo, name) {
+  async function downloadSingleOllama(tag, name) {
     try {
-      const r = await fetch('/api/nvidia/pull', {
+      const r = await fetch('/api/ollama/pull', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ model: repo })
+        body: JSON.stringify({ name: tag })
       });
       if (r.ok) {
-        alert('📥 Pulling ' + name + ' on server...\nMonitor with: docker images | grep ' + repo.split('/').pop());
+        alert('📥 Pulling ' + name + ' on server...\n\nMonitor with: ollama list\nOr: curl localhost:11434/api/tags');
         return;
       }
     } catch (e) { }
-    copyCmd('docker pull ' + repo);
-    alert('📋 Copied Docker pull command for ' + name + '\n\nPaste in terminal to download.');
+    copyCmd('ollama pull ' + tag);
+    alert('📋 Copied `ollama pull ' + tag + '` to clipboard.\n\nIf Ollama is installed on your server, paste in terminal to download.\n\nInstall Ollama first: curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/ONE-COMMAND-FREE-AI.sh | sudo bash');
+  }
+
+  function chatWithModel(tag, name) {
+    // Jump to GOAT chat with this model pre-selected
+    const url = '/goat-royalty/?model=' + encodeURIComponent(tag);
+    window.open(url, '_blank');
   }
 
   function renderAll() {
@@ -526,8 +538,8 @@
     document.getElementById('characterGrid').innerHTML = MODELS.characters.map(createCharacterCard).join('');
     document.getElementById('editingGrid').innerHTML = MODELS.editing.map(createEditingCard).join('');
     document.getElementById('lightningGrid').innerHTML = MODELS.lightning.map(createLightningCard).join('');
-    var ng = document.getElementById('nvidiaGrid');
-    if (ng) ng.innerHTML = NVIDIA_MODELS.map(createNvidiaCard).join('');
+    var ng = document.getElementById('freeaiGrid');
+    if (ng) ng.innerHTML = FREEAI_MODELS.map(createFreeAICard).join('');
   }
 
   renderAll();
@@ -640,73 +652,102 @@
     alert('🖥️ Server Setup Guide\n\n1. Install Git LFS:\n   sudo apt install git-lfs && git lfs install\n\n2. Create model directory:\n   mkdir -p /mnt/100tb/huggingface-models\n\n3. Click "Copy Bulk Script" and paste into terminal\n\n4. Install runtimes:\n   pip install diffusers torch transformers\n   git clone https://github.com/comfyanonymous/ComfyUI\n\nNo login or API keys needed for any public model!');
   }
 
-  // ========== NVIDIA NIM (20 MODELS) ==========
-  const NVIDIA_MODELS = [
-    // Meta Llama (4)
-    {name:'Llama 3.1 8B',  repo:'nvcr.io/nim/meta/llama-3.1-8b-instruct:latest',  size:'16 GB'},
-    {name:'Llama 3.1 70B', repo:'nvcr.io/nim/meta/llama-3.1-70b-instruct:latest', size:'140 GB'},
-    {name:'Llama 3.2 1B',  repo:'nvcr.io/nim/meta/llama-3.2-1b-instruct:latest',  size:'2 GB'},
-    {name:'Llama 3.2 3B',  repo:'nvcr.io/nim/meta/llama-3.2-3b-instruct:latest',  size:'6 GB'},
-    // Google Gemma (2)
-    {name:'Gemma 2 9B',    repo:'nvcr.io/nim/google/gemma-2-9b-it:latest',   size:'18 GB'},
-    {name:'Gemma 2 27B',   repo:'nvcr.io/nim/google/gemma-2-27b-it:latest',  size:'54 GB'},
-    // Mistral (3)
-    {name:'Mistral 7B',    repo:'nvcr.io/nim/mistralai/mistral-7b-instruct:latest',       size:'14 GB'},
-    {name:'Mixtral 8x7B',  repo:'nvcr.io/nim/mistralai/mixtral-8x7b-instruct-v0.1:latest', size:'90 GB'},
-    {name:'Mixtral 8x22B', repo:'nvcr.io/nim/mistralai/mixtral-8x22b-instruct-v0.1:latest', size:'280 GB'},
-    // Microsoft Phi (2)
-    {name:'Phi-3 Mini',    repo:'nvcr.io/nim/microsoft/phi-3-mini-128k-instruct:latest',   size:'8 GB'},
-    {name:'Phi-3 Medium',  repo:'nvcr.io/nim/microsoft/phi-3-medium-128k-instruct:latest', size:'28 GB'},
-    // NVIDIA Nemotron (3)
-    {name:'Nemotron 4 340B',  repo:'nvcr.io/nim/nvidia/nemotron-4-340b-instruct:latest',      size:'700 GB'},
-    {name:'Nemotron Embed',   repo:'nvcr.io/nim/nvidia/llama-nemotron-embed-1b-v2:latest',    size:'2 GB'},
-    {name:'Nemotron Rerank',  repo:'nvcr.io/nim/nvidia/llama-nemotron-rerank-1b-v2:latest',   size:'2 GB'},
-    // NVIDIA Embedding (1)
-    {name:'NV-EmbedQA E5',    repo:'nvcr.io/nim/nvidia/nv-embedqa-e5-v5:latest', size:'2 GB'},
-    // Qwen (1)
-    {name:'Qwen 2.5 72B',     repo:'nvcr.io/nim/qwen/qwen2.5-72b-instruct:latest', size:'145 GB'},
-    // DeepSeek (2)
-    {name:'DeepSeek V3',         repo:'nvcr.io/nim/deepseek-ai/deepseek-v3:latest',                  size:'1.2 TB'},
-    {name:'DeepSeek Coder 33B',  repo:'nvcr.io/nim/deepseek-ai/deepseek-coder-33b-instruct:latest',  size:'66 GB'},
-    // Code (2)
-    {name:'StarCoder 2 15B',  repo:'nvcr.io/nim/bigcode/starcoder2-15b:latest',         size:'30 GB'},
-    {name:'CodeLlama 34B',    repo:'nvcr.io/nim/codellama/codellama-34b-instruct:latest', size:'68 GB'}
+  // ========== FREE AI via OLLAMA (29 MODELS, NO API KEY) ==========
+  const FREEAI_MODELS = [
+    // === UNCENSORED (priority) ===
+    {name:'Llama 2 Uncensored 7B',    tag:'llama2-uncensored:7b',    size:'3.8 GB',  uncensored:true, desc:'No safety filters, general purpose'},
+    {name:'Dolphin Llama 3 8B',       tag:'dolphin-llama3:8b',       size:'4.7 GB',  uncensored:true, desc:'Uncensored fine-tune of Llama 3'},
+    {name:'Dolphin Mistral 7B',       tag:'dolphin-mistral:7b',      size:'4.1 GB',  uncensored:true, desc:'Uncensored Mistral variant'},
+    {name:'Dolphin Mixtral 8x7B',     tag:'dolphin-mixtral:8x7b',    size:'26 GB',   uncensored:true, desc:'GPT-4 class, no filters'},
+    {name:'WizardLM Uncensored 13B',  tag:'wizardlm-uncensored:13b', size:'7.4 GB',  uncensored:true, desc:'Conversational, no filters'},
+    {name:'Llama 2 Uncensored 70B',   tag:'llama2-uncensored:70b',   size:'39 GB',   uncensored:true, desc:'Largest uncensored Llama 2'},
+
+    // === Small/Fast (CPU-friendly) ===
+    {name:'Llama 3.2 1B',             tag:'llama3.2:1b',              size:'1.3 GB',  desc:'Ultra fast, low resource'},
+    {name:'Llama 3.2 3B',             tag:'llama3.2:3b',              size:'2.0 GB',  desc:'Fast, good quality'},
+    {name:'Gemma 2 2B',               tag:'gemma2:2b',                size:'1.6 GB',  desc:'Google\'s smallest Gemma'},
+    {name:'Qwen 2.5 3B',              tag:'qwen2.5:3b',               size:'1.9 GB',  desc:'Alibaba\'s Qwen, multilingual'},
+    {name:'Phi-3 Mini',               tag:'phi3:mini',                size:'2.2 GB',  desc:'Microsoft\'s tiny powerhouse'},
+
+    // === Medium (7-9B sweet spot) ===
+    {name:'Llama 3.1 8B',             tag:'llama3.1:8b',              size:'4.7 GB',  desc:'Meta\'s most popular model'},
+    {name:'Mistral 7B',               tag:'mistral:7b',               size:'4.1 GB',  desc:'FREE here — no NIM login!'},
+    {name:'Qwen 2.5 7B',              tag:'qwen2.5:7b',               size:'4.7 GB',  desc:'Strong multilingual'},
+    {name:'Gemma 2 9B',               tag:'gemma2:9b',                size:'5.4 GB',  desc:'FREE here — no NIM login!'},
+    {name:'DeepSeek R1 7B',           tag:'deepseek-r1:7b',           size:'4.7 GB',  desc:'Reasoning model (like o1)'},
+
+    // === Large (GPU helpful) ===
+    {name:'Mixtral 8x7B MoE',         tag:'mixtral:8x7b',             size:'26 GB',   desc:'FREE here — mixture of experts'},
+    {name:'Llama 3.1 70B',            tag:'llama3.1:70b',             size:'40 GB',   desc:'Flagship open model'},
+    {name:'Qwen 2.5 72B',             tag:'qwen2.5:72b',              size:'41 GB',   desc:'FREE here — competes with GPT-4'},
+    {name:'DeepSeek R1 70B',          tag:'deepseek-r1:70b',          size:'40 GB',   desc:'Reasoning at 70B scale'},
+
+    // === Code ===
+    {name:'StarCoder 2 15B',          tag:'starcoder2:15b',           size:'9 GB',    desc:'FREE here — code generation'},
+    {name:'CodeLlama 34B',            tag:'codellama:34b',            size:'19 GB',   desc:'FREE here — Meta\'s code model'},
+    {name:'DeepSeek Coder 33B',       tag:'deepseek-coder:33b',       size:'19 GB',   desc:'Top code benchmark'},
+    {name:'Qwen 2.5 Coder 32B',       tag:'qwen2.5-coder:32b',        size:'19 GB',   desc:'Latest code specialist'},
+
+    // === Vision ===
+    {name:'LLaVA 7B',                 tag:'llava:7b',                 size:'4.7 GB',  desc:'See images, describe, answer'},
+    {name:'Llama 3.2 Vision 11B',     tag:'llama3.2-vision:11b',      size:'7.9 GB',  desc:'Meta\'s vision model'},
+    {name:'Moondream',                tag:'moondream:1.8b',           size:'1.7 GB',  desc:'Tiny vision model'},
+
+    // === Embeddings (for RAG / catalog search) ===
+    {name:'Nomic Embed',              tag:'nomic-embed-text:latest',  size:'274 MB',  desc:'Embeddings for search/RAG'},
+    {name:'MxBai Embed Large',        tag:'mxbai-embed-large:latest', size:'670 MB',  desc:'Higher quality embeddings'}
   ];
 
-  async function downloadAllNvidia() {
-    const confirmed = confirm('🚀 Download ALL 20 NVIDIA NIM Models?\n\nTotal size: ~2.8 TB\nRequires: Docker + NVIDIA GPU + NGC API Key\n\nThis will start the bulk Docker pull on your server.\nContinue?');
+  async function downloadAllOllama() {
+    const uncensored = FREEAI_MODELS.filter(m => m.uncensored).length;
+    const confirmed = confirm('🔓 Download ALL ' + FREEAI_MODELS.length + ' FREE AI Models?\n\n' +
+      '✅ No API key • No login • No rate limits\n' +
+      '🔞 Includes ' + uncensored + ' UNCENSORED models\n' +
+      '💾 Total size: ~400 GB\n' +
+      '📁 Saves to your 10TB external drive\n\n' +
+      'Continue?');
     if (!confirmed) return;
 
     // Try real backend first
     try {
-      const r = await fetch('/api/nvidia/download-all', {
+      const r = await fetch('/api/ollama/pull-all', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ models: NVIDIA_MODELS.map(m => m.repo) })
+        body: JSON.stringify({ models: FREEAI_MODELS.map(m => m.tag) })
       });
       if (r.ok) {
         const data = await r.json();
-        alert('✅ NVIDIA bulk download STARTED on server!\n\nJob ID: ' + (data.job_id || 'n/a') + '\nCheck progress: /api/nvidia/status\n\nDownloading ' + NVIDIA_MODELS.length + ' models...');
+        alert('✅ Bulk download STARTED!\n\nJob ID: ' + (data.job_id || 'n/a') + '\nDownloading ' + FREEAI_MODELS.length + ' models to /mnt/ai-storage/ollama\n\nMonitor: ollama list');
         return;
       }
     } catch (e) { /* fall through */ }
 
     // Fallback: copy the 1-liner
-    copyNvidiaOneLiner();
-    alert('⚠️ Backend not installed yet.\n\nThe 1-line NVIDIA installer was copied to your clipboard.\nPaste it in your server terminal to download all 20 models.\n\nOr install the backend: bash INSTALL-MODEL-DOWNLOADER.sh');
+    copyFreeAIOneLiner();
+    alert('📋 The 1-line installer was copied!\n\nPaste this in your server SSH terminal:\n\ncurl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/ONE-COMMAND-FREE-AI.sh | sudo bash\n\nIt will:\n1. Mount your external drive\n2. Install Ollama\n3. Download all 29 models\n4. Save to /mnt/ai-storage/ollama');
   }
 
-  function copyNvidiaOneLiner() {
-    const cmd = 'curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/NVIDIA-1-CLICK-DOWNLOAD.sh | bash';
+  function copyFreeAIOneLiner() {
+    const cmd = 'curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/ONE-COMMAND-FREE-AI.sh | sudo bash';
     copyCmd(cmd);
   }
 
-  function showNvidiaInfo() {
-    let info = '🟢 NVIDIA NIM — 20 Models Available\n\n';
-    NVIDIA_MODELS.forEach((m, i) => {
-      info += (i+1).toString().padStart(2,' ') + '. ' + m.name + ' (' + m.size + ')\n';
+  function showFreeAIInfo() {
+    let info = '🔓 FREE AI — 29 Models, No API Key\n\n';
+    info += '━━━ UNCENSORED ━━━\n';
+    FREEAI_MODELS.filter(m => m.uncensored).forEach(m => {
+      info += '🔞 ' + m.name + ' (' + m.size + ')\n';
     });
-    info += '\n💾 Total: ~2.8 TB\n🔑 Requires: NGC API Key (already configured)\n🖥️ Requires: Docker + NVIDIA GPU\n\n▶️ Run:\ncurl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/NVIDIA-1-CLICK-DOWNLOAD.sh | bash';
+    info += '\n━━━ STANDARD ━━━\n';
+    FREEAI_MODELS.filter(m => !m.uncensored).forEach(m => {
+      info += '🔓 ' + m.name + ' (' + m.size + ')\n';
+    });
+    info += '\n💾 Total: ~400 GB on your 10TB drive\n';
+    info += '🚫 NO API key • NO login • NO limits\n';
+    info += '💻 Runs on CPU or GPU\n';
+    info += '📡 OpenAI-compatible API on port 11434\n\n';
+    info += '▶️ Install everything with one command:\n';
+    info += 'curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/ONE-COMMAND-FREE-AI.sh | sudo bash';
     alert(info);
   }
 

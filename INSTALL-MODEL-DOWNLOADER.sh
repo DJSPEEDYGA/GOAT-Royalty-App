@@ -249,6 +249,72 @@ def nvidia_installed():
     except Exception as e:
         return jsonify({'error': str(e), 'items': []})
 
+# ========== OLLAMA (NO API KEY) ENDPOINTS ==========
+ollama_jobs = {}
+
+def ollama_pull_worker(job_id, models):
+    """Pull Ollama models sequentially (no login, no API key needed)."""
+    ollama_jobs[job_id] = {'status':'running','total':len(models),'done':0,'success':0,'failed':0,'current':'','log':[]}
+    for m in models:
+        ollama_jobs[job_id]['current'] = m
+        ollama_jobs[job_id]['log'].append(f'Pulling {m}')
+        try:
+            r = subprocess.run(['ollama','pull',m], capture_output=True, text=True, timeout=14400)
+            if r.returncode == 0:
+                ollama_jobs[job_id]['success'] += 1
+                ollama_jobs[job_id]['log'].append(f'OK {m}')
+            else:
+                ollama_jobs[job_id]['failed'] += 1
+                ollama_jobs[job_id]['log'].append(f'FAIL {m}: {r.stderr[:200]}')
+        except Exception as e:
+            ollama_jobs[job_id]['failed'] += 1
+            ollama_jobs[job_id]['log'].append(f'EXCEPTION {m}: {e}')
+        ollama_jobs[job_id]['done'] += 1
+    ollama_jobs[job_id]['status'] = 'complete'
+    ollama_jobs[job_id]['current'] = ''
+
+@app.route('/api/ollama/pull', methods=['POST'])
+def ollama_pull_one():
+    data = request.get_json(force=True)
+    name = data.get('name') or data.get('model','')
+    if not name:
+        return jsonify({'error':'no model name'}), 400
+    job_id = f'ollama_{int(time.time())}'
+    threading.Thread(target=ollama_pull_worker, args=(job_id,[name]), daemon=True).start()
+    return jsonify({'started':True,'job_id':job_id,'model':name})
+
+@app.route('/api/ollama/pull-all', methods=['POST'])
+def ollama_pull_all():
+    data = request.get_json(force=True)
+    models = data.get('models',[])
+    if not models:
+        return jsonify({'error':'no models provided'}), 400
+    job_id = f'ollama_{int(time.time())}'
+    threading.Thread(target=ollama_pull_worker, args=(job_id,models), daemon=True).start()
+    return jsonify({'started':True,'job_id':job_id,'total':len(models)})
+
+@app.route('/api/ollama/status', methods=['GET'])
+def ollama_status_all():
+    return jsonify(ollama_jobs)
+
+@app.route('/api/ollama/status/<job_id>', methods=['GET'])
+def ollama_status_one(job_id):
+    return jsonify(ollama_jobs.get(job_id, {'error':'not found'}))
+
+@app.route('/api/ollama/installed', methods=['GET'])
+def ollama_installed():
+    try:
+        r = subprocess.run(['ollama','list'], capture_output=True, text=True, timeout=10)
+        items = []
+        lines = r.stdout.strip().split('\n')[1:]  # skip header
+        for line in lines:
+            parts = line.split()
+            if len(parts) >= 3:
+                items.append({'name':parts[0],'id':parts[1],'size':parts[2]})
+        return jsonify(items)
+    except Exception as e:
+        return jsonify({'error':str(e),'items':[]})
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5555, debug=False)
 PYAPP
