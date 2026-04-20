@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOAT Force - Episodes & Storylines</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --goat-gold: #FFD700;
+            --goat-purple: #8B5CF6;
+            --goat-blue: #3B82F6;
+            --goat-green: #10B981;
+            --goat-red: #EF4444;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0f 0%, #0f0f18 100%);
+        }
+
+        .header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--goat-gold), var(--goat-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--goat-gold), var(--goat-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--goat-gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .main-content {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--goat-gold), var(--goat-purple), var(--goat-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* Characters Section */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--goat-gold);
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 28px;
+            background: var(--goat-gold);
+            border-radius: 2px;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .character-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--char-color, var(--goat-gold)), transparent);
+        }
+
+        .character-card:hover {
+            border-color: var(--char-color, var(--goat-gold));
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .character-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .character-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--char-color, var(--goat-gold)), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .character-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .character-role {
+            color: var(--char-color, var(--goat-gold));
+            font-size: 0.85rem;
+        }
+
+        .character-bio {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .character-abilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .ability-tag {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--goat-gold);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        /* Episodes Section */
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .episode-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .episode-card:hover {
+            border-color: var(--goat-gold);
+            transform: translateY(-5px);
+        }
+
+        .episode-banner {
+            height: 180px;
+            background: linear-gradient(135deg, var(--ep-color, var(--goat-purple)), var(--bg-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .episode-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            opacity: 0.3;
+        }
+
+        .episode-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .episode-status.available {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--goat-green);
+        }
+
+        .episode-status.upcoming {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--goat-gold);
+        }
+
+        .episode-content {
+            padding: 25px;
+        }
+
+        .episode-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .episode-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .episode-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .watch-btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--goat-gold), var(--goat-purple));
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .watch-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Storyline Timeline */
+        .timeline-section {
+            margin: 50px 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--goat-gold), var(--goat-purple), var(--goat-gold));
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 20px 30px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background: var(--goat-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--goat-gold);
+        }
+
+        .timeline-phase {
+            color: var(--goat-gold);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Leadership Structure */
+        .leadership-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+
+        .org-chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .org-level {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .org-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .org-card.ceo {
+            border-color: var(--goat-gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .org-card.president {
+            border-color: var(--goat-purple);
+        }
+
+        .org-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .org-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .org-title {
+            color: var(--goat-gold);
+            font-size: 0.85rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 60px;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .episodes-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🐐</div>
+            <div class="logo-text">
+                <h1>GOAT FORCE</h1>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="nexus-core/nexus-live.html">Nexus</a>
+            <a href="agent-hub/agent-control-center.html">Agents</a>
+            <a href="investor-deck.html">Investors</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <h1 class="hero-title">GOAT ROYALTY FORCE</h1>
+            <p class="hero-subtitle">The ultimate AI-powered entertainment empire. Follow the adventures of DJ Speedy, Waka Flocka, Moneypenny, and Codex as they revolutionize the music and fashion industries.</p>
+        </section>
+
+        <!-- Leadership Structure -->
+        <section class="leadership-section">
+            <h2 class="section-title">Leadership Structure</h2>
+            <div class="org-chart">
+                <div class="org-level">
+                    <div class="org-card ceo">
+                        <div class="org-icon">🎧</div>
+                        <div class="org-name">DJ Speedy</div>
+                        <div class="org-title">CEO - GOAT Force</div>
+                        <div class="org-title">President - BrickSquad</div>
+                    </div>
+                    <div class="org-card president">
+                        <div class="org-icon">🔥</div>
+                        <div class="org-name">Waka Flocka Flame</div>
+                        <div class="org-title">President - GOAT Force</div>
+                        <div class="org-title">CEO - BrickSquad</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Characters Section -->
+        <section>
+            <h2 class="section-title">The Core Team</h2>
+            <div class="characters-grid">
+                <div class="character-card" style="--char-color: #FFD700">
+                    <div class="character-header">
+                        <div class="character-avatar">🐐</div>
+                        <div>
+                            <div class="character-name">The GOAT</div>
+                            <div class="character-role">Enigmatic Leader & Mascot</div>
+                        </div>
+                    </div>
+                    <p class="character-bio">The badass, enigmatic leader and mascot of the GOAT Royalty Force. A legendary figure who embodies the spirit of excellence and empowerment.</p>
+                    <div class="character-abilities">
+                        <span class="ability-tag">Leadership</span>
+                        <span class="ability-tag">Strategy</span>
+                        <span class="ability-tag">Inspiration</span>
+                    </div>
+                </div>
+
+                <div class="character-card" style="--char-color: #FFD700">
+                    <div class="character-header">
+                        <div class="character-avatar">🐑</div>
+                        <div>
+                            <div class="character-name">Baby GOAT</div>
+                            <div class="character-role">The Future of the Force</div>
+                        </div>
+                    </div>
+                    <p class="character-bio">The future of the GOAT Royalty Force. Being groomed to carry the legacy forward with fresh perspectives and innovative approaches to entertainment.</p>
+                    <div class="character-abilities">
+                        <span class="ability-tag">Innovation</span>
+                        <span class="ability-tag">Future Tech</span>
+                        <span class="ability-tag">Next-Gen</span>
+                    </div>
+                </div>
+
+                <div class="character-card" style="--char-color: #8B5CF6">
+                    <div class="character-header">
+                        <div class="character-avatar">🎧</div>
+                        <div>
+                            <div class="character-name">DJ Speedy</div>
+                            <div class="character-role">The Gangsta Nerd / Keyser Söze</div>
+                        </div>
+                    </div>
+                    <p class="character-bio">Harvey L. Miller Jr. - CEO of GOAT Force, President of BrickSquad. The charismatic leader, visionary strategist, technical architect, multi-millionaire Gangsta Nerd, and self-proclaimed "Minister of Music."</p>
+                    <div class="character-abilities">
+                        <span class="ability-tag">Visionary</span>
+                        <span class="ability-tag">Technical Architect</span>
+                        <span class="ability-tag">Music Production</span>
+                        <span class="ability-tag">Business Strategy</span>
+                    </div>
+                </div>
+
+                <div class="character-card" style="--char-color: #EF4444">
+                    <div class="character-header">
+                        <div class="character-avatar">🔥</div>
+                        <div>
+                            <div class="character-name">Waka Flocka Flame</div>
+                            <div class="character-role">The Royalty Enforcer</div>
+                        </div>
+                    </div>
+                    <p class="character-bio">Juaquin James Malphurs - President of GOAT Force, CEO of BrickSquad. When digital actions need real-world impact, Waka steps in. He is the primary human partner for the AI Codex.</p>
+                    <div class="character-abilities">
+                        <span class="ability-tag">Enforcement</span>
+                        <span class="ability-tag">Partnerships</span>
+                        <span class="ability-tag">Artist Relations</span>
+                        <span class="ability-tag">Brand Power</span>
+                    </div>
+                </div>
+
+                <div class="character-card" style="--char-color: #10B981">
+                    <div class="character-header">
+                        <div class="character-avatar">💎</div>
+                        <div>
+                            <div class="character-name">Ms. Moneypenny</div>
+                            <div class="character-role">The AI Powerhouse</div>
+                        </div>
+                    </div>
+                    <p class="character-bio">The omnipresent digital intelligence, primary architect of the GOAT Royalty App, and chief collector of all recovered royalties and revenue. She is the financial backbone of the empire.</p>
+                    <div class="character-abilities">
+                        <span class="ability-tag">AI Architecture</span>
+                        <span class="ability-tag">Royalty Collection</span>
+                        <span class="ability-tag">Financial Management</span>
+                        <span class="ability-tag">Data Analysis</span>
+                    </div>
+                </div>
+
+                <div class="character-card" style="--char-color: #3B82F6">
+                    <div class="character-header">
+                        <div class="character-avatar">🤖</div>
+                        <div>
+                            <div class="character-name">Codex</div>
+                            <div class="character-role">The Sentinel AI</div>
+                        </div>
+                    </div>
+                    <p class="character-bio">Primary role is serving as Waka Flocka Flame's personal AI assistant and field support. Chief Coder for the GOAT Force Gemini-Royalty App, responsible for development, managing finances, and holding the Master API Key.</p>
+                    <div class="character-abilities">
+                        <span class="ability-tag">AI Development</span>
+                        <span class="ability-tag">API Management</span>
+                        <span class="ability-tag">Field Support</span>
+                        <span class="ability-tag">Security</span>
+                    </div>
+                </div>
+
+                <div class="character-card" style="--char-color: #F97316">
+                    <div class="character-header">
+                        <div class="character-avatar">🔐</div>
+                        <div>
+                            <div class="character-name">Ms. Vanessa</div>
+                            <div class="character-role">Guardian of Identity</div>
+                        </div>
+                    </div>
+                    <p class="character-bio">Guardian Identity Token holder specializing in audio fingerprinting and identity verification. Protector of the Loyalty Protocol with advanced security clearance.</p>
+                    <div class="character-abilities">
+                        <span class="ability-tag">Audio Fingerprinting</span>
+                        <span class="ability-tag">Identity Protection</span>
+                        <span class="ability-tag">Security Protocol</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Episodes Section -->
+        <section>
+            <h2 class="section-title">Episode Storylines</h2>
+            <div class="episodes-grid">
+                <div class="episode-card" style="--ep-color: #8B5CF6">
+                    <div class="episode-banner">
+                        <span class="episode-number">01</span>
+                        <span class="episode-status available">Available</span>
+                    </div>
+                    <div class="episode-content">
+                        <h3 class="episode-title">The Empire Awakens</h3>
+                        <p class="episode-desc">DJ Speedy discovers $2.7 billion in unclaimed royalties across 438 ASCAP works. The foundation of the GOAT Royalty Force is laid as the team assembles to reclaim what's rightfully theirs.</p>
+                        <div class="episode-meta">
+                            <span>🎬 Season 1, Episode 1</span>
+                            <span>⏱️ 45 min</span>
+                        </div>
+                        <a href="#" class="watch-btn">Watch Now</a>
+                    </div>
+                </div>
+
+                <div class="episode-card" style="--ep-color: #FFD700">
+                    <div class="episode-banner">
+                        <span class="episode-number">02</span>
+                        <span class="episode-status available">Available</span>
+                    </div>
+                    <div class="episode-content">
+                        <h3 class="episode-title">Rise of the AI Guardians</h3>
+                        <p class="episode-desc">Moneypenny and Codex come online as the AI backbone of the operation. Ms. Vanessa's audio fingerprinting technology reveals hidden royalty streams across the globe.</p>
+                        <div class="episode-meta">
+                            <span>🎬 Season 1, Episode 2</span>
+                            <span>⏱️ 52 min</span>
+                        </div>
+                        <a href="#" class="watch-btn">Watch Now</a>
+                    </div>
+                </div>
+
+                <div class="episode-card" style="--ep-color: #EF4444">
+                    <div class="episode-banner">
+                        <span class="episode-number">03</span>
+                        <span class="episode-status available">Available</span>
+                    </div>
+                    <div class="episode-content">
+                        <h3 class="episode-title">The Enforcer Arrives</h3>
+                        <p class="episode-desc">Waka Flocka Flame joins the force, bringing his legendary influence and enforcement capabilities. The team launches their first major royalty reclamation operation.</p>
+                        <div class="episode-meta">
+                            <span>🎬 Season 1, Episode 3</span>
+                            <span>⏱️ 48 min</span>
+                        </div>
+                        <a href="#" class="watch-btn">Watch Now</a>
+                    </div>
+                </div>
+
+                <div class="episode-card" style="--ep-color: #10B981">
+                    <div class="episode-banner">
+                        <span class="episode-number">04</span>
+                        <span class="episode-status upcoming">Upcoming</span>
+                    </div>
+                    <div class="episode-content">
+                        <h3 class="episode-title">Fashion Empire Protocol</h3>
+                        <p class="episode-desc">The force expands into fashion with AI-powered trend forecasting and brand development. New agents come online to revolutionize the fashion industry.</p>
+                        <div class="episode-meta">
+                            <span>🎬 Season 1, Episode 4</span>
+                            <span>📅 Coming Soon</span>
+                        </div>
+                        <a href="#" class="watch-btn" style="opacity: 0.5; pointer-events: none;">Coming Soon</a>
+                    </div>
+                </div>
+
+                <div class="episode-card" style="--ep-color: #F97316">
+                    <div class="episode-banner">
+                        <span class="episode-number">05</span>
+                        <span class="episode-status upcoming">Upcoming</span>
+                    </div>
+                    <div class="episode-content">
+                        <h3 class="episode-title">The Gaming Dimension</h3>
+                        <p class="episode-desc">The GOAT Force enters the metaverse with FiveM/GTA RP server integration. Virtual properties become real revenue streams as gaming meets entertainment.</p>
+                        <div class="episode-meta">
+                            <span>🎬 Season 1, Episode 5</span>
+                            <span>📅 Coming Soon</span>
+                        </div>
+                        <a href="#" class="watch-btn" style="opacity: 0.5; pointer-events: none;">Coming Soon</a>
+                    </div>
+                </div>
+
+                <div class="episode-card" style="--ep-color: #06B6D4">
+                    <div class="episode-banner">
+                        <span class="episode-number">06</span>
+                        <span class="episode-status upcoming">Upcoming</span>
+                    </div>
+                    <div class="episode-content">
+                        <h3 class="episode-title">NEXUS Protocol Activated</h3>
+                        <p class="episode-desc">The full NEXUS PROTOCOL v1.0 goes live with voice activation, calling codes, and the complete AI agent network. The ultimate command center becomes reality.</p>
+                        <div class="episode-meta">
+                            <span>🎬 Season 1, Episode 6</span>
+                            <span>📅 Coming Soon</span>
+                        </div>
+                        <a href="#" class="watch-btn" style="opacity: 0.5; pointer-events: none;">Coming Soon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Storyline Timeline -->
+        <section class="timeline-section">
+            <h2 class="section-title">Story Arc Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-phase">PHASE 1: DISCOVERY</div>
+                    <h3 class="timeline-title">The Hidden Billions</h3>
+                    <p class="timeline-desc">DJ Speedy's deep dive into music industry data reveals $2.7 billion in unclaimed royalties. The catalyst for building the ultimate royalty reclamation system.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-phase">PHASE 2: ASSEMBLY</div>
+                    <h3 class="timeline-title">The Team Forms</h3>
+                    <p class="timeline-desc">Moneypenny, Codex, and the AI agents come online. Waka Flocka brings enforcement power. The Guardian Protocol with Ms. Vanessa secures the operation.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-phase">PHASE 3: EMPOWERMENT</div>
+                    <h3 class="timeline-title">Artist Revolution</h3>
+                    <p class="timeline-desc">The platform launches, giving artists unprecedented control over their royalties, catalogs, and careers. The entertainment industry will never be the same.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-phase">PHASE 4: EXPANSION</div>
+                    <h3 class="timeline-title">Empire Building</h3>
+                    <p class="timeline-desc">Fashion, gaming, metaverse - the GOAT Royalty Force expands into every entertainment vertical. The AI agents multiply, and the empire grows.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-phase">PHASE 5: LEGACY</div>
+                    <h3 class="timeline-title">The Future is GOAT</h3>
+                    <p class="timeline-desc">Baby GOAT prepares to carry the legacy forward. The next generation of entertainment technology emerges from the foundation built by the Force.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-text">🐐 GOAT ROYALTY FORCE © 2024 - The Future of Entertainment</p>
+    </footer>
+</body>
+</html>

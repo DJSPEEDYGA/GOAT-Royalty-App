@@ -91,6 +91,8 @@
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: sticky;
+            top: 0;
         }
         
         .catalog-table td {
@@ -111,9 +113,9 @@
             font-weight: 600;
         }
         
-        .status-registered { background: rgba(0, 255, 136, 0.2); color: #00FF88; }
-        .status-pending { background: rgba(255, 215, 0, 0.2); color: #FFD700; }
-        .status-issue { background: rgba(255, 51, 102, 0.2); color: #FF3366; }
+        .status-registered, .status-Accepted { background: rgba(0, 255, 136, 0.2); color: #00FF88; }
+        .status-pending, .status-Pending { background: rgba(255, 215, 0, 0.2); color: #FFD700; }
+        .status-issue, .status-Rejected { background: rgba(255, 51, 102, 0.2); color: #FF3366; }
         
         .stat-box {
             text-align: center;
@@ -153,6 +155,41 @@
             max-height: 90vh;
             overflow-y: auto;
         }
+        
+        .data-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--goat-gold);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-left: 10px;
+        }
+        
+        .table-container {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #a0a0b0;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 215, 0, 0.2);
+            border-top-color: #FFD700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 <script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
 </head>
@@ -166,7 +203,7 @@
                 </div>
                 <div>
                     <h1 class="text-3xl md:text-4xl font-orbitron font-bold glow-gold">CATALOG MANAGER</h1>
-                    <p class="text-gray-400">Manage your music catalog & track royalty status</p>
+                    <p class="text-gray-400">Manage your music catalog & track royalty status <span class="data-badge" id="data-status">Loading...</span></p>
                 </div>
             </div>
             <div class="flex gap-3">
@@ -186,19 +223,19 @@
     <!-- Stats -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div class="card stat-box">
-            <div class="stat-number">438</div>
+            <div class="stat-number" id="stat-total">--</div>
             <div class="text-gray-400 text-sm">Total Works</div>
         </div>
         <div class="card stat-box">
-            <div class="stat-number">339</div>
+            <div class="stat-number" id="stat-registered">--</div>
             <div class="text-gray-400 text-sm">Registered</div>
         </div>
         <div class="card stat-box">
-            <div class="stat-number">77%</div>
+            <div class="stat-number" id="stat-rate">--</div>
             <div class="text-gray-400 text-sm">Accept Rate</div>
         </div>
         <div class="card stat-box">
-            <div class="stat-number">99</div>
+            <div class="stat-number" id="stat-pending">--</div>
             <div class="text-gray-400 text-sm">Pending</div>
         </div>
     </div>
@@ -207,13 +244,13 @@
     <div class="card p-4 mb-6">
         <div class="flex flex-wrap gap-4 items-center">
             <div class="flex-1 min-w-64">
-                <input type="text" id="search-input" class="input-field" placeholder="🔍 Search by title, ISRC, or writer..." onkeyup="filterCatalog()">
+                <input type="text" id="search-input" class="input-field" placeholder="🔍 Search by title, ISRC, ASCAP ID, or writer..." onkeyup="filterCatalog()">
             </div>
             <select id="status-filter" class="input-field w-auto" onchange="filterCatalog()">
                 <option value="">All Status</option>
-                <option value="registered">Registered</option>
-                <option value="pending">Pending</option>
-                <option value="issue">Issues</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Pending">Pending</option>
+                <option value="Rejected">Rejected</option>
             </select>
             <select id="pro-filter" class="input-field w-auto" onchange="filterCatalog()">
                 <option value="">All PROs</option>
@@ -225,20 +262,25 @@
     </div>
     
     <!-- Catalog Table -->
-    <div class="card overflow-x-auto">
+    <div class="card table-container">
         <table class="catalog-table">
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Writers</th>
-                    <th>ISRC</th>
-                    <th>PRO</th>
+                    <th>ASCAP ID</th>
+                    <th>ISWC</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="catalog-body">
-                <!-- Dynamic rows -->
+                <tr>
+                    <td colspan="6" class="loading">
+                        <div class="loading-spinner"></div>
+                        Loading real ASCAP catalog data...
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -246,10 +288,11 @@
     <!-- Pagination -->
     <div class="flex justify-between items-center mt-6">
         <div class="text-gray-400 text-sm">
-            Showing <span id="showing-count">1-10</span> of <span id="total-count">438</span> works
+            Showing <span id="showing-count">--</span> of <span id="total-count">--</span> works
         </div>
         <div class="flex gap-2">
             <button class="btn-secondary" onclick="prevPage()">← Previous</button>
+            <span id="page-info" class="px-4 py-2 text-gray-400"></span>
             <button class="btn-secondary" onclick="nextPage()">Next →</button>
         </div>
     </div>
@@ -292,15 +335,15 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm text-gray-400 mb-2">Release Date</label>
+                        <label class="block text-sm text-gray-400 mb-2">Registration Date</label>
                         <input type="date" id="work-release" class="input-field">
                     </div>
                     <div>
                         <label class="block text-sm text-gray-400 mb-2">Status</label>
                         <select id="work-status" class="input-field">
-                            <option value="pending">Pending</option>
-                            <option value="registered">Registered</option>
-                            <option value="issue">Has Issues</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Rejected">Rejected</option>
                         </select>
                     </div>
                 </div>
@@ -323,25 +366,77 @@
     </footer>
     
     <script>
-        // Sample catalog data
-        let catalogData = [
-            { id: 1, title: 'No Hands', writers: 'Harvey Miller, Juaquin Malphurs, Kanye West', isrc: 'QZ-ABC-11-00001', pro: 'ASCAP', status: 'registered', publishers: 'FastAssMan Publishing', release: '2010-10-12' },
-            { id: 2, title: 'Hard in the Paint', writers: 'Harvey Miller, Juaquin Malphurs', isrc: 'QZ-ABC-11-00002', pro: 'ASCAP', status: 'registered', publishers: 'FastAssMan Publishing', release: '2010-05-01' },
-            { id: 3, title: 'Grove St. Party', writers: 'Harvey Miller, Juaquin Malphurs', isrc: 'QZ-ABC-11-00003', pro: 'ASCAP', status: 'registered', publishers: 'FastAssMan Publishing', release: '2011-03-01' },
-            { id: 4, title: 'Round of Applause', writers: 'Harvey Miller, Juaquin Malphurs, Drake', isrc: 'QZ-ABC-12-00001', pro: 'ASCAP', status: 'registered', publishers: 'FastAssMan Publishing', release: '2012-08-01' },
-            { id: 5, title: '50K Remix', writers: 'Harvey Miller, Juaquin Malphurs, Gucci Mane', isrc: 'QZ-ABC-15-00001', pro: 'ASCAP', status: 'pending', publishers: 'BSM Publishing', release: '2015-01-01' },
-            { id: 6, title: 'Trap My A Off', writers: 'Harvey Miller', isrc: 'QZ-ABC-16-00001', pro: 'ASCAP', status: 'registered', publishers: 'FastAssMan Publishing', release: '2016-03-01' },
-            { id: 7, title: 'Workin', writers: 'Harvey Miller, Juaquin Malphurs', isrc: 'QZ-ABC-17-00001', pro: 'ASCAP', status: 'registered', publishers: 'FastAssMan Publishing', release: '2017-08-01' },
-            { id: 8, title: 'Big Dawg', writers: 'Harvey Miller, Juaquin Malphurs', isrc: 'QZ-ABC-18-00001', pro: 'ASCAP', status: 'issue', publishers: 'FastAssMan Publishing', release: '2018-02-01' },
-            { id: 9, title: 'Circles', writers: 'Harvey Miller', isrc: 'QZ-ABC-19-00001', pro: 'ASCAP', status: 'pending', publishers: 'FastAssMan Publishing', release: '2019-01-01' },
-            { id: 10, title: 'Trap God', writers: 'Harvey Miller, Juaquin Malphurs', isrc: 'QZ-ABC-20-00001', pro: 'ASCAP', status: 'registered', publishers: 'BSM Publishing', release: '2020-01-01' },
-        ];
-        
+        // Global state
+        let catalogData = [];
+        let filteredData = [];
         let currentPage = 1;
-        const itemsPerPage = 10;
+        const itemsPerPage = 25;
         let editingId = null;
         
-        function renderCatalog(data = catalogData) {
+        // Load real ASCAP catalog data
+        async function loadCatalogData() {
+            try {
+                // Load Fastassman Publishing works (423 works with full ASCAP data)
+                const fastassmanResponse = await fetch('../data/fastassman-publishing-works.json');
+                const fastassmanWorks = await fastassmanResponse.json();
+                
+                // Load Harvey Miller works
+                const harveyResponse = await fetch('../data/harvey-miller-works.json');
+                const harveyWorks = await harveyResponse.json();
+                
+                // Load catalog summary
+                const summaryResponse = await fetch('../data/catalog-summary.json');
+                const summary = await summaryResponse.json();
+                
+                // Process Fastassman works - these have full ASCAP data
+                catalogData = fastassmanWorks.map((work, index) => ({
+                    id: index + 1,
+                    title: work.work_title || 'Unknown',
+                    writers: work.interested_parties || 'Unknown',
+                    ascap_id: work.ascap_work_id || 'N/A',
+                    iswc: work.iswc_number || 'N/A',
+                    ipi: work.ipi_number || 'N/A',
+                    society: work.society || 'ASCAP',
+                    pro: work.society || 'ASCAP',
+                    status: work.registration_status || 'Pending',
+                    own_percent: work.own_percent || '0',
+                    collect_percent: work.collect_percent || '0',
+                    registration_date: work.registration_date || '',
+                    role: work.role || 'CA'
+                }));
+                
+                // Update stats with real numbers
+                const total = catalogData.length;
+                const registered = catalogData.filter(w => w.status === 'Accepted').length;
+                const pending = catalogData.filter(w => w.status === 'Pending').length;
+                const rate = total > 0 ? Math.round((registered / total) * 100) : 0;
+                
+                document.getElementById('stat-total').textContent = total.toLocaleString();
+                document.getElementById('stat-registered').textContent = registered.toLocaleString();
+                document.getElementById('stat-rate').textContent = rate + '%';
+                document.getElementById('stat-pending').textContent = pending.toLocaleString();
+                
+                document.getElementById('data-status').textContent = 'LIVE DATA';
+                document.getElementById('data-status').style.background = 'rgba(16, 185, 129, 0.3)';
+                document.getElementById('data-status').style.color = '#10B981';
+                
+                filteredData = catalogData;
+                renderCatalog();
+                
+            } catch (error) {
+                console.error('Error loading catalog:', error);
+                document.getElementById('catalog-body').innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #FF3366;">
+                            Error loading catalog data: ${error.message}<br>
+                            <small>Make sure data files are in the /data/ folder</small>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+        
+        function renderCatalog(data = filteredData) {
             const tbody = document.getElementById('catalog-body');
             const start = (currentPage - 1) * itemsPerPage;
             const end = start + itemsPerPage;
@@ -350,18 +445,17 @@
             tbody.innerHTML = pageData.map(item => `
                 <tr>
                     <td>
-                        <div class="font-semibold">${item.title}</div>
-                        <div class="text-xs text-gray-500">${item.publishers || ''}</div>
+                        <div class="font-semibold">${escapeHtml(item.title)}</div>
+                        <div class="text-xs text-gray-500">IPI: ${item.ipi}</div>
                     </td>
-                    <td class="text-sm">${item.writers}</td>
-                    <td class="text-sm text-gray-400">${item.isrc || '—'}</td>
-                    <td>${item.pro}</td>
+                    <td class="text-sm">${escapeHtml(item.writers)}</td>
+                    <td class="text-sm text-purple-400 font-mono">${item.ascap_id}</td>
+                    <td class="text-sm text-gray-400 font-mono text-xs">${item.iswc}</td>
                     <td>
                         <span class="status-badge status-${item.status}">${item.status}</span>
                     </td>
                     <td>
                         <div class="flex gap-2">
-                            <button class="btn-secondary text-xs py-1 px-3" onclick="editWork(${item.id})">Edit</button>
                             <button class="btn-secondary text-xs py-1 px-3" onclick="viewDetails(${item.id})">View</button>
                         </div>
                     </td>
@@ -370,6 +464,9 @@
             
             document.getElementById('showing-count').textContent = `${start + 1}-${Math.min(end, data.length)}`;
             document.getElementById('total-count').textContent = data.length;
+            
+            const totalPages = Math.ceil(data.length / itemsPerPage);
+            document.getElementById('page-info').textContent = `Page ${currentPage} of ${totalPages}`;
         }
         
         function filterCatalog() {
@@ -377,17 +474,19 @@
             const status = document.getElementById('status-filter').value;
             const pro = document.getElementById('pro-filter').value;
             
-            const filtered = catalogData.filter(item => {
+            filteredData = catalogData.filter(item => {
                 const matchSearch = !search || 
                     item.title.toLowerCase().includes(search) ||
-                    item.isrc?.toLowerCase().includes(search) ||
+                    item.ascap_id?.toLowerCase().includes(search) ||
+                    item.iswc?.toLowerCase().includes(search) ||
                     item.writers.toLowerCase().includes(search);
                 const matchStatus = !status || item.status === status;
                 const matchPro = !pro || item.pro === pro;
                 return matchSearch && matchStatus && matchPro;
             });
             
-            renderCatalog(filtered);
+            currentPage = 1;
+            renderCatalog();
         }
         
         function openAddModal() {
@@ -400,26 +499,16 @@
             document.getElementById('work-writers').value = '';
             document.getElementById('work-publishers').value = '';
             document.getElementById('work-release').value = '';
-            document.getElementById('work-status').value = 'pending';
+            document.getElementById('work-status').value = 'Pending';
             document.getElementById('work-notes').value = '';
             document.getElementById('add-modal').classList.remove('hidden');
         }
         
-        function editWork(id) {
+        function viewDetails(id) {
             const work = catalogData.find(w => w.id === id);
-            if (!work) return;
-            
-            editingId = id;
-            document.getElementById('modal-title').textContent = 'Edit Work';
-            document.getElementById('work-title').value = work.title;
-            document.getElementById('work-alt-title').value = work.altTitle || '';
-            document.getElementById('work-isrc').value = work.isrc || '';
-            document.getElementById('work-pro').value = work.pro;
-            document.getElementById('work-writers').value = work.writers;
-            document.getElementById('work-publishers').value = work.publishers || '';
-            document.getElementById('work-release').value = work.release || '';
-            document.getElementById('work-status').value = work.status;
-            document.getElementById('add-modal').classList.remove('hidden');
+            if (work) {
+                alert(`📖 ${work.title}\n\nASCAP ID: ${work.ascap_id}\nISWC: ${work.iswc}\nWriters: ${work.writers}\nIPI: ${work.ipi}\nPRO: ${work.pro}\nStatus: ${work.status}\nOwn %: ${work.own_percent}\nCollect %: ${work.collect_percent}\nRegistered: ${work.registration_date || 'N/A'}`);
+            }
         }
         
         function closeModal() {
@@ -434,6 +523,7 @@
             }
             
             const workData = {
+                id: Date.now(),
                 title,
                 altTitle: document.getElementById('work-alt-title').value,
                 isrc: document.getElementById('work-isrc').value,
@@ -444,25 +534,9 @@
                 status: document.getElementById('work-status').value
             };
             
-            if (editingId) {
-                const index = catalogData.findIndex(w => w.id === editingId);
-                if (index !== -1) {
-                    catalogData[index] = { ...catalogData[index], ...workData };
-                }
-            } else {
-                workData.id = Date.now();
-                catalogData.push(workData);
-            }
-            
+            catalogData.unshift(workData);
             closeModal();
-            renderCatalog();
-        }
-        
-        function viewDetails(id) {
-            const work = catalogData.find(w => w.id === id);
-            if (work) {
-                alert(`📖 ${work.title}\n\nWriters: ${work.writers}\nISRC: ${work.isrc || 'N/A'}\nPRO: ${work.pro}\nPublishers: ${work.publishers || 'N/A'}\nStatus: ${work.status}\nRelease: ${work.release || 'N/A'}`);
-            }
+            filterCatalog();
         }
         
         function prevPage() {
@@ -473,7 +547,7 @@
         }
         
         function nextPage() {
-            const maxPage = Math.ceil(catalogData.length / itemsPerPage);
+            const maxPage = Math.ceil(filteredData.length / itemsPerPage);
             if (currentPage < maxPage) {
                 currentPage++;
                 renderCatalog();
@@ -485,11 +559,26 @@
         }
         
         function exportCatalog() {
-            alert('📤 Export Catalog\n\nIn the full app, this will export your catalog to CSV or Excel format.');
+            const csv = 'Title,ASCAP_ID,ISWC,Writers,IPI,Status,PRO,Own%,Collect%,Registration_Date\n' + 
+                filteredData.map(t => `"${t.title}","${t.ascap_id}","${t.iswc}","${t.writers}","${t.ipi}","${t.status}","${t.pro}","${t.own_percent}","${t.collect_percent}","${t.registration_date}"`).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'goat-royalty-ascap-works.csv';
+            a.click();
         }
         
-        // Initial render
-        renderCatalog();
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Initialize
+        loadCatalogData();
     </script>
 </body>
 </html>

@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOAT Force HQ - Agent Control Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --goat-gold: #FFD700;
+            --goat-purple: #8B5CF6;
+            --goat-blue: #3B82F6;
+            --goat-green: #10B981;
+            --goat-red: #EF4444;
+            --goat-orange: #F97316;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-hover: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-color: #2a2a3a;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0f 0%, #0f0f18 100%);
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--goat-gold), var(--goat-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--goat-gold), var(--goat-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text span {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--goat-gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--goat-gold);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--goat-gold), var(--goat-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--goat-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--goat-gold);
+            border-radius: 2px;
+        }
+
+        /* Agent Grid */
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .agent-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--agent-color, var(--goat-gold)), transparent);
+        }
+
+        .agent-card:hover {
+            border-color: var(--agent-color, var(--goat-gold));
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .agent-card.active {
+            border-color: var(--goat-green);
+        }
+
+        .agent-card.active::after {
+            content: '●';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--goat-green);
+            font-size: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .agent-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--agent-color, var(--goat-gold)), transparent);
+        }
+
+        .agent-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .agent-info .agent-type {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .agent-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .agent-capabilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .capability-tag {
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--goat-gold);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .agent-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .agent-stat {
+            text-align: center;
+        }
+
+        .agent-stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--goat-gold);
+        }
+
+        .agent-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .agent-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--goat-gold), var(--goat-purple));
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--goat-gold);
+        }
+
+        /* Agent Chat Panel */
+        .chat-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .chat-title .status {
+            width: 10px;
+            height: 10px;
+            background: var(--goat-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--goat-purple), var(--goat-blue));
+        }
+
+        .message.agent {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .message .sender {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--goat-gold);
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--goat-gold), var(--goat-purple));
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Agent Selector */
+        .agent-selector {
+            display: flex;
+            gap: 10px;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .agent-chip {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .agent-chip:hover, .agent-chip.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--goat-gold);
+            color: var(--goat-gold);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quick-action {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-action:hover {
+            border-color: var(--goat-gold);
+            transform: translateY(-2px);
+        }
+
+        .quick-action-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .quick-action-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .quick-action-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            .main-content {
+                padding: 20px;
+            }
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🐐</div>
+            <div class="logo-text">
+                <h1>GOAT FORCE HQ</h1>
+                <span>Agent Control Center</span>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="../index.html">Dashboard</a>
+            <a href="../nexus-core/nexus-live.html">Nexus</a>
+            <a href="../goat-force-hq/index.html">GOAT Force</a>
+            <a href="#">Settings</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number" id="totalAgents">11</div>
+                <div class="stat-label">Total Agents</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="activeAgents">11</div>
+                <div class="stat-label">Active Agents</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalOps">2,847</div>
+                <div class="stat-label">Operations Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="successRate">99.2%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="section-header">
+            <h2 class="section-title">Quick Actions</h2>
+        </div>
+        <div class="quick-actions">
+            <div class="quick-action" onclick="activateAllAgents()">
+                <div class="quick-action-icon">⚡</div>
+                <div class="quick-action-label">Activate All</div>
+                <div class="quick-action-desc">Wake all dormant agents</div>
+            </div>
+            <div class="quick-action" onclick="runDiagnostics()">
+                <div class="quick-action-icon">🔍</div>
+                <div class="quick-action-label">Run Diagnostics</div>
+                <div class="quick-action-desc">Check system health</div>
+            </div>
+            <div class="quick-action" onclick="syncCatalog()">
+                <div class="quick-action-icon">🎵</div>
+                <div class="quick-action-label">Sync Catalog</div>
+                <div class="quick-action-desc">Update music database</div>
+            </div>
+            <div class="quick-action" onclick="generateReport()">
+                <div class="quick-action-icon">📊</div>
+                <div class="quick-action-label">Generate Report</div>
+                <div class="quick-action-desc">AI insights summary</div>
+            </div>
+        </div>
+
+        <!-- Agent Cards -->
+        <div class="section-header">
+            <h2 class="section-title">AI Agents</h2>
+        </div>
+        <div class="agents-grid" id="agentsGrid">
+            <!-- Agents will be populated by JavaScript -->
+        </div>
+
+        <!-- Chat Panel -->
+        <div class="section-header">
+            <h2 class="section-title">Agent Communication</h2>
+        </div>
+        <div class="chat-panel">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="status"></span>
+                    <span>Multi-Agent Chat</span>
+                </div>
+                <select id="agentSelect" style="background: rgba(255,255,255,0.1); border: 1px solid var(--border-color); color: white; padding: 8px 12px; border-radius: 8px;">
+                    <option value="all">All Agents</option>
+                </select>
+            </div>
+            <div class="agent-selector" id="agentSelector">
+                <!-- Agent chips will be populated -->
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message agent">
+                    <div class="sender">🎵 Music Industry Agent</div>
+                    Welcome to the GOAT Force Agent Control Center. All 11 AI agents are online and ready. How can we assist you today?
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Send a message to the agents..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">➤</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Agent Data
+        const agents = [
+            {
+                id: 'music-industry',
+                name: 'Music Industry Expert',
+                type: 'Business Intelligence',
+                icon: '🎵',
+                color: '#10B981',
+                description: 'Specialized in music business, royalties, entertainment law, and industry trends. Manages music catalogs and royalty tracking.',
+                capabilities: ['royalty_calculations', 'music_law', 'catalog_management', 'licensing', 'trend_analysis'],
+                stats: { operations: 847, success: 99.5%, responseTime: '1.2s' }
+            },
+            {
+                id: 'fashion-business',
+                name: 'Fashion Business Agent',
+                type: 'Fashion Industry',
+                icon: '👗',
+                color: '#EC4899',
+                description: 'Expert in fashion business strategy, brand development, market analysis, and retail partnerships.',
+                capabilities: ['brand_strategy', 'market_analysis', 'retail_partnerships', 'trend_forecasting'],
+                stats: { operations: 623, success: 98.7%, responseTime: '1.5s' }
+            },
+            {
+                id: 'fashion-designer',
+                name: 'Fashion Designer Agent',
+                type: 'Creative Design',
+                icon: '✨',
+                color: '#F97316',
+                description: 'AI fashion designer with expertise in trend forecasting, design generation, and collection development.',
+                capabilities: ['design_generation', 'trend_forecasting', 'collection_dev', 'material_selection'],
+                stats: { operations: 412, success: 99.1%, responseTime: '2.1s' }
+            },
+            {
+                id: 'personal-stylist',
+                name: 'Personal Stylist Agent',
+                type: 'Style & Image',
+                icon: '👔',
+                color: '#8B5CF6',
+                description: 'Virtual personal stylist providing outfit recommendations, wardrobe management, and style advice.',
+                capabilities: ['outfit_recommendations', 'wardrobe_management', 'color_analysis', 'style_advice'],
+                stats: { operations: 534, success: 99.3%, responseTime: '1.8s' }
+            },
+            {
+                id: 'business-strategy',
+                name: 'Business Strategy Agent',
+                type: 'Strategic Planning',
+                icon: '📈',
+                color: '#3B82F6',
+                description: 'Strategic business advisor for growth planning, market positioning, and competitive analysis.',
+                capabilities: ['strategic_planning', 'market_research', 'competitive_analysis', 'growth_strategy'],
+                stats: { operations: 389, success: 98.9%, responseTime: '1.4s' }
+            },
+            {
+                id: 'creative-content',
+                name: 'Creative Content Agent',
+                type: 'Content Creation',
+                icon: '🎨',
+                color: '#F59E0B',
+                description: 'Creative AI for content generation, marketing materials, social media, and brand storytelling.',
+                capabilities: ['content_creation', 'marketing_copy', 'social_media', 'brand_storytelling'],
+                stats: { operations: 756, success: 99.6%, responseTime: '1.1s' }
+            },
+            {
+                id: 'legal-compliance',
+                name: 'Legal & Compliance Agent',
+                type: 'Legal Protection',
+                icon: '⚖️',
+                color: '#EF4444',
+                description: 'Legal expert for contract review, compliance monitoring, IP protection, and risk assessment.',
+                capabilities: ['contract_review', 'compliance', 'ip_protection', 'risk_assessment'],
+                stats: { operations: 234, success: 99.8%, responseTime: '2.3s' }
+            },
+            {
+                id: 'researcher',
+                name: 'Research Agent',
+                type: 'Intelligence',
+                icon: '🔬',
+                color: '#06B6D4',
+                description: 'Deep research capabilities for market intelligence, competitor analysis, and data gathering.',
+                capabilities: ['market_research', 'competitor_analysis', 'data_gathering', 'trend_analysis'],
+                stats: { operations: 567, success: 99.2%, responseTime: '1.6s' }
+            },
+            {
+                id: 'tech-development',
+                name: 'Tech Development Agent',
+                type: 'Technology',
+                icon: '💻',
+                color: '#84CC16',
+                description: 'Technical expert for software development, system architecture, and technology strategy.',
+                capabilities: ['software_dev', 'architecture', 'tech_strategy', 'code_review'],
+                stats: { operations: 423, success: 99.4%, responseTime: '1.3s' }
+            },
+            {
+                id: 'writer',
+                name: 'Writer Agent',
+                type: 'Content Writing',
+                icon: '✍️',
+                color: '#A855F7',
+                description: 'Professional writing AI for documents, proposals, scripts, and creative content.',
+                capabilities: ['document_writing', 'proposals', 'scripts', 'creative_writing'],
+                stats: { operations: 689, success: 99.7%, responseTime: '1.0s' }
+            },
+            {
+                id: 'autonomous',
+                name: 'Autonomous Agent',
+                type: 'Self-Directed AI',
+                icon: '🤖',
+                color: '#FFD700',
+                description: 'Self-directed AI capable of autonomous decision-making, task execution, and multi-agent coordination.',
+                capabilities: ['autonomous_execution', 'decision_making', 'multi_agent_coordination', 'task_management'],
+                stats: { operations: 345, success: 98.5%, responseTime: '0.8s' }
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAgents();
+            renderAgentSelector();
+            renderAgentSelect();
+        });
+
+        function renderAgents() {
+            const grid = document.getElementById('agentsGrid');
+            grid.innerHTML = agents.map(agent => `
+                <div class="agent-card active" style="--agent-color: ${agent.color}">
+                    <div class="agent-header">
+                        <div class="agent-avatar" style="background: linear-gradient(135deg, ${agent.color}, transparent)">
+                            ${agent.icon}
+                        </div>
+                        <div class="agent-info">
+                            <h3>${agent.name}</h3>
+                            <div class="agent-type">${agent.type}</div>
+                        </div>
+                    </div>
+                    <p class="agent-description">${agent.description}</p>
+                    <div class="agent-capabilities">
+                        ${agent.capabilities.slice(0, 4).map(cap => `
+                            <span class="capability-tag">${cap.replace(/_/g, ' ')}</span>
+                        `).join('')}
+                    </div>
+                    <div class="agent-stats">
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">${agent.stats.operations}</div>
+                            <div class="agent-stat-label">Operations</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">${agent.stats.success}</div>
+                            <div class="agent-stat-label">Success</div>
+                        </div>
+                        <div class="agent-stat">
+                            <div class="agent-stat-value">${agent.stats.responseTime}</div>
+                            <div class="agent-stat-label">Avg Response</div>
+                        </div>
+                    </div>
+                    <div class="agent-actions">
+                        <button class="btn btn-primary" onclick="interactWithAgent('${agent.id}')">Interact</button>
+                        <button class="btn btn-secondary" onclick="viewAgentDetails('${agent.id}')">Details</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAgentSelector() {
+            const selector = document.getElementById('agentSelector');
+            selector.innerHTML = `
+                <div class="agent-chip active" onclick="selectAgent('all')">All Agents</div>
+                ${agents.map(agent => `
+                    <div class="agent-chip" onclick="selectAgent('${agent.id}')">${agent.icon} ${agent.name}</div>
+                `).join('')}
+            `;
+        }
+
+        function renderAgentSelect() {
+            const select = document.getElementById('agentSelect');
+            select.innerHTML = `
+                <option value="all">All Agents</option>
+                ${agents.map(agent => `
+                    <option value="${agent.id}">${agent.icon} ${agent.name}</option>
+                `).join('')}
+            `;
+        }
+
+        function selectAgent(agentId) {
+            document.querySelectorAll('.agent-chip').forEach(chip => chip.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('agentSelect').value = agentId;
+        }
+
+        function interactWithAgent(agentId) {
+            const agent = agents.find(a => a.id === agentId);
+            document.getElementById('chatInput').placeholder = `Send a message to ${agent.name}...`;
+            document.getElementById('agentSelect').value = agentId;
+            document.querySelectorAll('.agent-chip').forEach(chip => chip.classList.remove('active'));
+            document.querySelectorAll('.agent-chip').forEach(chip => {
+                if (chip.textContent.includes(agent.name)) chip.classList.add('active');
+            });
+            document.getElementById('chatInput').focus();
+        }
+
+        function viewAgentDetails(agentId) {
+            const agent = agents.find(a => a.id === agentId);
+            addMessage('agent', `📋 ${agent.name} Details:\n\nType: ${agent.type}\nCapabilities: ${agent.capabilities.join(', ')}\nTotal Operations: ${agent.stats.operations}\nSuccess Rate: ${agent.stats.success}\nAvg Response Time: ${agent.stats.responseTime}`, agent.icon);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage('user', message);
+            input.value = '';
+
+            // Simulate agent response
+            setTimeout(() => {
+                const selectedAgent = document.getElementById('agentSelect').value;
+                if (selectedAgent === 'all') {
+                    const randomAgent = agents[Math.floor(Math.random() * agents.length)];
+                    addMessage('agent', generateAgentResponse(randomAgent, message), randomAgent.icon, randomAgent.name);
+                } else {
+                    const agent = agents.find(a => a.id === selectedAgent);
+                    addMessage('agent', generateAgentResponse(agent, message), agent.icon, agent.name);
+                }
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function addMessage(type, content, icon = '🤖', name = 'Agent') {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type}`;
+            messageEl.innerHTML = type === 'agent' ? 
+                `<div class="sender">${icon} ${name}</div>${content}` : 
+                content;
+            messagesDiv.appendChild(messageEl);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function generateAgentResponse(agent, userMessage) {
+            const responses = {
+                'music-industry': [
+                    `Based on the catalog data, I can help analyze royalty optimization strategies. ${userMessage.includes('royalt') ? 'Let me pull up the ASCAP catalog data for detailed analysis.' : 'What specific aspect of the music business would you like to explore?'}`,
+                    `I've processed 438 works in your catalog. The current royalty collection efficiency is at 87.3%. I can suggest strategies to improve this.`,
+                ],
+                'fashion-business': [
+                    `The fashion market analysis shows emerging trends in sustainable luxury. I can provide detailed insights on brand positioning.`,
+                    `Looking at current retail partnerships, there's potential for expansion in the Asian market. Would you like a detailed report?`,
+                ],
+                'default': [
+                    `I've processed your request: "${userMessage}". Let me analyze the data and provide actionable insights.`,
+                    `Based on my ${agent.type} capabilities, I can help you with that. Here's what I found...`,
+                    `I'm analyzing the data now. My ${agent.capabilities[0].replace(/_/g, ' ')} capability is particularly relevant here.`,
+                ]
+            };
+            return (responses[agent.id] || responses['default'])[Math.floor(Math.random() * (responses[agent.id] || responses['default']).length)];
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+
+        function activateAllAgents() {
+            addMessage('agent', '⚡ Activating all 11 AI agents...\n\n✓ Music Industry Agent - ONLINE\n✓ Fashion Business Agent - ONLINE\n✓ Fashion Designer Agent - ONLINE\n✓ Personal Stylist Agent - ONLINE\n✓ Business Strategy Agent - ONLINE\n✓ Creative Content Agent - ONLINE\n✓ Legal & Compliance Agent - ONLINE\n✓ Research Agent - ONLINE\n✓ Tech Development Agent - ONLINE\n✓ Writer Agent - ONLINE\n✓ Autonomous Agent - ONLINE\n\nAll agents are ready for operation.', '🤖', 'System');
+        }
+
+        function runDiagnostics() {
+            addMessage('agent', '🔍 Running system diagnostics...\n\n📊 Agent System Health: 100%\n💾 Memory Usage: 2.4GB / 8GB\n⚡ Response Time: 1.2s average\n🔗 API Connections: All active\n📁 Database: Synced (2,980 entries)\n\n✅ All systems operational', '🔧', 'System');
+        }
+
+        function syncCatalog() {
+            addMessage('agent', '🎵 Syncing music catalog...\n\n📚 ASCAP Works: 438 entries\n📀 ISRC Codes: 2,542 registered\n💰 Royalty Data: $2.7B tracked\n📈 Performance Data: Updated\n\n✅ Catalog sync complete', '🎵', 'Music Industry Agent');
+        }
+
+        function generateReport() {
+            addMessage('agent', '📊 GOAT ROYALTY - Daily Intelligence Report\n\n🎵 Music Division:\n   - 438 ASCAP works registered\n   - $2.7B in unclaimed royalties identified\n   - 87.3% catalog optimization score\n\n👗 Fashion Division:\n   - 23 active brand partnerships\n   - 156 trend forecasts generated\n   - 94% style recommendation accuracy\n\n💼 Business Operations:\n   - 11 AI agents operational\n   - 2,847 operations processed today\n   - 99.2% success rate\n\n📈 Recommendations:\n   1. Priority claim on unclaimed royalties\n   2. Expand fashion retail partnerships in Asia\n   3. Launch sync licensing campaign', '📊', 'Business Strategy Agent');
+        }
+    </script>
+</body>
+</html>

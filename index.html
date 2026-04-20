@@ -317,6 +317,30 @@
                 </div>
             </div>
             
+            <!-- AI Agents -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">AI Agents</div>
+                <div class="sidebar-item" onclick="navigate('agent-control')">
+                    <span>🤖</span>
+                    <span>Agent Control Center</span>
+                </div>
+                <div class="sidebar-item" onclick="navigate('ms-vanessa')">
+                    <span>🔐</span>
+                    <span>Ms. Vanessa Guardian</span>
+                </div>
+            </div>
+            <!-- Business -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Business</div>
+                <div class="sidebar-item" onclick="navigate('investor-deck')">
+                    <span>📊</span>
+                    <span>Investor Presentation</span>
+                </div>
+                <div class="sidebar-item" onclick="navigate('goat-force-episodes')">
+                    <span>🎬</span>
+                    <span>GOAT Force Episodes</span>
+                </div>
+            </div>
             <!-- System -->
             <div class="sidebar-section">
                 <div class="sidebar-section-title">System</div>
@@ -631,7 +655,8 @@
                 'royalties': 'web-app/royalty-calc.html',
                 'dj-speedy': 'goat-force-hq/dj-speedy/command-center.html',
                 'waka': 'goat-force-hq/waka-flocka/operations-hub.html',
-                'nexus': 'goat-force-hq/nexus/home.html',
+                'nexus': 'nexus-core/nexus-live.html',
+                'nexus-old': 'goat-force-hq/nexus/home.html',
                 'money-penny': 'goat-force-hq/money-penny/integration-panel.html',
                 'codex': 'goat-force-hq/codex/field-operations.html',
                 'royalty-calc': 'creator-tools/royalty-calculator-pro.html',
@@ -642,7 +667,14 @@
                 'agent-payments': 'agent-hub/payment-center.html',
                 'properties': 'web-app/goat-properties.html',
                 'settings': 'web-app/settings.html',
-                'security': 'web-app/goat-background-check.html'
+                'security': 'web-app/goat-background-check.html',
+                'agent-control': 'agent-hub/agent-control-center.html',
+                'ms-vanessa': 'nexus-core/ms-vanessa-guardian.html',
+                'investor-deck': 'investor-deck.html',
+                'goat-force-episodes': 'goat-force-episodes.html',
+                'legal-protection': 'legal-protection.html',
+                'video-gallery': 'video-gallery.html',
+                'sync-licensing': 'creator-tools/sync-licensing.html'
             };
             
             if (routes[page]) {

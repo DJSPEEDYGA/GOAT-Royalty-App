@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOAT Royalty - Investor Presentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --goat-gold: #FFD700;
+            --goat-purple: #8B5CF6;
+            --goat-blue: #3B82F6;
+            --goat-green: #10B981;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .slide {
+            min-height: 100vh;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 30px;
+            right: 60px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--goat-gold);
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--goat-gold), var(--goat-purple));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--goat-gold), var(--goat-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text span {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: var(--goat-gold);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .hero-text {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 60px 0;
+            max-width: 900px;
+        }
+
+        .hero-text .highlight {
+            background: linear-gradient(90deg, var(--goat-gold), var(--goat-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--goat-gold), var(--goat-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--goat-gold);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .problem-solution {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .problem-box, .solution-box {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .problem-box {
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .solution-box {
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .box-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .problem-box .box-title { color: #EF4444; }
+        .solution-box .box-title { color: #10B981; }
+
+        .box-list {
+            list-style: none;
+        }
+
+        .box-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .market-size {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .market-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .market-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--goat-gold);
+        }
+
+        .market-label {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .market-growth {
+            color: var(--goat-green);
+            font-size: 1rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--goat-gold), var(--goat-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px;
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            color: var(--goat-gold);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .team-bio {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .timeline {
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--goat-gold), var(--goat-purple));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            width: 45%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 55%;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+        }
+
+        .timeline-year {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--goat-gold);
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .ask-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(139, 92, 246, 0.1));
+            border: 2px solid var(--goat-gold);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .ask-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--goat-gold), var(--goat-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .ask-purpose {
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+
+        .use-of-funds {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .fund-item {
+            text-align: center;
+        }
+
+        .fund-percent {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--goat-gold);
+        }
+
+        .fund-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .contact-section {
+            text-align: center;
+            padding: 60px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 1.2rem;
+            color: var(--goat-gold);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--goat-gold);
+            color: var(--goat-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--goat-gold);
+            color: #000;
+        }
+
+        @media print {
+            .nav-buttons { display: none; }
+            .slide { page-break-after: always; }
+        }
+
+        @media (max-width: 1024px) {
+            .stat-grid, .feature-grid, .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .market-size { grid-template-columns: 1fr; }
+            .problem-solution { grid-template-columns: 1fr; }
+            .hero-text { font-size: 2.5rem; }
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide" id="slide1">
+        <span class="slide-number">01 / 10</span>
+        <div class="slide-content">
+            <div class="logo">
+                <div class="logo-icon">🐐</div>
+                <div class="logo-text">
+                    <h1>GOAT ROYALTY</h1>
+                    <span>Entertainment Empire Platform</span>
+                </div>
+            </div>
+            <div class="hero-text">
+                The <span class="highlight">Future</span> of Music & Fashion Entertainment
+            </div>
+            <p class="subtitle">Revolutionizing how artists manage, monetize, and maximize their creative empires through AI-powered technology</p>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-number">$2.7B</div>
+                    <div class="stat-label">Unclaimed Royalties Identified</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">438</div>
+                    <div class="stat-label">ASCAP Works Registered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">11</div>
+                    <div class="stat-label">AI Agents Operational</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$75B+</div>
+                    <div class="stat-label">Total Addressable Market</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: The Problem -->
+    <div class="slide" id="slide2">
+        <span class="slide-number">02 / 10</span>
+        <div class="slide-content">
+            <h2>The Problem</h2>
+            <p class="subtitle">Artists lose billions annually due to fragmented royalty systems and lack of transparency</p>
+            <div class="problem-solution">
+                <div class="problem-box">
+                    <h3 class="box-title">❌ Industry Pain Points</h3>
+                    <ul class="box-list">
+                        <li>💰 $2.7B in unclaimed royalties annually</li>
+                        <li>📊 Fragmented data across 100+ PROs</li>
+                        <li>🔍 No real-time royalty visibility</li>
+                        <li>📝 Complex contract management</li>
+                        <li>⏱️ 6-12 month royalty payment delays</li>
+                        <li>🎵 Manual catalog tracking</li>
+                    </ul>
+                </div>
+                <div class="solution-box">
+                    <h3 class="box-title">✅ Our Solution</h3>
+                    <ul class="box-list">
+                        <li>🤖 AI-powered royalty discovery</li>
+                        <li>🔐 Blockchain-verified ownership</li>
+                        <li>📈 Real-time analytics dashboard</li>
+                        <li>⚖️ Smart contract automation</li>
+                        <li>💳 Instant royalty payments</li>
+                        <li>📚 Unified catalog management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Product Overview -->
+    <div class="slide" id="slide3">
+        <span class="slide-number">03 / 10</span>
+        <div class="slide-content">
+            <h2>Platform Overview</h2>
+            <p class="subtitle">A comprehensive entertainment empire management platform</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <div class="feature-title">Music Royalty Engine</div>
+                    <div class="feature-desc">AI-powered royalty tracking, ASCAP/BMI integration, and automated claim discovery across 438+ works.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👗</div>
+                    <div class="feature-title">Fashion Empire Suite</div>
+                    <div class="feature-desc">Complete fashion business management with trend forecasting, brand development, and retail partnerships.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">AI Agent Network</div>
+                    <div class="feature-desc">11 specialized AI agents for music, fashion, legal, business strategy, and creative content.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-title">Guardian Security</div>
+                    <div class="feature-desc">AES-256-GCM encryption, loyalty protocol, and multi-factor authentication for data protection.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Analytics Dashboard</div>
+                    <div class="feature-desc">Real-time insights, royalty projections, and performance metrics across all entertainment verticals.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <div class="feature-title">Gaming Integration</div>
+                    <div class="feature-desc">FiveM/GTA RP server integration, virtual properties, and metaverse entertainment experiences.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Market Opportunity -->
+    <div class="slide" id="slide4">
+        <span class="slide-number">04 / 10</span>
+        <div class="slide-content">
+            <h2>Market Opportunity</h2>
+            <p class="subtitle">Massive addressable markets across music, fashion, and entertainment technology</p>
+            <div class="market-size">
+                <div class="market-card">
+                    <div class="market-value">$45B</div>
+                    <div class="market-label">Music Royalty Management</div>
+                    <div class="market-growth">↑ 12% CAGR</div>
+                </div>
+                <div class="market-card">
+                    <div class="market-value">$20B</div>
+                    <div class="market-label">Fashion Technology</div>
+                    <div class="market-growth">↑ 18% CAGR</div>
+                </div>
+                <div class="market-card">
+                    <div class="market-value">$10B+</div>
+                    <div class="market-label">Entertainment AI</div>
+                    <div class="market-growth">↑ 25% CAGR</div>
+                </div>
+            </div>
+            <div class="stat-grid" style="margin-top: 40px;">
+                <div class="stat-card">
+                    <div class="stat-number">100M+</div>
+                    <div class="stat-label">Independent Artists Worldwide</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Fashion Brands</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">500M</div>
+                    <div class="stat-label">Gaming Entertainment Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$2.7B</div>
+                    <div class="stat-label">Immediate Opportunity</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Technology -->
+    <div class="slide" id="slide5">
+        <span class="slide-number">05 / 10</span>
+        <div class="slide-content">
+            <h2>Technology Stack</h2>
+            <p class="subtitle">Enterprise-grade infrastructure with cutting-edge AI capabilities</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <div class="feature-title">Super-LLM Router</div>
+                    <div class="feature-desc">Intelligent routing across 215+ LLM models for optimal performance and cost efficiency.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <div class="feature-title">RAG System</div>
+                    <div class="feature-desc">Retrieval-Augmented Generation for accurate catalog queries and document analysis.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎤</div>
+                    <div class="feature-title">Voice & Avatar</div>
+                    <div class="feature-desc">NVIDIA Riva speech, MetaHuman avatars, and Pixel Streaming for immersive experiences.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Edge Deployment</div>
+                    <div class="feature-desc">NVIDIA Jetson compatibility for offline AI processing and reduced latency.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <div class="feature-title">Cloud Infrastructure</div>
+                    <div class="feature-desc">Multi-server deployment with Docker, Traefik, and enterprise security.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <div class="feature-title">Blockchain Layer</div>
+                    <div class="feature-desc">Smart contracts, crypto payments via Liberdus, and NFT marketplace integration.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Business Model -->
+    <div class="slide" id="slide6">
+        <span class="slide-number">06 / 10</span>
+        <div class="slide-content">
+            <h2>Business Model</h2>
+            <p class="subtitle">Multiple revenue streams for sustainable growth</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <div class="feature-title">SaaS Subscriptions</div>
+                    <div class="feature-desc">Tiered pricing from $49/mo for independents to enterprise plans for labels.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"> percentages</div>
+                    <div class="feature-title">Royalty Recovery %</div>
+                    <div class="feature-desc">Performance-based fees on recovered royalties (15-25% of recovered amounts).</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛒</div>
+                    <div class="feature-title">E-Commerce</div>
+                    <div class="feature-desc">GOAT Store merchandise, digital products, and fashion marketplace.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <div class="feature-title">Gaming & Metaverse</div>
+                    <div class="feature-desc">Virtual property sales, in-game items, and entertainment experiences.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📡</div>
+                    <div class="feature-title">DSP Distribution</div>
+                    <div class="feature-desc">Music distribution to Spotify, Apple Music, YouTube with competitive rates.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <div class="feature-title">Enterprise Licensing</div>
+                    <div class="feature-desc">White-label solutions for record labels and entertainment companies.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Team -->
+    <div class="slide" id="slide7">
+        <span class="slide-number">07 / 10</span>
+        <div class="slide-content">
+            <h2>Leadership Team</h2>
+            <p class="subtitle">Industry veterans with proven track records</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">🎧</div>
+                    <div class="team-name">DJ Speedy</div>
+                    <div class="team-role">Founder & CEO</div>
+                    <div class="team-bio">Legendary producer with 438 ASCAP works. Pioneer in Atlanta music scene. $2.7B royalty portfolio.</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">🔥</div>
+                    <div class="team-name">Waka Flocka</div>
+                    <div class="team-role">Co-Founder & Creative Director</div>
+                    <div class="team-bio">Multi-platinum artist, fashion entrepreneur, and entertainment icon with global influence.</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">💎</div>
+                    <div class="team-name">Money Penny</div>
+                    <div class="team-role">Chief Financial Officer</div>
+                    <div class="team-bio">Entertainment finance expert with 15+ years in royalty management and artist wealth preservation.</div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">🤖</div>
+                    <div class="team-name">Codex</div>
+                    <div class="team-role">Chief Technology Officer</div>
+                    <div class="team-bio">AI architect and systems engineer. Creator of Nexus AI and the GOAT Force agent network.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Traction & Milestones -->
+    <div class="slide" id="slide8">
+        <span class="slide-number">08 / 10</span>
+        <div class="slide-content">
+            <h2>Traction & Milestones</h2>
+            <p class="subtitle">Proven execution and growing momentum</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023 Q1</div>
+                        <div class="timeline-title">Platform Development</div>
+                        <div class="timeline-desc">Core platform architecture, AI agent framework, and initial catalog integration.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023 Q4</div>
+                        <div class="timeline-title">Catalog Integration</div>
+                        <div class="timeline-desc">438 ASCAP works processed, $2.7B in unclaimed royalties identified.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024 Q1</div>
+                        <div class="timeline-title">NEXUS Protocol v1.0</div>
+                        <div class="timeline-desc">AI assistant launch with 11 specialized agents and voice activation.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024 Q2</div>
+                        <div class="timeline-title">Production Launch</div>
+                        <div class="timeline-desc">Full platform deployment, gaming server, and enterprise features.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: The Ask -->
+    <div class="slide" id="slide9">
+        <span class="slide-number">09 / 10</span>
+        <div class="slide-content">
+            <h2>Investment Opportunity</h2>
+            <div class="ask-box">
+                <div class="ask-amount">$5M</div>
+                <div class="ask-purpose">Series Seed Round</div>
+                <div class="use-of-funds">
+                    <div class="fund-item">
+                        <div class="fund-percent">40%</div>
+                        <div class="fund-label">Engineering & AI</div>
+                    </div>
+                    <div class="fund-item">
+                        <div class="fund-percent">25%</div>
+                        <div class="fund-label">Marketing & Sales</div>
+                    </div>
+                    <div class="fund-item">
+                        <div class="fund-percent">20%</div>
+                        <div class="fund-label">Operations</div>
+                    </div>
+                    <div class="fund-item">
+                        <div class="fund-percent">15%</div>
+                        <div class="fund-label">Legal & Compliance</div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-grid" style="margin-top: 40px;">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">18-Month Runway</div>
+                    <div class="feature-desc">Sufficient capital to reach profitability and scale operations globally.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-title">10x Growth Target</div>
+                    <div class="feature-desc">Projected user growth from 1,000 to 100,000+ active subscribers.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <div class="feature-title">Series A Ready</div>
+                    <div class="feature-desc">Path to $50M valuation within 18 months with strong metrics.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Contact -->
+    <div class="slide" id="slide10">
+        <span class="slide-number">10 / 10</span>
+        <div class="slide-content">
+            <h2>Let's Build the Future</h2>
+            <p class="subtitle">Join us in revolutionizing the entertainment industry</p>
+            <div class="contact-section">
+                <div class="logo" style="justify-content: center; margin-bottom: 60px;">
+                    <div class="logo-icon">🐐</div>
+                    <div class="logo-text">
+                        <h1 style="font-size: 3rem;">GOAT ROYALTY</h1>
+                        <span>Entertainment Empire Platform</span>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">investors@goatroyalty.com</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">Website</div>
+                        <div class="contact-value">www.goatroyalty.com</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">GitHub</div>
+                        <div class="contact-value">github.com/DJSPEEDYGA/GOAT-Royalty-App</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="scrollToTop()">⬆</button>
+        <button class="nav-btn" onclick="window.print()">🖨</button>
+    </div>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
