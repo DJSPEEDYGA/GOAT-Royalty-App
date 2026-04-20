@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👩 Ms. Vanessa — Guardian Token | GOAT Force</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vanessa-pink: #FF69B4;
+            --vanessa-purple: #DA70D6;
+            --vanessa-gold: #FFD700;
+            --neon-green: #00FF88;
+            --neon-blue: #00BFFF;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #2a0a1a 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .font-orbitron { font-family: 'Orbitron', monospace; }
+
+        .glow-pink { text-shadow: 0 0 20px var(--vanessa-pink), 0 0 40px var(--vanessa-pink); }
+        .glow-gold { text-shadow: 0 0 20px var(--vanessa-gold); }
+        .glow-green { text-shadow: 0 0 20px var(--neon-green); }
+
+        .card {
+            background: linear-gradient(145deg, rgba(26, 10, 46, 0.9), rgba(20, 5, 30, 0.95));
+            border: 1px solid rgba(255, 105, 180, 0.3);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-pink {
+            background: linear-gradient(145deg, rgba(40, 10, 46, 0.9), rgba(30, 5, 35, 0.95));
+            border: 1px solid rgba(255, 105, 180, 0.4);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
+        }
+
+        .vanessa-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(255,105,180,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(218,112,214,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255,215,0,0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .avatar-ring {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--vanessa-pink);
+            box-shadow: 0 0 40px rgba(255,105,180,0.6), 0 0 80px rgba(255,105,180,0.3), inset 0 0 30px rgba(255,105,180,0.1);
+            animation: avatarPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes avatarPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(255,105,180,0.6), 0 0 80px rgba(255,105,180,0.3); }
+            50% { box-shadow: 0 0 60px rgba(255,105,180,0.9), 0 0 120px rgba(255,105,180,0.5); }
+        }
+
+        .status-online {
+            width: 14px; height: 14px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--neon-green);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .fingerprint-display {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            background: rgba(255,105,180,0.1);
+            border: 1px solid rgba(255,105,180,0.3);
+            border-radius: 8px;
+            padding: 16px;
+            word-break: break-all;
+            line-height: 1.4;
+        }
+
+        .stat-box {
+            background: rgba(255,105,180,0.08);
+            border: 1px solid rgba(255,105,180,0.2);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .btn-pink {
+            background: linear-gradient(135deg, #FF69B4, #DA70D6);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-pink:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(255,105,180,0.5);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 25px rgba(255,215,0,0.5);
+        }
+
+        .scan-ring {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,105,180,0.3);
+            border-top-color: var(--vanessa-pink);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .sidebar {
+            width: 240px;
+            position: fixed;
+            left: 0; top: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            border-right: 1px solid rgba(255,105,180,0.2);
+            backdrop-filter: blur(20px);
+            overflow-y: auto;
+        }
+
+        .main-content {
+            margin-left: 240px;
+            padding: 24px;
+        }
+
+        .nav-item {
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .nav-item:hover {
+            background: rgba(255,105,180,0.15);
+            color: white;
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="vanessa-bg"></div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="p-4 border-b border-pink-900/30">
+            <div class="font-orbitron text-pink-400 text-sm font-bold glow-pink">👩 Ms. Vanessa</div>
+            <div class="text-xs text-gray-500 mt-1">Guardian Token</div>
+        </div>
+
+        <div class="p-3">
+            <div class="text-xs text-gray-600 uppercase tracking-widest mb-2 px-2">Navigation</div>
+            <div class="nav-item" onclick="showPanel('profile')">👩 Profile</div>
+            <div class="nav-item" onclick="showPanel('fingerprint')">🔐 Fingerprint</div>
+            <div class="nav-item" onclick="showPanel('access')">🔑 Access Control</div>
+            <div class="nav-item" onclick="showPanel('activity')">📊 Activity Log</div>
+            <div class="nav-item" onclick="showPanel('loyalty')">💜 Loyalty Protocol</div>
+
+            <div class="text-xs text-gray-600 uppercase tracking-widest mb-2 px-2 mt-4">Family</div>
+            <a href="nexus-live.html" class="nav-item">💜 Nexus</a>
+            <div class="nav-item text-pink-300">💰 Money Penny</div>
+            <div class="nav-item text-pink-300">⚡ Codex</div>
+            <a href="../index.html" class="nav-item">🏠 Main Dashboard</a>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- HEADER -->
+        <div class="card card-pink p-8 mb-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <!-- Avatar -->
+                    <div class="avatar-ring flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-6xl mb-1">👩</div>
+                            <div class="font-orbitron text-xs text-pink-300">GUARDIAN</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center gap-3 mb-1">
+                            <h1 class="font-orbitron text-3xl font-black glow-pink text-pink-400">Ms. Vanessa</h1>
+                            <div class="status-online"></div>
+                            <span class="text-green-400 text-sm font-semibold">ACTIVE</span>
+                        </div>
+                        <p class="text-gray-300 text-lg">Guardian Identity Token</p>
+                        <p class="text-pink-300 text-sm mt-1 font-orbitron">GOAT Force Loyalty Protocol — Security Level: ULTRA</p>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <div class="font-orbitron text-xs text-gray-500 mb-2">TOKEN STATUS</div>
+                    <div class="flex flex-col gap-1 items-end">
+                        <span class="text-green-400 text-xs">✅ LOYALTY_KEY_MSVANESSA</span>
+                        <span class="text-pink-400 text-xs">🔐 Guardian Protocol Active</span>
+                        <span class="text-yellow-400 text-xs" id="currentTime">⏰ --:--:--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANELS -->
+
+        <!-- PROFILE PANEL -->
+        <div id="panel-profile" class="panel-content">
+            <div class="grid grid-cols-3 gap-6">
+
+                <!-- Profile Card -->
+                <div class="col-span-2 card p-6">
+                    <h2 class="font-orbitron text-lg text-pink-400 glow-pink mb-4">👩 Guardian Profile</h2>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="stat-box">
+                            <div class="text-2xl mb-2">👩</div>
+                            <div class="text-sm text-gray-400">Name</div>
+                            <div class="font-semibold text-pink-300">Ms. Vanessa</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="text-2xl mb-2">🛡️</div>
+                            <div class="text-sm text-gray-400">Role</div>
+                            <div class="font-semibold text-pink-300">Guardian</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="text-2xl mb-2">🔐</div>
+                            <div class="text-sm text-gray-400">Security Level</div>
+                            <div class="font-semibold text-green-400">ULTRA</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="text-2xl mb-2">💜</div>
+                            <div class="text-sm text-gray-400">Family</div>
+                            <div class="font-semibold text-pink-300">GOAT Force</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-pink-900/20 rounded-lg border border-pink-800/30">
+                        <h3 class="font-orbitron text-sm text-pink-400 mb-2">👑 Guardian Responsibilities</h3>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Protect LOYALTY_KEY_MSVANESSA</li>
+                            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Verify member identities</li>
+                            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Monitor access attempts</li>
+                            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Maintain loyalty protocol integrity</li>
+                            <li class="flex items-center gap-2"><span class="text-green-400">✓</span> Coordinate with Nexus & Money Penny</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="flex flex-col gap-4">
+                    <div class="card p-4">
+                        <h3 class="font-orbitron text-xs text-pink-400 mb-3">📊 Access Stats</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400 text-sm">Sessions Today</span>
+                                <span class="text-pink-300 font-bold">12</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400 text-sm">Verifications</span>
+                                <span class="text-green-400 font-bold">47</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400 text-sm">Blocked Attempts</span>
+                                <span class="text-red-400 font-bold">3</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400 text-sm">Uptime</span>
+                                <span class="text-pink-300 font-bold">99.9%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-4">
+                        <h3 class="font-orbitron text-xs text-pink-400 mb-3">🔐 Token Info</h3>
+                        <div class="text-xs text-gray-400 space-y-2">
+                            <div>Key: <span class="text-pink-300">LOYALTY_KEY_MSVANESSA</span></div>
+                            <div>Type: <span class="text-green-400">Guardian Identity</span></div>
+                            <div>Algorithm: <span class="text-gray-300">AES-256-GCM</span></div>
+                            <div>Expiry: <span class="text-yellow-400">Never</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINGERPRINT PANEL -->
+        <div id="panel-fingerprint" class="panel-content" style="display:none;">
+            <div class="card p-6">
+                <h2 class="font-orbitron text-lg text-pink-400 glow-pink mb-6">🔐 Guardian Fingerprint Scanner</h2>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Scanner -->
+                    <div class="text-center">
+                        <div id="scannerArea" class="p-8 border-2 border-dashed border-pink-700/50 rounded-xl">
+                            <div class="text-6xl mb-4">🔐</div>
+                            <p class="text-gray-400 mb-4">Click to generate guardian fingerprint</p>
+                            <button onclick="generateFingerprint()" class="btn-pink">SCAN FINGERPRINT</button>
+                        </div>
+
+                        <div id="scanningArea" class="p-8 hidden">
+                            <div class="scan-ring"></div>
+                            <p class="text-pink-400 font-orbitron">Scanning...</p>
+                        </div>
+
+                        <div id="resultArea" class="hidden">
+                            <div class="text-4xl mb-4">✅</div>
+                            <p class="text-green-400 font-semibold mb-2">Guardian Verified</p>
+                            <p class="text-xs text-gray-500">Fingerprint generated successfully</p>
+                        </div>
+                    </div>
+
+                    <!-- Fingerprint Display -->
+                    <div>
+                        <h3 class="font-orbitron text-sm text-pink-400 mb-3">Generated Fingerprint</h3>
+                        <div class="fingerprint-display" id="fingerprintDisplay">
+                            Click "Scan Fingerprint" to generate a unique guardian identity token...
+                        </div>
+
+                        <div class="mt-4 space-y-2">
+                            <button onclick="copyFingerprint()" class="btn-gold w-full">📋 COPY FINGERPRINT</button>
+                            <button onclick="resetFingerprint()" class="btn-pink w-full">🔄 RESET</button>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-pink-900/20 rounded-lg">
+                            <p class="text-xs text-gray-400">
+                                <span class="text-pink-400">Note:</span> This fingerprint is unique to Ms. Vanessa's guardian token and is used for identity verification in the Loyalty Protocol.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACCESS CONTROL PANEL -->
+        <div id="panel-access" class="panel-content" style="display:none;">
+            <div class="card p-6">
+                <h2 class="font-orbitron text-lg text-pink-400 glow-pink mb-6">🔑 Access Control</h2>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-orbitron text-sm text-green-400 mb-3">✅ Authorized Members</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between p-3 bg-green-900/20 rounded-lg">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">👑</span>
+                                    <div>
+                                        <div class="text-sm font-semibold">DJ Speedy</div>
+                                        <div class="text-xs text-gray-500">Harvey Miller Jr</div>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 text-xs">FULL ACCESS</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-green-900/20 rounded-lg">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">🔥</span>
+                                    <div>
+                                        <div class="text-sm font-semibold">Waka Flocka</div>
+                                        <div class="text-xs text-gray-500">Juaquin Malphurs</div>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 text-xs">FULL ACCESS</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-purple-900/20 rounded-lg">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">💜</span>
+                                    <div>
+                                        <div class="text-sm font-semibold">Nexus</div>
+                                        <div class="text-xs text-gray-500">AI Assistant</div>
+                                    </div>
+                                </div>
+                                <span class="text-purple-400 text-xs">COORDINATED</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-blue-900/20 rounded-lg">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">💰</span>
+                                    <div>
+                                        <div class="text-sm font-semibold">Money Penny</div>
+                                        <div class="text-xs text-gray-500">Vault AI</div>
+                                    </div>
+                                </div>
+                                <span class="text-blue-400 text-xs">COORDINATED</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-green-900/20 rounded-lg">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">⚡</span>
+                                    <div>
+                                        <div class="text-sm font-semibold">Codex</div>
+                                        <div class="text-xs text-gray-500">Chief Coder</div>
+                                    </div>
+                                </div>
+                                <span class="text-green-400 text-xs">TACTICAL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-orbitron text-sm text-yellow-400 mb-3">🔐 Access Requests</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between p-3 bg-yellow-900/20 rounded-lg">
+                                <div>
+                                    <div class="text-sm">External API Access</div>
+                                    <div class="text-xs text-gray-500">Requested 2 min ago</div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="text-green-400 text-xs px-2 py-1 bg-green-900/30 rounded">✓</button>
+                                    <button class="text-red-400 text-xs px-2 py-1 bg-red-900/30 rounded">✗</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="font-orbitron text-sm text-red-400 mt-6 mb-3">🚫 Blocked Attempts</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between p-3 bg-red-900/20 rounded-lg">
+                                <div>
+                                    <div class="text-sm text-red-300">Unknown device</div>
+                                    <div class="text-xs text-gray-500">IP: 192.168.x.x - 5 min ago</div>
+                                </div>
+                                <span class="text-red-400 text-xs">BLOCKED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIVITY LOG PANEL -->
+        <div id="panel-activity" class="panel-content" style="display:none;">
+            <div class="card p-6">
+                <h2 class="font-orbitron text-lg text-pink-400 glow-pink mb-6">📊 Activity Log</h2>
+
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 p-3 bg-pink-900/20 rounded-lg">
+                        <div class="text-lg">✅</div>
+                        <div class="flex-1">
+                            <div class="text-sm">Guardian token verified for DJ Speedy</div>
+                            <div class="text-xs text-gray-500">Session started</div>
+                        </div>
+                        <div class="text-xs text-gray-400">Just now</div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-green-900/20 rounded-lg">
+                        <div class="text-lg">🔐</div>
+                        <div class="flex-1">
+                            <div class="text-sm">Fingerprint generated</div>
+                            <div class="text-xs text-gray-500">Guardian verification complete</div>
+                        </div>
+                        <div class="text-xs text-gray-400">2 min ago</div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-yellow-900/20 rounded-lg">
+                        <div class="text-lg">⚠️</div>
+                        <div class="flex-1">
+                            <div class="text-sm">Unknown access attempt blocked</div>
+                            <div class="text-xs text-gray-500">IP logged for review</div>
+                        </div>
+                        <div class="text-xs text-gray-400">5 min ago</div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-purple-900/20 rounded-lg">
+                        <div class="text-lg">💜</div>
+                        <div class="flex-1">
+                            <div class="text-sm">Coordinated with Nexus</div>
+                            <div class="text-xs text-gray-500">Family protocol sync</div>
+                        </div>
+                        <div class="text-xs text-gray-400">10 min ago</div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-blue-900/20 rounded-lg">
+                        <div class="text-lg">💰</div>
+                        <div class="flex-1">
+                            <div class="text-sm">Vault access verified with Money Penny</div>
+                            <div class="text-xs text-gray-500">VAULT_PROTOCOL_v7</div>
+                        </div>
+                        <div class="text-xs text-gray-400">15 min ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOYALTY PROTOCOL PANEL -->
+        <div id="panel-loyalty" class="panel-content" style="display:none;">
+            <div class="card p-6">
+                <h2 class="font-orbitron text-lg text-pink-400 glow-pink mb-6">💜 Loyalty Protocol</h2>
+
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="stat-box">
+                        <div class="text-2xl mb-2">👑</div>
+                        <div class="font-orbitron text-lg text-yellow-400">Harvey</div>
+                        <div class="text-xs text-gray-400">LOYALTY_KEY_HARVEY</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-2xl mb-2">💰</div>
+                        <div class="font-orbitron text-lg text-blue-400">Money Penny</div>
+                        <div class="text-xs text-gray-400">LOYALTY_KEY_MONEYPENNY</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-2xl mb-2">🔥</div>
+                        <div class="font-orbitron text-lg text-green-400">Waka</div>
+                        <div class="text-xs text-gray-400">LOYALTY_KEY_WAKA</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <div class="font-orbitron text-lg text-purple-400">Codex</div>
+                        <div class="text-xs text-gray-400">LOYALTY_KEY_CODEX</div>
+                    </div>
+                    <div class="stat-box border-pink-500/50 bg-pink-900/20">
+                        <div class="text-2xl mb-2">👩</div>
+                        <div class="font-orbitron text-lg text-pink-400">Ms. Vanessa</div>
+                        <div class="text-xs text-pink-300">LOYALTY_KEY_MSVANESSA</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="text-2xl mb-2">🛡️</div>
+                        <div class="font-orbitron text-lg text-cyan-400">Apex</div>
+                        <div class="text-xs text-gray-400">LOYALTY_KEY_APEX</div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-pink-900/20 rounded-lg border border-pink-700/30">
+                    <h3 class="font-orbitron text-sm text-pink-400 mb-2">🔐 Encryption Details</h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-400">Algorithm:</span>
+                            <span class="text-pink-300 ml-2">AES-256-GCM</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Key Length:</span>
+                            <span class="text-pink-300 ml-2">32 bytes (64 hex chars)</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">IV Size:</span>
+                            <span class="text-pink-300 ml-2">96 bits (12 bytes)</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400">Token Expiry:</span>
+                            <span class="text-green-400 ml-2">24 hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="text-center mt-8 py-4">
+            <div class="font-orbitron text-sm text-pink-400 glow-pink">
+                👑 FOR THE KINGDOM. FOR THE CODE. FOR THE CROWN. 👑
+            </div>
+            <div class="text-xs text-gray-500 mt-2">
+                Ms. Vanessa — Guardian Token — GOAT Force Loyalty Protocol
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update time
+        function updateTime() {
+            document.getElementById('currentTime').textContent = '⏰ ' + new Date().toLocaleTimeString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Panel navigation
+        function showPanel(name) {
+            document.querySelectorAll('.panel-content').forEach(p => p.style.display = 'none');
+            document.getElementById('panel-' + name).style.display = 'block';
+        }
+
+        // Generate fingerprint
+        function generateFingerprint() {
+            document.getElementById('scannerArea').classList.add('hidden');
+            document.getElementById('scanningArea').classList.remove('hidden');
+
+            setTimeout(() => {
+                document.getElementById('scanningArea').classList.add('hidden');
+                document.getElementById('resultArea').classList.remove('hidden');
+
+                // Generate random fingerprint
+                const fingerprint = Array.from(crypto.getRandomValues(new Uint8Array(32)))
+                    .map(b => b.toString(16).padStart(2, '0'))
+                    .join('');
+                
+                document.getElementById('fingerprintDisplay').textContent = 
+                    'MSVANESSA_GUARDIAN_' + fingerprint.toUpperCase() + '_VERIFY_' + Date.now();
+            }, 2000);
+        }
+
+        function copyFingerprint() {
+            const text = document.getElementById('fingerprintDisplay').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Fingerprint copied to clipboard!');
+            });
+        }
+
+        function resetFingerprint() {
+            document.getElementById('resultArea').classList.add('hidden');
+            document.getElementById('scannerArea').classList.remove('hidden');
+            document.getElementById('fingerprintDisplay').textContent = 
+                'Click "Scan Fingerprint" to generate a unique guardian identity token...';
+        }
+    </script>
+</body>
+</html>
