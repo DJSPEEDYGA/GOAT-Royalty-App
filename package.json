@@ -78,7 +78,7 @@
     "winston": "^3.19.0"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.3",
     "electron": "^35.7.5",
     "electron-builder": "^26.8.1",
     "eslint": "^9.39.1",
