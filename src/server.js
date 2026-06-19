@@ -19,6 +19,9 @@ const loyaltyRoutes = require('./routes/loyalty');
 const activationRoutes = require('./routes/activation');
 const { logger, intrusionCheck } = require('./middleware/loyalty');
 const ragRoutes = require('./routes/rag');
+const ragEnhancedRoutes = require('./routes/ragEnhanced');
+const localLLMRoutes = require('./routes/localLLM');
+const llmRouterRoutes = require('./routes/llmRouter');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -74,6 +77,9 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/loyalty', loyaltyRoutes);
 app.use('/api/activation', activationRoutes);
 app.use('/api/rag', ragRoutes);
+app.use('/api/rag-enhanced', ragEnhancedRoutes);
+app.use('/api/local-llm', localLLMRoutes);
+app.use('/api/llm-router', llmRouterRoutes);
 
 // 404 Handler - handled by express router
 
