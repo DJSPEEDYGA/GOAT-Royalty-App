@@ -1212,7 +1212,7 @@ const staticLimiter = rateLimit({
     message: 'Too many requests, please slow down.'
 });
 app.get('*', staticLimiter, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'static', 'index.html'));
 });
 
 // Error handling
