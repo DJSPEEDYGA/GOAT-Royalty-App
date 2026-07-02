@@ -88,6 +88,7 @@ nav img{width:32px;height:32px;border-radius:8px;object-fit:cover;}
   <img src="goat-logo.png" onerror="this.style.display='none'">
   <span class="nav-title">GOAT Force — Master Hub</span>
   <div class="nav-links">
+    <a href="#oscar" style="color:var(--gold);font-weight:700;">🐐 Oscar</a>
     <a href="#live">Live</a>
     <a href="#drive">Drive</a>
     <a href="#agents">Agents</a>
@@ -129,6 +130,37 @@ nav img{width:32px;height:32px;border-radius:8px;object-fit:cover;}
     </div>
   </div>
 
+  <!-- ★ OSCAR CONSOLE — TOP PRIORITY LAUNCH CARD ★ -->
+  <div id="oscar" class="sec">
+    <div class="sec-head"><span class="ico">🐐</span><h2>Oscar Console — GOAT Force AI</h2><span class="cnt">Touch Studio · Gen UI · Voice · Customize</span></div>
+    <div class="grid grid-wide">
+      <a href="http://127.0.0.1:3333/" target="_blank" class="card" style="border-color:rgba(212,160,60,.4);background:linear-gradient(135deg,rgba(212,160,60,.07),rgba(13,17,23,1));">
+        <div class="ci" style="background:linear-gradient(135deg,rgba(212,160,60,.3),rgba(240,192,64,.15))">🐐</div>
+        <div class="cb">
+          <div class="cn" style="color:var(--gold);">Oscar Console · Launch Now</div>
+          <div class="cd">Full Oscar AI — chat, Touch Studio, generative UI, voice, customize colors/logo. Runs at http://127.0.0.1:3333/ — start chat_server.py first.</div>
+          <div class="tags"><span class="tag tg">PORT 3333</span><span class="tag tg">OSCAR AI</span><span class="tag tc">TOUCH STUDIO</span><span class="tag tp">GEN UI</span></div>
+        </div>
+      </a>
+      <div class="card c" onclick="openOscarStudio()">
+        <div class="ci" style="background:rgba(0,212,255,.15)">🎛️</div>
+        <div class="cb"><div class="cn">Touch Studio — Full Screen</div><div class="cd">Open Oscar's full-screen touch console — knobs, faders, 16 pads, transport, XY pad. Works on iPad/touchscreen.</div><div class="tags"><span class="tag tc">TOUCH</span><span class="tag tc">STUDIO</span><span class="tag tg">DRAG &amp; DROP</span></div></div>
+      </div>
+      <div class="card" onclick="copy('cd ~/GOAT-Royalty-App/web-app/usb-ai/Shared && python3 chat_server.py')">
+        <div class="ci" style="background:rgba(63,185,80,.15)">▶</div>
+        <div class="cb"><div class="cn">Start Oscar Server</div><div class="cd">Copies the start command to clipboard. Paste in Terminal to launch Oscar on port 3333.</div><div class="tags"><span class="tag tgr">COPY CMD</span><span class="tag tgr">TERMINAL</span></div></div>
+      </div>
+      <div class="card" onclick="copy('pkill -f ollama; pkill -f llama-server; ollama serve &')">
+        <div class="ci" style="background:rgba(88,166,255,.15)">🦙</div>
+        <div class="cb"><div class="cn">Restart Ollama Engine</div><div class="cd">Kills stuck Ollama/llama-server, restarts clean. Fixes "abort trap" crashes. Copies command to clipboard.</div><div class="tags"><span class="tag tb">COPY CMD</span><span class="tag tb">FIX CRASH</span></div></div>
+      </div>
+      <div class="card" onclick="copy('ollama pull llama3.2:3b')">
+        <div class="ci" style="background:rgba(167,139,250,.15)">📥</div>
+        <div class="cb"><div class="cn">Pull Model (3B — fits any Mac)</div><div class="cd">ollama pull llama3.2:3b — safe model that runs on 8GB RAM. Copies pull command to clipboard.</div><div class="tags"><span class="tag tp">COPY CMD</span><span class="tag tp">3B MODEL</span></div></div>
+      </div>
+    </div>
+  </div>
+
   <!-- i2i DRIVE — AGENTS & AI -->
   <div id="agents" class="sec">
     <div class="sec-head"><span class="ico">🤖</span><h2>AI Agents — i2i 1 Drive</h2><span class="cnt">7 agents</span></div>
@@ -157,9 +189,19 @@ nav img{width:32px;height:32px;border-radius:8px;object-fit:cover;}
         <div class="ci" style="background:rgba(212,160,60,.15)">🧠</div>
         <div class="cb"><div class="cn">Agents Brain · GOAT Force Media</div><div class="cd">Opens the full GOAT Force Media agents brain. All 11 agents coordinated.</div><div class="tags"><span class="tag tg">COMMAND</span><span class="tag tg">11 AGENTS</span></div></div>
       </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20GOAT%20CASINO%20NIGHT.command')">
-        <div class="ci" style="background:rgba(230,57,70,.15)">🎰</div>
+      <!-- CASINO -->
+      <div class="card r" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20GOAT%20CASINO%20NIGHT.command')">
+        <div class="ci" style="background:rgba(230,57,70,.2)">🎰</div>
         <div class="cb"><div class="cn">GOAT Casino Night</div><div class="cd">Opens Casino Night mode. VIP access via hidden route.</div><div class="tags"><span class="tag tr">CASINO</span><span class="tag td">COMMAND</span></div></div>
+      </div>
+      <a href="goat-entertainment.html" target="_blank" class="card r">
+        <div class="ci" style="background:rgba(230,57,70,.15)">🎲</div>
+        <div class="cb"><div class="cn">GOAT Casino — Web App</div><div class="cd">Casino/entertainment hub in the web app. Open in browser, no drive needed.</div><div class="tags"><span class="tag tr">CASINO WEB</span><span class="tag tr">ONLINE</span></div></div>
+      </a>
+      <!-- EVERYBODY APP placeholder -->
+      <div class="card p" onclick="copy('cd ~/GOAT-Royalty-App && node src/server.js')">
+        <div class="ci" style="background:rgba(167,139,250,.2)">🌍</div>
+        <div class="cb"><div class="cn">Everybody App — Launch</div><div class="cd">GOAT Force fan/everybody platform. Copies launch command. Runs on local Node server.</div><div class="tags"><span class="tag tp">EVERYBODY</span><span class="tag tp">COPY CMD</span></div></div>
       </div>
     </div>
   </div>
@@ -554,6 +596,19 @@ function copy(cmd){
 fetch('http://localhost:5500/health',{signal:AbortSignal.timeout(2500)})
   .then(r=>{document.getElementById('d-intel').className='dot '+(r.ok?'dg':'dr');})
   .catch(()=>{document.getElementById('d-intel').className='dot dr';});
+
+// Open Oscar Touch Studio (opens Oscar Console then signals it to open studio)
+function openOscarStudio(){
+  const w=window.open('http://127.0.0.1:3333/','oscar_console');
+  setTimeout(()=>{
+    try{w.postMessage({action:'openStudio'},'*');}catch{}
+  },1200);
+}
+
+// Oscar Console connection status badge in nav
+fetch('http://127.0.0.1:3333/',{signal:AbortSignal.timeout(2000)})
+  .then(r=>{if(r.ok){document.querySelector('.pill').style.background='rgba(63,185,80,.2)';document.querySelector('.pill').style.color='#3fb950';document.querySelector('.pill').textContent='● Oscar Online';}})
+  .catch(()=>{document.querySelector('.pill').textContent='● Oscar Offline';document.querySelector('.pill').style.color='#8b949e';});
 </script>
 </body>
 </html>
