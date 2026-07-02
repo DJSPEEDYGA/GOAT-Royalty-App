@@ -89,7 +89,7 @@ jobs:
               git pull origin main
             else
               rm -rf /opt/goat-app
-              git clone https://github.com/DJSPEEDYGA/nextjs-commerce.git /opt/goat-app
+              git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git /opt/goat-app
               cd /opt/goat-app
             fi
             
@@ -183,7 +183,7 @@ jobs:
               cd /opt/goat-app
               git pull origin main
             else
-              git clone https://github.com/DJSPEEDYGA/nextjs-commerce.git /opt/goat-app
+              git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git /opt/goat-app
             fi
             
             # Setup backup script
