@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPER GOAT ROYALTIES - AI-Powered Creator Platform</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111128;
+            --bg-card: #161638;
+            --bg-hover: #1e1e4a;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --accent-glow: rgba(108, 92, 231, 0.3);
+            --success: #00cec9;
+            --warning: #fdcb6e;
+            --danger: #ff6b6b;
+            --text-primary: #ffffff;
+            --text-secondary: #b2b2d0;
+            --text-muted: #6c6c8a;
+            --border: #2d2d5e;
+            --sidebar-width: 240px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ==================== SIDEBAR ==================== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .sidebar-header h1 {
+            font-size: 18px;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-header .version {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            font-size: 14px;
+            gap: 12px;
+        }
+
+        .nav-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+        .nav-item.active {
+            background: var(--bg-hover);
+            color: var(--accent-light);
+            border-left-color: var(--accent);
+        }
+
+        .nav-item .icon { font-size: 18px; width: 24px; text-align: center; }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            padding: 24px;
+            min-height: 100vh;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .page-header {
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .page-header .badge {
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ==================== CARDS & GRID ==================== */
+        .grid { display: grid; gap: 20px; }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s;
+        }
+
+        .card:hover { border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); }
+
+        .stat-card .stat-icon { font-size: 28px; margin-bottom: 8px; }
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .stat-card .stat-change {
+            font-size: 12px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .stat-change.positive { color: var(--success); }
+        .stat-change.negative { color: var(--danger); }
+
+        .chart-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container h3 {
+            margin-bottom: 16px;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #5b4bd5; }
+        .btn-secondary { background: var(--bg-hover); color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-secondary:hover { border-color: var(--accent); }
+        .btn-success { background: var(--success); color: #0a0a1a; }
+        .btn-danger { background: var(--danger); color: white; }
+
+        /* ==================== AI CHAT ==================== */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 140px);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .chat-bubble.user {
+            background: var(--accent);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bubble.ai {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input-area input:focus { border-color: var(--accent); }
+
+        /* ==================== TABLES ==================== */
+        .table-container { overflow-x: auto; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        tr:hover td { background: var(--bg-hover); }
+
+        /* ==================== AGENT CARDS ==================== */
+        .agent-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .agent-card .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .agent-card .agent-name { font-size: 16px; font-weight: 700; }
+
+        .agent-status {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .agent-status.active { background: rgba(0, 206, 201, 0.15); color: var(--success); }
+        .agent-status.idle { background: rgba(253, 203, 110, 0.15); color: var(--warning); }
+
+        .agent-card .agent-desc {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .agent-card .agent-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .tool-tag {
+            background: var(--bg-hover);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            color: var(--accent-light);
+        }
+
+        /* ==================== FORM ELEMENTS ==================== */
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 600; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+
+        /* ==================== SETTINGS ==================== */
+        .settings-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .settings-section h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .toggle-switch { position: relative; width: 48px; height: 24px; display: inline-block; }
+        .toggle-switch input { display: none; }
+        .toggle-slider {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-hover); border-radius: 24px; cursor: pointer; transition: 0.3s;
+        }
+        .toggle-slider::before {
+            content: ''; position: absolute; width: 18px; height: 18px;
+            left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s;
+        }
+        .toggle-switch input:checked + .toggle-slider { background: var(--accent); }
+        .toggle-switch input:checked + .toggle-slider::before { transform: translateX(24px); }
+
+        .setting-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(45, 45, 94, 0.5);
+        }
+        .setting-row:last-child { border-bottom: none; }
+        .setting-info .setting-label { font-size: 14px; font-weight: 600; }
+        .setting-info .setting-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+            .mobile-menu { display: block !important; position: fixed; top: 16px; left: 16px; z-index: 200; background: var(--bg-card); border: 1px solid var(--border); padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 20px; }
+        }
+        .mobile-menu { display: none; }
+
+        /* ==================== SCROLLBAR ==================== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        .loading-spinner {
+            display: inline-block; width: 20px; height: 20px;
+            border: 2px solid var(--border); border-top-color: var(--accent);
+            border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    /* ==================== CATALOG & NETWORK STYLES ==================== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        .data-table th, .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .data-table th {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+        .data-table tr:hover {
+            background: var(--bg-hover);
+        }
+        .data-table code {
+            background: var(--bg-primary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .profile-card {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .profile-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .profile-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .profile-info h4 {
+            margin: 0 0 4px;
+            color: var(--text-primary);
+        }
+        .profile-info p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .influence {
+            color: var(--success);
+            font-size: 12px;
+        }
+        .connection-item, .opportunity-item {
+            background: var(--bg-primary);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .connection-type {
+            background: var(--accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+        .opportunity-item h4 {
+            margin: 0 0 4px;
+        }
+        .opportunity-item p {
+            margin: 0 0 8px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .badge.open { background: var(--success); }
+        .badge.closed { background: var(--danger); }
+        .value {
+            color: var(--success);
+            font-weight: bold;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-menu" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1>🐐 GOAT ROYALTIES</h1>
+            <div class="version">v3.0 • AI-Powered Platform</div>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="nav-item active" onclick="showPage('dashboard', this)"><span class="icon">📊</span> Dashboard</div>
+            <div class="nav-item" onclick="showPage('revenue', this)"><span class="icon">💰</span> Revenue</div>
+            <div class="nav-item" onclick="showPage('nft', this)"><span class="icon">🎨</span> NFT Portfolio</div>
+            <div class="nav-item" onclick="showPage('ai-chat', this)"><span class="icon">🤖</span> AI Chat</div>
+            <div class="nav-item" onclick="showPage('agents', this)"><span class="icon">⚡</span> AI Agents</div>
+            <div class="nav-item" onclick="showPage('contracts', this)"><span class="icon">📋</span> Contracts</div>
+            <div class="nav-item" onclick="showPage('team', this)"><span class="icon">👥</span> Team Hub</div>
+            <div class="nav-item" onclick="showPage('market', this)"><span class="icon">📈</span> Market Intel</div>
+            <div class="nav-item" onclick="showPage('mining', this)"><span class="icon">⛏️</span> Crypto Mining</div>
+            <div class="nav-item" onclick="showPage('catalog', this)"><span class="icon">🎵</span> Music Catalog</div>
+            <div class="nav-item" onclick="showPage('network', this)"><span class="icon">🔗</span> Network</div>
+            <div class="nav-item" onclick="showPage('video', this)"><span class="icon">🎬</span> Video Editor</div>
+            <div class="nav-item" onclick="showPage('dsp', this)"><span class="icon">🎵</span> DSP Distribution</div>
+            <div class="nav-item" onclick="showPage('local-llm', this)"><span class="icon">🧠</span> Local LLM</div>
+            <div class="nav-item" onclick="showPage('settings', this)"><span class="icon">⚙️</span> Settings</div>
+        </nav>
+        <div class="sidebar-footer">
+            <span class="status-dot"></span>
+            <span id="status-text">Connecting...</span>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- DASHBOARD -->
+        <div id="page-dashboard" class="page active">
+            <div class="page-header">
+                <h2>📊 Dashboard</h2>
+                <span class="badge" id="mode-badge">Loading...</span>
+            </div>
+            <div class="grid grid-4" style="margin-bottom:24px;">
+                <div class="card stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="total-revenue">$0</div><div class="stat-label">Total Revenue</div><div class="stat-change positive">▲ 23.5% this quarter</div></div>
+                <div class="card stat-card"><div class="stat-icon">🎵</div><div class="stat-value" id="total-streams">0</div><div class="stat-label">Total Streams</div><div class="stat-change positive">▲ 18.7% growth</div></div>
+                <div class="card stat-card"><div class="stat-icon">🎨</div><div class="stat-value" id="nft-value">$0</div><div class="stat-label">NFT Portfolio Value</div><div class="stat-change positive">▲ 12.3% this month</div></div>
+                <div class="card stat-card"><div class="stat-icon">🤖</div><div class="stat-value" id="active-agents">4</div><div class="stat-label">Active AI Agents</div><div class="stat-change positive">All systems operational</div></div>
+            </div>
+            <div class="grid grid-2">
+                <div class="chart-container"><h3>Revenue Trends (Last 12 Months)</h3><canvas id="revenueChart" height="250"></canvas></div>
+                <div class="chart-container"><h3>Platform Distribution</h3><canvas id="platformChart" height="250"></canvas></div>
+            </div>
+            <div class="chart-container"><h3>Platform Growth Comparison</h3><canvas id="growthChart" height="200"></canvas></div>
+        </div>
+
+        <!-- REVENUE -->
+        <div id="page-revenue" class="page">
+            <div class="page-header"><h2>💰 Revenue Analytics</h2><button class="btn btn-primary" onclick="analyzeRevenue()">🤖 AI Analysis</button></div>
+            <div class="grid grid-3" style="margin-bottom:24px;">
+                <div class="card stat-card"><div class="stat-icon">📈</div><div class="stat-value">$4,230</div><div class="stat-label">Monthly Revenue</div></div>
+                <div class="card stat-card"><div class="stat-icon">🎯</div><div class="stat-value">$52,800</div><div class="stat-label">Annual Projected</div></div>
+                <div class="card stat-card"><div class="stat-icon">⚡</div><div class="stat-value">23.5%</div><div class="stat-label">Growth Rate</div></div>
+            </div>
+            <div class="card">
+                <h3 style="margin-bottom:16px;">Platform Breakdown</h3>
+                <div class="table-container"><table><thead><tr><th>Platform</th><th>Revenue</th><th>Streams</th><th>Growth</th><th>Status</th></tr></thead>
+                <tbody id="platform-table">
+                    <tr><td>Spotify</td><td>$12,847</td><td>285,000</td><td style="color:var(--success)">+31.2%</td><td>🟢 Active</td></tr>
+                    <tr><td>Apple Music</td><td>$8,234</td><td>142,000</td><td style="color:var(--success)">+24.8%</td><td>🟢 Active</td></tr>
+                    <tr><td>YouTube Music</td><td>$5,671</td><td>520,000</td><td style="color:var(--success)">+18.7%</td><td>🟢 Active</td></tr>
+                    <tr><td>Tidal</td><td>$2,100</td><td>38,500</td><td style="color:var(--success)">+45.2%</td><td>🟢 Active</td></tr>
+                    <tr><td>Amazon Music</td><td>$1,890</td><td>67,000</td><td style="color:var(--success)">+15.3%</td><td>🟢 Active</td></tr>
+                </tbody></table></div>
+            </div>
+            <div id="revenue-analysis" class="card" style="margin-top:20px;display:none;"><h3 style="margin-bottom:12px;">🤖 AI Revenue Analysis</h3><div id="revenue-analysis-content" style="color:var(--text-secondary);line-height:1.8;white-space:pre-wrap;"></div></div>
+        </div>
+
+        <!-- NFT PORTFOLIO -->
+        <div id="page-nft" class="page">
+            <div class="page-header"><h2>🎨 NFT Portfolio</h2><button class="btn btn-primary">+ Mint New NFT</button></div>
+            <div class="grid grid-3" style="margin-bottom:24px;">
+                <div class="card stat-card"><div class="stat-icon">🖼️</div><div class="stat-value">12</div><div class="stat-label">Total NFTs</div></div>
+                <div class="card stat-card"><div class="stat-icon">💎</div><div class="stat-value">$24,500</div><div class="stat-label">Portfolio Value</div></div>
+                <div class="card stat-card"><div class="stat-icon">🔄</div><div class="stat-value">$3,200</div><div class="stat-label">Secondary Sales</div></div>
+            </div>
+            <div class="grid grid-3">
+                <div class="card"><div style="background:linear-gradient(135deg,#6c5ce7,#00cec9);height:160px;border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-size:48px;">🎵</div><h4>Genesis Beat #001</h4><p style="color:var(--text-secondary);font-size:13px;margin:6px 0;">1/1 Exclusive Beat NFT</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;"><span style="font-weight:700;color:var(--success);">2.5 ETH</span><span style="font-size:12px;color:var(--text-muted);">Ethereum</span></div></div>
+                <div class="card"><div style="background:linear-gradient(135deg,#fd79a8,#fdcb6e);height:160px;border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-size:48px;">🎤</div><h4>GOAT Vocal Pack</h4><p style="color:var(--text-secondary);font-size:13px;margin:6px 0;">Limited Edition (50/100)</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;"><span style="font-weight:700;color:var(--success);">0.8 ETH</span><span style="font-size:12px;color:var(--text-muted);">Polygon</span></div></div>
+                <div class="card"><div style="background:linear-gradient(135deg,#00cec9,#0984e3);height:160px;border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;font-size:48px;">🎹</div><h4>Platinum Melody</h4><p style="color:var(--text-secondary);font-size:13px;margin:6px 0;">Royalty Share NFT (10%)</p><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;"><span style="font-weight:700;color:var(--success);">5.0 ETH</span><span style="font-size:12px;color:var(--text-muted);">Ethereum</span></div></div>
+            </div>
+            <div class="chart-container" style="margin-top:24px;"><h3>NFT Value Over Time</h3><canvas id="nftChart" height="200"></canvas></div>
+        </div>
+
+        <!-- AI CHAT -->
+        <div id="page-ai-chat" class="page">
+            <div class="page-header"><h2>🤖 AI Chat Assistant</h2><span class="badge">RAG-Powered</span></div>
+            <div class="card chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-bubble ai">👋 Welcome to GOAT Royalties AI Assistant! I'm powered by NVIDIA NIM and RAG technology. Ask me about your revenue, market trends, contracts, content strategy, or anything else!</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Ask about revenue, trends, contracts, content strategy..." onkeypress="if(event.key==='Enter')sendChat()">
+                    <button class="btn btn-primary" onclick="sendChat()">Send ➤</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI AGENTS -->
+        <div id="page-agents" class="page">
+            <div class="page-header"><h2>⚡ Autonomous AI Agents</h2><button class="btn btn-secondary" onclick="refreshAgents()">🔄 Refresh Status</button></div>
+            <div class="grid grid-2">
+                <div class="agent-card">
+                    <div class="agent-header"><span class="agent-name">📊 Royalty Tracker</span><span class="agent-status active">● Active</span></div>
+                    <div class="agent-desc">Monitors all platform revenue in real-time, detects anomalies, and provides predictive analytics for future earnings.</div>
+                    <div class="agent-tools"><span class="tool-tag">revenue-analyzer</span><span class="tool-tag">platform-integrator</span><span class="tool-tag">prediction-engine</span></div>
+                    <div style="display:flex;gap:8px;"><button class="btn btn-primary" onclick="executeAgent('royaltyTracker')">Execute</button><button class="btn btn-secondary">Configure</button></div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-header"><span class="agent-name">🎵 Content Advisor</span><span class="agent-status active">● Active</span></div>
+                    <div class="agent-desc">Analyzes market trends and audience data to recommend optimal content strategy, release timing, and platform targeting.</div>
+                    <div class="agent-tools"><span class="tool-tag">market-analyzer</span><span class="tool-tag">trend-detector</span><span class="tool-tag">recommender</span></div>
+                    <div style="display:flex;gap:8px;"><button class="btn btn-primary" onclick="executeAgent('contentAdvisor')">Execute</button><button class="btn btn-secondary">Configure</button></div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-header"><span class="agent-name">📋 Contract Analyst</span><span class="agent-status active">● Active</span></div>
+                    <div class="agent-desc">Reviews and generates smart contract terms, analyzes legal compliance, and assesses risk in royalty agreements.</div>
+                    <div class="agent-tools"><span class="tool-tag">legal-analyzer</span><span class="tool-tag">compliance-checker</span><span class="tool-tag">risk-assessor</span></div>
+                    <div style="display:flex;gap:8px;"><button class="btn btn-primary" onclick="executeAgent('contractAnalyst')">Execute</button><button class="btn btn-secondary">Configure</button></div>
+                </div>
+                <div class="agent-card">
+                    <div class="agent-header"><span class="agent-name">📣 Marketing Agent</span><span class="agent-status idle">● Idle</span></div>
+                    <div class="agent-desc">Creates marketing campaigns, optimizes SEO, and generates promotional content across social media platforms.</div>
+                    <div class="agent-tools"><span class="tool-tag">campaign-generator</span><span class="tool-tag">seo-optimizer</span><span class="tool-tag">content-creator</span></div>
+                    <div style="display:flex;gap:8px;"><button class="btn btn-primary" onclick="executeAgent('marketingAgent')">Execute</button><button class="btn btn-secondary">Configure</button></div>
+                </div>
+            </div>
+            <div id="agent-output" class="card" style="margin-top:20px;display:none;"><h3 style="margin-bottom:12px;">⚡ Agent Output</h3><div id="agent-output-content" style="color:var(--text-secondary);line-height:1.8;white-space:pre-wrap;"></div></div>
+        </div>
+
+        <!-- CONTRACTS -->
+        <div id="page-contracts" class="page">
+            <div class="page-header"><h2>📋 Smart Contracts</h2><button class="btn btn-primary" onclick="generateContract()">🤖 Generate Contract</button></div>
+            <div class="grid grid-2" style="margin-bottom:24px;">
+                <div class="card">
+                    <h3 style="margin-bottom:16px;">Create New Contract</h3>
+                    <div class="form-group"><label>Contract Type</label><select id="contract-type"><option value="distribution">Distribution Agreement</option><option value="licensing">Licensing Deal</option><option value="collaboration">Collaboration Agreement</option><option value="publishing">Publishing Deal</option><option value="management">Management Contract</option></select></div>
+                    <div class="form-group"><label>Party A (Creator)</label><input type="text" id="contract-party-a" placeholder="Your name or entity" value="DJSPEEDYGA"></div>
+                    <div class="form-group"><label>Party B (Counterpart)</label><input type="text" id="contract-party-b" placeholder="Label, platform, or collaborator"></div>
+                    <div class="form-group"><label>Key Terms</label><textarea id="contract-terms" placeholder="Describe key terms, royalty splits, duration..."></textarea></div>
+                    <button class="btn btn-primary" onclick="generateContract()" style="width:100%;">Generate AI Contract ➤</button>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom:16px;">Active Contracts</h3>
+                    <table><thead><tr><th>Contract</th><th>Type</th><th>Status</th></tr></thead><tbody>
+                        <tr><td>Spotify Distribution</td><td>Distribution</td><td style="color:var(--success);">Active</td></tr>
+                        <tr><td>Beat Licensing #47</td><td>Licensing</td><td style="color:var(--success);">Active</td></tr>
+                        <tr><td>Collab - ArtistX</td><td>Collaboration</td><td style="color:var(--warning);">Pending</td></tr>
+                        <tr><td>Publishing Deal</td><td>Publishing</td><td style="color:var(--success);">Active</td></tr>
+                    </tbody></table>
+                </div>
+            </div>
+            <div id="contract-output" class="card" style="display:none;"><h3 style="margin-bottom:12px;">🤖 Generated Contract</h3><div id="contract-output-content" style="color:var(--text-secondary);line-height:1.8;white-space:pre-wrap;"></div></div>
+        </div>
+
+        <!-- TEAM HUB -->
+        <div id="page-team" class="page">
+            <div class="page-header"><h2>👥 Team Hub</h2><button class="btn btn-primary">+ Add Member</button></div>
+            <div class="grid grid-3">
+                <div class="card" style="text-align:center;padding:30px;"><div style="font-size:48px;margin-bottom:12px;">👤</div><h4>DJSPEEDYGA</h4><p style="color:var(--accent-light);font-size:13px;margin:6px 0;">Owner & Creator</p><p style="color:var(--text-muted);font-size:12px;">Full access • All platforms</p></div>
+                <div class="card" style="text-align:center;padding:30px;"><div style="font-size:48px;margin-bottom:12px;">🤖</div><h4>AI Manager</h4><p style="color:var(--success);font-size:13px;margin:6px 0;">Autonomous Agent</p><p style="color:var(--text-muted);font-size:12px;">4 agents active • Auto-optimization</p></div>
+                <div class="card" style="text-align:center;padding:30px;"><div style="font-size:48px;margin-bottom:12px;">📊</div><h4>Analytics Bot</h4><p style="color:var(--success);font-size:13px;margin:6px 0;">Data Processor</p><p style="color:var(--text-muted);font-size:12px;">Real-time monitoring • All platforms</p></div>
+            </div>
+        </div>
+
+        <!-- MARKET INTEL -->
+        <div id="page-market" class="page">
+            <div class="page-header"><h2>📈 Market Intelligence</h2><button class="btn btn-primary" onclick="getMarketTrends()">🤖 AI Market Analysis</button></div>
+            <div class="grid grid-2" style="margin-bottom:24px;">
+                <div class="chart-container"><h3>Genre Performance</h3><canvas id="genreChart" height="250"></canvas></div>
+                <div class="chart-container"><h3>Platform Market Share</h3><canvas id="marketShareChart" height="250"></canvas></div>
+            </div>
+            <div class="grid grid-4" style="margin-bottom:24px;">
+                <div class="card stat-card"><div class="stat-value" style="font-size:20px;">$19.3B</div><div class="stat-label">Global Streaming Market</div></div>
+                <div class="card stat-card"><div class="stat-value" style="font-size:20px;">+11.2%</div><div class="stat-label">YoY Growth</div></div>
+                <div class="card stat-card"><div class="stat-value" style="font-size:20px;">616M</div><div class="stat-label">Global Subscribers</div></div>
+                <div class="card stat-card"><div class="stat-value" style="font-size:20px;">$0.004</div><div class="stat-label">Avg Per Stream</div></div>
+            </div>
+            <div id="market-analysis" class="card" style="display:none;"><h3 style="margin-bottom:12px;">🤖 AI Market Analysis</h3><div id="market-analysis-content" style="color:var(--text-secondary);line-height:1.8;white-space:pre-wrap;"></div></div>
+        </div>
+
+        <!-- CRYPTO MINING -->
+        <div id="page-mining" class="page">
+            <div class="page-header"><h2>⛏️ Crypto Mining Dashboard</h2><button class="btn btn-primary" onclick="createMiner()">+ New Miner</button></div>
+            <div class="grid grid-4" style="margin-bottom:24px;">
+                <div class="card stat-card"><div class="stat-icon">⚡</div><div class="stat-value" id="mining-hashrate">0 MH/s</div><div class="stat-label">Total Hashrate</div></div>
+                <div class="card stat-card"><div class="stat-icon">💰</div><div class="stat-value" id="mining-earnings">$0.00</div><div class="stat-label">Total Earnings</div></div>
+                <div class="card stat-card"><div class="stat-icon">🖥️</div><div class="stat-value" id="mining-active">0</div><div class="stat-label">Active Miners</div></div>
+                <div class="card stat-card"><div class="stat-icon">🪙</div><div class="stat-value">5</div><div class="stat-label">Supported Coins</div></div>
+            </div>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 style="margin-bottom:16px;">💰 Supported Cryptocurrencies</h3>
+                    <div class="table-container"><table><thead><tr><th>Coin</th><th>Algorithm</th><th>Price</th><th>Block Reward</th></tr></thead>
+                    <tbody id="mining-coins-table">
+                        <tr><td>🟠 Bitcoin (BTC)</td><td>SHA-256</td><td>$67,500</td><td>3.125 BTC</td></tr>
+                        <tr><td>🔷 Ethereum (ETH)</td><td>Ethash</td><td>$3,450</td><td>2.0 ETH</td></tr>
+                        <tr><td>🔶 Monero (XMR)</td><td>RandomX</td><td>$125</td><td>0.6 XMR</td></tr>
+                        <tr><td>⚪ Litecoin (LTC)</td><td>Scrypt</td><td>$85</td><td>6.25 LTC</td></tr>
+                        <tr><td>🐕 Dogecoin (DOGE)</td><td>Scrypt</td><td>$0.15</td><td>10,000 DOGE</td></tr>
+                    </tbody></table></div>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom:16px;">🖥️ Mining Hardware</h3>
+                    <div style="margin-bottom:16px;">
+                        <label style="font-size:13px;color:var(--text-secondary);">Hardware Type</label>
+                        <select id="mining-hardware-type" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);margin-top:6px;">
+                            <option value="cpu">CPU Mining</option>
+                            <option value="gpu">GPU Mining</option>
+                            <option value="asic">ASIC Mining</option>
+                            <option value="cloud">Cloud Mining</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <label style="font-size:13px;color:var(--text-secondary);">Coin to Mine</label>
+                        <select id="mining-coin-select" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);margin-top:6px;">
+                            <option value="bitcoin">Bitcoin (BTC)</option>
+                            <option value="ethereum">Ethereum (ETH)</option>
+                            <option value="monero">Monero (XMR)</option>
+                            <option value="litecoin">Litecoin (LTC)</option>
+                            <option value="dogecoin">Dogecoin (DOGE)</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:16px;">
+                        <label style="font-size:13px;color:var(--text-secondary);">Wallet Address</label>
+                        <input type="text" id="mining-wallet" placeholder="Enter your wallet address" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);margin-top:6px;">
+                    </div>
+                    <button class="btn btn-primary" style="width:100%;" onclick="startMiningSession()">Start Mining</button>
+                </div>
+            </div>
+            <div class="card" style="margin-top:20px;">
+                <h3 style="margin-bottom:16px;">📊 Mining Statistics</h3>
+                <canvas id="miningChart" height="200"></canvas>
+            </div>
+            
+            <!-- Wallet Configuration Section -->
+            <div class="card" style="margin-top:20px;">
+                <h3 style="margin-bottom:16px;">👛 Wallet Configuration</h3>
+                <p style="color:var(--text-secondary);margin-bottom:16px;font-size:13px;">
+                    Configure your wallet addresses to receive mining payouts. Your mined crypto will be sent to these addresses.
+                </p>
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label>🟠 Bitcoin (BTC) Address</label>
+                        <input type="text" id="wallet-btc" placeholder="Enter your Bitcoin wallet address" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);margin-top:6px;">
+                        <small style="color:var(--text-muted);">Cash App: $lifeimitatesartinc</small>
+                    </div>
+                    <div class="form-group">
+                        <label>🔷 Ethereum (ETH) Address</label>
+                        <input type="text" id="wallet-eth" placeholder="Enter your Ethereum wallet address" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);margin-top:6px;">
+                    </div>
+                    <div class="form-group">
+                        <label>🟣 Monero (XMR) Address</label>
+                        <input type="text" id="wallet-xmr" placeholder="Enter your Monero wallet address" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);margin-top:6px;">
+                    </div>
+                    <div class="form-group">
+                        <label>⚪ Litecoin (LTC) Address</label>
+                        <input type="text" id="wallet-ltc" placeholder="Enter your Litecoin wallet address" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);margin-top:6px;">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>🐕 Dogecoin (DOGE) Address</label>
+                        <input type="text" id="wallet-doge" placeholder="Enter your Dogecoin wallet address" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);margin-top:6px;">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveWalletConfig()" style="margin-top:12px;">💾 Save Wallet Addresses</button>
+                <div id="wallet-status" style="margin-top:12px;font-size:13px;"></div>
+            </div>
+        </div>
+
+        <!-- MUSIC CATALOG PAGE -->
+        <div id="page-catalog" class="page">
+            <div class="page-header"><h2>🎵 Music Catalog - WAKA FLOCKA FLAME</h2><button class="btn btn-primary" onclick="exportCatalog()">📥 Export CSV</button></div>
+            
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value" id="catalog-total-songs">0</div><div class="stat-label">Total Songs</div></div>
+                <div class="stat-card"><div class="stat-value" id="catalog-total-share">0%</div><div class="stat-label">Total Share %</div></div>
+                <div class="stat-card"><div class="stat-value" id="catalog-albums">0</div><div class="stat-label">Albums</div></div>
+                <div class="stat-card"><div class="stat-value" id="catalog-labels">0</div><div class="stat-label">Labels</div></div>
+                <div class="stat-card"><div class="stat-value" id="catalog-collabs">0</div><div class="stat-label">Collaborations</div></div>
+                <div class="stat-card"><div class="stat-value" id="catalog-isrc">0</div><div class="stat-label">With ISRC</div></div>
+            </div>
+
+            <div class="card">
+                <h3>🔍 Search Catalog</h3>
+                <div class="form-group">
+                    <input type="text" id="catalog-search" placeholder="Search by song title..." onkeyup="searchCatalog(this.value)" style="width: 100%; padding: 12px; background: var(--bg-primary); border: 1px solid var(--border); color: var(--text-primary); border-radius: 8px;">
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📊 Top Albums</h3>
+                <div id="catalog-top-albums"></div>
+            </div>
+
+            <div class="card">
+                <h3>🏢 Top Labels</h3>
+                <div id="catalog-top-labels"></div>
+            </div>
+
+            <div class="card">
+                <h3>📋 Song Catalog</h3>
+                <div style="overflow-x: auto;">
+                    <table class="data-table" id="catalog-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Song Title</th>
+                                <th>ISWC</th>
+                                <th>Share %</th>
+                                <th>Album</th>
+                                <th>Label</th>
+                                <th>ISRC</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catalog-tbody"></tbody>
+                    </table>
+                </div>
+                <div id="catalog-pagination" style="margin-top: 16px; text-align: center;"></div>
+            </div>
+        </div>
+
+        <!-- NETWORK PAGE -->
+        <div id="page-network" class="page">
+            <div class="page-header"><h2>🔗 Our Network = Our Net Worth</h2><button class="btn btn-primary" onclick="addNetworkProfile()">+ Add Contact</button></div>
+            
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-value" id="network-total-profiles">0</div><div class="stat-label">Total Contacts</div></div>
+                <div class="stat-card"><div class="stat-value" id="network-connections">0</div><div class="stat-label">Connections</div></div>
+                <div class="stat-card"><div class="stat-value" id="network-net-worth">$0</div><div class="stat-label">Network Value</div></div>
+                <div class="stat-card"><div class="stat-value" id="network-opportunities">0</div><div class="stat-label">Opportunities</div></div>
+            </div>
+
+            <div class="card">
+                <h3>⭐ Key Profiles</h3>
+                <div id="network-key-profiles" class="profiles-grid"></div>
+            </div>
+
+            <div class="card">
+                <h3>🤝 Recent Connections</h3>
+                <div id="network-recent-connections"></div>
+            </div>
+
+            <div class="card">
+                <h3>💼 Opportunities</h3>
+                <div id="network-opportunities-list"></div>
+            </div>
+
+            <div class="card">
+                <h3>👥 All Contacts</h3>
+                <div style="overflow-x: auto;">
+                    <table class="data-table" id="network-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Company</th>
+                                <th>Influence</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="network-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIDEO EDITOR -->
+        <div id="page-video" class="page">
+            <div class="page-header"><h2>🎬 Video Editor</h2><button class="btn btn-primary" onclick="createVideoProject()">+ New Project</button></div>
+            <div class="grid grid-4" style="margin-bottom:24px;">
+                <div class="card stat-card"><div class="stat-icon">🎥</div><div class="stat-value" id="video-projects">0</div><div class="stat-label">Projects</div></div>
+                <div class="card stat-card"><div class="stat-icon">✨</div><div class="stat-value">50+</div><div class="stat-label">Effects</div></div>
+                <div class="card stat-card"><div class="stat-icon">🔄</div><div class="stat-value">16</div><div class="stat-label">Transitions</div></div>
+                <div class="card stat-card"><div class="stat-icon">📐</div><div class="stat-value">6</div><div class="stat-label">Templates</div></div>
+            </div>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 style="margin-bottom:16px;">✨ Video Effects Library</h3>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+                        <span class="tool-tag">3D Text</span>
+                        <span class="tool-tag">Cinematic LUTs</span>
+                        <span class="tool-tag">Neon Glow</span>
+                        <span class="tool-tag">Glitch</span>
+                        <span class="tool-tag">VHS Effect</span>
+                        <span class="tool-tag">Audio Reactive</span>
+                        <span class="tool-tag">Parallax</span>
+                        <span class="tool-tag">Particle 3D</span>
+                        <span class="tool-tag">Lens Flare</span>
+                        <span class="tool-tag">AI Upscale 4K</span>
+                    </div>
+                    <h4 style="margin:16px 0 12px;color:var(--accent-light);">🎨 Color Grading</h4>
+                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+                        <div style="background:linear-gradient(135deg,#667eea,#764ba2);height:60px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;">Cinematic</div>
+                        <div style="background:linear-gradient(135deg,#f093fb,#f5576c);height:60px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;">Neon</div>
+                        <div style="background:linear-gradient(135deg,#4facfe,#00f2fe);height:60px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;">Cool</div>
+                        <div style="background:linear-gradient(135deg,#fa709a,#fee140);height:60px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;">Warm</div>
+                    </div>
+                    <h4 style="margin:16px 0 12px;color:var(--accent-light);">🤖 AI-Powered Effects</h4>
+                    <div class="table-container"><table><thead><tr><th>Effect</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>AI Upscale 4K</td><td>Enhance video quality to 4K resolution</td></tr>
+                        <tr><td>AI Background Removal</td><td>Remove/replace video backgrounds</td></tr>
+                        <tr><td>AI Stabilization</td><td>Smooth shaky footage</td></tr>
+                        <tr><td>AI Slow Motion</td><td>Generate smooth slow-mo frames</td></tr>
+                        <tr><td>AI Style Transfer</td><td>Apply artistic styles to video</td></tr>
+                    </tbody></table></div>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom:16px;">🎬 Quick Templates</h3>
+                    <div style="display:grid;gap:12px;">
+                        <div style="background:var(--bg-hover);padding:16px;border-radius:8px;cursor:pointer;" onclick="loadTemplate('music_video')">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <div><strong>🎵 Music Video</strong><br><span style="font-size:12px;color:var(--text-muted);">Beat sync, audio reactive effects</span></div>
+                                <span style="color:var(--accent);">→</span>
+                            </div>
+                        </div>
+                        <div style="background:var(--bg-hover);padding:16px;border-radius:8px;cursor:pointer;" onclick="loadTemplate('lyric_video')">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <div><strong>📝 Lyric Video</strong><br><span style="font-size:12px;color:var(--text-muted);">Animated text, kinetic typography</span></div>
+                                <span style="color:var(--accent);">→</span>
+                            </div>
+                        </div>
+                        <div style="background:var(--bg-hover);padding:16px;border-radius:8px;cursor:pointer;" onclick="loadTemplate('social_vertical')">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <div><strong>📱 TikTok/Reels (9:16)</strong><br><span style="font-size:12px;color:var(--text-muted);">Vertical format, trending effects</span></div>
+                                <span style="color:var(--accent);">→</span>
+                            </div>
+                        </div>
+                        <div style="background:var(--bg-hover);padding:16px;border-radius:8px;cursor:pointer;" onclick="loadTemplate('youtube_intro')">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <div><strong>▶️ YouTube Intro</strong><br><span style="font-size:12px;color:var(--text-muted);">Logo animation, text reveal</span></div>
+                                <span style="color:var(--accent);">→</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DSP DISTRIBUTION -->
+        <div id="page-dsp" class="page">
+            <div class="page-header"><h2>🎵 DSP Distribution</h2><button class="btn btn-primary" onclick="createNewRelease()">+ New Release</button></div>
+            <div class="grid grid-4" style="margin-bottom:24px;">
+                <div class="card stat-card"><div class="stat-icon">💿</div><div class="stat-value" id="dsp-releases">0</div><div class="stat-label">Total Releases</div></div>
+                <div class="card stat-card"><div class="stat-icon">🌐</div><div class="stat-value">10</div><div class="stat-label">Platforms</div></div>
+                <div class="card stat-card"><div class="stat-icon">🌍</div><div class="stat-value">190+</div><div class="stat-label">Territories</div></div>
+                <div class="card stat-card"><div class="stat-icon">📊</div><div class="stat-value">$0.004</div><div class="stat-label">Avg Per Stream</div></div>
+            </div>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3 style="margin-bottom:16px;">🌐 Distribution Platforms</h3>
+                    <div class="table-container"><table><thead><tr><th>Platform</th><th>Market Share</th><th>Payout</th><th>Territories</th></tr></thead>
+                    <tbody id="dsp-platforms-table">
+                        <tr><td>🟢 Spotify</td><td>31%</td><td>$0.0035/stream</td><td>184</td></tr>
+                        <tr><td>🔴 Apple Music</td><td>15%</td><td>$0.007/stream</td><td>167</td></tr>
+                        <tr><td>▶️ YouTube Music</td><td>10%</td><td>$0.002/stream</td><td>178</td></tr>
+                        <tr><td>🟠 Amazon Music</td><td>13%</td><td>$0.004/stream</td><td>52</td></tr>
+                        <tr><td>🔵 Tidal</td><td>3%</td><td>$0.012/stream</td><td>61</td></tr>
+                        <tr><td>🟣 Deezer</td><td>2%</td><td>$0.0045/stream</td><td>180</td></tr>
+                        <tr><td>🟠 SoundCloud</td><td>1.5%</td><td>$0.003/stream</td><td>190</td></tr>
+                    </tbody></table></div>
+                </div>
+                <div class="card">
+                    <h3 style="margin-bottom:16px;">📤 Create New Release</h3>
+                    <div class="form-group"><label>Title</label><input type="text" id="release-title" placeholder="Release title"></div>
+                    <div class="form-group"><label>Artist</label><input type="text" id="release-artist" value="DJSPEEDYGA"></div>
+                    <div class="form-group"><label>Type</label>
+                        <select id="release-type" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);">
+                            <option value="single">Single</option>
+                            <option value="ep">EP</option>
+                            <option value="album">Album</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Release Date</label><input type="date" id="release-date"></div>
+                    <div class="form-group"><label>Genre</label>
+                        <select id="release-genre" style="width:100%;padding:10px;background:var(--bg-primary);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);">
+                            <option value="Hip-Hop">Hip-Hop</option>
+                            <option value="R&B">R&B</option>
+                            <option value="Pop">Pop</option>
+                            <option value="Electronic">Electronic</option>
+                            <option value="Rock">Rock</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" style="width:100%;" onclick="submitRelease()">Create Release</button>
+                </div>
+            </div>
+            <div class="card" style="margin-top:20px;">
+                <h3 style="margin-bottom:16px;">📋 Recent Releases</h3>
+                <div class="table-container"><table><thead><tr><th>Title</th><th>Type</th><th>Date</th><th>Platforms</th><th>Status</th></tr></thead>
+                <tbody id="dsp-releases-table">
+                    <tr><td>GOAT Mode</td><td>Single</td><td>2024-03-15</td><td>Spotify, Apple Music, YouTube</td><td style="color:var(--success);">✅ Delivered</td></tr>
+                    <tr><td>Royalty Kings</td><td>Album</td><td>2024-04-01</td><td>All Platforms</td><td style="color:var(--warning);">⏳ Processing</td></tr>
+                    <tr><td>Digital Dreams</td><td>EP</td><td>2024-05-20</td><td>Spotify, Apple Music</td><td style="color:var(--accent);">📅 Scheduled</td></tr>
+                </tbody></table></div>
+            </div>
+            <div class="card" style="margin-top:20px;">
+                <h3 style="margin-bottom:16px;">📊 Google Sheets DSP Database</h3>
+                <p style="color:var(--text-secondary);margin-bottom:16px;">Connect your Google Sheets to manage your catalog database. Sync releases, track royalties, and manage metadata.</p>
+                <div class="grid grid-2" style="gap:12px;">
+                    <div class="form-group"><label>Spreadsheet ID</label><input type="text" id="sheets-id" placeholder="Enter Google Sheets ID"></div>
+                    <div class="form-group"><label>API Key</label><input type="password" id="sheets-api-key" placeholder="Enter API Key"></div>
+                </div>
+                <div style="display:flex;gap:12px;margin-top:12px;">
+                    <button class="btn btn-secondary" onclick="syncGoogleSheets()">🔄 Sync from Sheets</button>
+                    <button class="btn btn-secondary" onclick="exportGoogleSheets()">📤 Export to Sheets</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOCAL LLM -->
+        <div id="page-local-llm" class="page">
+            <div class="page-header">
+                <h2>🧠 Local LLM</h2>
+                <span class="badge" id="llm-status-badge">Offline Ready</span>
+            </div>
+            
+            <!-- Status Cards -->
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-bottom: 24px;">
+                <div class="card">
+                    <div class="card-label">Model Status</div>
+                    <div class="card-value" id="llm-model-status">No Model Loaded</div>
+                    <div class="card-sub" id="llm-model-name">Select a model to start</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Data Path</div>
+                    <div class="card-value" id="llm-data-path">./goat-data</div>
+                    <div class="card-sub">Models storage location</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Inference</div>
+                    <div class="card-value" id="llm-inference-status">Ready</div>
+                    <div class="card-sub">100% Offline • No API</div>
+                </div>
+                <div class="card">
+                    <div class="card-label">Memory</div>
+                    <div class="card-value" id="llm-memory">--</div>
+                    <div class="card-sub">Context window</div>
+                </div>
+            </div>
+
+            <!-- Two Column Layout -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Model Management -->
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">📦 Model Management</h3>
+                    <div id="llm-models-list" style="max-height: 300px; overflow-y: auto;">
+                        <!-- Models will be populated here -->
+                    </div>
+                    <div style="margin-top: 16px;">
+                        <button class="btn btn-primary" onclick="refreshModels()">🔄 Refresh Models</button>
+                        <button class="btn btn-secondary" onclick="showDownloadInstructions()">📥 Download Models</button>
+                    </div>
+                </div>
+
+                <!-- Configuration -->
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">⚙️ Configuration</h3>
+                    <div class="form-group">
+                        <label>Data Storage Path</label>
+                        <input type="text" id="llm-path-input" placeholder="/path/to/external/drive" style="width: 100%;">
+                        <small style="color: var(--text-muted);">Point to your 10TB external drive for model storage</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Default Model</label>
+                        <select id="llm-default-model" style="width: 100%;">
+                            <option value="phi-3-mini">Phi-3 Mini (2.2GB) - Recommended</option>
+                            <option value="llama-3-8b">Llama 3 8B (4.9GB)</option>
+                            <option value="mistral-7b">Mistral 7B (4.1GB)</option>
+                            <option value="gemma-7b">Gemma 7B (4.3GB)</option>
+                            <option value="qwen-7b">Qwen 2 7B (4.2GB)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Temperature: <span id="temp-value">0.7</span></label>
+                        <input type="range" id="llm-temperature" min="0" max="2" step="0.1" value="0.7" style="width: 100%;">
+                    </div>
+                    <div class="form-group">
+                        <label>Max Tokens: <span id="tokens-value">2048</span></label>
+                        <input type="range" id="llm-max-tokens" min="256" max="8192" step="256" value="2048" style="width: 100%;">
+                    </div>
+                    <div class="form-group">
+                        <label>Context Size</label>
+                        <select id="llm-context-size" style="width: 100%;">
+                            <option value="4096">4K tokens</option>
+                            <option value="8192" selected>8K tokens</option>
+                            <option value="16384">16K tokens</option>
+                            <option value="32768">32K tokens</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveLLMConfig()">💾 Save Configuration</button>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div class="card" style="margin-top: 20px;">
+                <h3 style="margin-bottom: 16px;">💬 Local Chat (100% Offline)</h3>
+                <div id="local-chat-messages" style="height: 300px; overflow-y: auto; background: var(--bg-primary); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                    <div class="chat-message system">
+                        <div class="chat-bubble">Welcome to Local LLM! Load a model to start chatting. All processing happens on your machine - no internet required.</div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <input type="text" id="local-chat-input" placeholder="Type your message... (100% offline)" style="flex: 1;" onkeypress="if(event.key==='Enter')sendLocalChat()">
+                    <button class="btn btn-primary" onclick="sendLocalChat()">Send</button>
+                    <button class="btn btn-secondary" onclick="clearLocalChat()">Clear</button>
+                </div>
+            </div>
+
+            <!-- Download Instructions Modal -->
+            <div id="download-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+                <div class="card" style="max-width: 600px; max-height: 80vh; overflow-y: auto; margin: 20px;">
+                    <h3 style="margin-bottom: 16px;">📥 Download Models (Manual)</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">Since this is an offline-first app, download models manually and place them in your data folder:</p>
+                    <div id="download-instructions-content"></div>
+                    <button class="btn btn-secondary" onclick="closeDownloadModal()" style="margin-top: 16px;">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="page-settings" class="page">
+            <div class="page-header"><h2>⚙️ Settings</h2></div>
+            <div class="settings-section">
+                <h3>🤖 AI Configuration</h3>
+                <div class="setting-row"><div class="setting-info"><div class="setting-label">NVIDIA NIM API</div><div class="setting-desc" id="nvidia-status">Checking connection...</div></div><label class="toggle-switch"><input type="checkbox" id="nvidia-toggle" checked><span class="toggle-slider"></span></label></div>
+                <div class="setting-row"><div class="setting-info"><div class="setting-label">RAG System</div><div class="setting-desc">Knowledge base with industry documents</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+                <div class="setting-row"><div class="setting-info"><div class="setting-label">Autonomous Agents</div><div class="setting-desc">4 AI agents for automated tasks</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+                <div class="setting-row"><div class="setting-info"><div class="setting-label">Auto-Optimization</div><div class="setting-desc">AI-driven performance optimization</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="settings-section">
+                <h3>🔗 Platform Connections</h3>
+                <div class="setting-row"><div class="setting-info"><div class="setting-label">Spotify for Artists</div><div class="setting-desc">Connected • Last sync: 2 hours ago</div></div><button class="btn btn-secondary" style="font-size:12px;padding:6px 12px;">Reconnect</button></div>
+                <div class="setting-row"><div class="setting-info"><div class="setting-label">Apple Music for Artists</div><div class="setting-desc">Connected • Last sync: 3 hours ago</div></div><button class="btn btn-secondary" style="font-size:12px;padding:6px 12px;">Reconnect</button></div>
+                <div class="setting-row"><div class="setting-info"><div class="setting-label">YouTube Studio</div><div class="setting-desc">Connected • Last sync: 1 hour ago</div></div><button class="btn btn-secondary" style="font-size:12px;padding:6px 12px;">Reconnect</button></div>
+            </div>
+            <div class="settings-section">
+                <h3>💼 Account</h3>
+                <div class="form-group"><label>Artist / Creator Name</label><input type="text" value="DJSPEEDYGA"></div>
+                <div class="form-group"><label>Email</label><input type="text" value="creator@goatroyalties.com"></div>
+                <button class="btn btn-primary" style="margin-top:8px;">Save Changes</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // ==================== PAGE NAVIGATION ====================
+        function showPage(pageId, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            if (el) el.classList.add('active');
+            document.querySelector('.sidebar').classList.remove('open');
+            if (pageId === 'nft') initNFTChart();
+            if (pageId === 'market') initMarketCharts();
+            if (pageId === 'mining') { loadMiningStats(); initMiningChart(); loadWalletConfig(); }
+            if (pageId === 'video') loadVideoEffects();
+            if (pageId === 'dsp') loadDSPReleases();
+            if (pageId === 'catalog') { loadCatalogStats(); loadCatalogSongs(); }
+            if (pageId === 'network') { loadNetworkStats(); loadNetworkProfiles(); }
+        }
+
+        // ==================== API HELPERS ====================
+        async function apiGet(url) {
+            try { const r = await fetch(url); return await r.json(); }
+            catch(e) { console.error('API GET error:', e); return null; }
+        }
+        async function apiPost(url, data) {
+            try { const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) }); return await r.json(); }
+            catch(e) { console.error('API POST error:', e); return null; }
+        }
+
+        // ==================== INITIALIZATION ====================
+        async function init() {
+            const status = await apiGet('/api/status');
+            if (status) {
+                document.getElementById('status-text').textContent = status.mode === 'demo' ? 'Demo Mode' : 'Live • Connected';
+                document.getElementById('mode-badge').textContent = status.mode === 'demo' ? '🎮 Demo Mode' : '🟢 Live';
+                document.getElementById('nvidia-status').textContent = status.mode === 'demo' ? 'Demo mode (no API key)' : 'Connected to NVIDIA NIM';
+            }
+            const dashboard = await apiGet('/api/dashboard');
+            if (dashboard) {
+                document.getElementById('total-revenue').textContent = '$' + (dashboard.totalRevenue || 30742).toLocaleString();
+                document.getElementById('total-streams').textContent = (dashboard.contentStats?.totalStreams || 3400000).toLocaleString();
+                document.getElementById('nft-value').textContent = '$' + (dashboard.nftPortfolio?.totalValue || 24500).toLocaleString();
+            }
+            initDashboardCharts();
+            initLocalLLM();
+        }
+
+        // ==================== CHARTS ====================
+        const C = { purple:'#6c5ce7', teal:'#00cec9', pink:'#fd79a8', yellow:'#fdcb6e', blue:'#0984e3', orange:'#e17055', green:'#00b894' };
+
+        function initDashboardCharts() {
+            new Chart(document.getElementById('revenueChart'), {
+                type:'line',
+                data: { labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    datasets:[{ label:'Revenue ($)', data:[1800,2100,2400,2200,2800,3100,3400,3200,3800,4100,4230,4500],
+                        borderColor:C.purple, backgroundColor:'rgba(108,92,231,0.1)', fill:true, tension:0.4, pointRadius:4, pointBackgroundColor:C.purple }] },
+                options: { responsive:true, plugins:{legend:{labels:{color:'#b2b2d0'}}},
+                    scales:{ x:{ticks:{color:'#6c6c8a'},grid:{color:'rgba(45,45,94,0.3)'}}, y:{ticks:{color:'#6c6c8a',callback:v=>'$'+v.toLocaleString()},grid:{color:'rgba(45,45,94,0.3)'}} } }
+            });
+            new Chart(document.getElementById('platformChart'), {
+                type:'doughnut',
+                data: { labels:['Spotify','Apple Music','YouTube Music','Tidal','Amazon Music','Other'],
+                    datasets:[{ data:[42,27,18,7,4,2], backgroundColor:[C.green,C.pink,C.blue,C.teal,C.orange,C.yellow], borderWidth:0 }] },
+                options: { responsive:true, plugins:{legend:{position:'bottom',labels:{color:'#b2b2d0',padding:16}}} }
+            });
+            new Chart(document.getElementById('growthChart'), {
+                type:'bar',
+                data: { labels:['Spotify','Apple Music','YouTube Music','Tidal','Amazon Music'],
+                    datasets:[
+                        { label:'Revenue ($)', data:[12847,8234,5671,2100,1890], backgroundColor:C.purple, borderRadius:6 },
+                        { label:'Growth (%)', data:[31.2,24.8,18.7,45.2,15.3], backgroundColor:C.teal, borderRadius:6 }
+                    ] },
+                options: { responsive:true, plugins:{legend:{labels:{color:'#b2b2d0'}}},
+                    scales:{ x:{ticks:{color:'#6c6c8a'},grid:{display:false}}, y:{ticks:{color:'#6c6c8a'},grid:{color:'rgba(45,45,94,0.3)'}} } }
+            });
+        }
+
+        let nftChartInit = false;
+        function initNFTChart() {
+            if (nftChartInit) return; nftChartInit = true;
+            new Chart(document.getElementById('nftChart'), {
+                type:'line',
+                data: { labels:['Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    datasets:[{ label:'Portfolio Value (ETH)', data:[2.5,4.1,6.8,8.2,9.5,11.3,12.8],
+                        borderColor:C.teal, backgroundColor:'rgba(0,206,201,0.1)', fill:true, tension:0.4 }] },
+                options: { responsive:true, plugins:{legend:{labels:{color:'#b2b2d0'}}},
+                    scales:{ x:{ticks:{color:'#6c6c8a'},grid:{color:'rgba(45,45,94,0.3)'}}, y:{ticks:{color:'#6c6c8a'},grid:{color:'rgba(45,45,94,0.3)'}} } }
+            });
+        }
+
+        let marketChartsInit = false;
+        function initMarketCharts() {
+            if (marketChartsInit) return; marketChartsInit = true;
+            new Chart(document.getElementById('genreChart'), {
+                type:'polarArea',
+                data: { labels:['Hip-Hop/R&B','Pop','Latin','Rock','Electronic','Country','Classical'],
+                    datasets:[{ data:[28.5,24.1,9.8,8.5,7.2,5.8,2.1],
+                        backgroundColor:['rgba(108,92,231,0.7)','rgba(253,121,168,0.7)','rgba(253,203,110,0.7)','rgba(9,132,227,0.7)','rgba(0,206,201,0.7)','rgba(225,112,85,0.7)','rgba(0,184,148,0.7)'] }] },
+                options: { responsive:true, plugins:{legend:{position:'right',labels:{color:'#b2b2d0'}}} }
+            });
+            new Chart(document.getElementById('marketShareChart'), {
+                type:'bar',
+                data: { labels:['Spotify','Apple','YouTube','Amazon','Tidal','Deezer'],
+                    datasets:[{ label:'Market Share (%)', data:[31,15,10,13,3,2],
+                        backgroundColor:[C.green,C.pink,C.blue,C.orange,C.teal,C.yellow], borderRadius:6 }] },
+                options: { indexAxis:'y', responsive:true, plugins:{legend:{display:false}},
+                    scales:{ x:{ticks:{color:'#6c6c8a',callback:v=>v+'%'},grid:{color:'rgba(45,45,94,0.3)'}}, y:{ticks:{color:'#b2b2d0'},grid:{display:false}} } }
+            });
+        }
+
+        // ==================== AI CHAT ====================
+        async function sendChat() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value.trim();
+            if (!msg) return;
+            const messages = document.getElementById('chat-messages');
+            messages.innerHTML += `<div class="chat-bubble user">${escapeHtml(msg)}</div>`;
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+            const loadingId = 'loading-' + Date.now();
+            messages.innerHTML += `<div class="chat-bubble ai" id="${loadingId}"><span class="loading-spinner"></span> Thinking...</div>`;
+            messages.scrollTop = messages.scrollHeight;
+            const result = await apiPost('/api/rag/query', { query: msg });
+            const el = document.getElementById(loadingId);
+            if (result && result.response) { el.textContent = result.response; }
+            else { el.textContent = '❌ Unable to get a response. Please check the server connection.'; }
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // ==================== AGENT EXECUTION ====================
+        async function executeAgent(agentName) {
+            const o = document.getElementById('agent-output');
+            const c = document.getElementById('agent-output-content');
+            o.style.display = 'block';
+            c.innerHTML = '<span class="loading-spinner"></span> Agent executing...';
+            const result = await apiPost('/api/agents/execute', { agent: agentName });
+            if (result && result.result) { c.textContent = result.result; }
+            else { c.textContent = '⚡ Agent completed with default response. Connect API keys for live AI analysis.'; }
+        }
+
+        // ==================== REVENUE ANALYSIS ====================
+        async function analyzeRevenue() {
+            const o = document.getElementById('revenue-analysis');
+            const c = document.getElementById('revenue-analysis-content');
+            o.style.display = 'block';
+            c.innerHTML = '<span class="loading-spinner"></span> AI analyzing revenue data...';
+            const result = await apiPost('/api/ai/analyze', { type: 'revenue' });
+            if (result && result.analysis) { c.textContent = result.analysis; }
+            else { c.textContent = 'Analysis complete. Connect NVIDIA API key for detailed AI insights.'; }
+        }
+
+        // ==================== CONTRACT GENERATION ====================
+        async function generateContract() {
+            const o = document.getElementById('contract-output');
+            const c = document.getElementById('contract-output-content');
+            o.style.display = 'block';
+            c.innerHTML = '<span class="loading-spinner"></span> AI generating contract...';
+            const result = await apiPost('/api/ai/contract', {
+                type: document.getElementById('contract-type').value,
+                partyA: document.getElementById('contract-party-a').value,
+                partyB: document.getElementById('contract-party-b').value,
+                terms: document.getElementById('contract-terms').value
+            });
+            if (result && result.contract) { c.textContent = result.contract; }
+            else { c.textContent = 'Contract generation complete. Connect NVIDIA API key for full AI-powered contracts.'; }
+        }
+
+        // ==================== MARKET TRENDS ====================
+        async function getMarketTrends() {
+            const o = document.getElementById('market-analysis');
+            const c = document.getElementById('market-analysis-content');
+            o.style.display = 'block';
+            c.innerHTML = '<span class="loading-spinner"></span> AI analyzing market trends...';
+            const result = await apiPost('/api/ai/market', { genre: 'all', timeframe: '6 months' });
+            if (result && result.analysis) { c.textContent = result.analysis; }
+            else { c.textContent = 'Market analysis complete. Connect API keys for live market intelligence.'; }
+        }
+
+        function refreshAgents() {
+            document.querySelectorAll('.agent-status').forEach(el => {
+                el.textContent = '● Refreshing...';
+                setTimeout(() => { el.textContent = '● Active'; }, 1000);
+            });
+        }
+
+        // ==================== CRYPTO MINING ====================
+        let miningChart = null;
+        async function loadMiningStats() {
+            const stats = await apiGet('/api/mining/stats');
+            if (stats) {
+                document.getElementById('mining-hashrate').textContent = stats.totalHashrate.toFixed(2) + ' MH/s';
+                document.getElementById('mining-earnings').textContent = '$' + stats.totalEarnings.toFixed(2);
+                document.getElementById('mining-active').textContent = stats.activeMiners;
+            }
+        }
+        
+        async function createMiner() {
+            const coin = document.getElementById('mining-coin-select').value;
+            const type = document.getElementById('mining-hardware-type').value;
+            const wallet = document.getElementById('mining-wallet').value;
+            const result = await apiPost('/api/mining/create', { coin, type, wallet, threads: 4 });
+            if (result && result.minerId) {
+                alert('Miner created: ' + result.minerId);
+                loadMiningStats();
+            }
+        }
+        
+        async function startMiningSession() {
+            const coin = document.getElementById('mining-coin-select').value;
+            const type = document.getElementById('mining-hardware-type').value;
+            const wallet = document.getElementById('mining-wallet').value;
+            
+            const createResult = await apiPost('/api/mining/create', { coin, type, wallet, threads: 4 });
+            if (createResult && createResult.minerId) {
+                const startResult = await apiPost('/api/mining/start', { minerId: createResult.minerId });
+                if (startResult && startResult.success) {
+                    alert('Mining started! Hashrate: ' + startResult.hashrate + ' MH/s');
+                    loadMiningStats();
+                }
+            }
+        }
+        
+        function initMiningChart() {
+            if (miningChart) return;
+            const ctx = document.getElementById('miningChart');
+            if (!ctx) return;
+            miningChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Hashrate (MH/s)',
+                        data: [45, 52, 48, 61, 55, 67, 72],
+                        borderColor: '#6c5ce7',
+                        backgroundColor: 'rgba(108,92,231,0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Earnings ($)',
+                        data: [12, 15, 13, 18, 16, 20, 22],
+                        borderColor: '#00cec9',
+                        backgroundColor: 'rgba(0,206,201,0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { labels: { color: '#b2b2d0' } } },
+                    scales: {
+                        x: { ticks: { color: '#6c6c8a' }, grid: { color: 'rgba(45,45,94,0.3)' } },
+                        y: { ticks: { color: '#6c6c8a' }, grid: { color: 'rgba(45,45,94,0.3)' } }
+                    }
+                }
+            });
+        }
+
+        // ==================== WALLET CONFIGURATION ====================
+        async function loadWalletConfig() {
+            try {
+                const result = await apiGet('/api/mining/wallets');
+                if (result && result.wallets) {
+                    result.wallets.forEach(w => {
+                        const input = document.getElementById('wallet-' + w.coin.substring(0, 3));
+                        if (input && result.config && result.config[w.coin]) {
+                            input.value = result.config[w.coin].address || '';
+                        }
+                    });
+                }
+            } catch (e) {
+                console.log('Load wallet config:', e);
+            }
+        }
+
+        async function saveWalletConfig() {
+            const statusEl = document.getElementById('wallet-status');
+            statusEl.innerHTML = '<span style="color:var(--warning)">Saving...</span>';
+            
+            const coins = [
+                { id: 'btc', name: 'bitcoin' },
+                { id: 'eth', name: 'ethereum' },
+                { id: 'xmr', name: 'monero' },
+                { id: 'ltc', name: 'litecoin' },
+                { id: 'doge', name: 'dogecoin' }
+            ];
+            
+            let saved = 0;
+            for (const coin of coins) {
+                const input = document.getElementById('wallet-' + coin.id);
+                if (input && input.value) {
+                    const result = await apiPost('/api/mining/wallets/' + coin.name, { address: input.value });
+                    if (result && result.success) saved++;
+                }
+            }
+            
+            statusEl.innerHTML = '<span style="color:var(--success)">✓ Saved ' + saved + ' wallet addresses!</span>';
+            
+            // Also update the mining wallet field
+            const btcAddress = document.getElementById('wallet-btc').value;
+            if (btcAddress) {
+                document.getElementById('mining-wallet').value = btcAddress;
+            }
+        }
+
+        // ==================== VIDEO EDITOR ====================
+        async function createVideoProject() {
+            const result = await apiPost('/api/video/project', {
+                name: 'New Video Project',
+                resolution: { width: 1920, height: 1080 },
+                fps: 30
+            });
+            if (result && result.id) {
+                alert('Video project created: ' + result.id);
+                document.getElementById('video-projects').textContent = parseInt(document.getElementById('video-projects').textContent) + 1;
+            }
+        }
+        
+        async function loadTemplate(templateId) {
+            const templates = await apiGet('/api/video/templates');
+            const template = templates?.find(t => t.id === templateId);
+            if (template) {
+                const result = await apiPost('/api/video/project', {
+                    name: template.name,
+                    resolution: template.resolution || { width: 1920, height: 1080 },
+                    fps: 30
+                });
+                if (result) {
+                    alert('Template loaded: ' + template.name);
+                }
+            }
+        }
+        
+        async function loadVideoEffects() {
+            const effects = await apiGet('/api/video/effects');
+            console.log('Loaded effects:', effects);
+        }
+
+        // ==================== DSP DISTRIBUTION ====================
+        async function loadDSPReleases() {
+            const releases = await apiGet('/api/dsp/releases');
+            if (releases) {
+                document.getElementById('dsp-releases').textContent = releases.length;
+            }
+        }
+        
+        async function createNewRelease() {
+            const title = document.getElementById('release-title')?.value || 'New Release';
+            const artist = document.getElementById('release-artist')?.value || 'DJSPEEDYGA';
+            const type = document.getElementById('release-type')?.value || 'single';
+            const genre = document.getElementById('release-genre')?.value || 'Hip-Hop';
+            const releaseDate = document.getElementById('release-date')?.value || new Date().toISOString().split('T')[0];
+            
+            const result = await apiPost('/api/dsp/releases', {
+                title,
+                artist,
+                type,
+                genre,
+                releaseDate,
+                platforms: ['spotify', 'appleMusic', 'youtubeMusic', 'amazonMusic']
+            });
+            
+            if (result && result.id) {
+                alert('Release created: ' + result.title);
+                loadDSPReleases();
+            }
+        }
+        
+        async function submitRelease() {
+            await createNewRelease();
+        }
+        
+        async function syncGoogleSheets() {
+            const spreadsheetId = document.getElementById('sheets-id')?.value;
+            const apiKey = document.getElementById('sheets-api-key')?.value;
+            
+            if (!spreadsheetId) {
+                alert('Please enter a Spreadsheet ID');
+                return;
+            }
+            
+            await apiPost('/api/dsp/google-sheets/config', { spreadsheetId, apiKey });
+            const result = await apiPost('/api/dsp/google-sheets/sync', {});
+            
+            if (result && result.success) {
+                alert('Synced ' + result.releases + ' releases from Google Sheets');
+                loadDSPReleases();
+            }
+        }
+        
+        async function exportGoogleSheets() {
+            const result = await apiPost('/api/dsp/google-sheets/export', {});
+            if (result && result.success) {
+                alert('Exported ' + result.exported + ' releases to Google Sheets');
+            }
+        }
+
+        function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+
+        // ==================== LOCAL LLM ====================
+        let currentLLMModel = null;
+        let llmConfig = { temperature: 0.7, maxTokens: 2048, contextSize: 8192 };
+
+        async function initLocalLLM() {
+            try {
+                const status = await apiGet('/api/llm/status');
+                if (status) {
+                    document.getElementById('llm-model-status').textContent = status.modelLoaded ? 'Model Loaded' : 'No Model Loaded';
+                    document.getElementById('llm-model-name').textContent = status.modelLoaded ? status.currentModel : 'Select a model to start';
+                    document.getElementById('llm-data-path').textContent = status.dataPath || './goat-data';
+                    document.getElementById('llm-status-badge').textContent = status.modelLoaded ? 'Ready' : 'Offline Ready';
+                    document.getElementById('llm-memory').textContent = status.contextSize ? status.contextSize + ' tokens' : '--';
+                    currentLLMModel = status.currentModel;
+                }
+                
+                const config = await apiGet('/api/llm/config');
+                if (config) {
+                    llmConfig = { ...llmConfig, ...config };
+                    document.getElementById('llm-temperature').value = llmConfig.temperature || 0.7;
+                    document.getElementById('llm-max-tokens').value = llmConfig.maxTokens || 2048;
+                    document.getElementById('temp-value').textContent = llmConfig.temperature || 0.7;
+                    document.getElementById('tokens-value').textContent = llmConfig.maxTokens || 2048;
+                }
+                
+                await refreshModels();
+            } catch (e) {
+                console.log('Local LLM init:', e);
+            }
+        }
+
+        async function refreshModels() {
+            try {
+                const result = await apiGet('/api/llm/models');
+                const listEl = document.getElementById('llm-models-list');
+                
+                if (!result || !result.models) {
+                    listEl.innerHTML = '<p style="color: var(--text-muted);">No models found. Download models to your data folder.</p>';
+                    return;
+                }
+                
+                let html = '';
+                for (const [id, model] of Object.entries(result.models)) {
+                    const isLoaded = currentLLMModel === id;
+                    html += `<div class="model-item" style="padding: 12px; background: var(--bg-primary); border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600;">${model.family || id} ${model.size || ''}</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">${model.sizeGB || '?'}GB • ${model.quantization || 'GGUF'}</div>
+                            </div>
+                            <div>
+                                ${isLoaded 
+                                    ? '<span style="color: var(--success);">✓ Loaded</span>'
+                                    : `<button class="btn btn-secondary" style="font-size:12px;padding:6px 12px;" onclick="loadModel('${id}')">Load</button>`
+                                }
+                            </div>
+                        </div>`;
+                }
+                listEl.innerHTML = html || '<p style="color: var(--text-muted);">No models found.</p>';
+            } catch (e) {
+                console.error('Failed to refresh models:', e);
+            }
+        }
+
+        async function loadModel(modelId) {
+            try {
+                document.getElementById('llm-model-status').textContent = 'Loading...';
+                const result = await apiPost('/api/llm/load/' + encodeURIComponent(modelId), {});
+                
+                if (result && result.success) {
+                    currentLLMModel = modelId;
+                    document.getElementById('llm-model-status').textContent = 'Model Loaded';
+                    document.getElementById('llm-model-name').textContent = result.model || modelId;
+                    document.getElementById('llm-status-badge').textContent = 'Ready';
+                    document.getElementById('llm-memory').textContent = (result.contextSize || 8192) + ' tokens';
+                    await refreshModels();
+                } else {
+                    document.getElementById('llm-model-status').textContent = 'Load Failed';
+                    alert(result?.error || 'Failed to load model');
+                }
+            } catch (e) {
+                console.error('Load model error:', e);
+                document.getElementById('llm-model-status').textContent = 'Error';
+            }
+        }
+
+        async function sendLocalChat() {
+            const input = document.getElementById('local-chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            if (!currentLLMModel) {
+                alert('Please load a model first!');
+                return;
+            }
+            
+            const messagesEl = document.getElementById('local-chat-messages');
+            
+            // Add user message
+            messagesEl.innerHTML += `<div class="chat-message user" style="display: flex; justify-content: flex-end; margin: 8px 0;">
+                    <div class="chat-bubble" style="background: var(--accent); border-radius: 12px 12px 4px 12px; padding: 12px 16px; max-width: 80%;">${escapeHtml(message)}</div>
+                </div>`;
+            
+            input.value = '';
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            
+            // Add thinking indicator
+            const thinkingId = 'thinking-' + Date.now();
+            messagesEl.innerHTML += `<div class="chat-message assistant" id="${thinkingId}" style="margin: 8px 0;">
+                    <div class="chat-bubble" style="background: var(--bg-card); border-radius: 12px 12px 12px 4px; padding: 12px 16px;">Thinking...</div>
+                </div>`;
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            
+            try {
+                const result = await apiPost('/api/llm/chat', {
+                    messages: [{ role: 'user', content: message }],
+                    options: llmConfig
+                });
+                
+                const thinkingEl = document.getElementById(thinkingId);
+                if (result && result.response) {
+                    thinkingEl.innerHTML = `<div class="chat-bubble" style="background: var(--bg-card); border-radius: 12px 12px 12px 4px; padding: 12px 16px; white-space: pre-wrap;">${escapeHtml(result.response)}</div>`;
+                } else {
+                    thinkingEl.innerHTML = `<div class="chat-bubble" style="background: var(--bg-card); border-radius: 12px 12px 12px 4px; padding: 12px 16px; color: var(--danger);">Error: ${result?.error || 'Unknown error'}</div>`;
+                }
+            } catch (e) {
+                document.getElementById(thinkingId).innerHTML = `<div class="chat-bubble" style="background: var(--bg-card); border-radius: 12px 12px 12px 4px; padding: 12px 16px; color: var(--danger);">Error: ${e.message}</div>`;
+            }
+            
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function clearLocalChat() {
+            document.getElementById('local-chat-messages').innerHTML = `<div class="chat-message system">
+                    <div class="chat-bubble">Chat cleared. Load a model to start a new conversation.</div>
+                </div>`;
+        }
+
+        async function saveLLMConfig() {
+            const dataPath = document.getElementById('llm-path-input').value;
+            const defaultModel = document.getElementById('llm-default-model').value;
+            
+            llmConfig = {
+                temperature: parseFloat(document.getElementById('llm-temperature').value),
+                maxTokens: parseInt(document.getElementById('llm-max-tokens').value),
+                contextSize: parseInt(document.getElementById('llm-context-size').value),
+                defaultModel: defaultModel
+            };
+            
+            try {
+                if (dataPath) {
+                    await apiPost('/api/llm/data-path', { path: dataPath });
+                    document.getElementById('llm-data-path').textContent = dataPath;
+                }
+                
+                await apiPost('/api/llm/config', llmConfig);
+                alert('Configuration saved!');
+            } catch (e) {
+                console.error('Save config error:', e);
+                alert('Failed to save configuration');
+            }
+        }
+
+        function showDownloadInstructions() {
+            const modal = document.getElementById('download-modal');
+            const content = document.getElementById('download-instructions-content');
+            
+            content.innerHTML = `<div style="margin-bottom: 20px;">
+                    <h4 style="color: var(--accent); margin-bottom: 8px;">🦙 Llama 3 8B (Recommended)</h4>
+                    <code style="background: var(--bg-primary); padding: 8px; display: block; border-radius: 4px; font-size: 12px;">
+                        wget https://huggingface.co/TheBloke/Llama-3-8B-GGUF/resolve/main/llama-3-8b.Q4_K_M.gguf
+                    </code>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Save to: [your-data-path]/models/llama-3-8b/</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: var(--accent); margin-bottom: 8px;">🔮 Mistral 7B</h4>
+                    <code style="background: var(--bg-primary); padding: 8px; display: block; border-radius: 4px; font-size: 12px;">
+                        wget https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q4_K_M.gguf
+                    </code>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Save to: [your-data-path]/models/mistral-7b/</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: var(--accent); margin-bottom: 8px;">📱 Phi-3 Mini (Smallest, Fast)</h4>
+                    <code style="background: var(--bg-primary); padding: 8px; display: block; border-radius: 4px; font-size: 12px;">
+                        wget https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/resolve/main/Phi-3-mini-4k-instruct-q4.gguf
+                    </code>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Save to: [your-data-path]/models/phi-3-mini/</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: var(--accent); margin-bottom: 8px;">💎 Gemma 7B</h4>
+                    <code style="background: var(--bg-primary); padding: 8px; display: block; border-radius: 4px; font-size: 12px;">
+                        wget https://huggingface.co/google/gemma-7b-it-GGUF/resolve/main/gemma-7b-it.q4_k_m.gguf
+                    </code>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Save to: [your-data-path]/models/gemma-7b/</p>
+                </div>
+                <div style="background: var(--bg-primary); padding: 12px; border-radius: 8px; margin-top: 16px;">
+                    <p style="font-size: 13px; color: var(--warning);">⚠️ Note: These are large files (2-5GB each). Download using a stable internet connection.</p>
+                    <p style="font-size: 13px; margin-top: 8px;">After downloading, point your Data Storage Path to the folder containing the "models" directory.</p>
+                </div>`;
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('download-modal').style.display = 'none';
+        }
+
+        // Temperature and tokens sliders
+        document.getElementById('llm-temperature')?.addEventListener('input', function() {
+            document.getElementById('temp-value').textContent = this.value;
+        });
+        document.getElementById('llm-max-tokens')?.addEventListener('input', function() {
+            document.getElementById('tokens-value').textContent = this.value;
+        });
+
+        // ==================== MUSIC CATALOG ====================
+        let catalogData = { songs: [] };
+        let catalogPage = 1;
+        const catalogPageSize = 20;
+
+        async function loadCatalogStats() {
+            const stats = await apiGet('/api/catalog/stats');
+            if (stats) {
+                document.getElementById('catalog-total-songs').textContent = stats.totalSongs?.toLocaleString() || '0';
+                document.getElementById('catalog-total-share').textContent = stats.totalShare?.toFixed(1) + '%' || '0%';
+                document.getElementById('catalog-albums').textContent = stats.uniqueAlbums || '0';
+                document.getElementById('catalog-labels').textContent = stats.uniqueLabels || '0';
+                document.getElementById('catalog-collabs').textContent = stats.songsWithAlbum || '0';
+                document.getElementById('catalog-isrc').textContent = stats.songsWithISRC || '0';
+                
+                // Top albums
+                const albumsHtml = (stats.topAlbums || []).map(a => 
+                    `<div class="list-item"><span>${a.name}</span><span class="badge">${a.count} songs</span></div>`
+                ).join('');
+                document.getElementById('catalog-top-albums').innerHTML = albumsHtml || '<p>No albums found</p>';
+                
+                // Top labels
+                const labelsHtml = (stats.topLabels || []).map(l => 
+                    `<div class="list-item"><span>${l.name}</span><span class="badge">${l.count} songs</span></div>`
+                ).join('');
+                document.getElementById('catalog-top-labels').innerHTML = labelsHtml || '<p>No labels found</p>';
+            }
+        }
+
+        async function loadCatalogSongs() {
+            const data = await apiGet('/api/catalog');
+            if (data) {
+                catalogData = data;
+                renderCatalogTable();
+            }
+        }
+
+        function renderCatalogTable() {
+            const songs = catalogData.songs || [];
+            const start = (catalogPage - 1) * catalogPageSize;
+            const end = start + catalogPageSize;
+            const pageSongs = songs.slice(start, end);
+            
+            const tbody = document.getElementById('catalog-tbody');
+            tbody.innerHTML = pageSongs.map((song, i) => `
+                <tr>
+                    <td>${start + i + 1}</td>
+                    <td><strong>${escapeHtml(song.song_title || '')}</strong></td>
+                    <td><code>${song.iswc || '-'}</code></td>
+                    <td>${song.share_percent?.toFixed(2) || '0'}%</td>
+                    <td>${escapeHtml(song.album || '-')}</td>
+                    <td>${escapeHtml(song.label || '-')}</td>
+                    <td><code>${song.isrc || '-'}</code></td>
+                </tr>
+            `).join('');
+            
+            // Pagination
+            const totalPages = Math.ceil(songs.length / catalogPageSize);
+            document.getElementById('catalog-pagination').innerHTML = `
+                <button onclick="catalogPrevPage()" ${catalogPage === 1 ? 'disabled' : ''}>← Prev</button>
+                <span style="margin: 0 16px;">Page ${catalogPage} of ${totalPages}</span>
+                <button onclick="catalogNextPage()" ${catalogPage === totalPages ? 'disabled' : ''}>Next →</button>
+            `;
+        }
+
+        function catalogNextPage() {
+            const totalPages = Math.ceil((catalogData.songs || []).length / catalogPageSize);
+            if (catalogPage < totalPages) {
+                catalogPage++;
+                renderCatalogTable();
+            }
+        }
+
+        function catalogPrevPage() {
+            if (catalogPage > 1) {
+                catalogPage--;
+                renderCatalogTable();
+            }
+        }
+
+        async function searchCatalog(query) {
+            if (query.length < 2) {
+                loadCatalogSongs();
+                return;
+            }
+            const data = await apiGet(`/api/catalog/search?q=${encodeURIComponent(query)}`);
+            if (data) {
+                catalogData = { songs: data.results };
+                catalogPage = 1;
+                renderCatalogTable();
+            }
+        }
+
+        async function exportCatalog() {
+            window.location.href = '/api/catalog/export';
+        }
+
+        // ==================== NETWORK PROFILES ====================
+        let networkData = { profiles: [], connections: [] };
+
+        async function loadNetworkStats() {
+            const stats = await apiGet('/api/network/stats');
+            if (stats) {
+                document.getElementById('network-total-profiles').textContent = stats.totalProfiles || '0';
+                document.getElementById('network-connections').textContent = stats.totalConnections || '0';
+                document.getElementById('network-net-worth').textContent = '$' + (stats.totalNetworkNetWorth || 0).toLocaleString();
+                document.getElementById('network-opportunities').textContent = stats.totalProfiles || '0';
+            }
+        }
+
+        async function loadNetworkProfiles() {
+            const data = await apiGet('/api/network/profiles');
+            if (data) {
+                networkData = data;
+                renderNetworkTable();
+                renderKeyProfiles();
+            }
+            
+            const connections = await apiGet('/api/network/connections');
+            if (connections) {
+                renderConnections(connections.connections || []);
+            }
+            
+            const opportunities = await apiGet('/api/network/opportunities');
+            if (opportunities) {
+                renderOpportunities(opportunities.opportunities || []);
+            }
+        }
+
+        function renderNetworkTable() {
+            const profiles = networkData.profiles || [];
+            const tbody = document.getElementById('network-tbody');
+            tbody.innerHTML = profiles.slice(0, 20).map(profile => `
+                <tr>
+                    <td><strong>${escapeHtml(profile.name || '')}</strong>${profile.verified ? ' ✓' : ''}</td>
+                    <td><span class="badge">${profile.type || 'unknown'}</span></td>
+                    <td>${escapeHtml(profile.company || '-')}</td>
+                    <td>${profile.influence || 0}</td>
+                    <td><button class="btn btn-sm" onclick="viewProfile('${profile.id}')">View</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderKeyProfiles() {
+            const profiles = (networkData.profiles || [])
+                .filter(p => p.influence >= 70 || p.verified)
+                .slice(0, 6);
+            
+            const html = profiles.map(p => `
+                <div class="profile-card" onclick="viewProfile('${p.id}')">
+                    <div class="profile-avatar">${(p.name || '?')[0].toUpperCase()}</div>
+                    <div class="profile-info">
+                        <h4>${escapeHtml(p.name || 'Unknown')}${p.verified ? ' ✓' : ''}</h4>
+                        <p>${escapeHtml(p.company || p.type || '')}</p>
+                        <span class="influence">Influence: ${p.influence || 0}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('network-key-profiles').innerHTML = html || '<p>No key profiles yet</p>';
+        }
+
+        function renderConnections(connections) {
+            const html = connections.slice(0, 10).map(c => `
+                <div class="connection-item">
+                    <span class="connection-type">${c.type || 'connection'}</span>
+                    <span class="connection-strength">Strength: ${c.strength || 1}</span>
+                </div>
+            `).join('');
+            document.getElementById('network-recent-connections').innerHTML = html || '<p>No connections yet</p>';
+        }
+
+        function renderOpportunities(opportunities) {
+            const html = opportunities.map(o => `
+                <div class="opportunity-item">
+                    <h4>${escapeHtml(o.title || 'Untitled')}</h4>
+                    <p>${escapeHtml(o.description || '')}</p>
+                    <span class="badge ${o.status}">${o.status || 'open'}</span>
+                    ${o.value ? `<span class="value">$${o.value.toLocaleString()}</span>` : ''}
+                </div>
+            `).join('');
+            document.getElementById('network-opportunities-list').innerHTML = html || '<p>No opportunities yet</p>';
+        }
+
+        async function viewProfile(id) {
+            const profile = await apiGet(`/api/network/profiles/${id}`);
+            if (profile) {
+                alert(`Profile: ${profile.name}\\nType: ${profile.type}\\nCompany: ${profile.company || 'N/A'}\\nInfluence: ${profile.influence || 0}\\nNet Worth: $${(profile.netWorth || 0).toLocaleString()}`);
+            }
+        }
+
+        async function addNetworkProfile() {
+            const name = prompt('Enter contact name:');
+            if (!name) return;
+            
+            const type = prompt('Enter type (artist, producer, label, executive, etc.):') || 'artist';
+            const company = prompt('Enter company (optional):') || '';
+            
+            const response = await fetch('/api/network/profiles', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, type, company, influence: 50 })
+            });
+            
+            if (response.ok) {
+                loadNetworkProfiles();
+                loadNetworkStats();
+            }
+        }
+
+        // ==================== WEBSOCKET ====================
+        let ws;
+        function connectWebSocket() {
+            const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            ws = new WebSocket(`${protocol}//${location.host}`);
+            ws.onopen = () => console.log('🔌 WebSocket connected');
+            ws.onmessage = (event) => { try { const d = JSON.parse(event.data); if(d.type==='revenue-update') document.getElementById('total-revenue').textContent = '$' + d.totalRevenue.toLocaleString(); } catch(e){} };
+            ws.onclose = () => { console.log('🔌 WebSocket disconnected, reconnecting in 5s...'); setTimeout(connectWebSocket, 5000); };
+            ws.onerror = () => ws.close();
+        }
+
+        init();
+        connectWebSocket();
+    </script>
+</body>
+</html>

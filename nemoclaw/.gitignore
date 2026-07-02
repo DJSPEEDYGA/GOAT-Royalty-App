@@ -1,0 +1,10 @@
+# NemoClaw .gitignore
+node_modules/
+dist/
+*.log
+.env
+.env.local
+__pycache__/
+*.pyc
+docs/_build/
+.venv/

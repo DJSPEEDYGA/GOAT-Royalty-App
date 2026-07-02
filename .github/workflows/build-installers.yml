@@ -1,0 +1,150 @@
+name: Build SUPER GOAT ROYALTIES Installers
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build'
+        required: false
+        default: '5.1.0'
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build Linux packages
+        run: npm run electron:build:linux
+
+      - name: List build artifacts
+        run: ls -la dist/
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        with:
+          name: linux-installers
+          path: |
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.tar.gz
+          retention-days: 1
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build Windows packages
+        run: npm run electron:build:win
+
+      - name: List build artifacts
+        run: ls dist/
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        with:
+          name: windows-installers
+          path: |
+            dist/*.exe
+          retention-days: 1
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build macOS packages
+        run: npm run electron:build:mac
+
+      - name: List build artifacts
+        run: ls -la dist/
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+        with:
+          name: macos-installers
+          path: |
+            dist/*.dmg
+          retention-days: 1
+
+  create-release:
+    needs: [build-linux, build-windows, build-macos]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@c850b9307c984a5c968db5d2c5f6c35f447fed6d # v4.1.4
+        with:
+          path: artifacts
+
+      - name: List all artifacts
+        run: find artifacts -type f
+
+      - name: Create Release
+        uses: softprops/action-gh-release@9d7c94cfd0a1f3ed45544c887983e9fa900f0564 # v2.0.4
+        with:
+          files: artifacts/**/*
+          generate_release_notes: true
+          body: |
+            # 🐐 SUPER GOAT ROYALTIES APP ${{ github.ref_name }}
+            
+            ## 📥 Downloads
+            
+            ### Windows
+            - `SUPER-GOAT-ROYALTIES-Setup-*.exe` - Full installer with desktop shortcuts
+            - `SUPER-GOAT-ROYALTIES-Portable-*.exe` - Portable version (no installation)
+            
+            ### macOS
+            - `SUPER-GOAT-ROYALTIES-*-x64.dmg` - Intel Macs
+            - `SUPER-GOAT-ROYALTIES-*-arm64.dmg` - Apple Silicon (M1/M2/M3)
+            
+            ### Linux
+            - `SUPER-GOAT-ROYALTIES-*.AppImage` - Universal (recommended)
+            - `SUPER-GOAT-ROYALTIES-*.deb` - Debian/Ubuntu
+            - `SUPER-GOAT-ROYALTIES-*.tar.gz` - Portable archive
+            
+            ## 🚀 Features
+            - 242 API Endpoints
+            - 6 AI Engines (NVIDIA NIM, OpenRouter, Gemini, DeepSeek, ACE SteerLM, OpenShell)
+            - Voice Commands
+            - Self-Healing System
+            - Real-time Dashboard
+            
+            ## 📋 Installation
+            See [BUILD_GUIDE.md](./BUILD_GUIDE.md) for detailed instructions.

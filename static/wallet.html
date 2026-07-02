@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet - GOAT Royalties</title>
+  <link rel="stylesheet" href="css/goat-theme.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    .wallet-container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+    .wallet-header { text-align: center; margin-bottom: 40px; padding: 30px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); }
+    .wallet-header h1 { font-family: var(--font-display); font-size: 2.5rem; color: var(--gold); margin-bottom: 10px; }
+    
+    .connect-wallet-section { background: linear-gradient(135deg, rgba(212, 160, 60, 0.1), rgba(240, 192, 64, 0.05)); border: 2px dashed var(--gold); border-radius: var(--radius-lg); padding: 40px; text-align: center; margin-bottom: 30px; }
+    .connect-wallet-section.connected { border-style: solid; background: rgba(46, 204, 113, 0.1); border-color: var(--success); }
+    
+    .wallet-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+    .wallet-btn { display: flex; align-items: center; gap: 12px; padding: 16px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: var(--transition); color: var(--text-primary); font-size: 1rem; font-weight: 600; }
+    .wallet-btn:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .wallet-btn img { width: 32px; height: 32px; }
+    .wallet-btn.connected { border-color: var(--success); background: rgba(46, 204, 113, 0.1); }
+    
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 30px; }
+    
+    .portfolio-card { background: var(--bg-card); border-radius: var(--radius); padding: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: var(--transition); }
+    .portfolio-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+    .portfolio-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    
+    .portfolio-card.eth::before { background: linear-gradient(90deg, #627eea, #8c9eff); }
+    .portfolio-card.btc::before { background: linear-gradient(90deg, #f7931a, #ffab40); }
+    .portfolio-card.usdc::before { background: linear-gradient(90deg, #2775ca, #3b82f6); }
+    .portfolio-card.nft::before { background: linear-gradient(90deg, #e040fb, #7c4dff); }
+    
+    .portfolio-card .symbol { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .portfolio-card.eth .symbol { color: #627eea; }
+    .portfolio-card.btc .symbol { color: #f7931a; }
+    .portfolio-card.usdc .symbol { color: #2775ca; }
+    .portfolio-card.nft .symbol { color: #e040fb; }
+    
+    .portfolio-card .balance { font-size: 2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 4px; }
+    .portfolio-card .usd-value { font-size: 1rem; color: var(--gold); }
+    .portfolio-card .address { font-size: 0.75rem; color: var(--text-muted); margin-top: 12px; word-break: break-all; }
+    
+    .total-portfolio { background: linear-gradient(135deg, var(--gold), var(--accent-light)); border-radius: var(--radius-lg); padding: 30px; text-align: center; margin-bottom: 30px; }
+    .total-portfolio h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--navy-deep); margin-bottom: 8px; }
+    .total-portfolio .total-amount { font-size: 3rem; font-weight: 800; color: var(--navy-deep); }
+    
+    .transactions-section { background: var(--bg-card); border-radius: var(--radius-lg); padding: 30px; border: 1px solid var(--border); }
+    .transactions-section h2 { font-family: var(--font-display); font-size: 1.8rem; color: var(--gold); margin-bottom: 20px; }
+    
+    .tx-list { display: flex; flex-direction: column; gap: 12px; }
+    .tx-item { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--bg-glass); border-radius: var(--radius); border: 1px solid var(--border); }
+    .tx-item:hover { border-color: var(--gold); }
+    .tx-item .info { display: flex; flex-direction: column; gap: 4px; }
+    .tx-item .type { font-weight: 600; }
+    .tx-item .date { font-size: 0.85rem; color: var(--text-secondary); }
+    .tx-item .amount { font-weight: 700; }
+    .tx-item .amount.in { color: var(--success); }
+    .tx-item .amount.out { color: var(--danger); }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <div class="goat-bg"></div>
+  <div class="goat-bg-overlay"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <nav class="top-nav">
+    <a href="index.html" class="logo">
+      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
+      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
+      <span>Ms Money Penny</span>
+      <span class="crown-badge">👑 GOAT</span>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">🏠 Home</a>
+      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="pro-royalties.html">🎵 PRO Royalties</a>
+      <a href="banking.html">🏦 Banking</a>
+      <a href="wallet.html" class="active">💰 Wallet</a>
+      <a href="about.html">👑 About</a>
+    </div>
+  </nav>
+
+  <div class="wallet-container">
+    <div class="wallet-header animate-in">
+      <h1>💰 Crypto Wallet</h1>
+      <p>Connect your wallet to manage crypto assets</p>
+    </div>
+
+    <div class="connect-wallet-section animate-in" id="connectSection">
+      <h2 style="font-family: var(--font-display); color: var(--gold); margin-bottom: 16px;">Connect Your Wallet</h2>
+      <p style="color: var(--text-secondary);">Connect MetaMask, WalletConnect, or Coinbase Wallet to view your assets</p>
+      <div class="wallet-buttons">
+        <button class="wallet-btn" id="metamaskBtn" onclick="connectMetaMask()">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask">
+          <span>MetaMask</span>
+        </button>
+        <button class="wallet-btn" onclick="connectWalletConnect()">
+          <img src="https://avatars.githubusercontent.com/u/37684638?s=200&v=4" alt="WalletConnect">
+          <span>WalletConnect</span>
+        </button>
+        <button class="wallet-btn" onclick="connectCoinbase()">
+          <img src="https://avatars.githubusercontent.com/u/18060234?s=200&v=4" alt="Coinbase">
+          <span>Coinbase</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="total-portfolio animate-in" id="totalSection" style="display: none;">
+      <h2>Total Portfolio Value</h2>
+      <div class="total-amount" id="totalValue">$0.00</div>
+    </div>
+
+    <div class="portfolio-grid" id="portfolioGrid" style="display: none;">
+      <!-- Wallet cards will be injected here -->
+    </div>
+
+    <div class="transactions-section animate-in" id="txSection" style="display: none;">
+      <h2>📜 Recent Transactions</h2>
+      <div class="tx-list" id="txList"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-brand">👑 GOAT Royalties - Stay Paid & Play Harder</div>
+  </footer>
+
+  <script src="js/particles.js"></script>
+  <script>
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+    
+    let isConnected = false;
+    let userAddress = null;
+    
+    // Mock wallet data
+    const WALLET_DATA = [
+      { symbol: 'ETH', name: 'Ethereum', balance: 125.5, usdValue: 451800, address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', class: 'eth' },
+      { symbol: 'BTC', name: 'Bitcoin', balance: 3.25, usdValue: 211250, address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', class: 'btc' },
+      { symbol: 'USDC', name: 'USD Coin', balance: 50000, usdValue: 50000, address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e', class: 'usdc' },
+      { symbol: 'NFT', name: 'Royalty NFT Vault', balance: 47, usdValue: 117500, address: '0x...', class: 'nft' }
+    ];
+
+    const TRANSACTIONS = [
+      { type: 'Royalty Payment', amount: 2.5, symbol: 'ETH', direction: 'in', date: '2024-03-22' },
+      { type: 'NFT Sale', amount: 5.0, symbol: 'ETH', direction: 'in', date: '2024-03-20' },
+      { type: 'Transfer to Operations', amount: 10000, symbol: 'USDC', direction: 'out', date: '2024-03-18' },
+      { type: 'Streaming Revenue', amount: 0.85, symbol: 'ETH', direction: 'in', date: '2024-03-15' }
+    ];
+
+    async function connectMetaMask() {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          userAddress = accounts[0];
+          isConnected = true;
+          showWallet();
+          document.getElementById('metamaskBtn').classList.add('connected');
+        } catch (error) {
+          console.error('MetaMask connection failed:', error);
+          // Demo mode
+          demoConnect();
+        }
+      } else {
+        // Demo mode - MetaMask not installed
+        demoConnect();
+      }
+    }
+
+    function demoConnect() {
+      isConnected = true;
+      userAddress = '0x742d35Cc6634C0532925a3b844Bc454e4438f44e';
+      showWallet();
+    }
+
+    function connectWalletConnect() { demoConnect(); }
+    function connectCoinbase() { demoConnect(); }
+
+    function showWallet() {
+      document.getElementById('connectSection').classList.add('connected');
+      document.getElementById('connectSection').innerHTML = `
+        <h2 style="font-family: var(--font-display); color: var(--success); margin-bottom: 8px;">✓ Wallet Connected</h2>
+        <p style="color: var(--text-secondary); font-family: monospace; font-size: 0.9rem;">${userAddress}</p>
+        <button onclick="disconnectWallet()" style="margin-top: 16px; padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); cursor: pointer;">Disconnect</button>
+      `;
+      
+      document.getElementById('totalSection').style.display = 'block';
+      document.getElementById('portfolioGrid').style.display = 'grid';
+      document.getElementById('txSection').style.display = 'block';
+      
+      renderPortfolio();
+      renderTransactions();
+    }
+
+    function disconnectWallet() {
+      isConnected = false;
+      userAddress = null;
+      location.reload();
+    }
+
+    function renderPortfolio() {
+      const grid = document.getElementById('portfolioGrid');
+      grid.innerHTML = WALLET_DATA.map(wallet => `
+        <div class="portfolio-card ${wallet.class} animate-in">
+          <div class="symbol">${wallet.symbol}</div>
+          <div class="name" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 8px;">${wallet.name}</div>
+          <div class="balance">${wallet.balance.toLocaleString()} ${wallet.symbol === 'NFT' ? 'Items' : wallet.symbol}</div>
+          <div class="usd-value">$${wallet.usdValue.toLocaleString()}</div>
+          <div class="address">${wallet.address.slice(0, 10)}...${wallet.address.slice(-8)}</div>
+        </div>
+      `).join('');
+      
+      const total = WALLET_DATA.reduce((sum, w) => sum + w.usdValue, 0);
+      document.getElementById('totalValue').textContent = '$' + total.toLocaleString();
+    }
+
+    function renderTransactions() {
+      const list = document.getElementById('txList');
+      list.innerHTML = TRANSACTIONS.map(tx => `
+        <div class="tx-item">
+          <div class="info">
+            <div class="type">${tx.type}</div>
+            <div class="date">${tx.date}</div>
+          </div>
+          <div class="amount ${tx.direction}">
+            ${tx.direction === 'in' ? '+' : '-'}${tx.amount} ${tx.symbol}
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

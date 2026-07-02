@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ms Money Penny — Download Center</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/goat-theme.css">
+  <link rel="stylesheet" href="css/models-manager.css">
+  <style>
+    :root {
+      --bg-primary: #0a0a0a; --bg-secondary: #0d1b2a; --bg-card: #1b2838;
+      --accent: #d4a03c; --accent-light: #f0c040; --text-primary: #f5f0e8;
+      --text-secondary: #b8b0a0; --text-muted: #6a6050; --border: #2a3a4a;
+      --success: #2ecc71; --info: #5dade2; --navy: #0f2440; --gold: #d4a03c;
+    }
+    .dl-section { background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px; }
+    .dl-section h3 { color:var(--gold); margin-bottom:12px; }
+    .script-box { background:#0d1117; border:1px solid var(--border); border-radius:8px; padding:16px; font-family:'SF Mono','Fira Code',monospace; font-size:13px; color:#c9d1d9; overflow-x:auto; white-space:pre; line-height:1.6; max-height:400px; overflow-y:auto; margin-bottom:12px; }
+    .dl-stat { display:inline-block; background:var(--navy); padding:6px 14px; border-radius:20px; font-size:13px; color:var(--gold); margin:4px; }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body class="models-page">
+
+  <!-- GOAT Background -->
+  <div class="goat-bg"></div>
+  <div class="goat-bg-overlay"></div>
+
+  <nav class="top-nav">
+    <a href="index.html" class="logo">
+      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
+      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
+      <img src="logo.png" alt="Ms Money Penny">
+      <span>Ms Money Penny</span>
+      <span class="crown-badge">👑 GOAT</span>
+    </a>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">🏠 Home</a>
+      <a href="models.html">🧠 AI Models</a>
+      <a href="tools.html">🛠️ Tools</a>
+      <a href="downloads.html" class="active">📥 Downloads</a>
+      <a href="about.html">👑 About</a>
+      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="screenwriting.html">🎬 Screenwriting</a>
+      <a href="index.html#store">🛒 Store</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>📥 Download Center</h1>
+    <p class="subtitle">GOAT Royalties App + AI Model Scripts for your 100TB servers</p>
+    <div class="stats">
+      <div class="stat"><div class="number">🐐</div><div class="label">GOAT App</div></div>
+      <div class="stat"><div class="number">60+</div><div class="label">Models</div></div>
+      <div class="stat"><div class="number">~150GB</div><div class="label">Foundation</div></div>
+      <div class="stat"><div class="number">5</div><div class="label">Platforms</div></div>
+    </div>
+  </div>
+
+  <!-- GOAT ROYALTIES APP DOWNLOADS -->
+  <div class="dl-section" style="border-color: var(--gold); background: linear-gradient(135deg, rgba(212,160,60,0.1) 0%, rgba(15,28,48,0.9) 100%);">
+    <h3>🐐 GOAT ROYALTIES APP v2.0.0</h3>
+    <p style="color:var(--text-secondary);margin-bottom:16px">The Ultimate AI-Powered Platform for Music Industry Professionals. Track royalties, manage catalogs, and stay paid!</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:20px;">
+      <!-- Windows Setup -->
+      <a href="downloads/Super-GOAT-Royalty-2.0.0-Setup.exe" class="btn btn-primary" style="text-align:center;padding:20px;text-decoration:none;">
+        <div style="font-size:2em;margin-bottom:8px">🪟</div>
+        <div style="font-weight:bold">Windows Setup</div>
+        <div style="font-size:0.8em;color:var(--text-secondary)">75 MB • .exe</div>
+      </a>
+      <!-- Windows Portable -->
+      <a href="downloads/Super-GOAT-Royalty-2.0.0-Portable.exe" class="btn btn-success" style="text-align:center;padding:20px;text-decoration:none;">
+        <div style="font-size:2em;margin-bottom:8px">💻</div>
+        <div style="font-weight:bold">Windows Portable</div>
+        <div style="font-size:0.8em;color:var(--text-secondary)">75 MB • No Install</div>
+      </a>
+      <!-- Linux AppImage -->
+      <a href="downloads/Super-GOAT-Royalty-2.0.0.AppImage" class="btn btn-primary" style="text-align:center;padding:20px;text-decoration:none;">
+        <div style="font-size:2em;margin-bottom:8px">🐧</div>
+        <div style="font-weight:bold">Linux AppImage</div>
+        <div style="font-size:0.8em;color:var(--text-secondary)">103 MB • Universal</div>
+      </a>
+      <!-- Linux DEB -->
+      <a href="downloads/Super-GOAT-Royalty-2.0.0.deb" class="btn btn-success" style="text-align:center;padding:20px;text-decoration:none;">
+        <div style="font-size:2em;margin-bottom:8px">📦</div>
+        <div style="font-weight:bold">Debian/Ubuntu</div>
+        <div style="font-size:0.8em;color:var(--text-secondary)">71 MB • .deb</div>
+      </a>
+      <!-- macOS ZIP -->
+      <a href="downloads/Super-GOAT-Royalty-2.0.0.zip" class="btn btn-primary" style="text-align:center;padding:20px;text-decoration:none;">
+        <div style="font-size:2em;margin-bottom:8px">🍎</div>
+        <div style="font-weight:bold">macOS</div>
+        <div style="font-size:0.8em;color:var(--text-secondary)">90 MB • .zip</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="content" style="padding:0">
+    <main class="main-content" style="max-width:1000px;margin:0 auto">
+
+      <!-- Quick Stats -->
+      <div style="text-align:center;margin-bottom:30px">
+        <div class="dl-stat">🏛️ 6 Foundation Models (~150GB)</div>
+        <div class="dl-stat">🎨 24 Art Style LoRAs (~2.4GB)</div>
+        <div class="dl-stat">👤 19 Character LoRAs (~1.9GB)</div>
+        <div class="dl-stat">🔄 4 Editing/Video Models (~5GB)</div>
+        <div class="dl-stat">🧠 12 LLM Runtimes (FREE)</div>
+      </div>
+
+      <!-- Master Script -->
+      <div class="dl-section" style="border-color:var(--gold)">
+        <h3>⚡ MASTER SCRIPT — Download EVERYTHING</h3>
+        <p style="color:var(--text-secondary);margin-bottom:16px">One script to download all 60+ models. Save as <code style="color:var(--gold)">download-all.sh</code> and run on your server.</p>
+        <div class="script-box" id="masterScript">#!/bin/bash
+# ═══════════════════════════════════════════════════════════════
+# Ms Money Penny — Ultimate AI Model Downloader
+# Life Imitates Art Inc. Nonprofit
+# ═══════════════════════════════════════════════════════════════
+# NO LOGIN REQUIRED | NO API KEYS | 100% FREE PUBLIC MODELS
+# ═══════════════════════════════════════════════════════════════
+
+set -e
+BOLD="\033[1m"
+GOLD="\033[0;33m"
+GREEN="\033[0;32m"
+CYAN="\033[0;36m"
+RESET="\033[0m"
+
+# ── Configuration ────────────────────────────────────────────
+BASE_DIR="${1:-/mnt/100tb/huggingface-models}"
+PARALLEL_DOWNLOADS=4
+
+echo -e "${BOLD}${GOLD}"
+echo "  ╔═══════════════════════════════════════════════════╗"
+echo "  ║  Ms Money Penny — AI Model Bulk Downloader       ║"
+echo "  ║  Life Imitates Art Inc. Nonprofit                 ║"
+echo "  ║  NO LOGIN | NO API KEYS | 100% OFFLINE           ║"
+echo "  ╚═══════════════════════════════════════════════════╝"
+echo -e "${RESET}"
+
+# ── Prerequisites ────────────────────────────────────────────
+echo -e "${CYAN}[1/6] Checking prerequisites...${RESET}"
+command -v git >/dev/null || { echo "❌ git required"; exit 1; }
+git lfs install --skip-smudge 2>/dev/null || true
+echo -e "${GREEN}✓ Ready${RESET}"
+
+# ── Create directories ───────────────────────────────────────
+echo -e "${CYAN}[2/6] Creating directories...${RESET}"
+mkdir -p "$BASE_DIR"/{foundation,loras/art-styles,loras/characters,editing,video}
+echo -e "${GREEN}✓ $BASE_DIR created${RESET}"
+
+# ── Foundation Models (~150GB) ───────────────────────────────
+echo -e "\n${BOLD}${GOLD}[3/6] Downloading Foundation Models (~150GB)...${RESET}"
+cd "$BASE_DIR/foundation"
+
+declare -a FOUNDATION=(
+  "black-forest-labs/FLUX.1-dev"
+  "black-forest-labs/FLUX.1-schnell"
+  "black-forest-labs/FLUX.2-dev"
+  "stabilityai/stable-diffusion-xl-base-1.0"
+  "stabilityai/stable-diffusion-3.5-large"
+  "Wan-AI/Wan2.1-T2I-14B"
+)
+
+for repo in "${FOUNDATION[@]}"; do
+  name=$(basename "$repo")
+  if [ -d "$name" ]; then
+    echo -e "  ⏭️  $name (already exists, skipping)"
+  else
+    echo -e "  📥 Downloading $repo..."
+    git clone "https://huggingface.co/$repo" && echo -e "  ${GREEN}✓ $name${RESET}" || echo -e "  ⚠️ Failed: $name"
+  fi
+done
+
+# ── Art Style LoRAs (~2.4GB) ─────────────────────────────────
+echo -e "\n${BOLD}${GOLD}[4/6] Downloading Art Style LoRAs (~2.4GB)...${RESET}"
+cd "$BASE_DIR/loras/art-styles"
+
+declare -a LORA_STYLES=(
+  "andrbykov/vangogh_style_LoRA"
+  "ZayacGde/vangog_style_LoRA"
+  "pils0n/claudemonet_style_LoRA"
+  "Vafich/avasnetsov_style_LoRA"
+  "Alia31566/Vinogradov_LoRA"
+  "Alia31566/NOZHEV_LoRA"
+  "Alia31566/Delovarya_LoRA"
+  "Alia31566/Niko_Pirosmani_LoRA"
+  "Mariiaaaaa/vittorio_reggianini_LoRA"
+  "Cilvia/Kochkina_style_LoRA"
+  "Cilvia/cherakshin_style_LoRA"
+  "polichwafer/olviertakac_style_LoRA"
+  "Zhmak/fairey_posters_style_LoRA"
+  "pils0n/langreiter_style_LoRA"
+  "pils0n/frutiger_style_LoRA"
+  "pils0n/rosie_style_LoRA"
+  "gvhfyhgif/tekilasuns3t_style_LoRA"
+  "gvhfyhgif/rosetty_style_LoRA"
+  "ftyuiolkmnjhg/diberkato_style_LoRA"
+  "LippmannAI/veiter-lora-flux"
+  "neiroia/rockconcert_style_LoRA"
+  "nepirog/nepirog_style_LoRA"
+  "kristian1515/filmgrain-redmond-filmgrain-lora-for-sdxl"
+  "imbaQ/lcm-lora-sdxl"
+)
+
+for repo in "${LORA_STYLES[@]}"; do
+  name=$(basename "$repo")
+  [ -d "$name" ] && echo "  ⏭️  $name (exists)" && continue
+  echo -e "  🎨 $name..."
+  git clone "https://huggingface.co/$repo" 2>/dev/null && echo -e "  ${GREEN}✓${RESET}" || echo "  ⚠️ Failed"
+done
+
+# ── Character LoRAs (~1.9GB) ─────────────────────────────────
+echo -e "\n${BOLD}${GOLD}[5/6] Downloading Character LoRAs (~1.9GB)...${RESET}"
+cd "$BASE_DIR/loras/characters"
+
+declare -a CHARACTERS=(
+  "alphaduriendur/avatar-weights-01"
+  "Barlowtech/rina_ai"
+  "Natasamk/lumi-character-lora"
+  "1337goose/KaterinaTLOD"
+  "1337goose/KetTLOD"
+  "Alex2422/Amaya_new"
+  "Krioklininkas/kaia"
+  "globaltraders/lara-21-flux-lora"
+  "xr669/Tessa"
+  "sololo-xyz/VG22Flora"
+  "sololo-xyz/VG21Amanda_ZITv2"
+  "bigdotdog/rachel2500"
+  "BadRabbit11101/Cat_Tina"
+  "darrenfu/Asian_model"
+  "sneaxnvice/lustly-ai"
+  "V1shu69/flux-RealismLora"
+  "Rabornkraken/flux2-xhs-travel-lora"
+  "Kokosha01/Wan2.2_StrangeNames"
+  "XonarLabs/OLOID_Framework"
+)
+
+for repo in "${CHARACTERS[@]}"; do
+  name=$(basename "$repo")
+  [ -d "$name" ] && echo "  ⏭️  $name (exists)" && continue
+  echo -e "  👤 $name..."
+  git clone "https://huggingface.co/$repo" 2>/dev/null && echo -e "  ${GREEN}✓${RESET}" || echo "  ⚠️ Failed"
+done
+
+# ── Editing & Video Models ───────────────────────────────────
+echo -e "\n${BOLD}${GOLD}[6/6] Downloading Editing & Video Models...${RESET}"
+cd "$BASE_DIR/editing"
+
+declare -a EDITING=(
+  "prithivMLmods/QIE-2509-Object-Mover-Bbox"
+  "prithivMLmods/QIE-2511-Object-Mover-Bbox"
+  "yxw1231/Qwen-Edit-2509-Multiple-angles"
+)
+
+for repo in "${EDITING[@]}"; do
+  name=$(basename "$repo")
+  [ -d "$name" ] && echo "  ⏭️  $name (exists)" && continue
+  echo -e "  🔄 $name..."
+  git clone "https://huggingface.co/$repo" 2>/dev/null && echo -e "  ${GREEN}✓${RESET}" || echo "  ⚠️ Failed"
+done
+
+cd "$BASE_DIR/video"
+git clone "https://huggingface.co/editedge/LTX-2-19b-LoRA-Camera-Control-Jib-Down" 2>/dev/null || true
+
+# ── Summary ──────────────────────────────────────────────────
+echo -e "\n${BOLD}${GOLD}═══════════════════════════════════════════════════${RESET}"
+echo -e "${BOLD}${GREEN}  ✅ ALL DOWNLOADS COMPLETE!${RESET}"
+echo -e "${BOLD}${GOLD}═══════════════════════════════════════════════════${RESET}"
+echo ""
+echo -e "  📂 Models saved to: ${CYAN}$BASE_DIR${RESET}"
+echo -e "  🏛️ Foundation: $(ls $BASE_DIR/foundation/ 2>/dev/null | wc -l) models"
+echo -e "  🎨 Art LoRAs:  $(ls $BASE_DIR/loras/art-styles/ 2>/dev/null | wc -l) models"
+echo -e "  👤 Characters: $(ls $BASE_DIR/loras/characters/ 2>/dev/null | wc -l) models"
+echo -e "  🔄 Editing:    $(ls $BASE_DIR/editing/ 2>/dev/null | wc -l) models"
+echo ""
+echo -e "  ${GOLD}Next: Install ComfyUI, Diffusers, or Ollama to start using!${RESET}"
+echo ""</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="copyScript('masterScript')">📋 Copy Entire Script</button>
+          <button class="btn btn-success" onclick="downloadScript('masterScript','download-all.sh')">💾 Save as .sh File</button>
+        </div>
+      </div>
+
+      <!-- Foundation Only -->
+      <div class="dl-section">
+        <h3>🏛️ Foundation Models Only (~150GB)</h3>
+        <p style="color:var(--text-secondary);margin-bottom:12px">Download just the 6 base models — required for all LoRAs</p>
+        <div class="script-box" id="foundationScript">#!/bin/bash
+# Foundation Models — NO LOGIN REQUIRED
+git lfs install
+mkdir -p /mnt/100tb/models/foundation && cd /mnt/100tb/models/foundation
+
+git clone https://huggingface.co/black-forest-labs/FLUX.1-dev
+git clone https://huggingface.co/black-forest-labs/FLUX.1-schnell
+git clone https://huggingface.co/black-forest-labs/FLUX.2-dev
+git clone https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0
+git clone https://huggingface.co/stabilityai/stable-diffusion-3.5-large
+git clone https://huggingface.co/Wan-AI/Wan2.1-T2I-14B
+
+echo "✅ All foundation models downloaded!"</div>
+        <button class="btn btn-primary" onclick="copyScript('foundationScript')">📋 Copy</button>
+        <button class="btn btn-success" onclick="downloadScript('foundationScript','download-foundation.sh')">💾 Save .sh</button>
+      </div>
+
+      <!-- LoRAs Only -->
+      <div class="dl-section">
+        <h3>🎨 All LoRA Models Only (~4GB)</h3>
+        <p style="color:var(--text-secondary);margin-bottom:12px">43 LoRA adapters — art styles + characters. Tiny files, huge variety.</p>
+        <div class="script-box" id="loraScript">#!/bin/bash
+# All LoRA Models — NO LOGIN REQUIRED
+mkdir -p /mnt/100tb/models/loras && cd /mnt/100tb/models/loras
+
+# Art Styles
+git clone https://huggingface.co/andrbykov/vangogh_style_LoRA
+git clone https://huggingface.co/pils0n/claudemonet_style_LoRA
+git clone https://huggingface.co/Vafich/avasnetsov_style_LoRA
+git clone https://huggingface.co/Alia31566/Vinogradov_LoRA
+git clone https://huggingface.co/Alia31566/NOZHEV_LoRA
+git clone https://huggingface.co/Alia31566/Delovarya_LoRA
+git clone https://huggingface.co/Alia31566/Niko_Pirosmani_LoRA
+git clone https://huggingface.co/Zhmak/fairey_posters_style_LoRA
+git clone https://huggingface.co/neiroia/rockconcert_style_LoRA
+git clone https://huggingface.co/kristian1515/filmgrain-redmond-filmgrain-lora-for-sdxl
+git clone https://huggingface.co/artshooter/flux-hand-drawn-stickman
+git clone https://huggingface.co/ALDOGS/miami-lora
+
+# Characters
+git clone https://huggingface.co/alphaduriendur/avatar-weights-01
+git clone https://huggingface.co/Barlowtech/rina_ai
+git clone https://huggingface.co/Natasamk/lumi-character-lora
+git clone https://huggingface.co/Alex2422/Amaya_new
+git clone https://huggingface.co/Krioklininkas/kaia
+git clone https://huggingface.co/Kokosha01/Wan2.2_StrangeNames
+git clone https://huggingface.co/XonarLabs/OLOID_Framework
+git clone https://huggingface.co/Rabornkraken/flux2-xhs-travel-lora
+git clone https://huggingface.co/V1shu69/flux-RealismLora
+
+echo "✅ All LoRA models downloaded!"</div>
+        <button class="btn btn-primary" onclick="copyScript('loraScript')">📋 Copy</button>
+        <button class="btn btn-success" onclick="downloadScript('loraScript','download-loras.sh')">💾 Save .sh</button>
+      </div>
+
+      <!-- Desktop App Downloads -->
+      <div class="dl-section" style="border-color:var(--gold)">
+        <h3>🖥️ Ms Money Penny Desktop App</h3>
+        <p style="color:var(--text-secondary);margin-bottom:16px">Download the standalone desktop app for your platform</p>
+        <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+          <div class="tool-card" style="text-align:center">
+            <div class="tool-icon">🪟</div>
+            <h3>Windows 10/11</h3>
+            <p>Installer (.exe) + Portable</p>
+            <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases/latest" target="_blank" class="btn btn-primary" style="width:100%">⬇️ Download .exe</a>
+          </div>
+          <div class="tool-card" style="text-align:center">
+            <div class="tool-icon">🍎</div>
+            <h3>macOS</h3>
+            <p>Disk Image (.dmg)</p>
+            <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases/latest" target="_blank" class="btn btn-primary" style="width:100%">⬇️ Download .dmg</a>
+          </div>
+          <div class="tool-card" style="text-align:center">
+            <div class="tool-icon">🐧</div>
+            <h3>Linux/Ubuntu</h3>
+            <p>AppImage + .deb + tar.gz</p>
+            <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases/latest" target="_blank" class="btn btn-primary" style="width:100%">⬇️ Download</a>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    function copyScript(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = event.target;
+        const orig = btn.textContent;
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => btn.textContent = orig, 2000);
+      });
+    }
+    function downloadScript(id, filename) {
+      const text = document.getElementById(id).textContent;
+      const blob = new Blob([text], {type:'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+    }
+
+    // OS auto-detection — highlight platform card
+    (function() {
+      const ua = navigator.userAgent || '';
+      let os = 'linux';
+      if (ua.includes('Win')) os = 'windows';
+      else if (ua.includes('Mac')) os = 'mac';
+      const cards = document.querySelectorAll('.dl-section:last-of-type .tool-card');
+      const osMap = { windows: 0, mac: 1, linux: 2 };
+      const idx = osMap[os];
+      if (cards[idx]) {
+        cards[idx].style.borderColor = 'var(--gold)';
+        cards[idx].style.boxShadow = '0 0 24px rgba(212,160,60,0.2)';
+        cards[idx].style.transform = 'translateY(-4px)';
+        const label = document.createElement('div');
+        label.textContent = '⭐ Recommended for your system';
+        label.style.cssText = 'color:var(--gold);font-size:12px;font-weight:600;margin-top:10px;letter-spacing:0.3px;';
+        cards[idx].appendChild(label);
+      }
+    })();
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.dl-section, .dl-stat').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(15px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="models.html">🧠 AI Models</a>
+      <a href="tools.html">🛠️ Tools</a>
+      <a href="downloads.html">📥 Downloads</a>
+      <a href="about.html">👑 About</a>
+      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="screenwriting.html">🎬 Screenwriting</a>
+      <a href="unreal-copilot.html">🎮 UE5 CoPilot</a>
+      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce" target="_blank">⭐ GitHub</a>
+      <a href="https://github.com/DJSPEEDYGA/nextjs-commerce/releases" target="_blank">📦 Releases</a>
+    </div>
+    <p>🐐 Ms Money Penny Store v1.3.0 — Built with ❤️ by <a href="https://lifeimitatesart.org" target="_blank">Life Imitates Art Inc.</a></p>
+    <p style="margin-top:8px;font-size:0.8rem;color:var(--text-muted);">Powered by NVIDIA AI Stack • Lightning AI • HuggingFace • OpenClaw • Electron</p>
+  </footer>
+
+</body>
+</html>

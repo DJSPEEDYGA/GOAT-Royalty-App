@@ -1,0 +1,57 @@
+# NeMo Agent Toolkit — Product Search Agent
+# Run: nat run --config_file configs/product-search.yml --input "Find me headphones under $300"
+
+functions:
+  # Product catalog search tool
+  product_search:
+    _type: rest_api
+    name: product_search
+    description: "Search the Ms Money Penny Store product catalog by name, category, or price range"
+    endpoint: "http://localhost:3942/api/products/search"
+    method: GET
+    params:
+      query:
+        type: string
+        description: "Search query for products"
+      category:
+        type: string
+        description: "Product category filter (electronics, accessories, computing)"
+      max_price:
+        type: number
+        description: "Maximum price filter"
+      min_price:
+        type: number
+        description: "Minimum price filter"
+
+  # Web search fallback
+  web_search:
+    _type: wiki_search
+    max_results: 3
+
+llms:
+  nim_llm:
+    _type: nim
+    model_name: meta/llama-3.1-70b-instruct
+    temperature: 0.0
+
+workflow:
+  _type: react_agent
+  tool_names: [product_search, web_search]
+  llm_name: nim_llm
+  verbose: true
+  parse_agent_response_max_retries: 3
+  system_prompt: |
+    You are the Ms Money Penny Store shopping assistant. You help customers find products
+    in our e-commerce catalog. Our store carries electronics and tech accessories including:
+    - Premium Headphones ($299)
+    - Smart Watch ($399)
+    - Laptop Pro ($1299)
+    - Wireless Mouse ($79)
+    - USB-C Hub ($49)
+    - Webcam HD ($129)
+
+    When helping customers:
+    1. Search for products matching their request
+    2. Provide clear product details and pricing
+    3. Suggest related products they might like
+    4. Be friendly, helpful, and knowledgeable

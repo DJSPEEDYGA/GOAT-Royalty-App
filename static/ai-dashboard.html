@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Dashboard - GOAT Royalties</title>
+  <link rel="stylesheet" href="css/goat-theme.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+    }
+    
+    .dashboard-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-gold);
+    }
+    
+    .stat-card h3 {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .stat-card .value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    
+    .stat-card .change {
+      font-size: 0.85rem;
+      color: var(--success);
+    }
+    
+    .stat-card .change.negative {
+      color: var(--danger);
+    }
+    
+    .section-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      border: 1px solid var(--border);
+      margin-bottom: 30px;
+    }
+    
+    .section-card h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .boss-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+    
+    .boss-card {
+      background: var(--bg-glass);
+      border-radius: var(--radius);
+      padding: 24px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .boss-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--accent-light));
+    }
+    
+    .boss-card h3 {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    
+    .boss-card .aka {
+      font-size: 0.9rem;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    
+    .boss-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    
+    .boss-stat {
+      background: var(--bg-card);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      text-align: center;
+    }
+    
+    .boss-stat .label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    
+    .boss-stat .value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    
+    .agent-card {
+      background: var(--bg-glass);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    
+    .agent-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+    }
+    
+    .agent-card .name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    
+    .agent-card .role {
+      font-size: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    
+    .agent-card .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(46, 204, 113, 0.2);
+      color: var(--success);
+    }
+    
+    .agent-card .tier {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    
+    .royalty-chart {
+      height: 300px;
+      background: var(--bg-glass);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-top: 20px;
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      position: relative;
+    }
+    
+    .royalty-bar {
+      flex: 1;
+      background: linear-gradient(180deg, var(--gold), var(--accent));
+      border-radius: 8px 8px 0 0;
+      position: relative;
+      transition: height 0.5s ease;
+      min-height: 20px;
+    }
+    
+    .royalty-bar:hover {
+      filter: brightness(1.2);
+    }
+    
+    .royalty-bar .label {
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+    
+    .royalty-bar .amount {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-secondary);
+    }
+    
+    .loading::after {
+      content: '...';
+      animation: blink 1.5s infinite;
+    }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <!-- Backgrounds -->
+  <div class="goat-bg"></div>
+  <div class="goat-bg-overlay"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="top-nav">
+    <a href="index.html" class="logo">
+      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
+      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
+      <span>Ms Money Penny</span>
+      <span class="crown-badge">👑 GOAT</span>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">🏠 Home</a>
+      <a href="models.html">🤖 AI Models</a>
+      <a href="tools.html">🔧 Tools</a>
+      <a href="downloads.html">📥 Downloads</a>
+      <a href="about.html">👑 About</a>
+      <a href="ai-dashboard.html" class="active">📊 Dashboard</a>
+      <a href="screenwriting.html">🎬 Screenwriting</a>
+    </div>
+  </nav>
+
+  <!-- Dashboard -->
+  <div class="dashboard-container">
+    <div class="dashboard-header animate-in">
+      <h1>👑 GOAT Royalties Dashboard</h1>
+      <p>Real-time analytics for OG & Boss catalog management</p>
+      <div class="status-badge status-healthy" style="margin-top: 16px;">
+        <span class="status-dot"></span> Live Data
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="dashboard-grid">
+      <div class="stat-card animate-in animate-delay-1">
+        <h3>Total Works</h3>
+        <div class="value" id="totalWorks">877</div>
+        <div class="change">📈 +12 this month</div>
+      </div>
+      <div class="stat-card animate-in animate-delay-2">
+        <h3>Total Revenue</h3>
+        <div class="value">$2.5M</div>
+        <div class="change">📈 +15.2% YoY</div>
+      </div>
+      <div class="stat-card animate-in animate-delay-3">
+        <h3>Active Streams</h3>
+        <div class="value">260M</div>
+        <div class="change">📈 +8.5% this week</div>
+      </div>
+      <div class="stat-card animate-in animate-delay-4">
+        <h3>AI Agents</h3>
+        <div class="value">7</div>
+        <div class="change">🟢 All Online</div>
+      </div>
+    </div>
+
+    <!-- Bosses Section -->
+    <div class="section-card animate-in">
+      <h2>👑 The Bosses</h2>
+      <div class="boss-grid" id="bossGrid">
+        <div class="loading">Loading boss data</div>
+      </div>
+    </div>
+
+    <!-- AI Agents Section -->
+    <div class="section-card animate-in">
+      <h2>🤖 AI Agent Crew</h2>
+      <div class="agent-grid" id="agentGrid">
+        <div class="loading">Loading agent data</div>
+      </div>
+    </div>
+
+    <!-- Royalties Section -->
+    <div class="section-card animate-in">
+      <h2>💰 Royalty Sources</h2>
+      <div class="royalty-chart" id="royaltyChart">
+        <div class="loading">Loading royalty data</div>
+      </div>
+    </div>
+
+    <!-- Hardware Section -->
+    <div class="section-card animate-in">
+      <h2>🖥️ Hardware Status</h2>
+      <div class="boss-grid" id="hardwareGrid">
+        <div class="loading">Loading hardware data</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-brand">👑 GOAT Royalties - Stay Paid & Play Harder</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="ai-dashboard.html">Dashboard</a>
+    </div>
+    <p style="text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+      © 2024 Life Imitates Art Inc. All rights reserved.
+    </p>
+  </footer>
+
+  <script src="js/particles.js"></script>
+  <script>
+    // Toggle mobile menu
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    // Fetch dashboard data
+    async function loadDashboard() {
+      try {
+        const response = await fetch('/api/dashboard');
+        const data = await response.json();
+        
+        // Update stats
+        document.getElementById('totalWorks').textContent = data.catalog.totalWorks;
+        
+        // Render bosses
+        const bossGrid = document.getElementById('bossGrid');
+        bossGrid.innerHTML = data.bosses.map(boss => `
+          <div class="boss-card">
+            <h3>${boss.name}</h3>
+            <div class="aka">${boss.aka}</div>
+            <div class="boss-stats">
+              <div class="boss-stat">
+                <div class="label">Works</div>
+                <div class="value">${boss.totalWorks || boss.totalTracks}</div>
+              </div>
+              <div class="boss-stat">
+                <div class="label">Status</div>
+                <div class="value" style="font-size: 1rem; color: var(--success);">${boss.status}</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+        
+        // Render agents
+        const agentGrid = document.getElementById('agentGrid');
+        agentGrid.innerHTML = data.agents.map(agent => `
+          <div class="agent-card">
+            <div class="name">${agent.name}</div>
+            <div class="role">${agent.role}</div>
+            <div class="status">${agent.status}</div>
+            <div class="tier">Tier ${agent.tier}</div>
+          </div>
+        `).join('');
+        
+        // Render royalty chart
+        const royaltyChart = document.getElementById('royaltyChart');
+        const maxAmount = Math.max(...data.royalties.sources.map(s => s.amount));
+        royaltyChart.innerHTML = data.royalties.sources.map(source => {
+          const height = (source.amount / maxAmount) * 80;
+          return `
+            <div class="royalty-bar" style="height: ${height}%;">
+              <div class="amount">$${(source.amount / 1000).toFixed(0)}K</div>
+              <div class="label">${source.name}</div>
+            </div>
+          `;
+        }).join('');
+        
+        // Render hardware
+        const hardwareGrid = document.getElementById('hardwareGrid');
+        const hw = data.hardware.jetsonCluster;
+        hardwareGrid.innerHTML = `
+          <div class="boss-card">
+            <h3>${hw.name}</h3>
+            <div class="aka">AI Processing Cluster</div>
+            <div class="boss-stats">
+              <div class="boss-stat">
+                <div class="label">Units</div>
+                <div class="value">${hw.active}/${hw.units}</div>
+              </div>
+              <div class="boss-stat">
+                <div class="label">TOPS</div>
+                <div class="value">${hw.totalTOPS}</div>
+              </div>
+              <div class="boss-stat">
+                <div class="label">RAM</div>
+                <div class="value">${hw.totalRAM}</div>
+              </div>
+              <div class="boss-stat">
+                <div class="label">Status</div>
+                <div class="value" style="font-size: 1rem; color: var(--success);">${hw.status}</div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+      } catch (error) {
+        console.error('Failed to load dashboard:', error);
+      }
+    }
+
+    // Load dashboard on page load
+    document.addEventListener('DOMContentLoaded', loadDashboard);
+    
+    // Refresh every 30 seconds
+    setInterval(loadDashboard, 30000);
+  </script>
+</body>
+</html>

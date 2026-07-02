@@ -1,0 +1,66 @@
+# Ms Money Penny Store — NeMo Agent Toolkit Docker Services
+# Usage: docker-compose up -d
+
+version: "3.9"
+
+services:
+  # NeMo Agent Toolkit API Server
+  nat-api:
+    image: python:3.11-slim
+    container_name: msmoneypenny-nat-api
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+      - NAT_HOST=0.0.0.0
+      - NAT_PORT=8100
+    command: >
+      bash -c "
+        pip install 'nvidia-nat[langchain]' &&
+        nat serve --config_file configs/product-search.yml --host 0.0.0.0 --port 8100
+      "
+    ports:
+      - "8100:8100"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8100/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # NeMo Agent Toolkit MCP Server
+  nat-mcp:
+    image: python:3.11-slim
+    container_name: msmoneypenny-nat-mcp
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+    command: >
+      bash -c "
+        pip install 'nvidia-nat[langchain]' &&
+        nat mcp-server --config_file configs/product-search.yml --host 0.0.0.0 --port 8101
+      "
+    ports:
+      - "8101:8101"
+    restart: unless-stopped
+
+  # NeMo Agent Toolkit A2A Server
+  nat-a2a:
+    image: python:3.11-slim
+    container_name: msmoneypenny-nat-a2a
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      - NVIDIA_API_KEY=${NVIDIA_API_KEY}
+    command: >
+      bash -c "
+        pip install 'nvidia-nat[langchain]' &&
+        nat a2a-server --config_file configs/customer-support.yml --host 0.0.0.0 --port 8102
+      "
+    ports:
+      - "8102:8102"
+    restart: unless-stopped

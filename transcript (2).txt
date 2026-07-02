@@ -1,0 +1,48 @@
+[User]
+Hello Hostinger Support,
+
+I have uploaded my payment documents via the document upload form. My account is at risk of deletion, and my payment for 2 servers (2 years) via American Express has not been reflected.
+
+Please review my documents and resolve this urgently.
+
+Account email: [harvey@bsmmusic.com
+Payment date: june 5 2026
+Amount: $4000
+
+Thank you,
+harvey l miller ]
+(09/06/2026 16:59)
+
+[Kodee]
+I checked your recent payments: I **don’t see a completed American Express charge** yet. One **2-year VPS payment is still pending**, and the other attempts show as **not completed**, so the renewal hasn’t fully reflected in hPanel.
+
+If Hostinger asked for account verification, open the **verification email** and finish the secure form there; uploaded documents usually must be submitted through that link. If the charge already appears on your AmEx statement but still isn’t in Hostinger, it may still be processing on the bank side.
+
+If you want, send the **service name/domain** for the 2 servers and I’ll help match the payment to the exact renewal.
+(09/06/2026 16:59)
+
+[User]
+i just uplaoded the reciepts
+(09/06/2026 17:00)
+
+[Kodee]
+Thanks — if this is the **identity verification** request, uploading receipts alone usually isn’t enough. You need to **open the verification email** and complete the **secure link** there to submit the required documents. If the card charge already shows on your AmEx statement, the payment may still be processing; if it does appear but the service doesn’t update, send me the **server/domain name** and I’ll match it.
+(09/06/2026 17:00)
+
+[User]
+i did all of that already 3 time actually
+(09/06/2026 17:02)
+
+[Kodee]
+I’m not seeing the upload in the verification system yet. Please submit the documents again through this secure link: [verification form](https://auth.hostinger.com/account-recovery?verify=1)
+
+After you finish, reply **done** and I’ll check the next step.
+(09/06/2026 17:02)
+
+[User]
+this is crazy you see i [paid and yet im the person in the wrong now?
+(09/06/2026 17:04)
+
+[Kodee]
+You’re **not** in the wrong — I’m just matching what the systems show. Right now, the payment is still **not fully completed**, and the verification system still doesn’t show a document upload on file. Please submit the documents again here: [verification form](https://auth.hostinger.com/account-recovery?verify=1), then reply **done**.
+(09/06/2026 17:04)

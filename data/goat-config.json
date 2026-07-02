@@ -1,0 +1,102 @@
+{
+  "app": {
+    "name": "SUPER GOAT ROYALTIES",
+    "version": "5.1.0",
+    "tagline": "AI-Powered Creator Platform - 100% Offline, No Login Required",
+    "description": "The ultimate royalty tracking, blockchain, crypto mining, DSP distribution, video editing, and AI platform for creators"
+  },
+  "catalog": {
+    "publisher": "BRICK SQUAD MONOPOLY PUBLISHING",
+    "artist": "WAKA FLOCKA FLAME",
+    "composer": "JUAQUIN MALPHURS",
+    "total_songs": 511,
+    "pro_affiliation": "ASCAP",
+    "publisher_address": "339 MORGAN PL SE ATLANTA, GA 30317",
+    "publisher_contact": "CRYSTAL@BSMMUSIC.COM"
+  },
+  "network": {
+    "tagline": "Our Network Is Our Net Worth",
+    "total_profiles": 142,
+    "total_connections": 140,
+    "primary_profile": {
+      "id": "waka_flocka_flame",
+      "name": "Waka Flocka Flame",
+      "realName": "Juaquin Malphurs",
+      "netWorth": 7000000,
+      "influence": 95,
+      "verified": true
+    }
+  },
+  "features": {
+    "music_catalog": {
+      "enabled": true,
+      "description": "511 songs from ASCAP catalog with ISWC, ISRC, labels, and share percentages"
+    },
+    "network_profiles": {
+      "enabled": true,
+      "description": "142 profiles with 140 connections - connect the dots in your network"
+    },
+    "royalty_calculator": {
+      "enabled": true,
+      "description": "Calculate streaming, sync, mechanical, and performance royalties"
+    },
+    "sync_opportunities": {
+      "enabled": true,
+      "description": "Track and manage sync placement opportunities for TV, film, games, commercials"
+    },
+    "crypto_mining": {
+      "enabled": true,
+      "description": "Bitcoin, Ethereum, Monero mining dashboard with pool configuration",
+      "wallets": {
+        "bitcoin_cashapp": "$lifeimitatesartinc"
+      }
+    },
+    "video_editor": {
+      "enabled": true,
+      "description": "Professional video editing with 3D effects, transitions, AI enhancement"
+    },
+    "dsp_distribution": {
+      "enabled": true,
+      "description": "Manage releases across Spotify, Apple Music, YouTube Music, Amazon, Tidal, and more"
+    },
+    "ai_assistant": {
+      "enabled": true,
+      "description": "Local LLM support with GGUF models - 100% offline, no API required"
+    }
+  },
+  "api_keys": {
+    "note": "Optional - for enhanced features. App works 100% offline without these. Set keys in .env (not committed)."
+  },
+  "server": {
+    "ip": "93.127.214.171",
+    "os": "Ubuntu 24.04.3 LTS",
+    "location": "Lithuania - Vilnius",
+    "resources": {
+      "cpu": 2,
+      "ram": "8GB",
+      "disk": "386GB"
+    }
+  },
+  "builds": {
+    "windows_exe": {
+      "enabled": true,
+      "target": "nsis",
+      "arch": ["x64"]
+    },
+    "windows_portable": {
+      "enabled": true,
+      "target": "portable",
+      "arch": ["x64"]
+    },
+    "macos_dmg": {
+      "enabled": true,
+      "target": "dmg",
+      "arch": ["x64", "arm64"]
+    },
+    "linux_appimage": {
+      "enabled": true,
+      "target": "AppImage",
+      "arch": ["x64"]
+    }
+  }
+}

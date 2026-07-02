@@ -1,0 +1,113 @@
+{
+  "opportunities": [
+    {
+      "id": "sync_001",
+      "title": "NBA 2K25 Soundtrack Placement",
+      "type": "videogame",
+      "status": "pending",
+      "description": "Seeking high-energy tracks for NBA 2K25 basketball video game soundtrack",
+      "songs": [],
+      "budget": 75000,
+      "deadline": "2025-06-30",
+      "contact": {
+        "company": "2K Sports",
+        "email": "music@2ksports.com"
+      },
+      "requirements": ["Explicit allowed", "High energy", "Sports anthem feel"],
+      "createdAt": "2025-01-15T00:00:00Z"
+    },
+    {
+      "id": "sync_002",
+      "title": "Fast & Furious 11 Soundtrack",
+      "type": "film",
+      "status": "pending",
+      "description": "Looking for trap/hip-hop tracks for action sequences",
+      "songs": [],
+      "budget": 150000,
+      "deadline": "2025-04-15",
+      "contact": {
+        "company": "Universal Pictures",
+        "email": "music@universal.com"
+      },
+      "requirements": ["Car culture", "Trap beats", "Club bangers"],
+      "createdAt": "2025-01-20T00:00:00Z"
+    },
+    {
+      "id": "sync_003",
+      "title": "Nike Campaign - \"Just Do It\"",
+      "type": "commercial",
+      "status": "pending",
+      "description": "Nike seeking motivational hip-hop for global campaign",
+      "songs": [],
+      "budget": 250000,
+      "deadline": "2025-03-01",
+      "contact": {
+        "company": "Wieden+Kennedy",
+        "email": "music@wk.com"
+      },
+      "requirements": ["Motivational", "High energy", "Clean version required"],
+      "createdAt": "2025-01-25T00:00:00Z"
+    },
+    {
+      "id": "sync_004",
+      "title": "Grand Theft Auto VI Radio Station",
+      "type": "videogame",
+      "status": "pending",
+      "description": "Rockstar Games looking for street hip-hop for GTA VI radio station",
+      "songs": [],
+      "budget": 100000,
+      "deadline": "2025-12-01",
+      "contact": {
+        "company": "Rockstar Games",
+        "email": "licensing@rockstargames.com"
+      },
+      "requirements": ["Street credibility", "Southern hip-hop", "Explicit OK"],
+      "createdAt": "2025-02-01T00:00:00Z"
+    },
+    {
+      "id": "sync_005",
+      "title": "Monday Night Football Intro",
+      "type": "tv_show",
+      "status": "pending",
+      "description": "ESPN seeking hype track for Monday Night Football intro",
+      "songs": [],
+      "budget": 175000,
+      "deadline": "2025-08-01",
+      "contact": {
+        "company": "ESPN Music",
+        "email": "music@espn.com"
+      },
+      "requirements": ["Hype", "Stadium feel", "Clean version required"],
+      "createdAt": "2025-02-15T00:00:00Z"
+    }
+  ],
+  "placements": [
+    {
+      "id": "place_001",
+      "song_title": "HARD IN DA PAINT",
+      "placement": "NBA 2K13 Soundtrack",
+      "type": "videogame",
+      "date": "2012-10-02",
+      "earnings": 50000,
+      "status": "completed"
+    },
+    {
+      "id": "place_002", 
+      "song_title": "NO HANDS",
+      "placement": "Project X (Film)",
+      "type": "film",
+      "date": "2012-03-01",
+      "earnings": 75000,
+      "status": "completed"
+    },
+    {
+      "id": "place_003",
+      "song_title": "GROVE STREET PARTY",
+      "placement": "GTA V Radio Station",
+      "type": "videogame",
+      "date": "2013-09-17",
+      "earnings": 45000,
+      "status": "completed"
+    }
+  ]
+}

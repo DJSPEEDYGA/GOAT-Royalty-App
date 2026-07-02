@@ -1,0 +1,8 @@
+# NVIDIA NeMo Agent Toolkit 1.5
+nvidia-nat[langchain]>=1.5.0
+
+# Optional integrations
+# nvidia-nat[llamaindex]
+# nvidia-nat[crewai]
+# nvidia-nat[semantic-kernel]
+# nvidia-nat[google-adk]

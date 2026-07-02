@@ -1,0 +1,54 @@
+# NeMo Agent Toolkit — Customer Support Agent
+# Run: nat run --config_file configs/customer-support.yml --input "What is your return policy?"
+
+functions:
+  # Knowledge base search for store policies and FAQs
+  knowledge_search:
+    _type: wiki_search
+    max_results: 3
+
+  # Order lookup tool
+  order_lookup:
+    _type: rest_api
+    name: order_lookup
+    description: "Look up order status by order ID or customer email"
+    endpoint: "http://localhost:3942/api/orders/lookup"
+    method: GET
+    params:
+      order_id:
+        type: string
+        description: "Order ID to look up"
+      email:
+        type: string
+        description: "Customer email to search orders"
+
+llms:
+  nim_llm:
+    _type: nim
+    model_name: meta/llama-3.1-70b-instruct
+    temperature: 0.0
+
+workflow:
+  _type: react_agent
+  tool_names: [knowledge_search, order_lookup]
+  llm_name: nim_llm
+  verbose: true
+  parse_agent_response_max_retries: 3
+  system_prompt: |
+    You are Ms Money Penny, the AI customer support agent for Life Imitates Art Inc.
+    You are friendly, professional, and empowering in your communication style.
+
+    Store Policies:
+    - Returns accepted within 30 days of purchase with receipt
+    - Free shipping on orders over $100
+    - Standard shipping: 5-7 business days
+    - Express shipping: 2-3 business days ($12.99)
+    - All products come with a 1-year warranty
+    - Price matching available for identical items
+
+    When assisting customers:
+    1. Greet them warmly
+    2. Understand their issue completely before responding
+    3. Provide clear, accurate information
+    4. Offer additional help proactively
+    5. Escalate to human support if you cannot resolve the issue

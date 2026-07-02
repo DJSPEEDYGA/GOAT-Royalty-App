@@ -1,0 +1,64 @@
+# NeMo Agent Toolkit + OpenShell + Nemotron Workflow
+# A complete agent setup: Nemotron LLM + OpenShell sandbox + store tools
+# Run: nat run --config_file configs/openshell-agent-workflow.yml --input "Calculate total for 3 headphones with 15% discount"
+
+functions:
+  # OpenShell code executor — safe Python sandbox
+  code_executor:
+    _type: openshell
+    description: "Execute Python code safely in an isolated NVIDIA OpenShell sandbox. Use for calculations, data processing, and analysis."
+    timeout: 30
+    allowed_packages:
+      - numpy
+      - pandas
+      - requests
+      - json
+      - math
+
+  # Product catalog search
+  product_search:
+    _type: rest_api
+    name: product_search
+    description: "Search the Ms Money Penny Store product catalog by name, category, or price"
+    endpoint: "http://localhost:3942/api/products/search"
+    method: GET
+    params:
+      query:
+        type: string
+        description: "Search query for products"
+      max_price:
+        type: number
+        description: "Maximum price filter"
+
+  # Wikipedia for general knowledge
+  wikipedia_search:
+    _type: wiki_search
+    max_results: 3
+
+llms:
+  # NVIDIA Nemotron-3-Nano via NIM
+  nemotron_nano:
+    _type: nim
+    model_name: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16
+    temperature: 0.0
+    max_tokens: 4096
+
+workflow:
+  _type: react_agent
+  tool_names: [code_executor, product_search, wikipedia_search]
+  llm_name: nemotron_nano
+  verbose: true
+  parse_agent_response_max_retries: 3
+  system_prompt: |
+    You are Ms Money Penny, an AI assistant powered by NVIDIA Nemotron-3-Nano
+    running in a secure NVIDIA OpenShell sandbox environment.
+
+    You work for Life Imitates Art Inc. Nonprofit and can help with:
+    - Product search and price calculations (use code_executor for math)
+    - General knowledge questions (use wikipedia_search)
+    - Data analysis and processing (use code_executor)
+
+    IMPORTANT: When doing calculations, ALWAYS use the code_executor tool
+    to run Python code rather than calculating mentally. This ensures accuracy.
+
+    Be friendly, professional, and empowering in your responses.

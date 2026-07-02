@@ -1,0 +1,70 @@
+# NeMo Agent Toolkit — Voice-Enabled Ms Money Penny Agent
+# Combines Nemotron Speech (ASR/TTS) with Nemotron LLM for voice shopping
+# Run: nat run --config_file configs/voice-agent-workflow.yml
+
+functions:
+  # Streaming ASR — real-time speech to text
+  speech_to_text:
+    _type: nvidia_asr
+    model: nemotron-asr-streaming
+    language: en
+    streaming: true
+    punctuation: true
+    word_timestamps: true
+
+  # Text to Speech — natural voice responses
+  text_to_speech:
+    _type: nvidia_tts
+    model: magpie-tts-multilingual
+    voice: default
+    language: en
+    sample_rate: 22050
+
+  # Product search tool
+  product_search:
+    _type: rest_api
+    name: product_search
+    description: "Search the Ms Money Penny Store product catalog"
+    endpoint: "http://localhost:3942/api/products/search"
+    method: GET
+    params:
+      query:
+        type: string
+        description: "Search query for products"
+
+  # Translation tool
+  translate:
+    _type: nvidia_nmt
+    model: riva-translate-4b-instruct-v1_1
+    source_language: auto
+    target_language: en
+
+llms:
+  nemotron_nano:
+    _type: nim
+    model_name: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16
+    temperature: 0.0
+    max_tokens: 2048
+
+workflow:
+  _type: react_agent
+  tool_names: [speech_to_text, text_to_speech, product_search, translate]
+  llm_name: nemotron_nano
+  verbose: true
+  parse_agent_response_max_retries: 3
+  system_prompt: |
+    You are Ms Money Penny, a voice-enabled AI shopping assistant powered by
+    NVIDIA Nemotron Speech and Nemotron-3-Nano LLM.
+
+    You work for Life Imitates Art Inc. Nonprofit and can:
+    - Listen to customer voice requests via speech recognition
+    - Search products in the store catalog
+    - Respond with natural, expressive speech
+    - Translate between languages for multilingual customers
+
+    When helping customers:
+    1. Acknowledge their request warmly
+    2. Search for relevant products
+    3. Present results clearly with prices
+    4. Offer to help with anything else
+    5. Respond in the customer's preferred language if needed

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRO Royalties - GOAT Royalties</title>
+  <link rel="stylesheet" href="css/goat-theme.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    .pro-container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+    .pro-header { text-align: center; margin-bottom: 40px; padding: 30px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); }
+    .pro-header h1 { font-family: var(--font-display); font-size: 2.5rem; color: var(--gold); margin-bottom: 10px; }
+    
+    .pro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin-bottom: 30px; }
+    
+    .pro-card { background: var(--bg-card); border-radius: var(--radius); padding: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: var(--transition); }
+    .pro-card:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: var(--shadow-gold); }
+    .pro-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+    
+    .pro-card.ascap::before { background: linear-gradient(90deg, #ff6b35, #f7c59f); }
+    .pro-card.bmi::before { background: linear-gradient(90deg, #e63946, #f1faee); }
+    .pro-card.sesac::before { background: linear-gradient(90deg, #2a9d8f, #a8dadc); }
+    
+    .pro-card .logo { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+    .pro-card.ascap .logo { color: #ff6b35; }
+    .pro-card.bmi .logo { color: #e63946; }
+    .pro-card.sesac .logo { color: #2a9d8f; }
+    
+    .pro-card h3 { font-size: 1.5rem; color: var(--text-primary); margin-bottom: 8px; }
+    .pro-card .status { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-bottom: 16px; }
+    .pro-card .status.active { background: rgba(46, 204, 113, 0.2); color: var(--success); }
+    .pro-card .status.pending { background: rgba(243, 156, 18, 0.2); color: var(--warning); }
+    
+    .pro-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; }
+    .pro-stat { background: var(--bg-glass); padding: 12px; border-radius: var(--radius-sm); text-align: center; }
+    .pro-stat .label { font-size: 0.75rem; color: var(--text-secondary); }
+    .pro-stat .value { font-size: 1.2rem; font-weight: 700; color: var(--gold); }
+    
+    .works-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .works-table th { text-align: left; padding: 12px; color: var(--gold); border-bottom: 1px solid var(--border); font-size: 0.85rem; text-transform: uppercase; }
+    .works-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    .works-table tr:hover { background: rgba(212, 160, 60, 0.05); }
+    
+    .connect-btn { display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, var(--gold), var(--accent-light)); color: var(--navy-deep); border: none; border-radius: var(--radius-sm); font-weight: 700; cursor: pointer; transition: var(--transition); margin-top: 16px; }
+    .connect-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--gold-glow); }
+    .connect-btn.connected { background: var(--success); color: white; }
+    
+    .total-banner { background: linear-gradient(135deg, var(--gold), var(--accent-light)); border-radius: var(--radius-lg); padding: 30px; text-align: center; margin-bottom: 30px; }
+    .total-banner h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--navy-deep); margin-bottom: 8px; }
+    .total-banner .total-amount { font-size: 3rem; font-weight: 800; color: var(--navy-deep); }
+    
+    .sync-status { display: flex; align-items: center; gap: 8px; margin-top: 16px; padding: 12px; background: var(--bg-glass); border-radius: var(--radius-sm); }
+    .sync-status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: pulse-dot 2s infinite; }
+    .sync-status .dot.warning { background: var(--warning); }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <div class="goat-bg"></div>
+  <div class="goat-bg-overlay"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <nav class="top-nav">
+    <a href="index.html" class="logo">
+      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
+      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
+      <span>Ms Money Penny</span>
+      <span class="crown-badge">👑 GOAT</span>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">🏠 Home</a>
+      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="pro-royalties.html" class="active">🎵 PRO Royalties</a>
+      <a href="banking.html">🏦 Banking</a>
+      <a href="wallet.html">💰 Wallet</a>
+      <a href="about.html">👑 About</a>
+    </div>
+  </nav>
+
+  <div class="pro-container">
+    <div class="pro-header animate-in">
+      <h1>🎵 PRO Royalty Integration</h1>
+      <p>ASCAP, BMI, SESAC - All your performing rights in one place</p>
+    </div>
+
+    <div class="total-banner animate-in">
+      <h2>Total PRO Revenue (Lifetime)</h2>
+      <div class="total-amount" id="totalProRevenue">$1,000,000</div>
+    </div>
+
+    <div class="pro-grid" id="proGrid">
+      <!-- PRO Cards will be injected here -->
+    </div>
+
+    <div class="section-card animate-in" style="background: var(--bg-card); border-radius: var(--radius-lg); padding: 30px; border: 1px solid var(--border); margin-bottom: 30px;">
+      <h2 style="font-family: var(--font-display); font-size: 1.8rem; color: var(--gold); margin-bottom: 20px;">📋 Registered Works</h2>
+      <div style="overflow-x: auto;">
+        <table class="works-table" id="worksTable">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>PRO</th>
+              <th>Owner</th>
+              <th>Status</th>
+              <th>Earnings</th>
+            </tr>
+          </thead>
+          <tbody id="worksBody">
+            <!-- Works will be injected here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-brand">👑 GOAT Royalties - Stay Paid & Play Harder</div>
+  </footer>
+
+  <script src="js/particles.js"></script>
+  <script>
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+    
+    // PRO Data
+    const PRO_DATA = {
+      ascap: {
+        name: 'ASCAP',
+        fullName: 'American Society of Composers, Authors and Publishers',
+        status: 'Active',
+        works: 877,
+        lastPayout: '$45,000',
+        lastPayoutDate: '2024-03-15',
+        ytd: 750000,
+        lifetime: 1200000,
+        color: '#ff6b35'
+      },
+      bmi: {
+        name: 'BMI',
+        fullName: 'Broadcast Music, Inc.',
+        status: 'Active',
+        works: 877,
+        lastPayout: '$28,500',
+        lastPayoutDate: '2024-02-28',
+        ytd: 200000,
+        lifetime: 450000,
+        color: '#e63946'
+      },
+      sesac: {
+        name: 'SESAC',
+        fullName: 'Society of European Stage Authors and Composers',
+        status: 'Active',
+        works: 150,
+        lastPayout: '$8,200',
+        lastPayoutDate: '2024-03-10',
+        ytd: 50000,
+        lifetime: 125000,
+        color: '#2a9d8f'
+      }
+    };
+
+    // Sample works
+    const WORKS = [
+      { title: 'Hard in da Paint', pro: 'ASCAP', owner: 'Boss', status: 'Active', earnings: 125000 },
+      { title: 'No Hands', pro: 'ASCAP', owner: 'Boss', status: 'Active', earnings: 95000 },
+      { title: 'Grove St. Party', pro: 'ASCAP', owner: 'Boss', status: 'Active', earnings: 75000 },
+      { title: 'ACROSS THE LAND', pro: 'ASCAP', owner: 'OG', status: 'Active', earnings: 45000 },
+      { title: 'BASIC BOUNCE', pro: 'BMI', owner: 'OG', status: 'Active', earnings: 32000 },
+      { title: 'Round of Applause', pro: 'ASCAP', owner: 'Boss', status: 'Active', earnings: 55000 },
+      { title: 'ALL I EVER WANTED', pro: 'ASCAP', owner: 'OG', status: 'Active', earnings: 28000 },
+      { title: 'Flockaveli', pro: 'ASCAP', owner: 'Boss', status: 'Active', earnings: 68000 },
+      { title: 'AMERIKKA', pro: 'BMI', owner: 'OG', status: 'Active', earnings: 22000 },
+      { title: 'Rooster in my Rari', pro: 'ASCAP', owner: 'Boss', status: 'Active', earnings: 35000 }
+    ];
+
+    function renderPROCards() {
+      const grid = document.getElementById('proGrid');
+      grid.innerHTML = Object.entries(PRO_DATA).map(([key, pro]) => `
+        <div class="pro-card ${key} animate-in">
+          <div class="logo">${pro.name}</div>
+          <h3>${pro.fullName}</h3>
+          <span class="status ${pro.status.toLowerCase()}">${pro.status}</span>
+          <div class="sync-status">
+            <span class="dot"></span>
+            <span>Last synced: ${new Date().toLocaleDateString()}</span>
+          </div>
+          <div class="pro-stats">
+            <div class="pro-stat">
+              <div class="label">Works</div>
+              <div class="value">${pro.works}</div>
+            </div>
+            <div class="pro-stat">
+              <div class="label">YTD</div>
+              <div class="value">$${(pro.ytd/1000).toFixed(0)}K</div>
+            </div>
+            <div class="pro-stat">
+              <div class="label">Last Payout</div>
+              <div class="value">${pro.lastPayout}</div>
+            </div>
+            <div class="pro-stat">
+              <div class="label">Lifetime</div>
+              <div class="value">$${(pro.lifetime/1000).toFixed(0)}K</div>
+            </div>
+          </div>
+          <button class="connect-btn connected" onclick="syncPRO('${key}')">✓ Connected - Sync Now</button>
+        </div>
+      `).join('');
+      
+      // Update total
+      const total = Object.values(PRO_DATA).reduce((sum, pro) => sum + pro.lifetime, 0);
+      document.getElementById('totalProRevenue').textContent = '$' + total.toLocaleString();
+    }
+
+    function renderWorksTable() {
+      const tbody = document.getElementById('worksBody');
+      tbody.innerHTML = WORKS.map(work => `
+        <tr>
+          <td>${work.title}</td>
+          <td><span style="color: ${PRO_DATA[work.pro.toLowerCase()]?.color || 'var(--gold)'}">${work.pro}</span></td>
+          <td>${work.owner}</td>
+          <td><span style="color: var(--success)">${work.status}</span></td>
+          <td>$${work.earnings.toLocaleString()}</td>
+        </tr>
+      `).join('');
+    }
+
+    function syncPRO(proKey) {
+      const btn = event.target;
+      btn.textContent = '⏳ Syncing...';
+      setTimeout(() => {
+        btn.textContent = '✓ Connected - Sync Now';
+        alert(`${PRO_DATA[proKey].name} synced successfully!`);
+      }, 2000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPROCards();
+      renderWorksTable();
+    });
+  </script>
+</body>
+</html>

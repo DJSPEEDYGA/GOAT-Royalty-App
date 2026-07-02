@@ -1,0 +1,418 @@
+# ============================================================================
+# Lightning AI Model APIs — NeMo Agent Toolkit Workflow Configuration
+# ============================================================================
+# Integrates Lightning AI's unified model gateway with the Ms Money Penny
+# Desktop Store App via NVIDIA NeMo Agent Toolkit.
+#
+# Platform: https://lightning.ai
+# Version:  1.0.0
+# ============================================================================
+
+workflow:
+  name: "lightning-ai-store-assistant"
+  version: "1.0.0"
+  description: >
+    Ms Money Penny AI-powered store assistant using Lightning AI Model APIs.
+    Routes requests to the optimal model based on task complexity, latency
+    requirements, and cost budget.
+
+# --------------------------------------------------------------------------
+# Provider Configuration
+# --------------------------------------------------------------------------
+providers:
+  lightning_ai:
+    type: "openai-compatible"
+    base_url: "https://api.lightning.ai/v1"
+    api_key: "${LIGHTNING_API_KEY}"
+    timeout: 60
+    max_retries: 3
+    retry_delay: 1.0
+
+# --------------------------------------------------------------------------
+# Model Registry — All available Lightning AI models
+# --------------------------------------------------------------------------
+models:
+  # --- Lightning AI Native Models ---
+  gpt-oss-20b:
+    provider: lightning_ai
+    model_id: "gpt-oss-20b"
+    context_length: 128000
+    cost_input: 0.05
+    cost_output: 0.20
+    cache_input: 0.01
+    cache_output: 0.05
+    latency_avg: 3.04
+    throughput_avg: 6.43
+    tier: "economy"
+    use_cases:
+      - "simple-completions"
+      - "batch-processing"
+      - "classification"
+      - "data-extraction"
+
+  gpt-oss-120b:
+    provider: lightning_ai
+    model_id: "gpt-oss-120b"
+    context_length: 128000
+    cost_input: 0.10
+    cost_output: 0.40
+    cache_input: 0.02
+    cache_output: 0.10
+    latency_avg: 0.90
+    throughput_avg: 177.56
+    tier: "standard"
+    use_cases:
+      - "code-generation"
+      - "complex-reasoning"
+      - "production-chat"
+      - "content-creation"
+
+  llama-3.3-70b:
+    provider: lightning_ai
+    model_id: "llama-3.3-70b"
+    context_length: 128000
+    cost_input: 0.30
+    cost_output: 0.30
+    cache_input: 0.07
+    cache_output: 0.07
+    latency_avg: 0.83
+    throughput_avg: 60.23
+    tier: "standard"
+    use_cases:
+      - "multilingual"
+      - "general-purpose"
+      - "balanced-workloads"
+
+  deepseek-v3.1:
+    provider: lightning_ai
+    model_id: "deepseek-v3.1"
+    context_length: 164000
+    cost_input: 0.32
+    cost_output: 1.10
+    cache_input: 0.08
+    cache_output: 0.28
+    latency_avg: 0.65
+    throughput_avg: 90.23
+    tier: "standard"
+    use_cases:
+      - "deep-reasoning"
+      - "mathematics"
+      - "scientific-analysis"
+      - "code-review"
+
+  nvidia-nemotron-3-super-120b:
+    provider: lightning_ai
+    model_id: "nvidia-nemotron-3-super-120b"
+    context_length: 256000
+    cost_input: 1.40
+    cost_output: 3.00
+    cache_input: 0.35
+    cache_output: 0.75
+    latency_avg: 1.06
+    throughput_avg: 376.15
+    tier: "premium"
+    use_cases:
+      - "enterprise-workloads"
+      - "long-context"
+      - "high-throughput"
+      - "document-processing"
+
+  minimax-m2.5:
+    provider: lightning_ai
+    model_id: "minimax-m2.5"
+    context_length: 196000
+    cost_input: 1.00
+    cost_output: 4.80
+    cache_input: 0.25
+    cache_output: 1.20
+    latency_avg: 0.85
+    throughput_avg: 108.49
+    tier: "premium"
+    use_cases:
+      - "multi-modal"
+      - "creative-content"
+      - "high-context"
+
+  kimi-k2.5:
+    provider: lightning_ai
+    model_id: "kimi-k2.5"
+    context_length: 256000
+    cost_input: 2.32
+    cost_output: 12.00
+    cache_input: 0.58
+    cache_output: 3.00
+    latency_avg: 0.63
+    throughput_avg: 280.46
+    tier: "premium"
+    use_cases:
+      - "ultra-long-context"
+      - "research"
+      - "complex-dialogues"
+
+  glm-5:
+    provider: lightning_ai
+    model_id: "glm-5"
+    context_length: 200000
+    cost_input: 3.60
+    cost_output: 12.80
+    cache_input: 0.90
+    cache_output: 3.20
+    latency_avg: 4.86
+    throughput_avg: 54.95
+    tier: "premium"
+    use_cases:
+      - "advanced-reasoning"
+      - "multilingual-excellence"
+      - "enterprise-analytics"
+
+  # --- OpenAI Models (via Lightning AI Gateway) ---
+  gpt-5-nano:
+    provider: lightning_ai
+    model_id: "gpt-5-nano"
+    context_length: 400000
+    cost_input: 0.05
+    cost_output: 0.40
+    latency_avg: 2.42
+    throughput_avg: 107.33
+    tier: "economy"
+    use_cases:
+      - "ultra-lightweight"
+      - "edge-deployment"
+      - "cost-optimization"
+
+  gpt-3.5-turbo:
+    provider: lightning_ai
+    model_id: "gpt-3.5-turbo"
+    context_length: 16000
+    cost_input: 0.50
+    cost_output: 1.50
+    latency_avg: 1.15
+    throughput_avg: 88.68
+    tier: "standard"
+    use_cases:
+      - "legacy-compatibility"
+      - "simple-chat"
+      - "quick-completions"
+
+  gpt-5-mini:
+    provider: lightning_ai
+    model_id: "gpt-5-mini"
+    context_length: 400000
+    cost_input: 0.25
+    cost_output: 2.00
+    latency_avg: 35.39
+    throughput_avg: 3.23
+    tier: "premium"
+    use_cases:
+      - "deep-reasoning"
+      - "complex-analysis"
+      - "high-accuracy"
+
+  # --- Google Models (via Lightning AI Gateway) ---
+  gemini-2.5-flash-lite:
+    provider: lightning_ai
+    model_id: "gemini-2.5-flash-lite"
+    context_length: 1000000
+    cost_input: 0.10
+    cost_output: 0.40
+    latency_avg: 4.80
+    throughput_avg: 7.61
+    tier: "economy"
+    use_cases:
+      - "massive-context"
+      - "document-analysis"
+      - "cost-efficient"
+
+  gemini-3-flash:
+    provider: lightning_ai
+    model_id: "gemini-3-flash"
+    context_length: 1000000
+    cost_input: 0.50
+    cost_output: 1.00
+    latency_avg: 1.66
+    throughput_avg: 159.34
+    tier: "standard"
+    use_cases:
+      - "high-throughput"
+      - "million-context"
+      - "multi-modal"
+      - "production"
+
+  gemini-2.5-flash:
+    provider: lightning_ai
+    model_id: "gemini-2.5-flash"
+    context_length: 1000000
+    cost_input: 0.30
+    cost_output: 2.50
+    latency_avg: 5.42
+    throughput_avg: 20.31
+    tier: "standard"
+    use_cases:
+      - "balanced-google-ai"
+      - "reasoning"
+      - "document-processing"
+
+# --------------------------------------------------------------------------
+# Smart Router — Routes requests to optimal model
+# --------------------------------------------------------------------------
+router:
+  strategy: "cost-performance-balanced"
+  
+  rules:
+    # Economy tier — simple tasks, batch processing
+    - name: "economy-routing"
+      condition:
+        task_type:
+          - "classification"
+          - "extraction"
+          - "simple-completion"
+        max_budget_per_request: 0.001
+      models:
+        primary: "gpt-oss-20b"
+        fallback: "gpt-5-nano"
+
+    # Standard tier — production workloads
+    - name: "standard-routing"
+      condition:
+        task_type:
+          - "chat"
+          - "content-creation"
+          - "code-generation"
+        latency_requirement: "< 2s"
+      models:
+        primary: "gpt-oss-120b"
+        fallback: "llama-3.3-70b"
+        overflow: "gemini-3-flash"
+
+    # Reasoning tier — complex analysis
+    - name: "reasoning-routing"
+      condition:
+        task_type:
+          - "reasoning"
+          - "analysis"
+          - "mathematics"
+      models:
+        primary: "deepseek-v3.1"
+        fallback: "gpt-5-mini"
+
+    # Long-context tier — large documents
+    - name: "long-context-routing"
+      condition:
+        input_tokens: "> 128000"
+      models:
+        primary: "gemini-3-flash"
+        fallback: "nvidia-nemotron-3-super-120b"
+        overflow: "kimi-k2.5"
+
+    # High-throughput tier — maximum speed
+    - name: "throughput-routing"
+      condition:
+        throughput_requirement: "> 200 tok/s"
+      models:
+        primary: "nvidia-nemotron-3-super-120b"
+        fallback: "kimi-k2.5"
+
+    # Enterprise tier — mission-critical
+    - name: "enterprise-routing"
+      condition:
+        priority: "critical"
+        sla: "99.9%"
+      models:
+        primary: "nvidia-nemotron-3-super-120b"
+        fallback: "gpt-oss-120b"
+        overflow: "gemini-3-flash"
+
+# --------------------------------------------------------------------------
+# Store Integration — Ms Money Penny Store Agents
+# --------------------------------------------------------------------------
+agents:
+  shopping_assistant:
+    name: "Ms Money Penny Shopping Assistant"
+    model: "gpt-oss-120b"
+    fallback_model: "llama-3.3-70b"
+    system_prompt: >
+      You are Ms Money Penny, the AI shopping assistant for Life Imitates Art Inc.
+      Help customers find products, answer questions about orders, and provide
+      personalized recommendations. Be friendly, knowledgeable, and professional.
+    max_tokens: 1024
+    temperature: 0.7
+    tools:
+      - "product_search"
+      - "order_lookup"
+      - "recommendation_engine"
+      - "inventory_check"
+
+  product_analyst:
+    name: "Product Analysis Agent"
+    model: "deepseek-v3.1"
+    fallback_model: "gemini-2.5-flash"
+    system_prompt: >
+      Analyze product data, market trends, and customer behavior to provide
+      actionable insights for the Ms Money Penny Store.
+    max_tokens: 2048
+    temperature: 0.3
+    tools:
+      - "analytics_dashboard"
+      - "trend_analysis"
+      - "competitor_scan"
+
+  content_creator:
+    name: "Store Content Generator"
+    model: "minimax-m2.5"
+    fallback_model: "gpt-oss-120b"
+    system_prompt: >
+      Generate engaging product descriptions, marketing copy, and creative
+      content for the Ms Money Penny Store catalog.
+    max_tokens: 4096
+    temperature: 0.8
+    tools:
+      - "image_description"
+      - "seo_optimizer"
+      - "social_media_formatter"
+
+  document_processor:
+    name: "Document Processing Agent"
+    model: "gemini-3-flash"
+    fallback_model: "nvidia-nemotron-3-super-120b"
+    system_prompt: >
+      Process, analyze, and extract information from store documents including
+      invoices, contracts, product catalogs, and customer communications.
+    max_tokens: 8192
+    temperature: 0.2
+    tools:
+      - "pdf_extractor"
+      - "invoice_parser"
+      - "contract_analyzer"
+
+# --------------------------------------------------------------------------
+# Monitoring & Cost Management
+# --------------------------------------------------------------------------
+monitoring:
+  enabled: true
+  metrics:
+    - "token_usage"
+    - "cost_per_request"
+    - "latency_p50"
+    - "latency_p99"
+    - "error_rate"
+    - "cache_hit_rate"
+  alerts:
+    daily_budget_limit: 100.00  # Lightning credits
+    per_request_limit: 5.00
+    error_rate_threshold: 0.05
+    latency_threshold: 10.0
+  dashboard:
+    url: "https://lightning.ai/dashboard"
+    refresh_interval: 30
+
+# --------------------------------------------------------------------------
+# Caching Configuration
+# --------------------------------------------------------------------------
+caching:
+  enabled: true
+  strategy: "semantic"
+  ttl: 3600  # 1 hour
+  max_entries: 10000
+  cache_system_prompts: true
+  cache_common_queries: true
+  similarity_threshold: 0.95

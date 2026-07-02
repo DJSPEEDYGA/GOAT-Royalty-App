@@ -1,0 +1,3438 @@
+{
+  "profiles": [
+    {
+      "id": "waka_flocka_flame",
+      "name": "Waka Flocka Flame",
+      "realName": "Juaquin Malphurs",
+      "type": "artist",
+      "company": "Brick Squad Monopoly",
+      "proAffiliation": "ASCAP",
+      "publisher": "BRICK SQUAD MONOPOLY PUBLISHING",
+      "netWorth": 7000000,
+      "influence": 95,
+      "verified": true,
+      "skills": [
+        "Rapper",
+        "Songwriter",
+        "Producer"
+      ],
+      "genres": [
+        "Hip-Hop",
+        "Trap",
+        "Southern Hip-Hop"
+      ],
+      "location": "Atlanta, GA",
+      "socialMedia": {
+        "instagram": "@wakaflocka",
+        "twitter": "@WakaFlocka",
+        "youtube": "WakaFlockaBSM"
+      },
+      "biography": "Juaquin James Malphurs, known professionally as Waka Flocka Flame, is an American rapper. He became a mainstream artist with the release of his singles 'O Let's Do It', 'Hard in da Paint', and 'No Hands'.",
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "brick_squad_monopoly",
+      "name": "Brick Squad Monopoly",
+      "type": "label",
+      "company": "Brick Squad Monopoly Publishing",
+      "netWorth": 15000000,
+      "influence": 80,
+      "verified": true,
+      "skills": [
+        "Music Publishing",
+        "Artist Development",
+        "Distribution"
+      ],
+      "location": "Atlanta, GA",
+      "contact": {
+        "email": "CRYSTAL@BSMMUSIC.COM",
+        "address": "339 MORGAN PL SE ATLANTA, GA 30317"
+      },
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_0",
+      "name": "1017 BRICK SQUAD",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_1",
+      "name": "A-WAX & BAKERY BRAD",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_2",
+      "name": "ALCOHOL MOTTO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_3",
+      "name": "ASAP ROCKY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_4",
+      "name": "AVERY STORM",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_5",
+      "name": "AZIZI GIBSON",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_6",
+      "name": "B SMEEZY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_7",
+      "name": "B.O.B.",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_8",
+      "name": "BEN G",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_9",
+      "name": "BIG K.R.I.T. & JUICY J",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_10",
+      "name": "BIG STACKSSS",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_11",
+      "name": "BJ THE CHICAGO KID",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_12",
+      "name": "BLAIR MAXBERRY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_13",
+      "name": "BLAR & P SMURF",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_14",
+      "name": "BO DEAL",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_15",
+      "name": "BORGONE & PAIGE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_16",
+      "name": "BOSS G & TAY DON",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_17",
+      "name": "CARTEL MGM",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_18",
+      "name": "CARTEL MGM & CHAISE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_19",
+      "name": "CARTEL MGM & KINTO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_20",
+      "name": "CARTEL MGM & LIL CAPP",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_21",
+      "name": "CASH OUT & WAKA FLOCKA",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_22",
+      "name": "CEDDY LO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_23",
+      "name": "CHAISE N CASH",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_24",
+      "name": "CHAZ GOTTI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_25",
+      "name": "CHAZ GOTTI & D DASH",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_26",
+      "name": "CHAZZ GOTTI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_27",
+      "name": "CHILL WILL",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_28",
+      "name": "DAE DAE DINRO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_29",
+      "name": "DAVID BLAYNE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_30",
+      "name": "DEREZ DESHON",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_31",
+      "name": "DIAMOND",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_32",
+      "name": "DIAMOND & GUCCI MANE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_33",
+      "name": "DJ SPEEDY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_34",
+      "name": "DOESHUN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_35",
+      "name": "ELDORADO RED",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_36",
+      "name": "FETTI GANG",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_37",
+      "name": "FLOWN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_38",
+      "name": "FRENCH MONTANA",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_39",
+      "name": "FRENCH MONTANA & SLIM DUNKIN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_40",
+      "name": "FRENCHIE, DESI, JOFFY & SONY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_41",
+      "name": "FUTURE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_42",
+      "name": "FUTURE & YOUNG SCOOTER",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_43",
+      "name": "GEPETTO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_44",
+      "name": "GIGGS",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_45",
+      "name": "GUCCI MANE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_46",
+      "name": "GUCCI MANE & CARTEL MGM",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_47",
+      "name": "GUCCI MANE & CHAZ GOTTI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_48",
+      "name": "GUCCI MANE & OJ DA JUICEMAN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_49",
+      "name": "GUCCI MANE & YOUNG THUG",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_50",
+      "name": "GUNPLAY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_51",
+      "name": "HITSQUAD TALIBAN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_52",
+      "name": "ICE BURGANDY & D-BO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_53",
+      "name": "J DUBB & LOUDIENE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_54",
+      "name": "JAE MILLZ",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_55",
+      "name": "JAIDED & YT",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_56",
+      "name": "JARVIS",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_57",
+      "name": "JIM JONES & JUELZ SANTANA",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_58",
+      "name": "JIMMY ROCKET",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_59",
+      "name": "JON GEEZY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_60",
+      "name": "JON GEEZY & DOESHUN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_61",
+      "name": "JON GEEZY & PARLAE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_62",
+      "name": "JON GEEZY & SUPPLYA",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_63",
+      "name": "JON GEEZY, LIL HOT & PARLAE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_64",
+      "name": "JU FROM D4L",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_65",
+      "name": "KEBO GOTTI & BO DEAL",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_66",
+      "name": "KEBO GOTTI & SLIM DUNKIN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_67",
+      "name": "KRAZY BLACX & LOUDIENE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_68",
+      "name": "KSO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_69",
+      "name": "KURT CT",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_70",
+      "name": "LA CHAT",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_71",
+      "name": "LIL CAPP",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_72",
+      "name": "LIL CAPP & B SMEEZY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_73",
+      "name": "LIL CAPP & BOOTZ",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_74",
+      "name": "LIL CAPP & YG HOOTIE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_75",
+      "name": "LIL DURK & DEREZ DESHON",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_76",
+      "name": "LIL WAYNE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_77",
+      "name": "LOUDIENE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_78",
+      "name": "MACHINE GUN KELLY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_79",
+      "name": "MACON HAMILTON",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_80",
+      "name": "MIGOS",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_81",
+      "name": "OFFSET & CA$H OUT",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_82",
+      "name": "OJ DA JUICEMAN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_83",
+      "name": "PRINCE DE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_84",
+      "name": "RICO LOVE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_85",
+      "name": "ROCKO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_86",
+      "name": "RON BROWZ",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_87",
+      "name": "SEAN TEEZY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_88",
+      "name": "SISGO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_89",
+      "name": "SLIM DUNKIN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_90",
+      "name": "SLIM DUNKIN & AMANDA",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_91",
+      "name": "SLIM DUNKIN & B-CEEZY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_92",
+      "name": "SLIM DUNKIN & D-BO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_93",
+      "name": "SLIM DUNKIN & GUCCI MANE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_94",
+      "name": "SLIM DUNKIN & QUEZ",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_95",
+      "name": "SLIM DUNKIN & RICH KIDZ",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_96",
+      "name": "SLIM DUNKIN & SEAN TEEZY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_97",
+      "name": "SLIM DUNKIN & WOOH DA KID",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_98",
+      "name": "SLIM DUNKIN, BC & LIL CAPP",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_99",
+      "name": "SLIM DUNKIN, YC & JODY BREEZE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_100",
+      "name": "SNYPA RYFLE & SMEEZEE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_101",
+      "name": "SONY",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_102",
+      "name": "SOUFBOI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_103",
+      "name": "SPEEDY & BC",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_104",
+      "name": "TARVORIA",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_105",
+      "name": "TAY BEATZ",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_106",
+      "name": "TAY BEATZ & GORILLA ZOE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_107",
+      "name": "TAY DON & KANDI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_108",
+      "name": "TC & EMANI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_109",
+      "name": "TOO $HORT",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_110",
+      "name": "TRAE THA TRUTH",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_111",
+      "name": "TRAVIS PORTER",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_112",
+      "name": "TRAVIS PORTER & BRYAN J",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_113",
+      "name": "TRAVIS PORTER & NEW BOYZ",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_114",
+      "name": "TRAVIS PORTER & ROSCOE DASH",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_115",
+      "name": "TROY AVE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_116",
+      "name": "VELI SOSA & TROUBLE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_117",
+      "name": "WAKA FLOCKA",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_118",
+      "name": "WAKA FLOCKA & SYA ARI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_119",
+      "name": "WAKA FLOCKA FLAME",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_120",
+      "name": "WHODINI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_121",
+      "name": "WOOH DA KID",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_122",
+      "name": "WOOH DA KID & FETTI GANG",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_123",
+      "name": "WOOH DA KID & SLIM DUNKIN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_124",
+      "name": "YG HOOTIE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_125",
+      "name": "YG HOOTIE & ELDORADO RED",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_126",
+      "name": "YG HOOTIE & KEBO GOTTI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_127",
+      "name": "YG HOOTIE & MOUSE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_128",
+      "name": "YG HOOTIE & SLIM DUNKIN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_129",
+      "name": "YG HOOTIE & WOOH DA KID",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_130",
+      "name": "YO GOTTI",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_131",
+      "name": "YO GOTTI, TONY YAYO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_132",
+      "name": "YOUNG BUCK",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_133",
+      "name": "YOUNG DOSE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_134",
+      "name": "YOUNG DOSE & MO PAIN",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_135",
+      "name": "YOUNG SAC",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_136",
+      "name": "YOUNG SCOOTER",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_137",
+      "name": "YOUNG SIZZLE",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_138",
+      "name": "YOUNG THUG & JUDO",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "featured_139",
+      "name": "YUNG GWAPA",
+      "type": "artist",
+      "source": "catalog_collaboration",
+      "netWorth": 0,
+      "influence": 50,
+      "verified": false,
+      "skills": [
+        "Artist"
+      ],
+      "connections": [],
+      "createdAt": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "connections": [
+    {
+      "id": "conn_0",
+      "from": "waka_flocka_flame",
+      "to": "featured_0",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_1",
+      "from": "waka_flocka_flame",
+      "to": "featured_1",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_2",
+      "from": "waka_flocka_flame",
+      "to": "featured_2",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_3",
+      "from": "waka_flocka_flame",
+      "to": "featured_3",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_4",
+      "from": "waka_flocka_flame",
+      "to": "featured_4",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_5",
+      "from": "waka_flocka_flame",
+      "to": "featured_5",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_6",
+      "from": "waka_flocka_flame",
+      "to": "featured_6",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_7",
+      "from": "waka_flocka_flame",
+      "to": "featured_7",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_8",
+      "from": "waka_flocka_flame",
+      "to": "featured_8",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_9",
+      "from": "waka_flocka_flame",
+      "to": "featured_9",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_10",
+      "from": "waka_flocka_flame",
+      "to": "featured_10",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_11",
+      "from": "waka_flocka_flame",
+      "to": "featured_11",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_12",
+      "from": "waka_flocka_flame",
+      "to": "featured_12",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_13",
+      "from": "waka_flocka_flame",
+      "to": "featured_13",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_14",
+      "from": "waka_flocka_flame",
+      "to": "featured_14",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_15",
+      "from": "waka_flocka_flame",
+      "to": "featured_15",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_16",
+      "from": "waka_flocka_flame",
+      "to": "featured_16",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_17",
+      "from": "waka_flocka_flame",
+      "to": "featured_17",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_18",
+      "from": "waka_flocka_flame",
+      "to": "featured_18",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_19",
+      "from": "waka_flocka_flame",
+      "to": "featured_19",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_20",
+      "from": "waka_flocka_flame",
+      "to": "featured_20",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_21",
+      "from": "waka_flocka_flame",
+      "to": "featured_21",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_22",
+      "from": "waka_flocka_flame",
+      "to": "featured_22",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_23",
+      "from": "waka_flocka_flame",
+      "to": "featured_23",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_24",
+      "from": "waka_flocka_flame",
+      "to": "featured_24",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_25",
+      "from": "waka_flocka_flame",
+      "to": "featured_25",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_26",
+      "from": "waka_flocka_flame",
+      "to": "featured_26",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_27",
+      "from": "waka_flocka_flame",
+      "to": "featured_27",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_28",
+      "from": "waka_flocka_flame",
+      "to": "featured_28",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_29",
+      "from": "waka_flocka_flame",
+      "to": "featured_29",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_30",
+      "from": "waka_flocka_flame",
+      "to": "featured_30",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_31",
+      "from": "waka_flocka_flame",
+      "to": "featured_31",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_32",
+      "from": "waka_flocka_flame",
+      "to": "featured_32",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_33",
+      "from": "waka_flocka_flame",
+      "to": "featured_33",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_34",
+      "from": "waka_flocka_flame",
+      "to": "featured_34",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_35",
+      "from": "waka_flocka_flame",
+      "to": "featured_35",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_36",
+      "from": "waka_flocka_flame",
+      "to": "featured_36",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_37",
+      "from": "waka_flocka_flame",
+      "to": "featured_37",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_38",
+      "from": "waka_flocka_flame",
+      "to": "featured_38",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_39",
+      "from": "waka_flocka_flame",
+      "to": "featured_39",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_40",
+      "from": "waka_flocka_flame",
+      "to": "featured_40",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_41",
+      "from": "waka_flocka_flame",
+      "to": "featured_41",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_42",
+      "from": "waka_flocka_flame",
+      "to": "featured_42",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_43",
+      "from": "waka_flocka_flame",
+      "to": "featured_43",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_44",
+      "from": "waka_flocka_flame",
+      "to": "featured_44",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_45",
+      "from": "waka_flocka_flame",
+      "to": "featured_45",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_46",
+      "from": "waka_flocka_flame",
+      "to": "featured_46",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_47",
+      "from": "waka_flocka_flame",
+      "to": "featured_47",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_48",
+      "from": "waka_flocka_flame",
+      "to": "featured_48",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_49",
+      "from": "waka_flocka_flame",
+      "to": "featured_49",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_50",
+      "from": "waka_flocka_flame",
+      "to": "featured_50",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_51",
+      "from": "waka_flocka_flame",
+      "to": "featured_51",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_52",
+      "from": "waka_flocka_flame",
+      "to": "featured_52",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_53",
+      "from": "waka_flocka_flame",
+      "to": "featured_53",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_54",
+      "from": "waka_flocka_flame",
+      "to": "featured_54",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_55",
+      "from": "waka_flocka_flame",
+      "to": "featured_55",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_56",
+      "from": "waka_flocka_flame",
+      "to": "featured_56",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_57",
+      "from": "waka_flocka_flame",
+      "to": "featured_57",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_58",
+      "from": "waka_flocka_flame",
+      "to": "featured_58",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_59",
+      "from": "waka_flocka_flame",
+      "to": "featured_59",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_60",
+      "from": "waka_flocka_flame",
+      "to": "featured_60",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_61",
+      "from": "waka_flocka_flame",
+      "to": "featured_61",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_62",
+      "from": "waka_flocka_flame",
+      "to": "featured_62",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_63",
+      "from": "waka_flocka_flame",
+      "to": "featured_63",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_64",
+      "from": "waka_flocka_flame",
+      "to": "featured_64",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_65",
+      "from": "waka_flocka_flame",
+      "to": "featured_65",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_66",
+      "from": "waka_flocka_flame",
+      "to": "featured_66",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_67",
+      "from": "waka_flocka_flame",
+      "to": "featured_67",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_68",
+      "from": "waka_flocka_flame",
+      "to": "featured_68",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_69",
+      "from": "waka_flocka_flame",
+      "to": "featured_69",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_70",
+      "from": "waka_flocka_flame",
+      "to": "featured_70",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_71",
+      "from": "waka_flocka_flame",
+      "to": "featured_71",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_72",
+      "from": "waka_flocka_flame",
+      "to": "featured_72",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_73",
+      "from": "waka_flocka_flame",
+      "to": "featured_73",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_74",
+      "from": "waka_flocka_flame",
+      "to": "featured_74",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_75",
+      "from": "waka_flocka_flame",
+      "to": "featured_75",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_76",
+      "from": "waka_flocka_flame",
+      "to": "featured_76",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_77",
+      "from": "waka_flocka_flame",
+      "to": "featured_77",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_78",
+      "from": "waka_flocka_flame",
+      "to": "featured_78",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_79",
+      "from": "waka_flocka_flame",
+      "to": "featured_79",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_80",
+      "from": "waka_flocka_flame",
+      "to": "featured_80",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_81",
+      "from": "waka_flocka_flame",
+      "to": "featured_81",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_82",
+      "from": "waka_flocka_flame",
+      "to": "featured_82",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_83",
+      "from": "waka_flocka_flame",
+      "to": "featured_83",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_84",
+      "from": "waka_flocka_flame",
+      "to": "featured_84",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_85",
+      "from": "waka_flocka_flame",
+      "to": "featured_85",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_86",
+      "from": "waka_flocka_flame",
+      "to": "featured_86",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_87",
+      "from": "waka_flocka_flame",
+      "to": "featured_87",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_88",
+      "from": "waka_flocka_flame",
+      "to": "featured_88",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_89",
+      "from": "waka_flocka_flame",
+      "to": "featured_89",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_90",
+      "from": "waka_flocka_flame",
+      "to": "featured_90",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_91",
+      "from": "waka_flocka_flame",
+      "to": "featured_91",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_92",
+      "from": "waka_flocka_flame",
+      "to": "featured_92",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_93",
+      "from": "waka_flocka_flame",
+      "to": "featured_93",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_94",
+      "from": "waka_flocka_flame",
+      "to": "featured_94",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_95",
+      "from": "waka_flocka_flame",
+      "to": "featured_95",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_96",
+      "from": "waka_flocka_flame",
+      "to": "featured_96",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_97",
+      "from": "waka_flocka_flame",
+      "to": "featured_97",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_98",
+      "from": "waka_flocka_flame",
+      "to": "featured_98",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_99",
+      "from": "waka_flocka_flame",
+      "to": "featured_99",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_100",
+      "from": "waka_flocka_flame",
+      "to": "featured_100",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_101",
+      "from": "waka_flocka_flame",
+      "to": "featured_101",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_102",
+      "from": "waka_flocka_flame",
+      "to": "featured_102",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_103",
+      "from": "waka_flocka_flame",
+      "to": "featured_103",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_104",
+      "from": "waka_flocka_flame",
+      "to": "featured_104",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_105",
+      "from": "waka_flocka_flame",
+      "to": "featured_105",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_106",
+      "from": "waka_flocka_flame",
+      "to": "featured_106",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_107",
+      "from": "waka_flocka_flame",
+      "to": "featured_107",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_108",
+      "from": "waka_flocka_flame",
+      "to": "featured_108",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_109",
+      "from": "waka_flocka_flame",
+      "to": "featured_109",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_110",
+      "from": "waka_flocka_flame",
+      "to": "featured_110",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_111",
+      "from": "waka_flocka_flame",
+      "to": "featured_111",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_112",
+      "from": "waka_flocka_flame",
+      "to": "featured_112",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_113",
+      "from": "waka_flocka_flame",
+      "to": "featured_113",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_114",
+      "from": "waka_flocka_flame",
+      "to": "featured_114",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_115",
+      "from": "waka_flocka_flame",
+      "to": "featured_115",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_116",
+      "from": "waka_flocka_flame",
+      "to": "featured_116",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_117",
+      "from": "waka_flocka_flame",
+      "to": "featured_117",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_118",
+      "from": "waka_flocka_flame",
+      "to": "featured_118",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_119",
+      "from": "waka_flocka_flame",
+      "to": "featured_119",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_120",
+      "from": "waka_flocka_flame",
+      "to": "featured_120",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_121",
+      "from": "waka_flocka_flame",
+      "to": "featured_121",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_122",
+      "from": "waka_flocka_flame",
+      "to": "featured_122",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_123",
+      "from": "waka_flocka_flame",
+      "to": "featured_123",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_124",
+      "from": "waka_flocka_flame",
+      "to": "featured_124",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_125",
+      "from": "waka_flocka_flame",
+      "to": "featured_125",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_126",
+      "from": "waka_flocka_flame",
+      "to": "featured_126",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_127",
+      "from": "waka_flocka_flame",
+      "to": "featured_127",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_128",
+      "from": "waka_flocka_flame",
+      "to": "featured_128",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_129",
+      "from": "waka_flocka_flame",
+      "to": "featured_129",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_130",
+      "from": "waka_flocka_flame",
+      "to": "featured_130",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_131",
+      "from": "waka_flocka_flame",
+      "to": "featured_131",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_132",
+      "from": "waka_flocka_flame",
+      "to": "featured_132",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_133",
+      "from": "waka_flocka_flame",
+      "to": "featured_133",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_134",
+      "from": "waka_flocka_flame",
+      "to": "featured_134",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_135",
+      "from": "waka_flocka_flame",
+      "to": "featured_135",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_136",
+      "from": "waka_flocka_flame",
+      "to": "featured_136",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_137",
+      "from": "waka_flocka_flame",
+      "to": "featured_137",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_138",
+      "from": "waka_flocka_flame",
+      "to": "featured_138",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    },
+    {
+      "id": "conn_139",
+      "from": "waka_flocka_flame",
+      "to": "featured_139",
+      "type": "collaboration",
+      "strength": 1,
+      "since": "2020-01-01T00:00:00Z",
+      "notes": "Collaboration on track",
+      "songs": []
+    }
+  ],
+  "companies": [
+    {
+      "id": "ascap",
+      "name": "ASCAP",
+      "type": "pro",
+      "description": "American Society of Composers, Authors and Publishers"
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "sync_001",
+      "title": "Sync Placement Opportunity",
+      "type": "sync",
+      "status": "open",
+      "description": "Seeking placements for film/TV for Waka Flocka catalog",
+      "songs": [],
+      "value": 50000,
+      "deadline": "2025-06-01",
+      "createdAt": "2025-01-15T00:00:00Z"
+    }
+  ]
+}

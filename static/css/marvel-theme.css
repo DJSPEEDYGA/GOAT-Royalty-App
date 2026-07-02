@@ -1,0 +1,644 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   GOAT MARVEL CARTOON ULTRA REALISTIC THEME - NEMO EDITION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@400;500;600;700&family=Russo+One&display=swap');
+
+:root {
+  /* Marvel Comic Colors */
+  --marvel-red: #e23636;
+  --marvel-gold: #ffd700;
+  --marvel-dark: #0a0a14;
+  --marvel-blue: #1a1a3e;
+  --goat-gold: #d4a03c;
+  --goat-orange: #ff6b35;
+  --goat-fire: #ff4500;
+  --comic-black: #111111;
+  --comic-white: #fefefe;
+  
+  /* Glow Effects */
+  --glow-gold: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+  --glow-red: 0 0 20px rgba(226, 54, 54, 0.8), 0 0 40px rgba(226, 54, 54, 0.4);
+  --glow-fire: 0 0 30px rgba(255, 107, 53, 0.6);
+  
+  /* Fonts */
+  --font-comic: 'Bangers', cursive;
+  --font-hero: 'Russo One', sans-serif;
+  --font-body: 'Oswald', sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLOBAL MARVEL STYLING
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+* {
+  font-family: var(--font-body);
+}
+
+body {
+  background: var(--marvel-dark) !important;
+  overflow-x: hidden;
+}
+
+/* Comic Book Halftone Pattern Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(226, 54, 54, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 107, 53, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EPIC HERO NAVIGATION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.top-nav {
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1a 100%) !important;
+  border-bottom: 3px solid var(--marvel-gold) !important;
+  box-shadow: 0 4px 30px rgba(255, 215, 0, 0.3), 0 0 60px rgba(226, 54, 54, 0.2) !important;
+  position: relative;
+  z-index: 1000;
+}
+
+.top-nav::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--marvel-red), var(--marvel-gold), var(--marvel-red));
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.top-nav .logo span {
+  font-family: var(--font-comic) !important;
+  font-size: 1.8rem !important;
+  color: var(--marvel-gold) !important;
+  text-shadow: 
+    2px 2px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    0 0 20px rgba(255, 215, 0, 0.8);
+  letter-spacing: 2px;
+}
+
+.crown-badge {
+  background: linear-gradient(135deg, var(--marvel-gold), var(--goat-orange)) !important;
+  color: #000 !important;
+  font-family: var(--font-comic) !important;
+  padding: 4px 12px !important;
+  border-radius: 4px !important;
+  animation: pulseBadge 2s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+  50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 215, 0, 0.9); }
+}
+
+.nav-links a {
+  font-family: var(--font-hero) !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  color: #ccc !important;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--marvel-gold) !important;
+  text-shadow: var(--glow-gold);
+  transform: translateY(-2px);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--marvel-gold);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a.active {
+  color: var(--marvel-red) !important;
+  text-shadow: var(--glow-red);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO SECTION - MARVEL STYLE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a14 0%, #1a1a3e 50%, #0a0a14 100%);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    url('../goat-hero-5.png') right center / contain no-repeat,
+    radial-gradient(ellipse at center, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+  opacity: 0.4;
+  animation: heroFloat 10s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.02); }
+}
+
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 20, 0.7) 0%,
+    rgba(26, 26, 62, 0.5) 50%,
+    rgba(10, 10, 20, 0.9) 100%
+  ) !important;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+}
+
+.hero-crown {
+  font-size: 5rem !important;
+  animation: crownBounce 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+}
+
+@keyframes crownBounce {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.hero h1 {
+  font-family: var(--font-comic) !important;
+  font-size: 4rem !important;
+  color: var(--marvel-gold) !important;
+  text-shadow: 
+    4px 4px 0 #000,
+    -4px -4px 0 #000,
+    4px -4px 0 #000,
+    -4px 4px 0 #000,
+    0 0 40px rgba(255, 215, 0, 0.6),
+    0 0 80px rgba(255, 107, 53, 0.4);
+  letter-spacing: 4px;
+  animation: titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% { text-shadow: 4px 4px 0 #000, 0 0 40px rgba(255, 215, 0, 0.6); }
+  50% { text-shadow: 4px 4px 0 #000, 0 0 60px rgba(255, 215, 0, 0.9), 0 0 100px rgba(255, 107, 53, 0.6); }
+}
+
+.hero .tagline {
+  font-family: var(--font-hero) !important;
+  font-size: 1.2rem !important;
+  color: var(--marvel-red) !important;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.hero .subtitle {
+  font-family: var(--font-body) !important;
+  color: #aaa !important;
+  font-size: 1.1rem !important;
+  max-width: 800px;
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HERO STATS - COMIC STYLE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.hero-stat {
+  background: linear-gradient(145deg, #1a1a2e, #0f0f1a) !important;
+  border: 2px solid var(--marvel-gold) !important;
+  border-radius: 12px !important;
+  padding: 20px 30px !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.hero-stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.hero-stat:hover::before {
+  left: 100%;
+}
+
+.hero-stat:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+}
+
+.hero-stat .number {
+  font-family: var(--font-comic) !important;
+  font-size: 2.5rem !important;
+  color: var(--marvel-gold) !important;
+  text-shadow: var(--glow-gold);
+}
+
+.hero-stat .label {
+  font-family: var(--font-hero) !important;
+  color: #888 !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUTTONS - SUPERHERO STYLE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.btn-primary, .cta-button, button {
+  background: linear-gradient(135deg, var(--marvel-red), #b91c1c) !important;
+  color: #fff !important;
+  font-family: var(--font-hero) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  border: none !important;
+  padding: 15px 35px !important;
+  border-radius: 8px !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(226, 54, 54, 0.4);
+}
+
+.btn-primary::before, .cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before, .cta-button:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover, .cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(226, 54, 54, 0.6), 0 0 40px rgba(255, 215, 0, 0.3);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--marvel-gold), var(--goat-orange)) !important;
+  color: #000 !important;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CARDS - COMIC PANEL STYLE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.card, .feature-card, .model-card, .store-item {
+  background: linear-gradient(145deg, #1a1a2e, #0f0f1a) !important;
+  border: 2px solid #2a2a4e !important;
+  border-radius: 16px !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.card::before, .feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--marvel-red), var(--marvel-gold), var(--marvel-red));
+}
+
+.card:hover, .feature-card:hover {
+  border-color: var(--marvel-gold) !important;
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(255, 215, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.card h3, .feature-card h3 {
+  font-family: var(--font-comic) !important;
+  color: var(--marvel-gold) !important;
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION HEADINGS - MARVEL STYLE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+h2, .section-title {
+  font-family: var(--font-comic) !important;
+  color: var(--marvel-gold) !important;
+  text-shadow: 
+    3px 3px 0 #000,
+    -3px -3px 0 #000,
+    3px -3px 0 #000,
+    -3px 3px 0 #000,
+    0 0 30px rgba(255, 215, 0, 0.5);
+  letter-spacing: 3px;
+  position: relative;
+  display: inline-block;
+}
+
+h2::after, .section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--marvel-red), var(--marvel-gold), var(--marvel-red));
+}
+
+h3 {
+  font-family: var(--font-hero) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMIC BOOK SPEECH BUBBLES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.speech-bubble {
+  background: #fff !important;
+  color: #000 !important;
+  border-radius: 20px !important;
+  padding: 20px 25px !important;
+  position: relative;
+  font-family: var(--font-body) !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 30px;
+  border: 15px solid transparent;
+  border-top-color: #fff;
+  border-bottom: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EPIC ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes comicZoom {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes epicSlide {
+  0% { transform: translateX(-100px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes heroPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 107, 53, 0.4); }
+}
+
+.animate-in {
+  animation: comicZoom 0.6s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FLOATING GOAT HERO IMAGE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.floating-hero {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 150px;
+  height: 150px;
+  z-index: 999;
+  animation: floatHero 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.floating-hero:hover {
+  transform: scale(1.2) rotate(5deg);
+}
+
+@keyframes floatHero {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PARTICLE EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--marvel-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat 10s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR STYLING
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--marvel-red), var(--marvel-gold));
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--marvel-gold), var(--goat-orange));
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LOADING SCREEN
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--marvel-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  flex-direction: column;
+}
+
+.loading-logo {
+  width: 200px;
+  height: 200px;
+  animation: logoPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5)); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 40px rgba(255, 215, 0, 0.8)); }
+}
+
+.loading-text {
+  font-family: var(--font-comic);
+  font-size: 2rem;
+  color: var(--marvel-gold);
+  margin-top: 20px;
+  animation: textGlow 1s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  to { text-shadow: 0 0 30px rgba(255, 215, 0, 1), 0 0 50px rgba(255, 107, 53, 0.5); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SPECIAL EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.glitch {
+  position: relative;
+}
+
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-1 0.3s infinite linear alternate-reverse;
+  color: var(--marvel-red);
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-2 0.3s infinite linear alternate-reverse;
+  color: var(--marvel-gold);
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0% { clip-path: inset(20% 0 30% 0); transform: translate(-2px); }
+  100% { clip-path: inset(50% 0 20% 0); transform: translate(2px); }
+}
+
+@keyframes glitch-2 {
+  0% { clip-path: inset(60% 0 10% 0); transform: translate(2px); }
+  100% { clip-path: inset(10% 0 60% 0); transform: translate(-2px); }
+}
+
+/* Energy Beam Effect */
+.energy-beam {
+  position: relative;
+}
+
+.energy-beam::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--marvel-gold), transparent);
+  animation: beamShoot 2s ease-in-out infinite;
+}
+
+@keyframes beamShoot {
+  0%, 100% { opacity: 0; width: 0; }
+  50% { opacity: 1; width: 100px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE ADJUSTMENTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem !important;
+  }
+  
+  .hero-crown {
+    font-size: 3rem !important;
+  }
+  
+  .floating-hero {
+    width: 80px;
+    height: 80px;
+  }
+}

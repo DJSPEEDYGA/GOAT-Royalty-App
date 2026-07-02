@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAT ULTIMATE STUDIO - Complete Production Suite</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      user-select: none;
+    }
+
+    :root {
+      --ssl-gold: #c4a000;
+      --avid-blue: #0055aa;
+      --avid-green: #00aa55;
+      --waves-blue: #0066cc;
+      --izotope-purple: #8844aa;
+      --fabfilter-orange: #ff8800;
+      --ua-green: #44aa44;
+      --slate-red: #cc3333;
+      --antares-blue: #4488cc;
+    }
+
+    /* MAIN LAYOUT - 4x4 Grid */
+    .studio-container {
+      display: grid;
+      grid-template-rows: 50px 100px 1fr 180px;
+      grid-template-columns: 280px 1fr 300px;
+      height: 100vh;
+      background: linear-gradient(180deg, #0f0f0f 0%, #080808 100%);
+    }
+
+    /* TOP MENU BAR */
+    .menu-bar {
+      grid-column: 1 / -1;
+      background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%);
+      border-bottom: 2px solid #3a3a3a;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      gap: 15px;
+      font-size: 12px;
+    }
+
+    .menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 15px;
+      background: linear-gradient(135deg, var(--ssl-gold), #8b7500);
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .menu-items {
+      display: flex;
+      gap: 3px;
+    }
+
+    .menu-item {
+      padding: 5px 10px;
+      color: #aaa;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .menu-item:hover { background: #3a3a3a; color: #fff; }
+
+    .menu-spacer { flex: 1; }
+
+    .cpu-meter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      background: #1a1a1a;
+      border-radius: 4px;
+      border: 1px solid #3a3a3a;
+    }
+
+    .cpu-bar {
+      width: 60px;
+      height: 8px;
+      background: #0a0a0a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .cpu-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--avid-green), #ffcc00, #ff4444);
+      width: 25%;
+      transition: width 0.3s;
+    }
+
+    .dsp-meter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      background: #1a1a1a;
+      border-radius: 4px;
+      border: 1px solid #3a3a3a;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      background: #1a1a1a;
+      border-radius: 4px;
+      border: 1px solid #3a3a3a;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--avid-green);
+      box-shadow: 0 0 10px var(--avid-green);
+      animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* METER BRIDGE */
+    .meter-bridge {
+      grid-column: 1 / -1;
+      background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+      border-bottom: 4px solid #2a2a2a;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 15px;
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.05);
+    }
+
+    .ssl-branding {
+      width: 180px;
+      padding: 12px;
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      border-radius: 8px;
+      border: 2px solid #3a3a3a;
+    }
+
+    .ssl-branding h1 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #c0c0c0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .ssl-branding .sub {
+      font-size: 9px;
+      color: #666;
+      text-transform: uppercase;
+    }
+
+    .transport-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      background: linear-gradient(180deg, #252525, #1a1a1a);
+      border-radius: 8px;
+      border: 2px solid #3a3a3a;
+    }
+
+    .transport-btn {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+      color: #888;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      border: 2px solid #4a4a4a;
+    }
+
+    .transport-btn:hover { transform: translateY(-2px); color: #fff; }
+    .transport-btn:active { transform: translateY(1px); }
+    .transport-btn.playing {
+      background: linear-gradient(145deg, #00cc00, #009900);
+      color: #fff;
+      border-color: #00ff00;
+      box-shadow: 0 0 25px rgba(0, 255, 0, 0.5);
+    }
+    .transport-btn.recording {
+      background: linear-gradient(145deg, #cc0000, #990000);
+      animation: rec-pulse 1s infinite;
+    }
+    @keyframes rec-pulse {
+      0%, 100% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.6); }
+      50% { box-shadow: 0 0 30px rgba(255, 0, 0, 1); }
+    }
+
+    .timecode-display {
+      background: #000;
+      padding: 12px 20px;
+      border-radius: 6px;
+      border: 2px solid #2a2a2a;
+    }
+
+    .timecode-value {
+      font-family: 'Courier New', monospace;
+      font-size: 24px;
+      color: #00ff00;
+      text-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+      letter-spacing: 3px;
+    }
+
+    .bpm-display {
+      background: #000;
+      padding: 8px 15px;
+      border-radius: 6px;
+      border: 2px solid #2a2a2a;
+      text-align: center;
+    }
+
+    .bpm-input {
+      width: 50px;
+      background: transparent;
+      border: none;
+      color: #ffa500;
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .master-meters {
+      display: flex;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .stereo-meter {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .meter-label {
+      font-size: 9px;
+      color: #666;
+      text-align: center;
+    }
+
+    .meter-bars {
+      display: flex;
+      gap: 3px;
+      height: 60px;
+      background: #000;
+      padding: 6px;
+      border-radius: 4px;
+      border: 2px solid #2a2a2a;
+    }
+
+    .meter-bar {
+      width: 18px;
+      height: 100%;
+      position: relative;
+      background: linear-gradient(to top, #00ff00 0%, #00ff00 60%, #ffff00 60%, #ffff00 80%, #ff0000 80%, #ff0000 100%);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .meter-bar::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: var(--meter-level, 70%);
+      background: #0a0a0a;
+      transition: height 0.05s;
+    }
+
+    /* SURROUND PANNER */
+    .surround-panner {
+      padding: 10px;
+      background: linear-gradient(180deg, #252525, #1a1a1a);
+      border-radius: 8px;
+      border: 2px solid #3a3a3a;
+    }
+
+    .panner-title {
+      font-size: 10px;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .panner-grid {
+      width: 80px;
+      height: 80px;
+      background: #0a0a0a;
+      border-radius: 50%;
+      position: relative;
+      border: 2px solid #3a3a3a;
+      margin: 0 auto;
+    }
+
+    .panner-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--ssl-gold);
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 10px var(--ssl-gold);
+      cursor: pointer;
+    }
+
+    .panner-speaker {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #666;
+      border-radius: 50%;
+      font-size: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .panner-speaker.l { top: 5px; left: 5px; }
+    .panner-speaker.c { top: 5px; left: 50%; transform: translateX(-50%); }
+    .panner-speaker.r { top: 5px; right: 5px; }
+    .panner-speaker.ls { bottom: 20%; left: 5px; }
+    .panner-speaker.rs { bottom: 20%; right: 5px; }
+    .panner-speaker.lfe { bottom: 5px; left: 50%; transform: translateX(-50%); background: #ff4444; }
+
+    .format-selector {
+      display: flex;
+      gap: 5px;
+      margin-top: 8px;
+      justify-content: center;
+    }
+
+    .format-btn {
+      padding: 3px 8px;
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      border-radius: 3px;
+      font-size: 9px;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .format-btn.active {
+      background: var(--avid-blue);
+      color: #fff;
+    }
+
+    /* LEFT PANEL */
+    .left-panel {
+      background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
+      border-right: 3px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .panel-tabs {
+      display: flex;
+      background: #222;
+      border-bottom: 2px solid #3a3a3a;
+    }
+
+    .panel-tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .panel-tab:hover { color: #aaa; }
+    .panel-tab.active {
+      color: var(--ssl-gold);
+      border-bottom-color: var(--ssl-gold);
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    /* Plugin Slots */
+    .plugin-slot {
+      background: linear-gradient(180deg, #252525, #1a1a1a);
+      border: 2px solid #3a3a3a;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .plugin-slot:hover { border-color: #555; }
+    .plugin-slot.active { border-color: var(--avid-green); box-shadow: 0 0 10px rgba(0, 170, 85, 0.3); }
+
+    .plugin-header {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      background: linear-gradient(180deg, #2a2a2a, #222);
+      border-bottom: 1px solid #3a3a3a;
+    }
+
+    .plugin-brand {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+    .plugin-brand.waves { background: var(--waves-blue); }
+    .plugin-brand.izotope { background: var(--izotope-purple); }
+    .plugin-brand.fabfilter { background: var(--fabfilter-orange); }
+    .plugin-brand.ua { background: var(--ua-green); }
+    .plugin-brand.slate { background: var(--slate-red); }
+    .plugin-brand.antares { background: var(--antares-blue); }
+    .plugin-brand.avid { background: var(--avid-blue); }
+
+    .plugin-name {
+      flex: 1;
+      font-size: 11px;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    .plugin-bypass {
+      width: 36px;
+      height: 18px;
+      background: #1a1a1a;
+      border-radius: 9px;
+      position: relative;
+      border: 2px solid #3a3a3a;
+      cursor: pointer;
+    }
+
+    .plugin-bypass.on { background: var(--avid-green); border-color: #00cc66; }
+
+    .plugin-bypass::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      top: 1px;
+      left: 2px;
+      transition: left 0.2s;
+    }
+
+    .plugin-bypass.on::after { left: 20px; }
+
+    .plugin-body {
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .plugin-knob {
+      width: 32px;
+      height: 32px;
+      background: radial-gradient(circle at 30% 30%, #5a5a5a, #2a2a2a);
+      border-radius: 50%;
+      border: 2px solid #4a4a4a;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    }
+
+    .plugin-knob::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 9px;
+      background: var(--ssl-gold);
+      border-radius: 2px;
+    }
+
+    .plugin-label {
+      font-size: 8px;
+      color: #666;
+      text-align: center;
+      margin-top: 3px;
+    }
+
+    /* AI Assistant Panel */
+    .ai-panel {
+      display: none;
+    }
+
+    .ai-panel.active {
+      display: block;
+    }
+
+    .ai-chat {
+      height: 200px;
+      background: #0a0a0a;
+      border-radius: 8px;
+      padding: 10px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .ai-message {
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 11px;
+    }
+
+    .ai-message.bot {
+      background: linear-gradient(135deg, #1a2a3a, #0f1a25);
+      border-left: 3px solid var(--avid-blue);
+    }
+
+    .ai-message.user {
+      background: #2a2a2a;
+      border-left: 3px solid var(--ssl-gold);
+    }
+
+    .ai-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ai-input {
+      flex: 1;
+      padding: 8px;
+      background: #1a1a1a;
+      border: 1px solid #3a3a3a;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 11px;
+    }
+
+    .ai-send {
+      padding: 8px 15px;
+      background: var(--avid-blue);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .ai-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .ai-preset {
+      padding: 5px 10px;
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    .ai-preset:hover { background: #3a3a3a; color: #fff; }
+
+    /* Automation Panel */
+    .automation-panel {
+      display: none;
+    }
+
+    .automation-panel.active {
+      display: block;
+    }
+
+    .auto-mode {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    .auto-btn {
+      flex: 1;
+      padding: 6px;
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      border-radius: 4px;
+      font-size: 9px;
+      color: #888;
+      cursor: pointer;
+    }
+
+    .auto-btn.read { border-color: #666; }
+    .auto-btn.touch { border-color: var(--ssl-gold); }
+    .auto-btn.latch { border-color: var(--avid-blue); }
+    .auto-btn.write { border-color: #ff4444; }
+
+    .auto-btn.active {
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      color: #fff;
+    }
+
+    .auto-lanes {
+      background: #0a0a0a;
+      border-radius: 6px;
+      padding: 10px;
+    }
+
+    .auto-lane {
+      display: flex;
+      align-items: center;
+      padding: 6px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .auto-lane-name {
+      width: 60px;
+      font-size: 10px;
+      color: #888;
+    }
+
+    .auto-lane-track {
+      flex: 1;
+      height: 20px;
+      background: #1a1a1a;
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auto-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--ssl-gold);
+    }
+
+    /* MAIN CONSOLE */
+    .main-console {
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
+      overflow: hidden;
+    }
+
+    .edit-groups {
+      height: 35px;
+      background: linear-gradient(180deg, #252525, #1a1a1a);
+      border-bottom: 2px solid #3a3a3a;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 8px;
+    }
+
+    .group-btn {
+      width: 26px;
+      height: 26px;
+      border: none;
+      border-radius: 5px;
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      color: #888;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid #4a4a4a;
+      transition: all 0.15s;
+    }
+
+    .group-btn:hover { background: linear-gradient(180deg, #4a4a4a, #3a3a3a); }
+    .group-btn.a.active { background: #cc4444; color: #fff; }
+    .group-btn.b.active { background: #44cc44; color: #fff; }
+    .group-btn.c.active { background: #4444cc; color: #fff; }
+    .group-btn.d.active { background: #cccc44; color: #000; }
+    .group-btn.e.active { background: #cc44cc; color: #fff; }
+    .group-btn.f.active { background: #44cccc; color: #000; }
+    .group-btn.g.active { background: #cc8844; color: #fff; }
+    .group-btn.h.active { background: #8844cc; color: #fff; }
+
+    .channels-container {
+      flex: 1;
+      display: flex;
+      overflow-x: auto;
+      padding: 8px;
+      gap: 3px;
+    }
+
+    /* CHANNEL STRIP */
+    .channel-strip {
+      width: 70px;
+      min-width: 70px;
+      background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 50%, #1a1a1a 100%);
+      border: 2px solid #3a3a3a;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      transition: all 0.2s;
+    }
+
+    .channel-strip:hover { border-color: #555; }
+    .channel-strip.selected { border-color: var(--avid-blue); box-shadow: 0 0 15px rgba(0, 85, 170, 0.3); }
+
+    .ch-header {
+      background: linear-gradient(180deg, #333, #222);
+      padding: 6px 4px;
+      text-align: center;
+      border-radius: 4px 4px 0 0;
+      border-bottom: 2px solid #3a3a3a;
+    }
+
+    .ch-number { font-size: 10px; font-weight: 700; color: #666; }
+    .ch-name { font-size: 8px; color: #aaa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .ch-input {
+      padding: 6px;
+      text-align: center;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .ch-knob {
+      width: 32px;
+      height: 32px;
+      background: radial-gradient(circle at 30% 30%, #5a5a5a, #2a2a2a);
+      border-radius: 50%;
+      border: 2px solid #4a4a4a;
+      margin: 0 auto;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    }
+
+    .ch-knob::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 9px;
+      background: var(--ssl-gold);
+      border-radius: 2px;
+    }
+
+    .ch-label {
+      font-size: 7px;
+      color: #666;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .ch-eq {
+      padding: 5px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .eq-row {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 3px;
+    }
+
+    .eq-knob {
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle at 30% 30%, #4a4a4a, #2a2a2a);
+      border-radius: 50%;
+      border: 1px solid #3a3a3a;
+      cursor: pointer;
+    }
+
+    .eq-labels {
+      display: flex;
+      justify-content: space-around;
+      font-size: 6px;
+      color: #555;
+    }
+
+    .ch-dynamics {
+      padding: 5px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .dyn-led-row {
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+      margin-bottom: 4px;
+    }
+
+    .dyn-led {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+    }
+
+    .dyn-led.g.on { background: #00ff00; box-shadow: 0 0 8px #00ff00; }
+    .dyn-led.y.on { background: #ffff00; box-shadow: 0 0 8px #ffff00; }
+    .dyn-led.r.on { background: #ff0000; box-shadow: 0 0 8px #ff0000; }
+
+    .ch-meter {
+      height: 80px;
+      padding: 5px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .ch-meter-bars {
+      height: 100%;
+      display: flex;
+      gap: 2px;
+      background: #000;
+      padding: 3px;
+      border-radius: 3px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .ch-meter-bar {
+      flex: 1;
+      background: linear-gradient(to top, #00ff00 0%, #00ff00 55%, #aaff00 55%, #aaff00 70%, #ffff00 70%, #ffff00 85%, #ff0000 85%, #ff0000 100%);
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ch-meter-bar::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: var(--meter-level, 70%);
+      background: #0a0a0a;
+      transition: height 0.05s;
+    }
+
+    .ch-fader {
+      flex: 1;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .fader-track {
+      flex: 1;
+      width: 28px;
+      background: linear-gradient(180deg, #1a1a1a, #0a0a0a);
+      border-radius: 3px;
+      position: relative;
+      cursor: pointer;
+      border: 1px solid #2a2a2a;
+    }
+
+    .fader-cap {
+      position: absolute;
+      left: 2px; right: 2px;
+      height: 22px;
+      background: linear-gradient(180deg, #666, #444, #333);
+      border-radius: 3px;
+      cursor: grab;
+      border: 1px solid #555;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    }
+
+    .fader-cap::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      height: 3px;
+      background: var(--ssl-gold);
+      border-radius: 2px;
+    }
+
+    .fader-db {
+      font-size: 8px;
+      color: var(--ssl-gold);
+      font-weight: 700;
+      margin-top: 3px;
+    }
+
+    .ch-pan { padding: 5px; border-bottom: 1px solid #2a2a2a; }
+
+    .ch-buttons {
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .ch-btn {
+      width: 15px;
+      height: 15px;
+      border: none;
+      border-radius: 3px;
+      font-size: 7px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      color: #666;
+      border: 1px solid #4a4a4a;
+    }
+
+    .ch-btn.sel.on { background: var(--avid-blue); color: #fff; }
+    .ch-btn.solo.on { background: #ffd700; color: #000; box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+    .ch-btn.mute.on { background: #cc0000; color: #fff; }
+    .ch-btn.rec.on { background: #ff0000; color: #fff; animation: rec-pulse 1s infinite; }
+
+    /* MASTER CHANNEL */
+    .channel-strip.master {
+      width: 90px;
+      min-width: 90px;
+      background: linear-gradient(180deg, #3a3a00, #2a2a00, #1a1a00);
+      border: 2px solid var(--ssl-gold);
+      box-shadow: 0 0 20px rgba(196, 160, 0, 0.3);
+    }
+
+    .channel-strip.master .ch-header {
+      background: linear-gradient(180deg, var(--ssl-gold), #8b7500);
+    }
+
+    .channel-strip.master .ch-name {
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    /* RIGHT PANEL */
+    .right-panel {
+      background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
+      border-left: 3px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-tabs {
+      display: flex;
+      background: #222;
+      border-bottom: 2px solid #3a3a3a;
+    }
+
+    .right-tab {
+      flex: 1;
+      padding: 8px;
+      text-align: center;
+      font-size: 9px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+
+    .right-tab.active {
+      color: var(--ssl-gold);
+      border-bottom-color: var(--ssl-gold);
+    }
+
+    .right-content {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Mini Timeline */
+    .mini-timeline {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .timeline-ruler {
+      height: 25px;
+      background: #222;
+      border-bottom: 1px solid #3a3a3a;
+      display: flex;
+      align-items: flex-end;
+      padding-left: 10px;
+      overflow: hidden;
+    }
+
+    .ruler-marker {
+      min-width: 50px;
+      font-size: 9px;
+      color: #666;
+    }
+
+    .timeline-tracks {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .timeline-track {
+      height: 40px;
+      display: flex;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .track-label {
+      width: 70px;
+      background: #222;
+      padding: 5px;
+      font-size: 9px;
+      border-right: 1px solid #3a3a3a;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .track-color {
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+    }
+
+    .track-lane {
+      flex: 1;
+      position: relative;
+      background: #1a1a1a;
+    }
+
+    .track-clip {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .track-clip.audio { background: linear-gradient(180deg, #44aa88, #338866); }
+    .track-clip.midi { background: linear-gradient(180deg, #8844aa, #662288); }
+
+    /* MIDI Keyboard */
+    .midi-section {
+      height: 150px;
+      border-top: 2px solid #3a3a3a;
+    }
+
+    .midi-header {
+      padding: 6px 10px;
+      background: #222;
+      border-bottom: 1px solid #3a3a3a;
+      font-size: 10px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    .piano-keys {
+      height: calc(100% - 28px);
+      display: flex;
+      position: relative;
+      padding: 0 8px;
+    }
+
+    .white-key {
+      flex: 1;
+      background: linear-gradient(180deg, #f8f8f8, #e0e0e0);
+      border: 1px solid #999;
+      border-radius: 0 0 3px 3px;
+      cursor: pointer;
+    }
+
+    .white-key:hover { background: linear-gradient(180deg, #fff, #f0f0f0); }
+    .white-key:active { background: linear-gradient(180deg, #ddd, #ccc); }
+
+    .black-key {
+      position: absolute;
+      width: 16px;
+      height: 55%;
+      background: linear-gradient(180deg, #333, #111);
+      border-radius: 0 0 2px 2px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .black-key:hover { background: linear-gradient(180deg, #444, #222); }
+
+    /* BOTTOM TIMELINE */
+    .bottom-timeline {
+      grid-column: 1 / -1;
+      background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
+      border-top: 3px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .timeline-toolbar {
+      height: 30px;
+      background: #222;
+      border-bottom: 1px solid #3a3a3a;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 8px;
+    }
+
+    .tool-btn {
+      padding: 4px 10px;
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      border: 1px solid #4a4a4a;
+      border-radius: 3px;
+      color: #888;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .tool-btn:hover { color: #fff; }
+    .tool-btn.active { background: var(--avid-blue); color: #fff; }
+
+    .main-timeline {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .timeline-track-labels {
+      width: 180px;
+      background: #1a1a1a;
+      border-right: 2px solid #2a2a2a;
+      overflow-y: auto;
+    }
+
+    .main-track-label {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 8px;
+      border-bottom: 1px solid #2a2a2a;
+      background: #222;
+    }
+
+    .main-track-label .color {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+
+    .main-track-label .name {
+      font-size: 10px;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    .main-track-label .type {
+      font-size: 8px;
+      color: #666;
+    }
+
+    .timeline-content {
+      flex: 1;
+      overflow: auto;
+      background: #0f0f0f;
+    }
+
+    .timeline-grid {
+      min-width: 2000px;
+    }
+
+    .grid-ruler {
+      height: 20px;
+      background: #1a1a1a;
+      border-bottom: 1px solid #2a2a2a;
+      display: flex;
+      align-items: flex-end;
+      padding-left: 10px;
+    }
+
+    .grid-marker {
+      width: 80px;
+      font-size: 9px;
+      color: #666;
+    }
+
+    .grid-track {
+      height: 50px;
+      border-bottom: 1px solid #1a1a1a;
+      position: relative;
+    }
+
+    .grid-clip {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .grid-clip:hover { filter: brightness(1.2); }
+
+    .playhead {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #ff0000;
+      z-index: 100;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #1a1a1a; }
+    ::-webkit-scrollbar-thumb { background: #3a3a3a; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4a4a4a; }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <div class="studio-container">
+    <!-- MENU BAR -->
+    <div class="menu-bar">
+      <div class="menu-logo">🐐 GOAT ULTIMATE STUDIO</div>
+      <div class="menu-items">
+        <div class="menu-item">File</div>
+        <div class="menu-item">Edit</div>
+        <div class="menu-item">View</div>
+        <div class="menu-item">Track</div>
+        <div class="menu-item">Region</div>
+        <div class="menu-item">Event</div>
+        <div class="menu-item">Audio</div>
+        <div class="menu-item">MIDI</div>
+        <div class="menu-item">Surround</div>
+        <div class="menu-item">Window</div>
+        <div class="menu-item">Help</div>
+      </div>
+      <div class="menu-spacer"></div>
+      <div class="cpu-meter">
+        <span style="font-size: 10px; color: #888;">CPU</span>
+        <div class="cpu-bar"><div class="cpu-fill" id="cpuFill"></div></div>
+        <span style="font-size: 10px; color: #aaa;" id="cpuValue">25%</span>
+      </div>
+      <div class="dsp-meter">
+        <span style="font-size: 10px; color: #888;">DSP</span>
+        <div class="cpu-bar"><div class="cpu-fill" style="width: 15%; background: linear-gradient(90deg, #4488ff, #44aaff);"></div></div>
+        <span style="font-size: 10px; color: #aaa;">15%</span>
+      </div>
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span style="font-size: 10px;">48kHz | 24-bit | 256</span>
+      </div>
+    </div>
+
+    <!-- METER BRIDGE -->
+    <div class="meter-bridge">
+      <div class="ssl-branding">
+        <h1>SSL Origin Evo</h1>
+        <div class="sub">+ Pro Tools X + Atmos 7.1.4</div>
+      </div>
+
+      <div class="transport-section">
+        <button class="transport-btn" id="rewindBtn">⏮</button>
+        <button class="transport-btn" id="stopBtn">⏹</button>
+        <button class="transport-btn" id="playBtn">▶</button>
+        <button class="transport-btn" id="recordBtn">⏺</button>
+        <button class="transport-btn" id="ffwdBtn">⏭</button>
+      </div>
+
+      <div class="timecode-display">
+        <div class="timecode-value" id="timecode">00:00:00:00</div>
+      </div>
+
+      <div class="bpm-display">
+        <input type="number" class="bpm-input" id="tempoInput" value="120" min="20" max="300">
+        <div style="font-size: 9px; color: #666;">BPM</div>
+      </div>
+
+      <!-- Surround Panner -->
+      <div class="surround-panner">
+        <div class="panner-title">7.1 Surround</div>
+        <div class="panner-grid">
+          <div class="panner-speaker l">L</div>
+          <div class="panner-speaker c">C</div>
+          <div class="panner-speaker r">R</div>
+          <div class="panner-speaker ls">Ls</div>
+          <div class="panner-speaker rs">Rs</div>
+          <div class="panner-speaker lfe">LFE</div>
+          <div class="panner-dot" id="pannerDot"></div>
+        </div>
+        <div class="format-selector">
+          <button class="format-btn active">5.1</button>
+          <button class="format-btn">7.1</button>
+          <button class="format-btn">Atmos</button>
+        </div>
+      </div>
+
+      <div class="master-meters">
+        <div class="stereo-meter">
+          <div class="meter-label">L</div>
+          <div class="meter-bars">
+            <div class="meter-bar" id="masterL"></div>
+          </div>
+        </div>
+        <div class="stereo-meter">
+          <div class="meter-label">R</div>
+          <div class="meter-bars">
+            <div class="meter-bar" id="masterR"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="panel-tabs">
+        <div class="panel-tab active" data-panel="plugins">Plugins</div>
+        <div class="panel-tab" data-panel="ai">AI Mix</div>
+        <div class="panel-tab" data-panel="automation">Auto</div>
+      </div>
+      <div class="panel-content">
+        <!-- Plugins Panel -->
+        <div class="plugins-panel active" id="pluginsPanel">
+          <!-- Plugin slots generated by JS -->
+        </div>
+
+        <!-- AI Panel -->
+        <div class="ai-panel" id="aiPanel">
+          <div class="ai-chat" id="aiChat">
+            <div class="ai-message bot">
+              🐐 Hi! I'm NEMO, your AI mixing assistant. I can help you with:
+              <br>• Auto-mixing suggestions
+              <br>• EQ recommendations
+              <br>• Compression settings
+              <br>• Mastering tips
+            </div>
+          </div>
+          <div class="ai-input-row">
+            <input type="text" class="ai-input" placeholder="Ask NEMO..." id="aiInput">
+            <button class="ai-send" id="aiSend">Send</button>
+          </div>
+          <div class="ai-presets">
+            <div class="ai-preset">Auto Mix</div>
+            <div class="ai-preset">Master</div>
+            <div class="ai-preset">Vocal Tune</div>
+            <div class="ai-preset">Drum Balance</div>
+            <div class="ai-preset">Bass Fix</div>
+          </div>
+        </div>
+
+        <!-- Automation Panel -->
+        <div class="automation-panel" id="automationPanel">
+          <div class="auto-mode">
+            <button class="auto-btn read active">Read</button>
+            <button class="auto-btn touch">Touch</button>
+            <button class="auto-btn latch">Latch</button>
+            <button class="auto-btn write">Write</button>
+          </div>
+          <div class="auto-lanes">
+            <div class="auto-lane">
+              <div class="auto-lane-name">Volume</div>
+              <div class="auto-lane-track">
+                <div class="auto-line"></div>
+              </div>
+            </div>
+            <div class="auto-lane">
+              <div class="auto-lane-name">Pan</div>
+              <div class="auto-lane-track">
+                <div class="auto-line"></div>
+              </div>
+            </div>
+            <div class="auto-lane">
+              <div class="auto-lane-name">Send A</div>
+              <div class="auto-lane-track">
+                <div class="auto-line"></div>
+              </div>
+            </div>
+            <div class="auto-lane">
+              <div class="auto-lane-name">Mute</div>
+              <div class="auto-lane-track">
+                <div class="auto-line"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONSOLE -->
+    <div class="main-console">
+      <div class="edit-groups">
+        <span style="font-size: 9px; color: #666;">GROUP:</span>
+        <button class="group-btn a">A</button>
+        <button class="group-btn b">B</button>
+        <button class="group-btn c">C</button>
+        <button class="group-btn d">D</button>
+        <button class="group-btn e">E</button>
+        <button class="group-btn f">F</button>
+        <button class="group-btn g">G</button>
+        <button class="group-btn h">H</button>
+        <span style="font-size: 9px; color: #666; margin-left: 10px;">EDIT:</span>
+        <button class="group-btn active" id="editBtn">EDIT</button>
+        <button class="group-btn" id="mixBtn">MIX</button>
+      </div>
+      <div class="channels-container" id="channelsContainer">
+        <!-- Channels generated by JS -->
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <div class="right-tabs">
+        <div class="right-tab active" data-tab="timeline">Timeline</div>
+        <div class="right-tab" data-tab="midi">MIDI</div>
+      </div>
+      <div class="right-content">
+        <div class="mini-timeline">
+          <div class="timeline-ruler" id="miniRuler"></div>
+          <div class="timeline-tracks" id="miniTracks"></div>
+        </div>
+        <div class="midi-section">
+          <div class="midi-header">🎹 MIDI Keyboard (A-K to play)</div>
+          <div class="piano-keys" id="pianoKeys"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM TIMELINE -->
+    <div class="bottom-timeline">
+      <div class="timeline-toolbar">
+        <button class="tool-btn active">Select</button>
+        <button class="tool-btn">Trim</button>
+        <button class="tool-btn">Grab</button>
+        <button class="tool-btn">Pencil</button>
+        <button class="tool-btn">Scrub</button>
+        <button class="tool-btn">Smart</button>
+        <span style="margin-left: auto; color: #666; font-size: 10px;">Grid: 1/16</span>
+        <button class="tool-btn">Snap</button>
+      </div>
+      <div class="main-timeline">
+        <div class="timeline-track-labels" id="timelineLabels"></div>
+        <div class="timeline-content">
+          <div class="timeline-grid" id="timelineGrid">
+            <div class="grid-ruler" id="gridRuler"></div>
+            <div id="gridTracks"></div>
+            <div class="playhead" id="playhead" style="left: 100px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== AUDIO ENGINE ====================
+    let audioContext = null;
+    let masterGain = null;
+    let masterAnalyser = null;
+    let isPlaying = false;
+    let isRecording = false;
+    let currentBeat = 0;
+    let tempo = 120;
+    let playInterval = null;
+    const channelData = [];
+
+    function initAudio() {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioContext.createGain();
+      masterAnalyser = audioContext.createAnalyser();
+      masterAnalyser.fftSize = 256;
+      masterGain.connect(masterAnalyser);
+      masterAnalyser.connect(audioContext.destination);
+      masterGain.gain.value = 0.8;
+      console.log('🐐 Audio Engine Ready');
+    }
+
+    function createSound(type, freq = 440, duration = 0.5) {
+      if (!audioContext) initAudio();
+      if (audioContext.state === 'suspended') audioContext.resume();
+
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const filter = audioContext.createBiquadFilter();
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(masterGain);
+
+      const now = audioContext.currentTime;
+
+      const sounds = {
+        kick: () => {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(150, now);
+          osc.frequency.exponentialRampToValueAtTime(30, now + 0.1);
+          gain.gain.setValueAtTime(1, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+          filter.type = 'lowpass';
+          filter.frequency.value = 200;
+          return 0.5;
+        },
+        snare: () => {
+          osc.type = 'triangle';
+          osc.frequency.value = 200;
+          gain.gain.setValueAtTime(0.8, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+          filter.type = 'highpass';
+          filter.frequency.value = 500;
+          return 0.2;
+        },
+        hihat: () => {
+          osc.type = 'square';
+          osc.frequency.value = 8000;
+          gain.gain.setValueAtTime(0.3, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+          filter.type = 'highpass';
+          filter.frequency.value = 5000;
+          return 0.05;
+        },
+        piano: () => {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.5, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+          filter.type = 'lowpass';
+          filter.frequency.value = 2000;
+          return duration;
+        },
+        bass: () => {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.6, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+          filter.type = 'lowpass';
+          filter.frequency.value = 400;
+          return duration;
+        },
+        synth: () => {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.4, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(2000, now);
+          filter.frequency.exponentialRampToValueAtTime(200, now + duration);
+          return duration;
+        }
+      };
+
+      const dur = (sounds[type] || sounds.piano)();
+      osc.start(now);
+      osc.stop(now + dur);
+
+      updateMeters();
+    }
+
+    function playNote(freq, duration = 0.5, type = 'piano') {
+      createSound(type, freq, duration);
+    }
+
+    // ==================== PLUGIN DATA ====================
+    const plugins = [
+      { brand: 'waves', name: 'C1 Compressor', category: 'Dynamics' },
+      { brand: 'waves', name: 'L1 Limiter', category: 'Dynamics' },
+      { brand: 'waves', name: 'Q10 EQ', category: 'EQ' },
+      { brand: 'izotope', name: 'Ozone 10', category: 'Mastering' },
+      { brand: 'izotope', name: 'Neutron 4', category: 'Mixing' },
+      { brand: 'fabfilter', name: 'Pro-Q 3', category: 'EQ' },
+      { brand: 'fabfilter', name: 'Pro-C 2', category: 'Dynamics' },
+      { brand: 'ua', name: 'LA-2A', category: 'Compressor' },
+      { brand: 'ua', name: '1176 LN', category: 'Compressor' },
+      { brand: 'slate', name: 'VMR', category: 'Channel Strip' },
+      { brand: 'antares', name: 'Auto-Tune Pro', category: 'Pitch' },
+      { brand: 'avid', name: 'D-Verb', category: 'Reverb' }
+    ];
+
+    const channelNames = [
+      'Kick', 'Snare', 'HiHat', 'Tom 1', 'Tom 2', 'OH L', 'OH R', 'Room',
+      'Bass', 'Gtr 1', 'Gtr 2', 'Keys', 'Piano', 'Synth 1', 'Synth 2', 'Pad',
+      'Lead Vox', 'Vox 2', 'Vox 3', 'BG Vox', 'FX 1', 'FX 2', 'Strings', 'Brass',
+      'Aux 1', 'Aux 2', 'Bus 1', 'Bus 2', 'Bus 3', 'Bus 4', 'Master L', 'Master R'
+    ];
+
+    const channelColors = [
+      '#ff4444', '#ff8844', '#ffcc44', '#88ff44', '#44ff88', '#44ffcc',
+      '#44ccff', '#4488ff', '#8844ff', '#cc44ff', '#ff44cc', '#ff4488'
+    ];
+
+    // ==================== GENERATE UI ====================
+    function generatePlugins() {
+      const container = document.getElementById('pluginsPanel');
+      container.innerHTML = '';
+
+      plugins.forEach((plugin, i) => {
+        const slot = document.createElement('div');
+        slot.className = 'plugin-slot';
+        slot.innerHTML = `
+          <div class="plugin-header">
+            <div class="plugin-brand ${plugin.brand}">${plugin.brand.charAt(0).toUpperCase()}</div>
+            <div class="plugin-name">${plugin.name}</div>
+            <div class="plugin-bypass"></div>
+          </div>
+          <div class="plugin-body">
+            <div>
+              <div class="plugin-knob"></div>
+              <div class="plugin-label">Input</div>
+            </div>
+            <div>
+              <div class="plugin-knob"></div>
+              <div class="plugin-label">Output</div>
+            </div>
+            <div>
+              <div class="plugin-knob"></div>
+              <div class="plugin-label">Mix</div>
+            </div>
+          </div>
+        `;
+        container.appendChild(slot);
+      });
+    }
+
+    function generateChannels() {
+      const container = document.getElementById('channelsContainer');
+
+      for (let i = 1; i <= 32; i++) {
+        const nameIndex = (i - 1) % channelNames.length;
+        const channel = document.createElement('div');
+        channel.className = 'channel-strip';
+        channel.dataset.channel = i;
+
+        channel.innerHTML = `
+          <div class="ch-header">
+            <div class="ch-number">${i}</div>
+            <div class="ch-name">${channelNames[nameIndex]}</div>
+          </div>
+          <div class="ch-input">
+            <div class="ch-knob"></div>
+            <div class="ch-label">GAIN</div>
+          </div>
+          <div class="ch-eq">
+            <div class="eq-row">
+              <div class="eq-knob"></div>
+              <div class="eq-knob"></div>
+              <div class="eq-knob"></div>
+            </div>
+            <div class="eq-labels"><span>HF</span><span>MF</span><span>LF</span></div>
+          </div>
+          <div class="ch-dynamics">
+            <div class="dyn-led-row">
+              <div class="dyn-led g"></div>
+              <div class="dyn-led y"></div>
+              <div class="dyn-led r"></div>
+            </div>
+            <div class="ch-input">
+              <div class="ch-knob" style="width: 24px; height: 24px;"></div>
+              <div class="ch-label">COMP</div>
+            </div>
+          </div>
+          <div class="ch-meter">
+            <div class="ch-meter-bars">
+              <div class="ch-meter-bar"></div>
+              <div class="ch-meter-bar"></div>
+            </div>
+          </div>
+          <div class="ch-fader">
+            <div class="fader-track">
+              <div class="fader-cap" style="top: 30%;"></div>
+            </div>
+            <div class="fader-db">-10.0</div>
+          </div>
+          <div class="ch-pan">
+            <div style="display: flex; justify-content: center;">
+              <div class="ch-knob" style="width: 22px; height: 22px;"></div>
+            </div>
+            <div class="ch-label">PAN</div>
+          </div>
+          <div class="ch-buttons">
+            <button class="ch-btn sel">S</button>
+            <button class="ch-btn solo">S</button>
+            <button class="ch-btn mute">M</button>
+            <button class="ch-btn rec">R</button>
+          </div>
+        `;
+
+        container.appendChild(channel);
+        channelData.push({ element: channel, fader: 0.7, pan: 0 });
+      }
+
+      // Master
+      const master = document.createElement('div');
+      master.className = 'channel-strip master';
+      master.innerHTML = `
+        <div class="ch-header">
+          <div class="ch-name">MASTER</div>
+        </div>
+        <div class="ch-meter" style="height: 120px;">
+          <div class="ch-meter-bars">
+            <div class="ch-meter-bar"></div>
+            <div class="ch-meter-bar"></div>
+          </div>
+        </div>
+        <div class="ch-fader">
+          <div class="fader-track" style="width: 35px;">
+            <div class="fader-cap" style="height: 26px; top: 15%;"></div>
+          </div>
+          <div class="fader-db">0.0</div>
+        </div>
+        <div class="ch-pan">
+          <div style="display: flex; justify-content: center;">
+            <div class="ch-knob" style="width: 26px; height: 26px;"></div>
+          </div>
+          <div class="ch-label">STEREO</div>
+        </div>
+        <div class="ch-buttons">
+          <button class="ch-btn solo">S</button>
+          <button class="ch-btn mute">M</button>
+        </div>
+      `;
+      container.appendChild(master);
+    }
+
+    function generatePiano() {
+      const piano = document.getElementById('pianoKeys');
+      piano.innerHTML = '';
+
+      const notes = [
+        { freq: 261.63, black: false },
+        { freq: 277.18, black: true },
+        { freq: 293.66, black: false },
+        { freq: 311.13, black: true },
+        { freq: 329.63, black: false },
+        { freq: 349.23, black: false },
+        { freq: 369.99, black: true },
+        { freq: 392.00, black: false },
+        { freq: 415.30, black: true },
+        { freq: 440.00, black: false },
+        { freq: 466.16, black: true },
+        { freq: 493.88, black: false },
+        { freq: 523.25, black: false }
+      ];
+
+      let whiteIndex = 0;
+      notes.forEach((n, i) => {
+        if (n.black) {
+          const key = document.createElement('div');
+          key.className = 'black-key';
+          key.style.left = `calc(${(whiteIndex / 8) * 100}% + ${100/8/2}% - 8px)`;
+          key.onclick = () => playNote(n.freq, 0.5, 'piano');
+          piano.appendChild(key);
+        } else {
+          const key = document.createElement('div');
+          key.className = 'white-key';
+          key.onclick = () => playNote(n.freq, 0.5, 'piano');
+          piano.appendChild(key);
+          whiteIndex++;
+        }
+      });
+    }
+
+    function generateTimeline() {
+      const miniRuler = document.getElementById('miniRuler');
+      const miniTracks = document.getElementById('miniTracks');
+      const gridRuler = document.getElementById('gridRuler');
+      const gridTracks = document.getElementById('gridTracks');
+      const timelineLabels = document.getElementById('timelineLabels');
+
+      // Rulers
+      for (let i = 0; i < 30; i++) {
+        const m1 = document.createElement('div');
+        m1.className = 'ruler-marker';
+        m1.textContent = `${Math.floor(i/4) + 1}.${(i % 4) + 1}`;
+        miniRuler.appendChild(m1);
+
+        const m2 = document.createElement('div');
+        m2.className = 'grid-marker';
+        m2.textContent = `${Math.floor(i/4) + 1}.${(i % 4) + 1}`;
+        gridRuler.appendChild(m2);
+      }
+
+      // Tracks
+      for (let i = 0; i < 8; i++) {
+        // Mini track
+        const miniTrack = document.createElement('div');
+        miniTrack.className = 'timeline-track';
+        miniTrack.innerHTML = `
+          <div class="track-label">
+            <div class="track-color" style="background: ${channelColors[i]}"></div>
+            ${channelNames[i]}
+          </div>
+          <div class="track-lane">${generateMiniClips()}</div>
+        `;
+        miniTracks.appendChild(miniTrack);
+
+        // Main track label
+        const label = document.createElement('div');
+        label.className = 'main-track-label';
+        label.innerHTML = `
+          <div class="color" style="background: ${channelColors[i]}"></div>
+          <div>
+            <div class="name">${channelNames[i]}</div>
+            <div class="type">Audio</div>
+          </div>
+        `;
+        timelineLabels.appendChild(label);
+
+        // Main track
+        const gridTrack = document.createElement('div');
+        gridTrack.className = 'grid-track';
+        gridTrack.innerHTML = generateMainClips(i);
+        gridTracks.appendChild(gridTrack);
+      }
+    }
+
+    function generateMiniClips() {
+      let clips = '';
+      for (let i = 0; i < 3; i++) {
+        const left = Math.random() * 250 + 20;
+        const width = Math.random() * 60 + 30;
+        clips += `<div class="track-clip ${Math.random() > 0.5 ? 'audio' : 'midi'}" style="left: ${left}px; width: ${width}px;"></div>`;
+      }
+      return clips;
+    }
+
+    function generateMainClips(trackIndex) {
+      const colors = ['#44aa88', '#8844aa', '#aa4444', '#4488aa', '#aaaa44', '#aa4488', '#44aaaa', '#88aa44'];
+      let clips = '';
+      for (let i = 0; i < 4; i++) {
+        const left = Math.random() * 1400 + 50;
+        const width = Math.random() * 250 + 80;
+        clips += `<div class="grid-clip" style="left: ${left}px; width: ${width}px; background: linear-gradient(180deg, ${colors[trackIndex]}, ${colors[trackIndex]}88);"></div>`;
+      }
+      return clips;
+    }
+
+    // ==================== METERING ====================
+    function updateMeters() {
+      // Master meters
+      const level = Math.random() * 30 + 40;
+      document.getElementById('masterL').style.setProperty('--meter-level', (100 - level) + '%');
+      document.getElementById('masterR').style.setProperty('--meter-level', (100 - level + Math.random() * 5) + '%');
+
+      // Channel meters
+      document.querySelectorAll('.ch-meter-bar').forEach(bar => {
+        const newLevel = Math.random() * 40 + 30;
+        bar.style.setProperty('--meter-level', (100 - newLevel) + '%');
+      });
+
+      // Dynamics LEDs
+      document.querySelectorAll('.dyn-led').forEach(led => {
+        if (Math.random() > 0.7) {
+          led.classList.add('on');
+          setTimeout(() => led.classList.remove('on'), 100);
+        }
+      });
+
+      // CPU
+      const cpu = Math.random() * 10 + 20;
+      document.getElementById('cpuFill').style.width = cpu + '%';
+      document.getElementById('cpuValue').textContent = Math.round(cpu) + '%';
+    }
+
+    // ==================== TRANSPORT ====================
+    document.getElementById('playBtn').onclick = function() {
+      if (!audioContext) initAudio();
+      if (audioContext.state === 'suspended') audioContext.resume();
+
+      isPlaying = !isPlaying;
+      this.classList.toggle('playing');
+      this.textContent = isPlaying ? '⏸' : '▶';
+
+      if (isPlaying) {
+        playInterval = setInterval(() => {
+          currentBeat++;
+          updateTimecode();
+          updateMeters();
+          updatePlayhead();
+        }, 60000 / tempo);
+      } else {
+        clearInterval(playInterval);
+      }
+    };
+
+    document.getElementById('stopBtn').onclick = function() {
+      isPlaying = false;
+      currentBeat = 0;
+      clearInterval(playInterval);
+      document.getElementById('playBtn').classList.remove('playing');
+      document.getElementById('playBtn').textContent = '▶';
+      document.getElementById('recordBtn').classList.remove('recording');
+      updateTimecode();
+      updatePlayhead();
+    };
+
+    document.getElementById('recordBtn').onclick = function() {
+      isRecording = !isRecording;
+      this.classList.toggle('recording');
+    };
+
+    document.getElementById('rewindBtn').onclick = function() {
+      currentBeat = Math.max(0, currentBeat - 16);
+      updateTimecode();
+      updatePlayhead();
+      createSound('hihat', 1000, 0.05);
+    };
+
+    document.getElementById('ffwdBtn').onclick = function() {
+      currentBeat += 16;
+      updateTimecode();
+      updatePlayhead();
+      createSound('hihat', 2000, 0.05);
+    };
+
+    function updateTimecode() {
+      const bars = Math.floor(currentBeat / 4);
+      const beat = (currentBeat % 4) + 1;
+      document.getElementById('timecode').textContent =
+        `${String(bars).padStart(2, '0')}:${String(beat).padStart(2, '0')}:00:00`;
+    }
+
+    function updatePlayhead() {
+      document.getElementById('playhead').style.left = (100 + currentBeat * 40) + 'px';
+    }
+
+    document.getElementById('tempoInput').onchange = function() {
+      tempo = parseInt(this.value) || 120;
+      if (isPlaying) {
+        clearInterval(playInterval);
+        playInterval = setInterval(() => {
+          currentBeat++;
+          updateTimecode();
+          updateMeters();
+          updatePlayhead();
+        }, 60000 / tempo);
+      }
+    };
+
+    // ==================== UI INTERACTIONS ====================
+    // Panel tabs
+    document.querySelectorAll('.panel-tab').forEach(tab => {
+      tab.onclick = function() {
+        document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        const panel = this.dataset.panel;
+        document.querySelectorAll('.plugins-panel, .ai-panel, .automation-panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(panel + 'Panel').classList.add('active');
+      };
+    });
+
+    // Format buttons
+    document.querySelectorAll('.format-btn').forEach(btn => {
+      btn.onclick = function() {
+        document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      };
+    });
+
+    // Plugin bypass
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('plugin-bypass')) {
+        e.target.classList.toggle('on');
+      }
+      if (e.target.classList.contains('ch-btn')) {
+        e.target.classList.toggle('on');
+      }
+      if (e.target.classList.contains('group-btn')) {
+        e.target.classList.toggle('active');
+      }
+      if (e.target.classList.contains('tool-btn')) {
+        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+      }
+      if (e.target.classList.contains('auto-btn')) {
+        document.querySelectorAll('.auto-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+      }
+      if (e.target.classList.contains('ai-preset')) {
+        handleAIPreset(e.target.textContent);
+      }
+    });
+
+    // Fader drag
+    let activeFader = null;
+    let startY = 0;
+    let startTop = 0;
+
+    document.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('fader-cap')) {
+        activeFader = e.target;
+        startY = e.clientY;
+        startTop = parseFloat(activeFader.style.top) || 30;
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (activeFader) {
+        const newTop = Math.max(5, Math.min(90, startTop + (e.clientY - startY) * 0.5));
+        activeFader.style.top = newTop + '%';
+        const db = activeFader.parentElement.nextElementSibling;
+        if (db) db.textContent = ((100 - newTop) / 100 * 20 - 10).toFixed(1);
+      }
+    });
+
+    document.addEventListener('mouseup', () => { activeFader = null; });
+
+    // Keyboard
+    const keyMap = {
+      'a': 261.63, 'w': 277.18, 's': 293.66, 'e': 311.13, 'd': 329.63,
+      'f': 349.23, 't': 369.99, 'g': 392.00, 'y': 415.30, 'h': 440.00,
+      'u': 466.16, 'j': 493.88, 'k': 523.25
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (keyMap[e.key.toLowerCase()] && !e.repeat) {
+        playNote(keyMap[e.key.toLowerCase()], 0.5, 'piano');
+      }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        document.getElementById('playBtn').click();
+      }
+    });
+
+    // AI Chat
+    document.getElementById('aiSend').onclick = sendAIMessage;
+    document.getElementById('aiInput').onkeypress = (e) => {
+      if (e.key === 'Enter') sendAIMessage();
+    };
+
+    function sendAIMessage() {
+      const input = document.getElementById('aiInput');
+      const chat = document.getElementById('aiChat');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      chat.innerHTML += `<div class="ai-message user">${msg}</div>`;
+      input.value = '';
+
+      setTimeout(() => {
+        const responses = [
+          "I'd suggest cutting around 300Hz on the kick to reduce muddiness.",
+          "Try a 2:1 ratio on the vocal compressor with medium attack.",
+          "For that polish, add a subtle high shelf at 10kHz.",
+          "Consider sidechaining the bass to the kick for more groove.",
+          "A room reverb with 1.2s decay would suit this track nicely.",
+          "I recommend -14 LUFS integrated for streaming platforms."
+        ];
+        chat.innerHTML += `<div class="ai-message bot">🐐 ${responses[Math.floor(Math.random() * responses.length)]}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+      }, 500);
+    }
+
+    function handleAIPreset(preset) {
+      const chat = document.getElementById('aiChat');
+      chat.innerHTML += `<div class="ai-message user">Apply ${preset}</div>`;
+      
+      setTimeout(() => {
+        chat.innerHTML += `<div class="ai-message bot">🐐 Applying ${preset} settings to your session...</div>`;
+        chat.scrollTop = chat.scrollHeight;
+      }, 300);
+    }
+
+    // ==================== INIT ====================
+    document.addEventListener('DOMContentLoaded', () => {
+      generatePlugins();
+      generateChannels();
+      generatePiano();
+      generateTimeline();
+      console.log('🐐 GOAT ULTIMATE STUDIO - Complete Edition Loaded');
+      console.log('🎹 Keys A-K play piano');
+      console.log('▶️ Space = Play/Pause');
+    });
+  </script>
+</body>
+</html>

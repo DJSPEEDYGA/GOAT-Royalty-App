@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAT ULTIMATE STUDIO - SSL Origin Evo 32</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      user-select: none;
+    }
+
+    /* AUTHENTIC SSL ORIGIN EVO STYLING */
+    :root {
+      --ssl-chassis: #1a1a1a;
+      --ssl-panel: #2a2a2a;
+      --ssl-surface: #1f1f1f;
+      --ssl-knob: #3a3a3a;
+      --ssl-knob-top: #4a4a4a;
+      --ssl-led-green: #00ff00;
+      --ssl-led-yellow: #ffff00;
+      --ssl-led-red: #ff0000;
+      --ssl-led-blue: #00aaff;
+      --ssl-gold: #c4a000;
+      --ssl-silver: #c0c0c0;
+      --ssl-black: #0a0a0a;
+      --ssl-wood: #4a3728;
+      --ssl-wood-dark: #3a2718;
+      --ssl-metal: #2a2a2a;
+      --ssl-metal-light: #3a3a3a;
+      --ssl-text: #e0e0e0;
+      --ssl-text-dim: #808080;
+    }
+
+    /* Main Console Container - Real Hardware Look */
+    .console-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: linear-gradient(180deg, #0f0f0f 0%, #080808 100%);
+      position: relative;
+    }
+
+    /* Wood Side Panels */
+    .wood-panel-left, .wood-panel-right {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      background: linear-gradient(90deg, var(--ssl-wood-dark) 0%, var(--ssl-wood) 50%, var(--ssl-wood-dark) 100%);
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+      z-index: 100;
+    }
+
+    .wood-panel-left { left: 0; }
+    .wood-panel-right { right: 0; }
+
+    .wood-panel-left::before, .wood-panel-right::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.1) 2px,
+        rgba(0,0,0,0.1) 4px
+      );
+    }
+
+    /* Metal Chassis */
+    .metal-chassis {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 80px;
+      right: 80px;
+      background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 50%, #1a1a1a 100%);
+      box-shadow: 
+        inset 0 2px 4px rgba(255,255,255,0.05),
+        inset 0 -2px 4px rgba(0,0,0,0.3);
+      z-index: 50;
+    }
+
+    /* Screw Holes */
+    .screw-hole {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle at 30% 30%, #4a4a4a, #1a1a1a);
+      border-radius: 50%;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .screw-hole::after {
+      content: '+';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 6px;
+      color: #2a2a2a;
+      font-weight: bold;
+    }
+
+    /* Top Meter Bridge - Authentic SSL Style */
+    .meter-bridge {
+      height: 100px;
+      background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+      border-bottom: 4px solid #2a2a2a;
+      display: flex;
+      align-items: center;
+      padding: 0 100px;
+      gap: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      position: relative;
+      z-index: 60;
+    }
+
+    .meter-bridge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #3a3a3a, transparent);
+    }
+
+    .ssl-logo {
+      width: 180px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+      border-radius: 8px;
+      border: 1px solid #3a3a3a;
+    }
+
+    .ssl-logo-text {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #c0c0c0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .ssl-logo-sub {
+      font-size: 0.6rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .meter-bridge-meters {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      height: 70px;
+    }
+
+    .stereo-meter {
+      display: flex;
+      gap: 3px;
+      height: 100%;
+      background: #0a0a0a;
+      padding: 6px;
+      border-radius: 6px;
+      border: 2px solid #2a2a2a;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .stereo-meter .meter-bar {
+      width: 18px;
+      height: 100%;
+      background: linear-gradient(to top, #00ff00 0%, #00ff00 60%, #ffff00 60%, #ffff00 80%, #ff0000 80%, #ff0000 100%);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .stereo-meter .meter-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: #0a0a0a;
+      transition: height 0.05s;
+    }
+
+    .meter-bridge-info {
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .timecode-display {
+      font-family: 'Courier New', monospace;
+      font-size: 2.2rem;
+      color: var(--ssl-led-green);
+      background: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: 2px solid #2a2a2a;
+      text-align: center;
+      letter-spacing: 4px;
+      text-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    /* Transport Panel - Real Hardware */
+    .transport-panel {
+      height: 80px;
+      background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
+      border-bottom: 3px solid #3a3a3a;
+      display: flex;
+      align-items: center;
+      padding: 0 100px;
+      gap: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      position: relative;
+      z-index: 60;
+    }
+
+    .transport-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .transport-btn {
+      width: 55px;
+      height: 55px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+      color: #888;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.1s;
+      box-shadow: 
+        0 4px 8px rgba(0,0,0,0.4),
+        inset 0 1px 2px rgba(255,255,255,0.1);
+      border: 1px solid #4a4a4a;
+    }
+
+    .transport-btn:hover {
+      background: linear-gradient(180deg, #4a4a4a 0%, #3a3a3a 100%);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+    }
+
+    .transport-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .transport-btn.playing {
+      background: linear-gradient(180deg, #00cc00 0%, #009900 100%);
+      color: #fff;
+      box-shadow: 0 0 25px rgba(0, 255, 0, 0.6);
+      border-color: #00ff00;
+    }
+
+    .transport-btn.recording {
+      background: linear-gradient(180deg, #cc0000 0%, #990000 100%);
+      color: #fff;
+      animation: pulse-rec 1s infinite;
+      border-color: #ff0000;
+    }
+
+    @keyframes pulse-rec {
+      0%, 100% { box-shadow: 0 0 15px rgba(255, 0, 0, 0.6); }
+      50% { box-shadow: 0 0 35px rgba(255, 0, 0, 0.9); }
+    }
+
+    .transport-info {
+      display: flex;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .tempo-display, .time-signature {
+      background: #0a0a0a;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 2px solid #2a2a2a;
+      text-align: center;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .tempo-value {
+      font-size: 1.6rem;
+      color: #ffa500;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(255, 165, 0, 0.3);
+    }
+
+    .tempo-input {
+      width: 75px;
+      background: transparent;
+      border: none;
+      color: #ffa500;
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .time-sig-value {
+      font-size: 1.3rem;
+      color: #00aaff;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(0, 170, 255, 0.3);
+    }
+
+    .transport-toggles {
+      display: flex;
+      gap: 12px;
+    }
+
+    .toggle-btn {
+      padding: 10px 18px;
+      background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
+      border: 2px solid #4a4a4a;
+      border-radius: 8px;
+      color: #888;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .toggle-btn.active {
+      background: linear-gradient(180deg, #0066cc 0%, #004499 100%);
+      border-color: #0077cc;
+      color: #fff;
+      box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+    }
+
+    /* Main Console Area */
+    .main-console {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      padding: 0 100px;
+      position: relative;
+      z-index: 55;
+    }
+
+    /* Left Panel - Plugin Rack */
+    .plugin-rack {
+      width: 280px;
+      background: linear-gradient(180deg, #1f1f1f 0%, #151515 100%);
+      border-right: 3px solid #2a2a2a;
+      overflow-y: auto;
+      box-shadow: inset -2px 0 4px rgba(0,0,0,0.3);
+    }
+
+    .rack-header {
+      padding: 18px;
+      background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%);
+      border-bottom: 3px solid #3a3a3a;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: #aaa;
+      letter-spacing: 1.5px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .plugin-slot {
+      padding: 14px;
+      border-bottom: 1px solid #2a2a2a;
+      cursor: pointer;
+      transition: background 0.2s;
+      background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+    }
+
+    .plugin-slot:hover {
+      background: linear-gradient(180deg, #252525 0%, #1a1a1a 100%);
+    }
+
+    .plugin-slot-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .plugin-slot-number {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #888;
+      border: 1px solid #4a4a4a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .plugin-slot-name {
+      flex: 1;
+      font-size: 0.9rem;
+      color: #e0e0e0;
+      font-weight: 600;
+    }
+
+    .plugin-slot-bypass {
+      width: 36px;
+      height: 22px;
+      background: linear-gradient(180deg, #2a2a2a, #1a1a1a);
+      border-radius: 11px;
+      position: relative;
+      cursor: pointer;
+      border: 2px solid #3a3a3a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .plugin-slot-bypass.active {
+      background: linear-gradient(180deg, #00aa00, #008800);
+      border-color: #00ff00;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+    }
+
+    .plugin-slot-bypass::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: linear-gradient(180deg, #fff, #ddd);
+      border-radius: 50%;
+      top: 1px;
+      left: 2px;
+      transition: left 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .plugin-slot-bypass.active::after {
+      left: 16px;
+    }
+
+    /* Center - Channel Strips */
+    .channel-strips-container {
+      flex: 1;
+      display: flex;
+      overflow-x: auto;
+      background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+      padding: 15px;
+      gap: 6px;
+    }
+
+    /* Authentic SSL Channel Strip */
+    .channel-strip {
+      width: 80px;
+      background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 50%, #1a1a1a 100%);
+      border: 2px solid #3a3a3a;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 
+        0 6px 12px rgba(0,0,0,0.5),
+        inset 0 1px 2px rgba(255,255,255,0.05);
+      transition: all 0.2s;
+    }
+
+    .channel-strip:hover {
+      border-color: var(--ssl-gold);
+      box-shadow: 0 0 20px rgba(196, 160, 0, 0.3);
+    }
+
+    .channel-strip.selected {
+      border-color: var(--ssl-led-blue);
+      box-shadow: 0 0 25px rgba(0, 170, 255, 0.4);
+    }
+
+    /* Channel Number and Name */
+    .channel-header {
+      background: linear-gradient(180deg, #333 0%, #222 100%);
+      padding: 8px 6px;
+      text-align: center;
+      border-radius: 8px 8px 0 0;
+      border-bottom: 2px solid #3a3a3a;
+    }
+
+    .channel-number {
+      font-size: 0.65rem;
+      color: #666;
+      font-weight: 700;
+    }
+
+    .channel-name {
+      font-size: 0.6rem;
+      color: #ccc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+    }
+
+    /* Input Gain - Real Knob */
+    .input-section {
+      padding: 8px;
+      text-align: center;
+    }
+
+    .gain-knob {
+      width: 45px;
+      height: 45px;
+      background: radial-gradient(circle at 30% 30%, #5a5a5a, #2a2a2a);
+      border-radius: 50%;
+      border: 3px solid #4a4a4a;
+      margin: 0 auto;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 
+        0 4px 8px rgba(0,0,0,0.5),
+        inset 0 2px 4px rgba(255,255,255,0.1);
+    }
+
+    .gain-knob::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 14px;
+      background: linear-gradient(180deg, var(--ssl-gold), #8b6914);
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .gain-label {
+      font-size: 0.55rem;
+      color: #888;
+      margin-top: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* EQ Section - Real SSL Style */
+    .eq-section {
+      padding: 8px;
+      border-top: 2px solid #2a2a2a;
+    }
+
+    .eq-knobs {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 6px;
+    }
+
+    .eq-knob {
+      width: 26px;
+      height: 26px;
+      background: radial-gradient(circle at 30% 30%, #6a6a6a, #3a3a3a);
+      border-radius: 50%;
+      border: 2px solid #5a5a5a;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    }
+
+    .eq-knob::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 8px;
+      background: #fff;
+      border-radius: 1px;
+    }
+
+    .eq-labels {
+      display: flex;
+      justify-content: space-around;
+      font-size: 0.5rem;
+      color: #666;
+      font-weight: 600;
+    }
+
+    /* Dynamics Section */
+    .dynamics-section {
+      padding: 8px;
+      border-top: 2px solid #2a2a2a;
+    }
+
+    .dynamics-led {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+
+    .led {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .led.green.active { 
+      background: #00ff00; 
+      box-shadow: 0 0 12px #00ff00, inset 0 1px 2px rgba(255,255,255,0.3);
+    }
+    .led.yellow.active { 
+      background: #ffff00; 
+      box-shadow: 0 0 12px #ffff00, inset 0 1px 2px rgba(255,255,255,0.3);
+    }
+    .led.red.active { 
+      background: #ff0000; 
+      box-shadow: 0 0 12px #ff0000, inset 0 1px 2px rgba(255,255,255,0.3);
+    }
+
+    .comp-threshold {
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle at 30% 30%, #5a5a5a, #2a2a2a);
+      border-radius: 50%;
+      border: 3px solid #4a4a4a;
+      margin: 0 auto;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+
+    .comp-threshold::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 12px;
+      background: linear-gradient(180deg, #ff6600, #cc4400);
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .dynamics-label {
+      font-size: 0.5rem;
+      color: #888;
+      text-align: center;
+      margin-top: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* Meter - Real SSL Style */
+    .channel-meter {
+      height: 120px;
+      padding: 6px;
+      border-top: 2px solid #2a2a2a;
+    }
+
+    .meter-container {
+      height: 100%;
+      display: flex;
+      gap: 3px;
+      background: #0a0a0a;
+      padding: 6px;
+      border-radius: 6px;
+      border: 2px solid #2a2a2a;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .meter-bar {
+      flex: 1;
+      background: linear-gradient(to top, #00ff00 0%, #00ff00 60%, #ffff00 60%, #ffff00 80%, #ff0000 80%, #ff0000 100%);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .meter-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #0a0a0a;
+      transition: height 0.05s;
+    }
+
+    /* Fader - Real SSL Style */
+    .fader-section {
+      flex: 1;
+      padding: 8px;
+      border-top: 2px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .fader-track {
+      flex: 1;
+      width: 35px;
+      background: linear-gradient(180deg, #222, #111);
+      border-radius: 6px;
+      position: relative;
+      cursor: pointer;
+      border: 2px solid #3a3a3a;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .fader-groove {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      top: 12px;
+      bottom: 12px;
+      background: #000;
+      border-radius: 3px;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .fader-cap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: linear-gradient(180deg, #666 0%, #444 50%, #333 100%);
+      border-radius: 6px;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #555;
+      box-shadow: 
+        0 4px 8px rgba(0,0,0,0.5),
+        inset 0 1px 2px rgba(255,255,255,0.1);
+    }
+
+    .fader-cap::after {
+      content: '';
+      width: 70%;
+      height: 4px;
+      background: linear-gradient(180deg, var(--ssl-gold), #8b6914);
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .fader-db {
+      font-size: 0.55rem;
+      color: var(--ssl-gold);
+      margin-top: 6px;
+      font-weight: 700;
+      text-shadow: 0 0 5px rgba(196, 160, 0, 0.3);
+    }
+
+    /* Pan - Real Knob */
+    .pan-section {
+      padding: 8px;
+      border-top: 2px solid #2a2a2a;
+      text-align: center;
+    }
+
+    .pan-knob {
+      width: 32px;
+      height: 32px;
+      background: radial-gradient(circle at 30% 30%, #5a5a5a, #2a2a2a);
+      border-radius: 50%;
+      border: 2px solid #4a4a4a;
+      margin: 0 auto;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+
+    .pan-knob::after {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 10px;
+      background: linear-gradient(180deg, #00aaff, #0066cc);
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .pan-label {
+      font-size: 0.5rem;
+      color: #888;
+      margin-top: 4px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* Mute/Solo/Select - Real Buttons */
+    .channel-buttons {
+      padding: 8px;
+      border-top: 2px solid #2a2a2a;
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .ch-btn {
+      width: 22px;
+      height: 22px;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.55rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      border: 1px solid #4a4a4a;
+    }
+
+    .ch-btn.select {
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      color: #888;
+    }
+
+    .ch-btn.select.active {
+      background: linear-gradient(180deg, #0066cc, #004499);
+      color: #fff;
+      border-color: #0077cc;
+      box-shadow: 0 0 15px rgba(0, 119, 204, 0.5);
+    }
+
+    .ch-btn.solo {
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      color: #666;
+    }
+
+    .ch-btn.solo.active {
+      background: linear-gradient(180deg, #ffd700, #cc9900);
+      color: #000;
+      border-color: #ffcc00;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    }
+
+    .ch-btn.mute {
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      color: #666;
+    }
+
+    .ch-btn.mute.active {
+      background: linear-gradient(180deg, #cc0000, #990000);
+      color: #fff;
+      border-color: #ff0000;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+    }
+
+    .ch-btn.record {
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      color: #666;
+    }
+
+    .ch-btn.record.active {
+      background: linear-gradient(180deg, #ff0000, #cc0000);
+      color: #fff;
+      border-color: #ff3333;
+      animation: pulse-rec 1s infinite;
+    }
+
+    /* Master Channel - Gold Styling */
+    .master-channel {
+      width: 120px;
+      background: linear-gradient(180deg, #3a3a00 0%, #2a2a00 50%, #1a1a00 100%);
+      border: 3px solid var(--ssl-gold);
+      box-shadow: 0 0 30px rgba(196, 160, 0, 0.3);
+    }
+
+    .master-channel .channel-header {
+      background: linear-gradient(180deg, var(--ssl-gold) 0%, #8b7500 100%);
+      border-bottom: 3px solid #6b5500;
+    }
+
+    .master-channel .channel-header .channel-name {
+      color: #000;
+      font-weight: 800;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .master-channel .channel-meter {
+      height: 160px;
+    }
+
+    .master-channel .meter-container {
+      padding: 8px;
+    }
+
+    .master-channel .meter-bar {
+      width: 25px;
+    }
+
+    .master-fader .fader-track {
+      width: 60px;
+    }
+
+    .master-fader .fader-cap {
+      background: linear-gradient(180deg, var(--ssl-gold) 0%, #8b7500 100%);
+      border-color: var(--ssl-gold);
+      box-shadow: 0 0 20px rgba(196, 160, 0, 0.5);
+    }
+
+    /* Right Panel */
+    .right-panel {
+      width: 320px;
+      background: linear-gradient(180deg, #1f1f1f 0%, #151515 100%);
+      border-left: 3px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      box-shadow: inset 2px 0 4px rgba(0,0,0,0.3);
+    }
+
+    /* Virtual Keyboard */
+    .keyboard-container {
+      padding: 12px;
+      border-bottom: 3px solid #2a2a2a;
+    }
+
+    .keyboard-header {
+      font-size: 0.85rem;
+      color: #888;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .piano-keys {
+      display: flex;
+      height: 90px;
+      position: relative;
+    }
+
+    .white-key {
+      flex: 1;
+      background: linear-gradient(180deg, #f5f5f5 0%, #ddd 100%);
+      border: 1px solid #999;
+      border-radius: 0 0 6px 6px;
+      cursor: pointer;
+      transition: all 0.1s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .white-key:hover {
+      background: linear-gradient(180deg, #fff 0%, #eee 100%);
+    }
+
+    .white-key:active, .white-key.active {
+      background: linear-gradient(180deg, #ddd 0%, #ccc 100%);
+      transform: translateY(3px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .black-key {
+      position: absolute;
+      width: 24px;
+      height: 55px;
+      background: linear-gradient(180deg, #333 0%, #111 100%);
+      border-radius: 0 0 4px 4px;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.1s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+
+    .black-key:hover {
+      background: linear-gradient(180deg, #444 0%, #222 100%);
+    }
+
+    .black-key:active, .black-key.active {
+      background: linear-gradient(180deg, #222 0%, #000 100%);
+      transform: translateY(3px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    /* Audio Drop Zone */
+    .audio-drop-zone {
+      margin: 12px;
+      padding: 24px;
+      border: 3px dashed #3a3a3a;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: linear-gradient(180deg, #1a1a1a, #151515);
+    }
+
+    .audio-drop-zone:hover, .audio-drop-zone.dragover {
+      border-color: var(--ssl-gold);
+      background: linear-gradient(180deg, rgba(196, 160, 0, 0.1), rgba(196, 160, 0, 0.05));
+      box-shadow: 0 0 20px rgba(196, 160, 0, 0.2);
+    }
+
+    .audio-drop-zone h3 {
+      color: #888;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .audio-drop-zone p {
+      color: #555;
+      font-size: 0.75rem;
+    }
+
+    /* Sample Tracks */
+    .sample-tracks {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .sample-track {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background: linear-gradient(180deg, #2a2a2a, #1f1f1f);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid #3a3a3a;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .sample-track:hover {
+      background: linear-gradient(180deg, #333, #2a2a2a);
+      border-color: #4a4a4a;
+    }
+
+    .sample-track.playing {
+      border-left: 4px solid var(--ssl-led-green);
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+    }
+
+    .sample-waveform {
+      width: 45px;
+      height: 35px;
+      background: linear-gradient(90deg, 
+        transparent 0%, #00ff00 20%, #00ff00 25%, transparent 30%,
+        transparent 40%, #00ff00 50%, #00ff00 55%, transparent 60%,
+        transparent 70%, #00ff00 80%, #00ff00 85%, transparent 90%
+      );
+      border-radius: 6px;
+      margin-right: 12px;
+      opacity: 0.6;
+      border: 1px solid #2a2a2a;
+    }
+
+    .sample-track.playing .sample-waveform {
+      opacity: 1;
+      animation: waveform-pulse 0.5s infinite;
+    }
+
+    @keyframes waveform-pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .sample-info {
+      flex: 1;
+    }
+
+    .sample-name {
+      font-size: 0.8rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .sample-duration {
+      font-size: 0.7rem;
+      color: #666;
+    }
+
+    .sample-play-btn {
+      width: 35px;
+      height: 35px;
+      background: linear-gradient(180deg, var(--ssl-gold), #8b6914);
+      border: none;
+      border-radius: 50%;
+      color: #000;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+
+    .sample-play-btn:hover {
+      box-shadow: 0 0 15px rgba(196, 160, 0, 0.5);
+    }
+
+    /* AI Assistant */
+    .ai-section {
+      padding: 12px;
+      border-top: 3px solid #2a2a2a;
+    }
+
+    .ai-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .ai-avatar {
+      width: 35px;
+      height: 35px;
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    }
+
+    .ai-title {
+      font-size: 0.9rem;
+      color: #a78bfa;
+      font-weight: 700;
+    }
+
+    .ai-quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .ai-action-btn {
+      padding: 6px 12px;
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      border: 1px solid #4a4a4a;
+      border-radius: 14px;
+      color: #aaa;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+
+    .ai-action-btn:hover {
+      background: linear-gradient(180deg, #4a4a4a, #3a3a3a);
+      border-color: #8b5cf6;
+      color: #fff;
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Timeline at Bottom */
+    .timeline-section {
+      height: 180px;
+      background: #0a0a0a;
+      border-top: 4px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 60;
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 20px;
+      background: linear-gradient(180deg, #1a1a1a, #0f0f0f);
+      border-bottom: 2px solid #2a2a2a;
+    }
+
+    .timeline-tools {
+      display: flex;
+      gap: 6px;
+    }
+
+    .timeline-tool {
+      padding: 6px 12px;
+      background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+      border: 1px solid #4a4a4a;
+      border-radius: 6px;
+      color: #888;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .timeline-tool:hover, .timeline-tool.active {
+      background: linear-gradient(180deg, #4a4a4a, #3a3a3a);
+      color: #fff;
+      border-color: #5a5a5a;
+    }
+
+    .timeline-zoom {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .zoom-slider {
+      width: 100px;
+      -webkit-appearance: none;
+      height: 5px;
+      background: #2a2a2a;
+      border-radius: 3px;
+    }
+
+    .zoom-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      background: var(--ssl-gold);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(196, 160, 0, 0.5);
+    }
+
+    .timeline-body {
+      flex: 1;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .timeline-ruler {
+      height: 24px;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .ruler-marker {
+      min-width: 55px;
+      padding: 0 12px;
+      font-size: 0.65rem;
+      color: #666;
+      border-right: 1px solid #2a2a2a;
+      font-weight: 600;
+    }
+
+    .playhead {
+      position: absolute;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--ssl-led-green);
+      z-index: 100;
+      pointer-events: none;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    }
+
+    .playhead::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -7px;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 10px solid var(--ssl-led-green);
+    }
+
+    .timeline-tracks {
+      flex: 1;
+    }
+
+    .timeline-track {
+      height: 28px;
+      display: flex;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .track-label {
+      width: 110px;
+      padding: 0 10px;
+      background: #1a1a1a;
+      border-right: 2px solid #2a2a2a;
+      font-size: 0.7rem;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .track-label-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .track-lane {
+      flex: 1;
+      position: relative;
+      background: #0f0f0f;
+    }
+
+    .track-clip {
+      position: absolute;
+      top: 4px;
+      height: 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .track-clip.audio {
+      background: linear-gradient(180deg, rgba(0,170,255,0.5), rgba(0,170,255,0.3));
+      border: 1px solid rgba(0,170,255,0.7);
+    }
+
+    .track-clip.midi {
+      background: linear-gradient(180deg, rgba(168,85,247,0.5), rgba(168,85,247,0.3));
+      border: 1px solid rgba(168,85,247,0.7);
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #1a1a1a; }
+    ::-webkit-scrollbar-thumb { background: #3a3a3a; border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4a4a4a; }
+
+    /* Responsive */
+    @media (max-width: 1400px) {
+      .plugin-rack { width: 240px; }
+      .right-panel { width: 280px; }
+    }
+
+    @media (max-width: 1100px) {
+      .plugin-rack { display: none; }
+    }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <!-- Wood Side Panels -->
+  <div class="wood-panel-left"></div>
+  <div class="wood-panel-right"></div>
+  
+  <!-- Metal Chassis -->
+  <div class="metal-chassis"></div>
+
+  <div class="console-container">
+    <!-- Meter Bridge -->
+    <div class="meter-bridge">
+      <div class="ssl-logo">
+        <div>
+          <div class="ssl-logo-text">GOAT ULTIMATE</div>
+          <div class="ssl-logo-sub">SSL Origin Evo 32</div>
+        </div>
+      </div>
+      <div class="meter-bridge-meters">
+        <div class="stereo-meter">
+          <div class="meter-bar" id="masterMeterL"></div>
+          <div class="meter-bar" id="masterMeterR"></div>
+        </div>
+      </div>
+      <div class="meter-bridge-info">
+        <div class="timecode-display" id="timecode">00:00:00:00</div>
+      </div>
+    </div>
+
+    <!-- Transport Panel -->
+    <div class="transport-panel">
+      <div class="transport-buttons">
+        <button class="transport-btn" id="rewindBtn" title="Rewind">⏮</button>
+        <button class="transport-btn" id="stopBtn" title="Stop">⏹</button>
+        <button class="transport-btn" id="playBtn" title="Play">▶</button>
+        <button class="transport-btn" id="recordBtn" title="Record">⏺</button>
+        <button class="transport-btn" id="loopBtn" title="Loop">🔁</button>
+      </div>
+      <div class="transport-info">
+        <div class="tempo-display">
+          <input type="number" class="tempo-input" id="tempoInput" value="120" min="20" max="300">
+          <div style="font-size: 0.65rem; color: #666;">BPM</div>
+        </div>
+        <div class="time-signature">
+          <div class="time-sig-value">4/4</div>
+          <div style="font-size: 0.65rem; color: #666;">Time</div>
+        </div>
+      </div>
+      <div class="transport-toggles">
+        <button class="toggle-btn" id="clickBtn">Click</button>
+        <button class="toggle-btn" id="loopToggle">Loop</button>
+        <button class="toggle-btn" id="snapToggle">Snap</button>
+      </div>
+    </div>
+
+    <!-- Main Console -->
+    <div class="main-console">
+      <!-- Plugin Rack -->
+      <aside class="plugin-rack">
+        <div class="rack-header">Plugin Rack</div>
+        <div class="plugin-slot">
+          <div class="plugin-slot-header">
+            <div class="plugin-slot-number">1</div>
+            <div class="plugin-slot-name">SSL Channel Strip 2</div>
+            <div class="plugin-slot-bypass active"></div>
+          </div>
+        </div>
+        <div class="plugin-slot">
+          <div class="plugin-slot-header">
+            <div class="plugin-slot-number">2</div>
+            <div class="plugin-slot-name">Waves SSL E-Channel</div>
+            <div class="plugin-slot-bypass"></div>
+          </div>
+        </div>
+        <div class="plugin-slot">
+          <div class="plugin-slot-header">
+            <div class="plugin-slot-number">3</div>
+            <div class="plugin-slot-name">iZotope Neutron 4</div>
+            <div class="plugin-slot-bypass"></div>
+          </div>
+        </div>
+        <div class="plugin-slot">
+          <div class="plugin-slot-header">
+            <div class="plugin-slot-number">4</div>
+            <div class="plugin-slot-name">Slate VMR</div>
+            <div class="plugin-slot-bypass"></div>
+          </div>
+        </div>
+        <div class="plugin-slot">
+          <div class="plugin-slot-header">
+            <div class="plugin-slot-number">5</div>
+            <div class="plugin-slot-name">UAD LA-2A</div>
+            <div class="plugin-slot-bypass"></div>
+          </div>
+        </div>
+        <div class="plugin-slot">
+          <div class="plugin-slot-header">
+            <div class="plugin-slot-number">6</div>
+            <div class="plugin-slot-name">Antares Auto-Tune</div>
+            <div class="plugin-slot-bypass"></div>
+          </div>
+        </div>
+        <div class="plugin-slot">
+          <div class="plugin-slot-header">
+            <div class="plugin-slot-number">7</div>
+            <div class="plugin-slot-name">FabFilter Pro-Q 3</div>
+            <div class="plugin-slot-bypass"></div>
+          </div>
+        </div>
+        <div class="plugin-slot">
+          <div class="plugin-slot-header">
+            <div class="plugin-slot-number">8</div>
+            <div class="plugin-slot-name">Soundtoys 5</div>
+            <div class="plugin-slot-bypass"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Channel Strips -->
+      <div class="channel-strips-container" id="channelContainer">
+        <!-- Channels generated by JS -->
+      </div>
+
+      <!-- Right Panel -->
+      <aside class="right-panel">
+        <!-- Virtual Keyboard -->
+        <div class="keyboard-container">
+          <div class="keyboard-header">Virtual Keyboard</div>
+          <div class="piano-keys" id="pianoKeys">
+            <!-- Keys generated by JS -->
+          </div>
+        </div>
+
+        <!-- Audio Drop Zone -->
+        <div class="audio-drop-zone" id="audioDropZone">
+          <h3>📁 Drop Audio Files</h3>
+          <p>Drag & drop WAV, MP3, AIFF files here</p>
+          <input type="file" id="audioFileInput" accept="audio/*" multiple style="display: none;">
+        </div>
+
+        <!-- Sample Tracks -->
+        <div class="sample-tracks" id="sampleTracks">
+          <!-- Demo tracks -->
+          <div class="sample-track" data-sound="kick">
+            <div class="sample-waveform"></div>
+            <div class="sample-info">
+              <div class="sample-name">Kick Drum</div>
+              <div class="sample-duration">0.5s</div>
+            </div>
+            <button class="sample-play-btn">▶</button>
+          </div>
+          <div class="sample-track" data-sound="snare">
+            <div class="sample-waveform"></div>
+            <div class="sample-info">
+              <div class="sample-name">Snare</div>
+              <div class="sample-duration">0.3s</div>
+            </div>
+            <button class="sample-play-btn">▶</button>
+          </div>
+          <div class="sample-track" data-sound="hihat">
+            <div class="sample-waveform"></div>
+            <div class="sample-info">
+              <div class="sample-name">Hi-Hat</div>
+              <div class="sample-duration">0.2s</div>
+            </div>
+            <button class="sample-play-btn">▶</button>
+          </div>
+          <div class="sample-track" data-sound="bass">
+            <div class="sample-waveform"></div>
+            <div class="sample-info">
+              <div class="sample-name">Bass</div>
+              <div class="sample-duration">1.0s</div>
+            </div>
+            <button class="sample-play-btn">▶</button>
+          </div>
+        </div>
+
+        <!-- AI Assistant -->
+        <div class="ai-section">
+          <div class="ai-header">
+            <div class="ai-avatar">N</div>
+            <div class="ai-title">NEMO AI Assistant</div>
+          </div>
+          <div class="ai-quick-actions">
+            <button class="ai-action-btn">Analyze Mix</button>
+            <button class="ai-action-btn">Auto EQ</button>
+            <button class="ai-action-btn">Balance</button>
+            <button class="ai-action-btn">Master</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline-section">
+      <div class="timeline-header">
+        <div class="timeline-tools">
+          <button class="timeline-tool active">Select</button>
+          <button class="timeline-tool">Draw</button>
+          <button class="timeline-tool">Split</button>
+          <button class="timeline-tool">Erase</button>
+        </div>
+        <div class="timeline-zoom">
+          <span style="color: #666; font-size: 0.75rem;">Zoom</span>
+          <input type="range" class="zoom-slider" min="1" max="10" value="5">
+        </div>
+      </div>
+      <div class="timeline-body" id="timelineBody">
+        <div class="timeline-ruler" id="timelineRuler"></div>
+        <div class="timeline-tracks" id="timelineTracks"></div>
+        <div class="playhead" id="playhead" style="left: 120px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // GOAT ULTIMATE STUDIO - SSL Origin Evo 32
+    // Professional Audio Engine
+    // ==========================================
+
+    // Audio Context
+    let audioContext = null;
+    let masterGain = null;
+    let isPlaying = false;
+    let isRecording = false;
+    let currentBeat = 0;
+    let tempo = 120;
+    let playInterval = null;
+
+    // Initialize Audio
+    function initAudio() {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      masterGain = audioContext.createGain();
+      masterGain.connect(audioContext.destination);
+      masterGain.gain.value = 0.8;
+    }
+
+    // Sound Synthesizer
+    function createSound(type, freq, duration = 0.5) {
+      if (!audioContext) initAudio();
+      if (audioContext.state === 'suspended') audioContext.resume();
+
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const filter = audioContext.createBiquadFilter();
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(masterGain);
+
+      // Sound types
+      switch(type) {
+        case 'kick':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(150, audioContext.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(30, audioContext.currentTime + 0.1);
+          gain.gain.setValueAtTime(1, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+          filter.type = 'lowpass';
+          filter.frequency.value = 200;
+          break;
+        case 'snare':
+          osc.type = 'triangle';
+          osc.frequency.value = 200;
+          gain.gain.setValueAtTime(0.8, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+          filter.type = 'highpass';
+          filter.frequency.value = 100;
+          // Add noise for snare
+          const noise = audioContext.createBufferSource();
+          const noiseBuffer = audioContext.createBuffer(1, audioContext.sampleRate * 0.2, audioContext.sampleRate);
+          const output = noiseBuffer.getChannelData(0);
+          for (let i = 0; i < output.length; i++) output[i] = Math.random() * 2 - 1;
+          noise.buffer = noiseBuffer;
+          const noiseGain = audioContext.createGain();
+          noise.connect(noiseGain);
+          noiseGain.connect(masterGain);
+          noiseGain.gain.setValueAtTime(0.5, audioContext.currentTime);
+          noiseGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+          noise.start(audioContext.currentTime);
+          noise.stop(audioContext.currentTime + 0.2);
+          break;
+        case 'hihat':
+          osc.type = 'square';
+          osc.frequency.value = 800;
+          gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+          filter.type = 'highpass';
+          filter.frequency.value = 7000;
+          break;
+        case 'bass':
+          osc.type = 'sawtooth';
+          osc.frequency.value = freq || 55;
+          gain.gain.setValueAtTime(0.6, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + (duration || 1));
+          filter.type = 'lowpass';
+          filter.frequency.value = 500;
+          break;
+        case 'piano':
+          osc.type = 'triangle';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.5, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+          filter.type = 'lowpass';
+          filter.frequency.value = 2000;
+          break;
+        default:
+          osc.type = 'sine';
+          osc.frequency.value = freq || 440;
+          gain.gain.setValueAtTime(0.5, audioContext.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+      }
+
+      osc.start(audioContext.currentTime);
+      osc.stop(audioContext.currentTime + duration);
+
+      // Update meters
+      animateMeters();
+    }
+
+    // Play Note
+    function playNote(frequency, duration = 0.5, type = 'piano') {
+      createSound(type, frequency, duration);
+    }
+
+    // Channel Strip Data
+    const channelData = [];
+    const channelNames = [
+      'Kick', 'Snare', 'Hi-Hat', 'Tom 1', 'Tom 2', 'OH L', 'OH R', 'Room',
+      'Bass', 'Bass DI', 'GTR 1', 'GTR 2', 'GTR 3', 'Keys L', 'Keys R',
+      'Piano', 'Strings', 'Brass', 'Synth 1', 'Synth 2', 'Pad', 'Lead Vox',
+      'BG Vox 1', 'BG Vox 2', 'BG Vox 3', 'FX 1', 'FX 2', 'Ambience', 'Click', 'Talkback'
+    ];
+
+    const channelColors = [
+      '#ff4444', '#ff4444', '#ff4444', '#ff4444', '#ff4444', '#ff4444', '#ff4444', '#ff4444',
+      '#ffaa00', '#ffaa00', '#44ff44', '#44ff44', '#44ff44', '#aa44ff', '#aa44ff',
+      '#4488ff', '#ff44aa', '#ff8844', '#44ffff', '#44ffff', '#8844ff', '#ffcc00',
+      '#88ff44', '#88ff44', '#88ff44', '#44ffaa', '#ff4488', '#ff4488', '#8844aa', '#888888'
+    ];
+
+    // Generate Channel Strips
+    function generateChannels() {
+      const container = document.getElementById('channelContainer');
+      container.innerHTML = '';
+
+      for (let i = 1; i <= 32; i++) {
+        const nameIndex = (i - 1) % channelNames.length;
+        const channel = document.createElement('div');
+        channel.className = 'channel-strip';
+        channel.dataset.channel = i;
+        
+        channel.innerHTML = `
+          <div class="channel-header">
+            <div class="channel-number">${i}</div>
+            <div class="channel-name">${channelNames[nameIndex]}</div>
+          </div>
+          <div class="input-section">
+            <div class="gain-knob" title="Input Gain"></div>
+            <div class="gain-label">GAIN</div>
+          </div>
+          <div class="eq-section">
+            <div class="eq-knobs">
+              <div class="eq-knob" title="HF"></div>
+              <div class="eq-knob" title="MF"></div>
+              <div class="eq-knob" title="LF"></div>
+            </div>
+            <div class="eq-labels">
+              <span>HF</span><span>MF</span><span>LF</span>
+            </div>
+          </div>
+          <div class="dynamics-section">
+            <div class="dynamics-led">
+              <div class="led green"></div>
+              <div class="led yellow"></div>
+              <div class="led red"></div>
+            </div>
+            <div class="comp-threshold" title="Threshold"></div>
+            <div class="dynamics-label">COMP</div>
+          </div>
+          <div class="channel-meter">
+            <div class="meter-container">
+              <div class="meter-bar"><div class="meter-fill"></div></div>
+              <div class="meter-bar"><div class="meter-fill"></div></div>
+            </div>
+          </div>
+          <div class="fader-section">
+            <div class="fader-track">
+              <div class="fader-groove"></div>
+              <div class="fader-cap" style="top: 30%"></div>
+            </div>
+            <div class="fader-db">-10.0</div>
+          </div>
+          <div class="pan-section">
+            <div class="pan-knob" title="Pan"></div>
+            <div class="pan-label">PAN</div>
+          </div>
+          <div class="channel-buttons">
+            <button class="ch-btn select">S</button>
+            <button class="ch-btn solo">SOLO</button>
+            <button class="ch-btn mute">M</button>
+          </div>
+        `;
+        
+        container.appendChild(channel);
+        channelData.push({ element: channel, fader: 0.7, pan: 0, muted: false, soloed: false });
+      }
+
+      // Master Channel
+      const master = document.createElement('div');
+      master.className = 'channel-strip master-channel';
+      master.innerHTML = `
+        <div class="channel-header">
+          <div class="channel-name">MASTER</div>
+        </div>
+        <div class="channel-meter">
+          <div class="meter-container">
+            <div class="meter-bar"><div class="meter-fill"></div></div>
+            <div class="meter-bar"><div class="meter-fill"></div></div>
+          </div>
+        </div>
+        <div class="fader-section master-fader">
+          <div class="fader-track">
+            <div class="fader-groove"></div>
+            <div class="fader-cap" style="top: 15%"></div>
+          </div>
+          <div class="fader-db">0.0</div>
+        </div>
+        <div class="pan-section">
+          <div class="pan-knob"></div>
+          <div class="pan-label">STEREO</div>
+        </div>
+        <div class="channel-buttons">
+          <button class="ch-btn solo">SOLO</button>
+          <button class="ch-btn mute">M</button>
+        </div>
+      `;
+      container.appendChild(master);
+    }
+
+    // Generate Piano Keys
+    function generatePiano() {
+      const piano = document.getElementById('pianoKeys');
+      piano.innerHTML = '';
+      
+      const notes = [
+        { note: 'C', freq: 261.63, black: false },
+        { note: 'C#', freq: 277.18, black: true },
+        { note: 'D', freq: 293.66, black: false },
+        { note: 'D#', freq: 311.13, black: true },
+        { note: 'E', freq: 329.63, black: false },
+        { note: 'F', freq: 349.23, black: false },
+        { note: 'F#', freq: 369.99, black: true },
+        { note: 'G', freq: 392.00, black: false },
+        { note: 'G#', freq: 415.30, black: true },
+        { note: 'A', freq: 440.00, black: false },
+        { note: 'A#', freq: 466.16, black: true },
+        { note: 'B', freq: 493.88, black: false },
+        { note: 'C2', freq: 523.25, black: false }
+      ];
+
+      let whiteKeyIndex = 0;
+      notes.forEach((n, i) => {
+        if (n.black) {
+          const blackKey = document.createElement('div');
+          blackKey.className = 'black-key';
+          blackKey.style.left = `${whiteKeyIndex * (100/8) - 12}px`;
+          blackKey.onclick = () => playNote(n.freq, 0.5, 'piano');
+          piano.appendChild(blackKey);
+        } else {
+          const whiteKey = document.createElement('div');
+          whiteKey.className = 'white-key';
+          whiteKey.onclick = () => playNote(n.freq, 0.5, 'piano');
+          piano.appendChild(whiteKey);
+          whiteKeyIndex++;
+        }
+      });
+    }
+
+    // Generate Timeline
+    function generateTimeline() {
+      const ruler = document.getElementById('timelineRuler');
+      const tracks = document.getElementById('timelineTracks');
+      
+      // Ruler
+      for (let i = 0; i < 50; i++) {
+        const marker = document.createElement('div');
+        marker.className = 'ruler-marker';
+        marker.textContent = `${Math.floor(i/4) + 1}.${(i % 4) + 1}`;
+        ruler.appendChild(marker);
+      }
+
+      // Tracks
+      for (let i = 0; i < 8; i++) {
+        const track = document.createElement('div');
+        track.className = 'timeline-track';
+        track.innerHTML = `
+          <div class="track-label">
+            <div class="track-label-color" style="background: ${channelColors[i]}"></div>
+            ${channelNames[i]}
+          </div>
+          <div class="track-lane">
+            ${generateClips()}
+          </div>
+        `;
+        tracks.appendChild(track);
+      }
+    }
+
+    function generateClips() {
+      let clips = '';
+      for (let i = 0; i < 3; i++) {
+        const left = Math.random() * 400 + 50;
+        const width = Math.random() * 150 + 50;
+        const isMidi = Math.random() > 0.5;
+        clips += `<div class="track-clip ${isMidi ? 'midi' : 'audio'}" style="left: ${left}px; width: ${width}px;"></div>`;
+      }
+      return clips;
+    }
+
+    // Animate Meters
+    function animateMeters() {
+      document.querySelectorAll('.meter-bar').forEach(bar => {
+        const fill = bar.querySelector('.meter-fill') || bar;
+        if (fill === bar) {
+          // Master meter style
+          const currentHeight = parseFloat(bar.style.getPropertyValue('--meter-height')) || 50;
+          const newHeight = Math.max(10, Math.min(95, currentHeight + (Math.random() - 0.3) * 30));
+          bar.style.cssText = `--meter-height: ${newHeight}%`;
+          bar.style.background = `linear-gradient(to top, #00ff00 0%, #00ff00 60%, #ffff00 60%, #ffff00 80%, #ff0000 80%, #ff0000 100%)`;
+          bar.style.clipPath = `inset(${100-newHeight}% 0 0 0)`;
+        } else {
+          const currentHeight = parseFloat(fill.style.height) || 50;
+          const newHeight = Math.max(5, Math.min(95, currentHeight + (Math.random() - 0.3) * 25));
+          fill.style.height = newHeight + '%';
+        }
+      });
+    }
+
+    // Transport Controls
+    document.getElementById('playBtn').onclick = function() {
+      if (!audioContext) initAudio();
+      if (audioContext.state === 'suspended') audioContext.resume();
+      
+      isPlaying = !isPlaying;
+      this.classList.toggle('playing');
+      this.textContent = isPlaying ? '⏸' : '▶';
+      
+      if (isPlaying) {
+        playInterval = setInterval(() => {
+          currentBeat++;
+          updateTimecode();
+          animateMeters();
+        }, 60000 / tempo);
+      } else {
+        clearInterval(playInterval);
+      }
+    };
+
+    document.getElementById('stopBtn').onclick = function() {
+      isPlaying = false;
+      currentBeat = 0;
+      clearInterval(playInterval);
+      document.getElementById('playBtn').classList.remove('playing');
+      document.getElementById('playBtn').textContent = '▶';
+      document.getElementById('recordBtn').classList.remove('recording');
+      updateTimecode();
+    };
+
+    document.getElementById('recordBtn').onclick = function() {
+      isRecording = !isRecording;
+      this.classList.toggle('recording');
+    };
+
+    // Update Timecode
+    function updateTimecode() {
+      const beats = currentBeat;
+      const bars = Math.floor(beats / 4);
+      const beat = (beats % 4) + 1;
+      const ticks = 0;
+      document.getElementById('timecode').textContent = 
+        `${String(bars).padStart(2, '0')}:${String(beat).padStart(2, '0')}:${String(ticks).padStart(2, '0')}:00`;
+    }
+
+    // Tempo Control
+    document.getElementById('tempoInput').onchange = function() {
+      tempo = parseInt(this.value) || 120;
+    };
+
+    // Toggle Buttons
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.onclick = function() { this.classList.toggle('active'); };
+    });
+
+    // Channel Buttons
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('ch-btn')) {
+        e.target.classList.toggle('active');
+        e.stopPropagation();
+      }
+      if (e.target.classList.contains('plugin-slot-bypass')) {
+        e.target.classList.toggle('active');
+      }
+    });
+
+    // Sample Tracks
+    document.querySelectorAll('.sample-track').forEach(track => {
+      track.onclick = function() {
+        const sound = this.dataset.sound;
+        createSound(sound);
+        document.querySelectorAll('.sample-track').forEach(t => t.classList.remove('playing'));
+        this.classList.add('playing');
+        setTimeout(() => this.classList.remove('playing'), 500);
+      };
+    });
+
+    // Audio Drop Zone
+    const dropZone = document.getElementById('audioDropZone');
+    const fileInput = document.getElementById('audioFileInput');
+
+    dropZone.onclick = () => fileInput.click();
+
+    dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add('dragover'); };
+    dropZone.ondragleave = () => dropZone.classList.remove('dragover');
+    dropZone.ondrop = (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      handleAudioFiles(e.dataTransfer.files);
+    };
+
+    fileInput.onchange = (e) => handleAudioFiles(e.target.files);
+
+    function handleAudioFiles(files) {
+      if (!audioContext) initAudio();
+      
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          audioContext.decodeAudioData(e.target.result, (buffer) => {
+            addLoadedTrack(file.name, buffer);
+          });
+        };
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    function addLoadedTrack(name, buffer) {
+      const container = document.getElementById('sampleTracks');
+      const track = document.createElement('div');
+      track.className = 'sample-track';
+      track.innerHTML = `
+        <div class="sample-waveform"></div>
+        <div class="sample-info">
+          <div class="sample-name">${name}</div>
+          <div class="sample-duration">${buffer.duration.toFixed(1)}s</div>
+        </div>
+        <button class="sample-play-btn">▶</button>
+      `;
+      track.onclick = function() {
+        playBuffer(buffer);
+        this.classList.add('playing');
+        setTimeout(() => this.classList.remove('playing'), 500);
+      };
+      container.appendChild(track);
+    }
+
+    function playBuffer(buffer) {
+      if (!audioContext) initAudio();
+      if (audioContext.state === 'suspended') audioContext.resume();
+      
+      const source = audioContext.createBufferSource();
+      source.buffer = buffer;
+      source.connect(masterGain);
+      source.start();
+      animateMeters();
+    }
+
+    // Fader Drag
+    let activeFader = null;
+    let startY = 0;
+    let startTop = 0;
+
+    document.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('fader-cap')) {
+        activeFader = e.target;
+        startY = e.clientY;
+        startTop = parseFloat(activeFader.style.top) || 30;
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (activeFader) {
+        const deltaY = e.clientY - startY;
+        const newTop = Math.max(5, Math.min(95, startTop + deltaY * 0.5));
+        activeFader.style.top = newTop + '%';
+        
+        const dbDisplay = activeFader.parentElement.nextElementSibling;
+        if (dbDisplay) {
+          const db = ((100 - newTop) / 100 * 20 - 10).toFixed(1);
+          dbDisplay.textContent = db;
+        }
+      }
+    });
+
+    document.addEventListener('mouseup', () => { activeFader = null; });
+
+    // Keyboard Shortcuts
+    const keyMap = {
+      'a': 261.63, 'w': 277.18, 's': 293.66, 'e': 311.13, 'd': 329.63,
+      'f': 349.23, 't': 369.99, 'g': 392.00, 'y': 415.30, 'h': 440.00,
+      'u': 466.16, 'j': 493.88, 'k': 523.25
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (keyMap[e.key.toLowerCase()] && !e.repeat) {
+        playNote(keyMap[e.key.toLowerCase()], 0.5, 'piano');
+      }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        document.getElementById('playBtn').click();
+      }
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      generateChannels();
+      generatePiano();
+      generateTimeline();
+      console.log('🐐 GOAT ULTIMATE STUDIO - SSL Origin Evo 32 Initialized');
+      console.log('🎹 Press A-K keys to play piano');
+      console.log('🎵 Drop audio files to load them');
+      console.log('▶️ Press Space to play/pause');
+    });
+  </script>
+</body>
+</html>

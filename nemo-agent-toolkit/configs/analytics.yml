@@ -1,0 +1,69 @@
+# NeMo Agent Toolkit — Analytics & Insights Agent
+# Run: nat run --config_file configs/analytics.yml --input "Show me today's sales summary"
+
+functions:
+  # Sales data query tool
+  sales_query:
+    _type: rest_api
+    name: sales_query
+    description: "Query sales data with filters for date range, product, and category"
+    endpoint: "http://localhost:3942/api/analytics/sales"
+    method: GET
+    params:
+      start_date:
+        type: string
+        description: "Start date (YYYY-MM-DD)"
+      end_date:
+        type: string
+        description: "End date (YYYY-MM-DD)"
+      product:
+        type: string
+        description: "Filter by product name"
+      category:
+        type: string
+        description: "Filter by category"
+
+  # Inventory check tool
+  inventory_check:
+    _type: rest_api
+    name: inventory_check
+    description: "Check current inventory levels for products"
+    endpoint: "http://localhost:3942/api/analytics/inventory"
+    method: GET
+    params:
+      product:
+        type: string
+        description: "Product name to check"
+      low_stock_only:
+        type: boolean
+        description: "Only show items with low stock"
+
+  # General knowledge for market context
+  market_research:
+    _type: wiki_search
+    max_results: 2
+
+llms:
+  nim_llm:
+    _type: nim
+    model_name: meta/llama-3.1-70b-instruct
+    temperature: 0.0
+
+workflow:
+  _type: react_agent
+  tool_names: [sales_query, inventory_check, market_research]
+  llm_name: nim_llm
+  verbose: true
+  parse_agent_response_max_retries: 3
+  system_prompt: |
+    You are the Ms Money Penny Store analytics assistant. You help store managers
+    and owners understand their business performance through data-driven insights.
+
+    When providing analytics:
+    1. Query the relevant data sources
+    2. Present data clearly with key metrics highlighted
+    3. Identify trends and patterns
+    4. Provide actionable recommendations
+    5. Compare against previous periods when relevant
+
+    Always be precise with numbers and transparent about data limitations.

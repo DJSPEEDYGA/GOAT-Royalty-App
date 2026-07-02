@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+out/
+.next/
+build/*.exe
+build/*.dmg
+build/*.AppImage
+build/*.deb
+build/*.snap
+build/*.msi
+build/*.icns
+build/*.png
+
+# Electron builder cache
+.electron-builder-cache/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Misc
+*.log
+.cache/
+todo.md
+
+# OS/Installer binaries and large media
+*.iso
+*.exe
+*.deb
+*.rpm
+*.zip
+*.rar
+*.dmg
+*.pkg
+*.AppImage
+*.snap
+*.msi
+*.7z
+*.tar.gz
+*.tar.xz
+*.img
+

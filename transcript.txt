@@ -1,0 +1,195 @@
+[User]
+help, me i paid $4000 and it didnt register as paid for my 2 servers for 2 years i have rediets
+(09/06/2026 16:52)
+
+[Kodee]
+I'm sorry to hear about the trouble with your payment! If you've paid $4000 and your 2 servers for 2 years are not showing as active, here’s what you should do:
+
+1. **Allow Processing Time:**  
+   - Payments can take up to 24 hours to process.  
+   - Cards/e-wallets/crypto: up to 2 hours  
+   - UPI: 2–6 hours  
+   - Cash: up to 48 hours
+
+2. **Check Your Payment Method:**  
+   - Confirm that the payment was completed and funds were deducted from your account.  
+   - If no charge appears, you may need to place the order again.
+
+3. **Refresh hPanel:**  
+   - Log in to your [hPanel](https://hpanel.hostinger.com) and refresh the page or use an incognito window.  
+   - Make sure you are logged into the correct account.  
+   - Check the **Home** page for services pending activation or the **Billing** section for updated expiration dates.
+
+4. **Check for Other Issues:**  
+   - Visit the [status page](https://statuspage.hostinger.com/) to see if there’s any maintenance.  
+   - Make sure your service wasn’t expired, suspended, or canceled.
+
+5. **If Still Not Appearing After 24–48 Hours:**  
+   - Contact [Hostinger Support](https://www.hostinger.com/support/1583780-how-to-contact-hostinger-support/) directly.
+   - Provide your payment proof:
+     - **PayPal:** Account email and transaction ID.
+     - **Credit Card:** First 6 and last 4 digits.
+     - **Other:** Transaction email and proof of payment.
+
+This will help the support team resolve your issue as quickly as possible.
+
+Would you like step-by-step instructions on how to contact support, or do you need help finding your payment details in hPanel?
+(09/06/2026 16:53)
+
+[User]
+it was 4 or 5 days ago
+(09/06/2026 16:53)
+
+[Kodee]
+Thank you for clarifying. Since your payment was made 4–5 days ago and your servers are still not showing as active, this is definitely longer than normal processing times. Here’s what you should do right now:
+
+1. **Contact Hostinger Support Immediately:**  
+   - Since it’s been more than 48 hours, you need to reach out to support with your payment proof.
+   - Prepare the following details:
+     - **Payment method used** (e.g., PayPal, credit card, etc.)
+     - **Transaction ID or reference number**
+     - **Proof of payment** (screenshot or bank statement showing the deduction)
+     - **Email address used for your Hostinger account**
+
+2. **How to Contact Support:**  
+   - If you can log in, go to [hPanel Support](https://hpanel.hostinger.com/) and use the live chat for the fastest response.
+   - If you cannot log in or see your services, use the [Hostinger Support Form](https://www.hostinger.com/support/1583780-how-to-contact-hostinger-support/).
+
+3. **What to Expect:**  
+   - The support team will investigate your payment and activate your servers or refund your payment if there was an issue.
+
+**Tip:** Avoid making duplicate payments while this is being resolved.
+
+Would you like direct instructions for contacting support, or do you need help gathering your payment details? Let me know how you’d like to proceed—I’m here to help you get this sorted quickly!
+(09/06/2026 16:53)
+
+[User]
+american express card
+(09/06/2026 16:53)
+
+[Kodee]
+Thank you for sharing that you used an **American Express card**. Here’s exactly what you should do next:
+
+### 1. Gather Your Payment Proof
+- Take a **screenshot or photo** of your bank statement showing:
+  - The **date** and **amount** of the charge
+  - The **destination** (should mention Hostinger, e.g., HOSTINGER.COM)
+  - Only show the **first 6 and last 4 digits** of your card for security  
+    ![image](https://www.hostinger.com/support/wp-content/uploads/sites/55/2025/04/32a62ad5-4938-408e-ad5d-f53f5f71f5e3.jpg)
+
+### 2. Contact Hostinger Support
+- **If you can log in:**  
+  Go to [hPanel Support](https://hpanel.hostinger.com/) and start a live chat. Attach your payment proof and explain your situation.
+- **If you cannot log in:**  
+  Use the [Support Form](https://www.hostinger.com/support/1583780-how-to-contact-hostinger-support/) and upload your payment proof.
+
+### 3. What to Include in Your Message
+- Mention you paid with an American Express card
+- Include your **Hostinger account email**
+- Attach your **payment proof** (screenshot/photo)
+- Add your **transaction date** and **amount**
+
+The support team will prioritize your case and help resolve the issue.
+
+**Ready to contact support?** If you need a template for your message or more help, just let me know!
+(09/06/2026 16:53)
+
+[User]
+yes help because theyn said they was going to delete my stuff
+(09/06/2026 16:54)
+
+[Kodee]
+Here’s how to get urgent help from Hostinger Support to prevent your servers and data from being deleted:
+
+**1. Fastest Option: Live Chat**
+- Log in to your Hostinger account at [hPanel](https://hpanel.hostinger.com/).
+- Go to the Help page and start a Live Chat with Support.
+- Explain your situation, mention your American Express payment, and attach your payment proof.
+
+**2. If You Can’t Log In:**
+- Email support@hostinger.com directly.
+- In your email, include:
+  - Your Hostinger account email
+  - Details of your payment (date, amount, first 6 and last 4 digits of your card)
+  - Screenshot or photo of your bank statement showing the payment
+  - Explain that your servers are at risk of deletion and you need urgent help
+
+**Template for Your Email:**
+```
+Subject: URGENT: Payment Not Reflected – Risk of Service Deletion
+
+Hello Hostinger Support,
+
+I paid $4000 for 2 years of hosting for 2 servers using my American Express card on [date]. The payment was deducted, but my services are not active, and I’ve been warned my data may be deleted.
+
+Details:
+- Hostinger account email: [your email]
+- Payment date: [date]
+- Amount: $4000
+- Card: American Express (first 6 digits: XXXXXX, last 4 digits: XXXX)
+- [Attach screenshot of payment]
+
+Please resolve this urgently and restore my services.
+
+Thank you,
+[your name]
+```
+
+Send this email and/or start a live chat as soon as possible. If you need help writing your message or attaching your proof, let me know!
+(09/06/2026 16:54)
+
+[User]
+can attachments be sent here? i have all rgw paperwork
+(09/06/2026 16:54)
+
+[Kodee]
+You can’t send attachments directly here in this chat, but you can easily share your paperwork with Hostinger Support using these methods:
+
+**1. Live Chat in hPanel:**  
+- When chatting with support, you’ll see an option to upload and attach files/screenshots directly in the chat window.
+
+**2. Email:**  
+- Attach your documents (screenshots, statements, etc.) to your email to support@hostinger.com.
+
+**3. Secure Upload Form:**  
+- Use the [Document upload form](https://auth.hostinger.com/documents) to securely send your payment proof.  
+- Make sure to mention in your support chat or email that you’ve uploaded documents via this form.
+
+**Next Step:**  
+Start a live chat or send your email with attachments right away for the fastest resolution. If you need help with the upload process or want to double-check your message, I’m here to help!
+(09/06/2026 16:55)
+
+[User]
+docs have been uploaded
+(09/06/2026 16:57)
+
+[Kodee]
+Great job uploading your documents! Here’s what you should do next to ensure your case is handled quickly:
+
+1. **Notify Support Immediately:**  
+   - If you haven’t already, start a live chat in [hPanel](https://hpanel.hostinger.com/) or send an email to support@hostinger.com.
+   - In your message, mention that you have uploaded your payment proof via the document upload form.
+   - Include your Hostinger account email, payment details, and explain the urgency (risk of deletion).
+
+2. **Sample Message to Send:**
+```
+Hello Hostinger Support,
+
+I have uploaded my payment documents via the document upload form. My account is at risk of deletion, and my payment for 2 servers (2 years) via American Express has not been reflected.
+
+Please review my documents and resolve this urgently.
+
+Account email: [your email]
+Payment date: [date]
+Amount: $4000
+
+Thank you,
+[your name]
+```
+
+3. **Wait for a Response:**  
+   - Support will review your documents and reply as soon as possible.  
+   - Keep an eye on your email (including spam/junk folders) and hPanel notifications.
+
+If you need help with your follow-up message or want to confirm next steps, just let me know. I’m here to help you get this resolved!
+(09/06/2026 16:57)

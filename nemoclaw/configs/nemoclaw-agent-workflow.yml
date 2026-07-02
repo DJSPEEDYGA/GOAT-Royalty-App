@@ -1,0 +1,142 @@
+# NemoClaw Agent Workflow — NeMo Agent Toolkit Configuration
+# Sandboxed OpenClaw agent running inside NVIDIA OpenShell
+
+name: nemoclaw-agent-workflow
+version: "0.1.0"
+description: |
+  Workflow configuration for running OpenClaw agents inside NemoClaw sandboxes
+  with NVIDIA inference routing through OpenShell gateway.
+
+# Sandbox Configuration
+sandbox:
+  runtime: openshell
+  name: nemoclaw
+  image: nemoclaw-sandbox:latest
+  build_context: ../Dockerfile
+  user: sandbox
+  working_dir: /sandbox
+  
+  resources:
+    memory: 4Gi
+    cpu: "2"
+    gpu: optional
+  
+  network:
+    # OpenShell manages network isolation
+    egress_policy: restricted
+    allowed_hosts:
+      - inference.local    # OpenShell inference proxy
+      - build.nvidia.com   # NVIDIA API fallback
+    
+  security:
+    read_only_root: true
+    no_new_privileges: true
+    drop_capabilities:
+      - ALL
+
+# Agent Configuration  
+agent:
+  name: main
+  type: openclaw
+  
+  model:
+    provider: nvidia
+    id: nemotron-3-super-120b-a12b
+    name: NVIDIA Nemotron 3 Super 120B
+    context_window: 131072
+    max_tokens: 4096
+    
+  inference:
+    base_url: https://inference.local/v1
+    api_key: openshell-managed
+    api_type: openai-completions
+    timeout: 120
+    max_retries: 3
+
+# Blueprint Configuration
+blueprint:
+  version: "0.1.0"
+  runner: python
+  source: /opt/nemoclaw-blueprint/
+  
+  stages:
+    - name: initialize
+      action: setup_sandbox
+      
+    - name: configure
+      action: apply_config
+      config_path: /sandbox/.openclaw/openclaw.json
+      
+    - name: start_agent
+      action: launch_openclaw
+      agent: main
+      mode: local
+      
+    - name: monitor
+      action: health_check
+      interval: 300
+      startup_grace: 60
+
+# Plugin Configuration
+plugin:
+  name: nemoclaw
+  path: /opt/nemoclaw
+  manifest: openclaw.plugin.json
+  
+  capabilities:
+    - sandbox_management
+    - inference_routing
+    - security_policy
+    - network_isolation
+
+# Health Monitoring
+health:
+  enabled: true
+  check_interval: 300
+  startup_grace: 60
+  channel_connect_grace: 120
+  
+  checks:
+    - name: agent_running
+      type: process
+      target: openclaw
+      
+    - name: inference_reachable
+      type: http
+      url: https://inference.local/v1/health
+      timeout: 10
+      
+    - name: sandbox_healthy
+      type: command
+      command: openshell sandbox list | grep nemoclaw | grep Ready
+
+# Logging
+logging:
+  level: INFO
+  format: json
+  file: /tmp/openclaw/openclaw-%(date)s.log
+  max_size: 100MB
+  
+# Integration with Ms Money Penny Store
+store_integration:
+  enabled: true
+  description: |
+    NemoClaw provides sandboxed execution for store AI agents,
+    ensuring all AI workloads run in secure, isolated environments
+    with NVIDIA enterprise inference.
+  
+  use_cases:
+    - name: store_assistant
+      agent: main
+      model: nemotron-3-super-120b-a12b
+      description: AI shopping assistant in secure sandbox
+      
+    - name: product_analysis
+      agent: main
+      model: nemotron-3-super-120b-a12b
+      description: Product catalog analysis and recommendations
+      
+    - name: order_processing
+      agent: main
+      model: nemotron-3-super-120b-a12b
+      description: Automated order processing and tracking
