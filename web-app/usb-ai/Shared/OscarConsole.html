@@ -377,13 +377,24 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
     <!-- GEN UI pane -->
     <div class="ws-pane active" id="pane-gen-ui">
       <div id="gui-container">
-        <!-- Default catalog card -->
-        <div class="gui-card">
+        <!-- Catalog card — populated by fetchCatalogStats() on load -->
+        <div class="gui-card" id="gui-catalog-card">
           <h3>📁 GOAT Catalog</h3>
           <div class="gui-stat-row">
-            <div class="gui-stat"><div class="val">759</div><div class="lbl">Tracks</div></div>
-            <div class="gui-stat"><div class="val">1.2M</div><div class="lbl">Streams</div></div>
-            <div class="gui-stat"><div class="val">6</div><div class="lbl">AI Agents</div></div>
+            <div class="gui-stat"><div class="val" id="gs-tracks">–</div><div class="lbl">Tracks</div></div>
+            <div class="gui-stat"><div class="val" id="gs-artists">–</div><div class="lbl">Artists</div></div>
+            <div class="gui-stat"><div class="val" id="gs-agents">7</div><div class="lbl">AI Agents</div></div>
+          </div>
+          <div id="gs-catalogs-wrap"></div>
+          <button class="gui-btn" onclick="send('Search the catalog for Waka Flocka')">🔍 Search Catalog</button>
+          <button class="gui-btn" onclick="send('Show ISRC codes for top tracks')">📋 ISRC Codes</button>
+        </div>
+        <div class="gui-card">
+          <h3>💰 Revenue & Royalties</h3>
+          <div class="gui-stat-row">
+            <div class="gui-stat"><div class="val">$24K</div><div class="lbl">Q2 Est.</div></div>
+            <div class="gui-stat"><div class="val">51</div><div class="lbl">DSPs</div></div>
+            <div class="gui-stat"><div class="val">100%</div><div class="lbl">Owned</div></div>
           </div>
           <div class="gui-progress">
             <div class="gui-progress-label"><span>Royalties Collected</span><span>78%</span></div>
@@ -393,15 +404,18 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
             <div class="gui-progress-label"><span>Distribution</span><span>92%</span></div>
             <div class="gui-bar"><div class="gui-bar-fill" style="width:92%"></div></div>
           </div>
+          <button class="gui-btn" onclick="send('Show full royalty breakdown and splits')">📊 Full Breakdown</button>
         </div>
         <div class="gui-card">
-          <h3>💰 Revenue Pipeline</h3>
+          <h3>💼 Investor EPK</h3>
           <div class="gui-stat-row">
-            <div class="gui-stat"><div class="val">$24K</div><div class="lbl">Q2 Est.</div></div>
-            <div class="gui-stat"><div class="val">51</div><div class="lbl">DSPs</div></div>
-            <div class="gui-stat"><div class="val">100%</div><div class="lbl">Owned</div></div>
+            <div class="gui-stat"><div class="val">2026</div><div class="lbl">Seed Round</div></div>
+            <div class="gui-stat"><div class="val">5,954</div><div class="lbl">Catalog</div></div>
+            <div class="gui-stat"><div class="val">3</div><div class="lbl">Artists</div></div>
           </div>
-          <button class="gui-btn" onclick="send('Show full revenue breakdown')">📊 Full Breakdown</button>
+          <button class="gui-btn" onclick="openEPK()">📄 Open EPK PDF</button>
+          <button class="gui-btn" onclick="window.open('http://72.61.193.184/epk/','_blank')">🌐 Public EPK Link</button>
+          <button class="gui-btn" onclick="send('Summarize the investor pitch for GOAT Force')">🤖 Ask Oscar About It</button>
         </div>
       </div>
     </div>
@@ -581,6 +595,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   setInterval(checkConn,8000);
   applySettings();
   buildColorSwatches();
+  fetchCatalogStats();
 });
 
 // ── Connection check ─────────────────────────────────────
@@ -1160,6 +1175,57 @@ function studioOscarPost(action){
 window.addEventListener('message',e=>{
   if(e.data&&e.data.action==='openStudio')openStudio();
 });
+
+// ── AGENT1 Catalog Stats ──────────────────────────────────
+// Try port 3334 (AGENT1 server.py) then fall back to local /api/stats
+async function fetchCatalogStats(){
+  const targets=[
+    {url:'http://127.0.0.1:3334/api/stats',source:'AGENT1'},
+    {url:'/api/stats',source:'local'},
+  ];
+  for(const t of targets){
+    try{
+      const r=await fetch(t.url,{signal:AbortSignal.timeout(2500)});
+      if(!r.ok)continue;
+      const d=await r.json();
+      const tracks=d.total_entries||d.catalog_entries||759;
+      const artists=(d.artists||[]).length||3;
+      const el_t=document.getElementById('gs-tracks');
+      const el_a=document.getElementById('gs-artists');
+      if(el_t)el_t.textContent=tracks.toLocaleString();
+      if(el_a)el_a.textContent=artists;
+      // Render per-catalog breakdown
+      const wrap=document.getElementById('gs-catalogs-wrap');
+      if(wrap&&d.catalogs&&d.catalogs.length){
+        wrap.innerHTML=d.catalogs.map(c=>`
+          <div class="gui-progress" style="margin-top:8px;">
+            <div class="gui-progress-label"><span>${esc(c.name)}</span><span>${c.entries.toLocaleString()}</span></div>
+            <div class="gui-bar"><div class="gui-bar-fill" style="width:${Math.round(c.entries/tracks*100)}%"></div></div>
+          </div>`).join('');
+      }
+      // Update stats pane model line
+      const em=document.getElementById('stats-model');
+      if(em)em.textContent=`Catalog: ${tracks.toLocaleString()} entries (${t.source})`;
+      return;
+    }catch{}
+  }
+  // fallback numbers
+  const el_t=document.getElementById('gs-tracks');
+  const el_a=document.getElementById('gs-artists');
+  if(el_t)el_t.textContent='5,954';
+  if(el_a)el_a.textContent='3';
+}
+
+// ── EPK opener ────────────────────────────────────────────
+function openEPK(){
+  // Try AGENT1 drive path first, then public server
+  const paths=[
+    'file:///Volumes/AGENT1/Oscar_Investor_EPK_Seed_2026.pdf',
+    'file:///Volumes/i2i%201/Agent-007-GOAT/Investor-EPK/Oscar-GOAT-Royalty-Investor-EPK-2026.docx',
+    'http://72.61.193.184/epk/',
+  ];
+  window.open(paths[0],'_blank');
+}
 
 // ── Stats poll ────────────────────────────────────────────
 function startStatsPoll(){
