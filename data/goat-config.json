@@ -76,9 +76,12 @@
     "gaming_server": {
       "enabled": false,
       "description": "GOAT City / Brick Squad RP FiveM server integration and status",
-      "name": "GOAT City RP",
+      "name": "Brick Squad RP Game Panel",
       "path": "/opt/goat-city-rp",
-      "type": "fivem"
+      "type": "fivem",
+      "host": "147.93.72.6",
+      "hostname": "srv1473464.hstgr.cloud",
+      "panel_user": "admin"
     }
   },
   "api_keys": {
