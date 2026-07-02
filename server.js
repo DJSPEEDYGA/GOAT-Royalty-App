@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
+const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const WebSocket = require('ws');
@@ -907,6 +908,31 @@ app.post('/api/llm/chat', async (req, res) => {
         res.json(result);
     } catch (error) {
         res.status(400).json({ error: error.message });
+    }
+});
+
+// Ms. Money Penny chat — injects her system prompt and forwards to local LLM
+app.post('/api/money-penny/chat', async (req, res) => {
+    try {
+        const promptPath = path.join(__dirname, 'lib', 'money-penny', 'money-penny-system-prompt.txt');
+        const systemPrompt = fs.readFileSync(promptPath, 'utf8');
+        const { messages = [], options = {} } = req.body;
+
+        const fullMessages = [
+            { role: 'system', content: systemPrompt },
+            ...messages
+        ];
+
+        const llm = getLLM();
+        const result = await llm.chat(fullMessages, options);
+        res.json(result);
+    } catch (error) {
+        logger.error(`Money Penny chat failed: ${error.message}`);
+        res.status(500).json({
+            error: 'Money Penny chat is unavailable.',
+            details: error.message,
+            fallback: true
+        });
     }
 });
 

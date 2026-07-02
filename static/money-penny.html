@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ms. Money Penny — GOAT Royalties</title>
+  <link rel="stylesheet" href="css/goat-theme.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    .chat-container { max-width: 900px; margin: 0 auto; padding: 20px; height: calc(100vh - 160px); display: flex; flex-direction: column; }
+
+    .chat-header { text-align: center; padding: 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 20px; }
+    .chat-header h1 { font-family: var(--font-display); font-size: 2rem; color: var(--gold); margin-bottom: 8px; }
+    .chat-header .tagline { color: var(--text-secondary); font-size: 0.95rem; }
+    .chat-header .status { display: inline-flex; align-items: center; gap: 8px; color: var(--success); font-size: 0.9rem; margin-top: 8px; }
+    .chat-header .status .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse-dot 2s infinite; }
+
+    .chat-messages { flex: 1; overflow-y: auto; padding: 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 20px; display: flex; flex-direction: column; gap: 16px; }
+
+    .message { max-width: 80%; padding: 16px 20px; border-radius: var(--radius); line-height: 1.6; }
+    .message.user { background: linear-gradient(135deg, var(--gold), var(--accent-light)); color: var(--navy-deep); align-self: flex-end; }
+    .message.money-penny { background: var(--bg-glass); border: 1px solid var(--border); color: var(--text-primary); align-self: flex-start; }
+    .message.money-penny .sender { font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+
+    .message pre { background: var(--bg-primary); padding: 12px; border-radius: var(--radius-sm); overflow-x: auto; margin: 12px 0; font-size: 0.85rem; }
+    .message code { font-family: var(--font-mono); }
+
+    .chat-input-container { display: flex; gap: 12px; }
+    .chat-input { flex: 1; padding: 16px 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-primary); font-size: 1rem; outline: none; transition: var(--transition); }
+    .chat-input:focus { border-color: var(--gold); }
+    .chat-input::placeholder { color: var(--text-muted); }
+
+    .send-btn { padding: 16px 24px; background: linear-gradient(135deg, var(--gold), var(--accent-light)); border: none; border-radius: var(--radius); color: var(--navy-deep); font-weight: 700; cursor: pointer; transition: var(--transition); }
+    .send-btn:hover { transform: scale(1.05); }
+    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .typing-indicator { display: none; align-items: center; gap: 8px; padding: 12px 16px; background: var(--bg-glass); border-radius: var(--radius); align-self: flex-start; }
+    .typing-indicator.active { display: flex; }
+    .typing-indicator .dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; animation: blink 1.4s infinite; }
+    .typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    .quick-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .quick-btn { padding: 8px 16px; background: var(--bg-glass); border: 1px solid var(--border); border-radius: 20px; color: var(--text-secondary); font-size: 0.85rem; cursor: pointer; transition: var(--transition); }
+    .quick-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    .fallback-banner { display: none; padding: 10px 14px; background: var(--bg-glass); border: 1px solid var(--warning); border-radius: var(--radius-sm); color: var(--warning); font-size: 0.85rem; margin-bottom: 12px; }
+    .fallback-banner.active { display: block; }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <div class="goat-bg"></div>
+  <div class="goat-bg-overlay"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <nav class="top-nav">
+    <a href="index.html" class="logo">
+      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
+      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
+      <span>Ms Money Penny</span>
+      <span class="crown-badge">👑 GOAT</span>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">🏠 Home</a>
+      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="money-penny.html" class="active">👑 Money Penny</a>
+      <a href="nemo-chat.html">🤖 NEMO Chat</a>
+      <a href="pro-royalties.html">🎵 PRO Royalties</a>
+      <a href="banking.html">🏦 Banking</a>
+      <a href="wallet.html">💰 Wallet</a>
+    </div>
+  </nav>
+
+  <main class="chat-container">
+    <div class="chat-header">
+      <h1>👑 Ms. Money Penny</h1>
+      <p class="tagline">GOAT Royalty business intelligence, royalty operations, research, and executive ops specialist.</p>
+      <div class="status"><span class="dot"></span> Live on GOAT Royalty App</div>
+    </div>
+
+    <div class="fallback-banner" id="fallbackBanner">
+      Local LLM is not loaded. Money Penny is running in offline fallback mode.
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="message money-penny">
+        <div class="sender">👑 Ms. Money Penny</div>
+        <div>Hello Boss. I'm home in the GOAT Royalty App. Ask me about royalties, catalog, research, genealogy, product architecture, or local operations.</div>
+      </div>
+      <div class="typing-indicator" id="typingIndicator">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <button class="quick-btn" onclick="sendQuick('Show catalog summary')">Catalog summary</button>
+      <button class="quick-btn" onclick="sendQuick('Check vault status')">Vault status</button>
+      <button class="quick-btn" onclick="sendQuick('List top labels and albums')">Top labels</button>
+      <button class="quick-btn" onclick="sendQuick('What is my change protocol?')">Change protocol</button>
+    </div>
+
+    <div class="chat-input-container">
+      <input type="text" class="chat-input" id="chatInput" placeholder="Ask Ms. Money Penny..." onkeypress="handleKeyPress(event)">
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
+    </div>
+  </main>
+
+  <script src="js/particles.js"></script>
+  <script src="js/money-penny.js"></script>
+  <script>
+    // Mobile nav toggle
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
