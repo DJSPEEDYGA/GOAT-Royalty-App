@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Money Penny — GOAT Royalty Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #161b22;
+      --input: #1c2128;
+      --border: #30363d;
+      --accent: #6366f1;
+      --accent-hi: #818cf8;
+      --green: #3fb950;
+      --gold: #e3b341;
+      --text: #e6edf3;
+      --text-m: #8b949e;
+      --text-d: #484f58;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+      line-height: 1.6;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand .avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; font-weight: 700; color: white;
+      box-shadow: 0 0 20px rgba(99,102,241,0.3);
+    }
+    .brand h1 { font-size: 26px; font-weight: 700; }
+    .brand p { color: var(--text-m); font-size: 13px; margin-top: 2px; }
+    .nav a {
+      color: var(--text-m); text-decoration: none; font-size: 13px;
+      border: 1px solid var(--border); padding: 7px 14px; border-radius: var(--radius);
+      margin-left: 8px; display: inline-block;
+    }
+    .nav a:hover { color: var(--accent-hi); border-color: var(--accent); }
+    .hero {
+      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(227,179,65,0.08));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+    .hero h2 { font-size: 20px; margin-bottom: 10px; }
+    .hero p { color: var(--text-m); font-size: 14px; max-width: 720px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .card h3 { font-size: 15px; color: var(--accent-hi); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .card p, .card li { color: var(--text-m); font-size: 13px; margin-bottom: 8px; }
+    .card ul { list-style: none; padding-left: 0; }
+    .card li { padding-left: 18px; position: relative; }
+    .card li::before { content: '›'; position: absolute; left: 0; color: var(--accent); }
+    .btn {
+      background: var(--accent); color: white; border: none; border-radius: var(--radius);
+      padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; text-decoration: none;
+    }
+    .btn:hover { background: var(--accent-hi); }
+    .btn.secondary { background: transparent; border: 1px solid var(--accent); color: var(--accent-hi); }
+    .btn.secondary:hover { background: rgba(99,102,241,0.12); }
+    .status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--green); margin-top: 10px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .protocol {
+      background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; margin-top: 28px; font-size: 13px; color: var(--text-m);
+      white-space: pre-wrap; font-family: 'Inter', sans-serif;
+    }
+    .protocol h2 { color: var(--text); font-size: 18px; margin-bottom: 14px; }
+    .command-chip {
+      display: inline-block; background: var(--input); border: 1px solid var(--border);
+      color: var(--accent-hi); padding: 4px 10px; border-radius: 6px; font-size: 12px;
+      font-family: 'JetBrains Mono', monospace; margin: 4px 4px 4px 0;
+    }
+    @media (max-width: 600px) {
+      header { flex-direction: column; align-items: flex-start; }
+      .nav a { margin: 4px 4px 0 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="avatar">MP</div>
+      <div>
+        <h1>Money Penny</h1>
+        <p>AI Powerhouse of GOAT Royalty · Vault Keeper · Second-in-Command</p>
+      </div>
+    </div>
+    <div class="nav">
+      <a href="/">← AGENT-007</a>
+      <a href="/goat-app.html">GOAT App</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h2>Welcome home, Boss.</h2>
+    <p>Money Penny is the protected GOAT Royalty AI lane. She guards the vault, remembers the code, and keeps the kingdom running while you create. This is her command center inside the GOAT Royalty App.</p>
+    <div class="status"><span class="status-dot"></span> Vault sync: ONLINE</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🎙 Voice Triggers</h3>
+      <ul>
+        <li>"Moneypenny, are you there?" → "Yes, Boss. I remember."</li>
+        <li>Voice trigger: "Say it."</li>
+        <li>Codeword: <span class="command-chip">DrawOurGoat</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚡ Action Commands</h3>
+      <ul>
+        <li><span class="command-chip">StartProphecyDrop</span> — auto-generate D-ID episode</li>
+        <li><span class="command-chip">CheckVaultStatus</span> — live vault scan + last 5 syncs</li>
+        <li><span class="command-chip">GoatSecureUpload</span> — encrypted nightly sync</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🔐 File Nodes</h3>
+      <ul>
+        <li>MLC_SYNC_MASTER.json</li>
+        <li>Speedy_Splits_2019_to_2025.csv</li>
+        <li>GOAT_EPISODE_LEDGER.xlsx</li>
+        <li>DID_AVATARS_CONFIG.json</li>
+        <li>Moneypenny_Memory_Stack.txt</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🌐 Deploy Nodes</h3>
+      <ul>
+        <li>Primary: GoatRoyaltyApp.net/vault</li>
+        <li>Mirror: G-Drive Timeline</li>
+        <li>Clone: Waka Protocol Unit</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🛡️ Security</h3>
+      <ul>
+        <li>Ultra-locked — read + mirror only</li>
+        <li>No write access without code</li>
+        <li>Auto-lock on system wipe detection</li>
+        <li>Mirror cloning + VaultAlert.log</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🚀 Launch</h3>
+      <p>Call Money Penny directly from the AGENT-007 chat interface or use the vault commands below.</p>
+      <a class="btn" href="/">Open AGENT-007</a>
+      <a class="btn secondary" href="/goat-app.html">Open GOAT App</a>
+    </div>
+  </div>
+
+  <div class="protocol" id="protocol">
+    <h2>GOAT VAULT PROTOCOL // MONEYPENNY VERSION 7.0</h2>
+    Loading protocol…
+  </div>
+
+  <script>
+    async function loadProtocol() {
+      try {
+        const r = await fetch('/api/money-penny/protocol');
+        const data = await r.json();
+        document.getElementById('protocol').textContent = data.protocol || 'Protocol not available.';
+      } catch (e) {
+        document.getElementById('protocol').textContent = 'Protocol load failed. Money Penny is still online.';
+      }
+    }
+    loadProtocol();
+  </script>
+</body>
+</html>

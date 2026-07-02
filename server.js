@@ -51,6 +51,8 @@ const cryptoMining = require('./lib/mining/crypto-mining');
 const videoEditor = require('./lib/video/video-editor');
 const dspDistribution = require('./lib/dsp/dsp-distribution');
 const agent007Routes = require('./lib/agent-007/agent-007-routes');
+const casinoRoutes = require('./lib/casino/casino-routes');
+const gamingRoutes = require('./lib/gaming/gaming-routes');
 
 const app = express();
 const server = http.createServer(app);
@@ -295,6 +297,13 @@ app.get('/api/dashboard', async (req, res) => {
                 ragEnabled: true,
                 agentsRunning: metrics.activeAgents ?? 0,
                 autonomousMode: metrics.autonomousMode ?? false
+            },
+            casino: casino.state(),
+            gamingServer: {
+                enabled: gamingServer.enabled,
+                name: gamingServer.name,
+                type: gamingServer.type,
+                status: gamingServer.status
             }
         };
 
@@ -1166,6 +1175,12 @@ app.get('/api/market/trends', (req, res) => {
 
 // ==================== AGENT-007 UI ROUTES ====================
 app.use(agent007Routes);
+
+// ==================== CASINO & GAMING ROUTES ====================
+app.use('/api', casinoRoutes);
+app.use('/api', gamingRoutes);
+const casino = casinoRoutes.casino;
+const gamingServer = gamingRoutes.gamingServer;
 
 // Catch-all route - serve index.html for client-side routing
 // Rate limited to prevent file-system abuse

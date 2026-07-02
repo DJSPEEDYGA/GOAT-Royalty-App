@@ -62,6 +62,23 @@
     "ai_assistant": {
       "enabled": true,
       "description": "Local LLM support with GGUF models - 100% offline, no API required"
+    },
+    "casino": {
+      "enabled": false,
+      "description": "GOAT Royalty Casino - VIP fun-play floor with owner-controlled real-money gate",
+      "mode": "fun",
+      "real_money_enabled": false,
+      "games": ["dice", "plinko", "crash", "slots", "blackjack", "roulette", "high-card"],
+      "currency": "VIP",
+      "starting_balance": 25000,
+      "max_wager": 5000
+    },
+    "gaming_server": {
+      "enabled": false,
+      "description": "GOAT City / Brick Squad RP FiveM server integration and status",
+      "name": "GOAT City RP",
+      "path": "/opt/goat-city-rp",
+      "type": "fivem"
     }
   },
   "api_keys": {

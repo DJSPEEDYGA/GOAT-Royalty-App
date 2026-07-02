@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOAT Gaming Server — GOAT City RP</title>
+  <link rel="stylesheet" href="css/goat-theme.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    .gaming-page { max-width: 900px; margin: 0 auto; padding: 100px 20px 40px; }
+    .gaming-hero { text-align: center; padding: 30px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--gold); margin-bottom: 24px; }
+    .gaming-hero h1 { font-family: var(--font-display); font-size: 2rem; color: var(--gold); margin-bottom: 8px; }
+    .gaming-hero .tagline { color: var(--text-secondary); }
+    .status-card { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; padding: 24px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 24px; }
+    .status-stat { text-align: center; }
+    .status-stat .value { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+    .status-stat .label { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; }
+    .online { color: var(--success); }
+    .offline { color: var(--danger); }
+    .owner-panel { padding: 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 24px; }
+    .owner-panel h2 { color: var(--gold); margin-bottom: 16px; }
+    .switch-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .switch-row label { color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+    .switch-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); }
+    .secret-input { padding: 10px 14px; background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-primary); min-width: 240px; }
+    .action-btn { padding: 10px 18px; background: linear-gradient(135deg, var(--gold), var(--accent-light)); border: none; border-radius: var(--radius-sm); color: var(--navy-deep); font-weight: 700; cursor: pointer; }
+    .info-block { padding: 20px; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border); }
+    .info-block h2 { color: var(--gold); margin-bottom: 12px; }
+    .info-block p { color: var(--text-secondary); line-height: 1.6; }
+    .info-block code { background: var(--bg-glass); padding: 2px 6px; border-radius: 4px; color: var(--text-primary); }
+  </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+  <div class="goat-bg"></div>
+  <div class="goat-bg-overlay"></div>
+  <canvas id="particles-canvas"></canvas>
+
+  <nav class="top-nav">
+    <a href="index.html" class="logo">
+      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
+      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
+      <span>Ms Money Penny</span>
+      <span class="crown-badge">👑 GOAT</span>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">🏠 Home</a>
+      <a href="money-penny.html">👑 Money Penny</a>
+      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="casino.html">🎰 Casino</a>
+      <a href="gaming-server.html" class="active">🎮 Gaming Server</a>
+      <a href="nemo-chat.html">🤖 NEMO Chat</a>
+      <a href="pro-royalties.html">🎵 PRO Royalties</a>
+      <a href="banking.html">🏦 Banking</a>
+      <a href="wallet.html">💰 Wallet</a>
+    </div>
+  </nav>
+
+  <main class="gaming-page">
+    <div class="gaming-hero">
+      <h1>🎮 GOAT Gaming Server</h1>
+      <p class="tagline">GOAT City RP / Brick Squad RP FiveM server integration hub.</p>
+    </div>
+
+    <div class="status-card">
+      <div class="status-stat"><div class="value" id="serverName">—</div><div class="label">Server</div></div>
+      <div class="status-stat"><div class="value" id="serverStatus">—</div><div class="label">Status</div></div>
+      <div class="status-stat"><div class="value" id="playerCount">—</div><div class="label">Players</div></div>
+      <div class="status-stat"><div class="value" id="maxPlayers">—</div><div class="label">Max Slots</div></div>
+      <div class="status-stat"><div class="value" id="serverType">—</div><div class="label">Type</div></div>
+    </div>
+
+    <div class="owner-panel">
+      <h2>Owner Controls</h2>
+      <div class="switch-row">
+        <label><input type="checkbox" id="enableGaming"> Enable Gaming Server Integration</label>
+      </div>
+      <div class="switch-row">
+        <input type="password" class="secret-input" id="ownerSecret" placeholder="Owner secret">
+        <button class="action-btn" onclick="saveGamingSettings()">Apply</button>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <h2>Local Server Paths</h2>
+      <p><strong>FiveM server:</strong> <code>/Volumes/i2i 1/Agent-007-GOAT/GTA-FiveM-Server</code></p>
+      <p><strong>Deploy package:</strong> <code>/Volumes/i2i 1/Agent-007-GOAT/Deploy/goat-city-rp-server</code></p>
+      <p><strong>Install script:</strong> <code>/Volumes/i2i 1/Agent-007-GOAT/Deploy/goat-city-rp-server/install-goat-city-rp.sh</code></p>
+      <p style="margin-top:12px;">Money Penny can check status and guide setup. For full remote monitoring, configure the server path in <code>data/goat-config.json</code> under <code>features.gaming_server</code>.</p>
+    </div>
+  </main>
+
+  <script src="js/particles.js"></script>
+  <script src="js/gaming-server.js"></script>
+  <script>
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+  </script>
+</body>
+</html>
