@@ -594,25 +594,100 @@ nav img{width:32px;height:32px;border-radius:8px;object-fit:cover;}
     </div>
   </div>
 
-  <!-- JETSON -->
+  <!-- UBUNTU + JETSON + GAMING SERVER -->
   <div id="jetson" class="sec">
-    <div class="sec-head"><span class="ico">⚡</span><h2>Jetson Flash — ISO + SDK Manager</h2></div>
+    <div class="sec-head"><span class="ico">🖥️</span><h2>Ubuntu + Jetson + Gaming Server — Full Deploy</h2><span class="cnt">AGENT1 ISOs</span></div>
+
+    <!-- Full guide link -->
+    <a href="gaming-server.html" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(63,185,80,.08),rgba(57,208,216,.06));border:1px solid rgba(63,185,80,.25);border-radius:12px;padding:18px 22px;text-decoration:none;margin-bottom:20px;transition:.15s;" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='rgba(63,185,80,.25)'">
+      <span style="font-size:32px;">📋</span>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--green);">Open Full Setup Guide — gaming-server.html</div>
+        <div style="font-size:13px;color:var(--dim);margin-top:3px;">Step-by-step: Flash Ubuntu USB · Jetson SDK Manager · Gaming Server · Mac VM (UTM) · GPU AI stack · all copy-to-run commands</div>
+      </div>
+      <span style="margin-left:auto;color:var(--green);font-size:20px;">→</span>
+    </a>
+
     <div class="grid grid-wide">
+      <!-- Ubuntu ISO -->
+      <div class="card g" style="border-color:rgba(63,185,80,.4);background:linear-gradient(135deg,rgba(63,185,80,.06),transparent);" onclick="copy('bash ~/GOAT-Royalty-App/flash-ubuntu-usb.sh')">
+        <div class="ci" style="background:rgba(63,185,80,.2)">🐧</div>
+        <div class="cb">
+          <div class="cn" style="color:var(--green);">Ubuntu 26.04 — Interactive USB Flasher ★</div>
+          <div class="cd">One-command interactive flasher. Lists all disks, safety-checks internals, asks confirmation, flashes ISO from AGENT1. Click to copy.</div>
+          <div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tg">SAFE</span><span class="tag tg">INTERACTIVE</span></div>
+        </div>
+      </div>
+      <div class="card g" onclick="copy('diskutil unmountDisk /dev/diskN && sudo dd if=\"/Volumes/AGENT1/ubuntu-26.04-desktop-amd64.iso\" of=/dev/rdiskN bs=1m status=progress')">
+        <div class="ci" style="background:rgba(63,185,80,.15)">💾</div>
+        <div class="cb">
+          <div class="cn">dd Flash Command — Ubuntu ISO → USB</div>
+          <div class="cd">Copies the dd flash command. Replace diskN with your actual USB disk number. Takes ~5 min. Erases USB completely.</div>
+          <div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tgr">ERASES USB</span></div>
+        </div>
+      </div>
+      <!-- Mac VM -->
+      <div class="card b" onclick="copy('brew install --cask utm')">
+        <div class="ci" style="background:rgba(88,166,255,.15)">💻</div>
+        <div class="cb">
+          <div class="cn">Run Ubuntu in VM on this Mac (UTM)</div>
+          <div class="cd">UTM = free VM for Apple Silicon. Install UTM → New VM → Emulate → Linux → point to AGENT1 ISO. 8GB RAM, 80GB disk, 4 cores.</div>
+          <div class="tags"><span class="tag tb">COPY: brew install utm</span><span class="tag tb">FREE</span></div>
+        </div>
+      </div>
+      <!-- Gaming Server -->
+      <a href="gaming-server.html#gaming" class="card r">
+        <div class="ci" style="background:rgba(230,57,70,.15)">🎮</div>
+        <div class="cb">
+          <div class="cn">Gaming Server Setup</div>
+          <div class="cd">Full step-by-step: Ubuntu → NVIDIA GPU drivers → SteamCMD → Ollama + GOAT → Nginx proxy → auto-start on boot.</div>
+          <div class="tags"><span class="tag tr">GAMING</span><span class="tag tr">NVIDIA GPU</span><span class="tag tg">+ AI</span></div>
+        </div>
+      </a>
+      <!-- Jetson ISO -->
       <div class="card c">
         <div class="ci" style="background:rgba(0,212,255,.15)">💿</div>
-        <div class="cb"><div class="cn">Jetson Installer ISO — r39.2.0</div><div class="cd">jetsoninstaller-r39.2.0-2026-06-01 (arm64) · 4.7GB · JetPack flash image for AGX Orin/Thor.</div><div class="tags"><span class="tag tc">4.7GB ISO</span><span class="tag tc">ARM64</span><span class="tag tc">r39.2.0</span></div></div>
+        <div class="cb">
+          <div class="cn">Jetson r39.2 — ARM64 ISO (4.7GB)</div>
+          <div class="cd">JetPack r39.2.0 for Jetson Orin series. AGX Orin, Orin NX, Orin Nano. CUDA + cuDNN + TensorRT included. On AGENT1.</div>
+          <div class="tags"><span class="tag tc">4.7GB</span><span class="tag tc">ARM64</span><span class="tag tc">JetPack 6.x</span></div>
+        </div>
       </div>
-      <div class="card c" onclick="copy('ssh root@72.61.193.184 \"sdkmanager --version\"')">
-        <div class="ci" style="background:rgba(0,212,255,.15)">✅</div>
-        <div class="cb"><div class="cn">SDK Manager · Server 2 — INSTALLED</div><div class="cd">NVIDIA SDK Manager v2.4.1 installed on 72.61.193.184. Ready to flash. Connect Jetson via USB-C in recovery mode.</div><div class="tags"><span class="tag tgr">v2.4.1 READY</span><span class="tag tc">COPY CMD</span></div></div>
+      <!-- SDK Manager via Docker -->
+      <div class="card c" onclick="copy('docker load -i \"/Volumes/AGENT1/sdkmanager-2.4.1.13529-Ubuntu_22.04_docker.tar.gz\"')">
+        <div class="ci" style="background:rgba(0,212,255,.15)">🐳</div>
+        <div class="cb">
+          <div class="cn">Load SDK Manager Docker (Ubuntu 22.04)</div>
+          <div class="cd">Loads the SDK Manager Docker image from AGENT1 into Docker Desktop. Then run sdkmanager container to flash Jetson.</div>
+          <div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tc">DOCKER</span><span class="tag tc">v2.4.1</span></div>
+        </div>
       </div>
+      <!-- Flash Jetson CLI -->
       <div class="card c" onclick="copy('ssh root@72.61.193.184 \"sdkmanager --cli install --logintype devzone --product Jetson --target JETSON_AGX_ORIN_TARGETS --targetos Linux --version 6.2 --host --downloads /root/nvidia/sdkm_downloads --log /root/nvidia/logs\"')">
         <div class="ci" style="background:rgba(0,212,255,.2)">🚀</div>
-        <div class="cb"><div class="cn">Flash Jetson AGX Orin — CLI Command</div><div class="cd">Full SDK Manager CLI flash command for AGX Orin. Put Jetson in recovery → connect USB-C to server → run this.</div><div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tc">AGX ORIN</span><span class="tag tc">JetPack 6.2</span></div></div>
+        <div class="cb">
+          <div class="cn">Flash Jetson AGX Orin — CLI (Server 2)</div>
+          <div class="cd">SDK Manager CLI flash via SSH to 72.61.193.184. Put Jetson in recovery, USB-C to server, run this.</div>
+          <div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tc">AGX ORIN</span><span class="tag tc">JetPack 6.2</span></div>
+        </div>
       </div>
-      <div class="card c" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Jetson-Thor-Deploy-Kit/scripts/check_jetson_recovery.sh')">
-        <div class="ci" style="background:rgba(0,212,255,.12)">🔍</div>
-        <div class="cb"><div class="cn">Check Jetson Recovery Mode</div><div class="cd">Run this script to verify Jetson is detected in recovery mode before flashing.</div><div class="tags"><span class="tag tc">CHECK</span><span class="tag tc">RECOVERY</span></div></div>
+      <!-- Oscar on Jetson -->
+      <div class="card c" onclick="copy('curl -fsSL https://ollama.com/install.sh | sh && git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git ~/goat && cd ~/goat && bash start-goat.sh')">
+        <div class="ci" style="background:rgba(0,212,255,.12)">🐐</div>
+        <div class="cb">
+          <div class="cn">Oscar on Jetson — One-Line Deploy</div>
+          <div class="cd">SSH to Jetson after flash → run this. Installs Ollama + clones GOAT + starts Oscar on port 3333. GPU-accelerated on Jetson CUDA.</div>
+          <div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tg">GOAT ON GPU</span></div>
+        </div>
+      </div>
+      <!-- Copy SDK to server -->
+      <div class="card c" onclick="copy('scp \"/Volumes/AGENT1/sdkmanager_2.4.1-13529_amd64.deb\" goat@SERVER-IP:~')">
+        <div class="ci" style="background:rgba(0,212,255,.12)">📤</div>
+        <div class="cb">
+          <div class="cn">SCP SDK Manager .deb to Linux Machine</div>
+          <div class="cd">Copies the amd64 .deb from AGENT1 to any Ubuntu server over SSH. Replace SERVER-IP with target IP.</div>
+          <div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tc">SCP</span></div>
+        </div>
       </div>
     </div>
   </div>
