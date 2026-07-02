@@ -846,6 +846,25 @@ app.post('/api/llm/data-path', (req, res) => {
     }
 });
 
+// Set multiple model search paths (for model pools / agent-specific folders)
+app.post('/api/llm/model-paths', (req, res) => {
+    try {
+        const llm = getLLM();
+        const { paths } = req.body;
+        if (!Array.isArray(paths)) {
+            return res.status(400).json({ error: 'paths must be an array' });
+        }
+        llm.setModelsPaths(paths);
+        res.json({
+            success: true,
+            dataPath: llm.getDataPath(),
+            models: llm.listModels()
+        });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 // List available models
 app.get('/api/llm/models', (req, res) => {
     try {
