@@ -195,6 +195,7 @@ app.use('/api/agents/execute', aiLimiter);
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'static')));
 
 // WebSocket for real-time updates
 wss.on('connection', (ws) => {
