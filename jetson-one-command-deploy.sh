@@ -95,7 +95,7 @@ cd /opt/goat-app
 
 # Download GOAT App from GitHub (replace with your actual repo)
 if [ ! -d "/opt/goat-app/.git" ]; then
-    sudo git clone https://github.com/DJSPEEDYGA/goat-royalty-app.git . 2>/dev/null || {
+    sudo git clone --branch devin-secure-real-data https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git . 2>/dev/null || {
         echo "Creating standalone app structure..."
         
         # Create package.json

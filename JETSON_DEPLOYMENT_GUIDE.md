@@ -17,6 +17,33 @@ The NVIDIA Jetson AGX Orin 64GB Developer Kit is the **ideal deployment platform
 
 ---
 
+## 📦 Step 0: Flash Jetson (if starting from a blank or corrupted unit)
+
+On your Mac/AGENT1 drive you have the official NVIDIA installer files:
+
+| File | Purpose |
+|------|---------|
+| `sdkmanager-2.4.1.13529-Ubuntu_20.04_docker.tar.gz` | SDK Manager for flashing from an Ubuntu 20.04 Docker host |
+| `sdkmanager-2.4.1.13529-Ubuntu_22.04_docker.tar.gz` | SDK Manager for flashing from an Ubuntu 22.04 Docker host |
+| `sdkmanager-2.4.1.13529-Ubuntu_24.04_docker.tar.gz` | SDK Manager for flashing from an Ubuntu 24.04 Docker host |
+| `jetsoninstaller-r39.2.0-2026-06-01-23-53-13-arm64.iso` | Stand-all Jetson installer image |
+
+### Quick flash path (recommended)
+1. Extract the SDK Manager tarball matching your host Ubuntu version:
+   ```bash
+   tar -xzf sdkmanager-2.4.1.13529-Ubuntu_22.04_docker.tar.gz
+   cd sdkmanager-2.4.1.13529-Ubuntu_22.04_docker
+   ```
+2. Put the Jetson in **Recovery Mode** (hold RECOVERY, press POWER, release RECOVERY).
+3. Connect the Jetson to your host via USB-C.
+4. Run SDK Manager and flash JetPack + L4T (Ubuntu for Tegra):
+   ```bash
+   ./sdkmanager
+   ```
+5. After the Jetson boots, continue with Step 1 below.
+
+---
+
 ## 📦 Step 1: Initial Setup
 
 ### 1.1 Install JetPack SDK
@@ -138,7 +165,7 @@ mkdir -p /opt/goat-app
 cd /opt/goat-app
 
 # Copy your GOAT app files here or clone from GitHub
-# git clone https://github.com/your-repo/goat-app.git .
+# git clone --branch devin-secure-real-data https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git .
 ```
 
 ### 5.2 Install Dependencies

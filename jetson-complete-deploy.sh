@@ -50,8 +50,8 @@ INSTALL_DIR="/opt/goat-app"
 DATA_DIR="/opt/goat-app/data"
 MODELS_DIR="/opt/goat-app/models"
 LOGS_DIR="/var/log/goat-app"
-GITHUB_REPO="https://github.com/DJSPEEDYGA/nextjs-commerce"
-BRANCH="main"
+GITHUB_REPO="https://github.com/DJSPEEDYGA/GOAT-Royalty-App"
+BRANCH="devin-secure-real-data"
 
 # ═══════════════════════════════════════════════════════════════════════════════════
 # STEP 1: SYSTEM SETUP
@@ -246,7 +246,7 @@ cat > $DATA_DIR/goat-config.json << 'CONFIG_EOF'
     "auto_update": true,
     "check_interval_hours": 24,
     "source": "github",
-    "repo": "DJSPEEDYGA/nextjs-commerce"
+    "repo": "DJSPEEDYGA/GOAT-Royalty-App"
   },
   "data": {
     "catalog_songs": 511,
@@ -551,7 +551,7 @@ function getMainHTML() {
     
     <div class="footer">
         <p>🐐 GOAT Royalty App v5.1.0 • Jetson AGX Orin 64GB Edition</p>
-        <p>100% Local • No External APIs • No Login • <a href="https://github.com/DJSPEEDYGA/nextjs-commerce">GitHub</a></p>
+        <p>100% Local • No External APIs • No Login • <a href="https://github.com/DJSPEEDYGA/GOAT-Royalty-App">GitHub</a></p>
     </div>
 
     <script>
@@ -865,7 +865,7 @@ const { exec } = require('child_process');
 const https = require('https');
 const fs = require('fs');
 
-const REPO = 'DJSPEEDYGA/nextjs-commerce';
+const REPO = 'DJSPEEDYGA/GOAT-Royalty-App';
 const BRANCH = 'main';
 const CHECK_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
 
