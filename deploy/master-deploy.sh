@@ -29,7 +29,7 @@ JETSON_USER="root"
 JETSON_ROLE="ai-engine"
 
 # GitHub Repository
-GITHUB_REPO="DJSPEEDYGA/nextjs-commerce"
+GITHUB_REPO="DJSPEEDYGA/GOAT-Royalty-App"
 GITHUB_BRANCH="main"
 GITHUB_URL="https://github.com/${GITHUB_REPO}"
 
@@ -77,7 +77,7 @@ deploy_to_vps1() {
             git pull origin main
         else
             rm -rf /opt/goat-app
-            git clone https://github.com/DJSPEEDYGA/nextjs-commerce.git /opt/goat-app
+            git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git /opt/goat-app
             cd /opt/goat-app
         fi
         
@@ -146,7 +146,7 @@ SQL
             cd /opt/goat-app
             git pull origin main
         else
-            git clone https://github.com/DJSPEEDYGA/nextjs-commerce.git /opt/goat-app
+            git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git /opt/goat-app
         fi
         
         # Setup backup cron job
@@ -190,7 +190,7 @@ deploy_to_jetson() {
             echo "=== Setting up Jetson AI Engine ==="
             
             # Run the complete deployment script
-            curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/nextjs-commerce/main/jetson-complete-deploy.sh | bash
+            curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/jetson-complete-deploy.sh | bash
             
             echo "✅ Jetson AI Engine deployed!"
 ENDSSH
@@ -198,7 +198,7 @@ ENDSSH
     else
         echo -e "${YELLOW}⚠️ Jetson not reachable on network. Run deployment manually on device.${NC}"
         echo -e "${YELLOW}   Run this command on your Jetson:${NC}"
-        echo -e "${CYAN}   curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/nextjs-commerce/main/jetson-complete-deploy.sh | bash${NC}"
+        echo -e "${CYAN}   curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/jetson-complete-deploy.sh | bash${NC}"
     fi
 }
 
@@ -212,7 +212,7 @@ sync_data_to_all() {
     if [ -d ".git" ]; then
         git add data/
         git commit -m "🔄 Auto-sync data update $(date +%Y%m%d_%H%M%S)" || echo "No changes to commit"
-        git push https://x-access-token:$GITHUB_TOKEN@github.com/DJSPEEDYGA/nextjs-commerce.git main || echo "Push completed"
+        git push https://x-access-token:$GITHUB_TOKEN@github.com/DJSPEEDYGA/GOAT-Royalty-App.git main || echo "Push completed"
     fi
     
     # Sync to VPS #1

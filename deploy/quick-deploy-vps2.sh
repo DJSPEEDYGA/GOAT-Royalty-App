@@ -38,7 +38,7 @@ mkdir -p /opt/backups
 cd /opt/goat-app
 
 # Clone repository for data files
-git clone https://github.com/DJSPEEDYGA/nextjs-commerce.git .
+git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git .
 
 # Setup backup script
 cat > /opt/goat-app/scripts/backup.sh << 'EOF'

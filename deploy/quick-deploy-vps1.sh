@@ -23,7 +23,7 @@ cd /opt/goat-app
 if [ -d ".git" ]; then
     git pull origin main
 else
-    git clone https://github.com/DJSPEEDYGA/nextjs-commerce.git .
+    git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git .
 fi
 
 # Install dependencies

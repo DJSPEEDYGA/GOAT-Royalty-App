@@ -1,22 +1,16 @@
 # 🐐 GOAT ROYALTY APP - COMPLETE SETUP GUIDE
 
-## Your SSH Keys (Generated)
+## Generate Your SSH Deploy Key
 
-### Public Key (Add this to your Hostinger VPS servers):
-```
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILc4S5kHgJu4uyNUIIMueeVNY7RxhX0r2KOTOriTllCx goat-deploy
+⚠️ **Security note:** Never commit private keys to the repository. Run the script below once to generate your own deploy key pair, then add the public key to your servers and the private key to GitHub Secrets.
+
+```bash
+bash deploy/setup-ssh.sh
 ```
 
-### Private Key (Add this to GitHub Secrets):
-```
------BEGIN OPENSSH PRIVATE KEY-----
-b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
-QyNTUxOQAAACC3OEuZB4CbuLsjVCCDLnnlTWO0cYV9K9ijkzq4k5ZQsQAAAJDJkcteyZHL
-XgAAAAtzc2gtZWQyNTUxOQAAACC3OEuZB4CbuLsjVCCDLnnlTWO0cYV9K9ijkzq4k5ZQsQ
-AAAEAwGRXfMHWnqSjFR+o4olZtUclRnav/9IoyjE1asEUlIbc4S5kHgJu4uyNUIIMueeVN
-Y7RxhX0r2KOTOriTllCxAAAAC2dvYXQtZGVwbG95AQI=
------END OPENSSH PRIVATE KEY-----
-```
+This creates:
+- `~/.ssh/goat_deploy_key` (private key — for GitHub Secrets only)
+- `~/.ssh/goat_deploy_key.pub` (public key — for Hostinger VPS)
 
 ---
 
@@ -34,7 +28,7 @@ Y7RxhX0r2KOTOriTllCxAAAAC2dvYXQtZGVwbG95AQI=
 
 ## Step 2: Add GitHub Secrets
 
-Go to: **https://github.com/DJSPEEDYGA/nextjs-commerce/settings/secrets/actions**
+Go to: **https://github.com/DJSPEEDYGA/GOAT-Royalty-App/settings/secrets/actions**
 
 Click **"New repository secret"** and add these:
 
@@ -68,7 +62,7 @@ ssh -i ~/.ssh/goat_deploy_key root@93.127.214.171
 On your Jetson AGX Orin, run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/nextjs-commerce/main/jetson-complete-deploy.sh | bash
+curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/GOAT-Royalty-App/main/jetson-complete-deploy.sh | bash
 ```
 
 ---
@@ -78,7 +72,7 @@ curl -fsSL https://raw.githubusercontent.com/DJSPEEDYGA/nextjs-commerce/main/jet
 After setting up secrets, trigger deployment:
 
 ```bash
-gh workflow run "deploy.yml" --repo DJSPEEDYGA/nextjs-commerce -f target=all
+gh workflow run "deploy.yml" --repo DJSPEEDYGA/GOAT-Royalty-App -f target=all
 ```
 
 Or push a commit to the `main` branch.
@@ -111,13 +105,13 @@ Or push a commit to the `main` branch.
 
 ```bash
 # View workflow status
-gh run list --repo DJSPEEDYGA/nextjs-commerce --limit 5
+gh run list --repo DJSPEEDYGA/GOAT-Royalty-App --limit 5
 
 # View workflow logs
-gh run view --repo DJSPEEDYGA/nextjs-commerce
+gh run view --repo DJSPEEDYGA/GOAT-Royalty-App
 
 # Trigger manual deployment
-gh workflow run "deploy.yml" --repo DJSPEEDYGA/nextjs-commerce
+gh workflow run "deploy.yml" --repo DJSPEEDYGA/GOAT-Royalty-App
 
 # SSH to VPS #1
 ssh -i ~/.ssh/goat_deploy_key root@72.61.193.184

@@ -5,7 +5,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                          GITHUB (Source of Truth)                           │
-│                    DJSPEEDYGA/nextjs-commerce                               │
+│                    DJSPEEDYGA/GOAT-Royalty-App                               │
 │                                                                              │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
 │  │  Source     │  │    Data     │  │   Deploy    │  │  Workflows  │        │
