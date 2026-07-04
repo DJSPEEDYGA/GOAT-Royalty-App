@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ms Ms. Money Penny — 🎵 Music Studio | DSP Distribution & Royalty Management</title>
+  <title>Ms. Money Penny — 🎵 Music Studio | DSP Distribution & Royalty Management</title>
   <meta name="description" content="Professional Music Studio - Distribute to Spotify, Apple Music, YouTube Music, and 10+ platforms. Track royalties, manage releases, and grow your audience.">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/goat-theme.css">
@@ -413,36 +413,46 @@
       background: var(--gold);
       color: #000;
     }
+
+    /* ── Topbar nav ── */
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg-primary);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;}
+    .topbar{background:rgba(4,6,8,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;}
+    .tb-logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--accent-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;}
+    .tb-links{display:flex;gap:2px;flex:1;overflow-x:auto;}
+    .tb-links::-webkit-scrollbar{display:none;}
+    .tb-links a{padding:6px 12px;border-radius:6px;text-decoration:none;color:var(--text-muted);font-size:13px;white-space:nowrap;transition:all .15s;}
+    .tb-links a:hover{color:var(--text-primary);background:#1f3044;}
+    .tb-links a.active{color:var(--gold);}
+    .tb-right{display:flex;gap:8px;margin-left:auto;flex-shrink:0;}
+    .tb-btn{padding:7px 14px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;border:none;}
+    .tb-btn.gold{background:linear-gradient(135deg,var(--gold),var(--accent-light));color:#000;}
+    .tb-btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
   </style>
-<script src="js/ninja-daytona-script.js"></script>
 </head>
-<body class="models-page">
+<body>
 
   <!-- GOAT Background -->
   <div class="goat-bg"></div>
   <div class="goat-bg-overlay"></div>
 
-  <nav class="top-nav">
-    <a href="index.html" class="logo">
-      <img src="money-penny-logo.png" alt="Money Penny" class="nav-logo-mp">
-      <img src="goat-logo.png" alt="GOAT" class="nav-logo-goat">
-      <img src="logo.png" alt="Ms Money Penny">
-      <span>Ms Money Penny</span>
-      <span class="crown-badge">👑 GOAT</span>
-    </a>
-    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-links" id="navLinks">
+  <nav class="topbar">
+    <a href="index.html" class="tb-logo">👑 Ms. Money Penny</a>
+    <div class="tb-links">
       <a href="index.html">🏠 Home</a>
-      <a href="models.html">🧠 AI Models</a>
-      <a href="tools.html">🛠️ Tools</a>
-      <a href="downloads.html">📥 Downloads</a>
+      <a href="powerhouse.html">🚀 Powerhouse</a>
+      <a href="studio.html">🎛️ Studio</a>
       <a href="music-studio.html" class="active">🎵 Music Studio</a>
       <a href="movie-studio.html">🎬 Movie Studio</a>
       <a href="catalog.html">📚 Catalog</a>
-      <a href="screenwriting.html">📝 Screenwriting</a>
-      <a href="ai-dashboard.html">📊 Dashboard</a>
+      <a href="beat-maker.html">🥁 Beat Maker</a>
+      <a href="royalty-calc.html">💰 Royalties</a>
+      <a href="distribution.html">📡 Distribution</a>
+      <a href="agents-brain.html">🧠 AI Brain</a>
+    </div>
+    <div class="tb-right">
+      <a href="touch-hub.html" class="tb-btn ghost">📱 Touch</a>
+      <a href="powerhouse.html" class="tb-btn gold">🚀 Launch</a>
     </div>
   </nav>
 
