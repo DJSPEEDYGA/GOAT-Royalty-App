@@ -669,7 +669,7 @@ button{font-family:inherit;cursor:pointer}
       <div class="sb-label">Recent Sessions</div>
       <div class="sb-session-item"><div class="s-title">Must Have Done Today</div><div class="s-time">now</div></div>
       <div class="sb-session-item"><div class="s-title">GOAT Royalty Living EPK</div><div class="s-time">19m ago</div></div>
-      <div class="sb-session-item"><div class="s-title">Pull UP Oscar</div><div class="s-time">14h ago</div></div>
+      <div class="sb-session-item"><div class="s-title">Pull UP Master Oscar</div><div class="s-time">14h ago</div></div>
       <div class="sb-session-item"><div class="s-title">Update GOAT royalty app UI</div><div class="s-time">16h ago</div></div>
       <div class="sb-session-item"><div class="s-title">Add EPK & Studio to Launchers</div><div class="s-time">18h ago</div></div>
       <div class="sb-session-item"><div class="s-title">Agent-007 UI and LLM Integration</div><div class="s-time">1d ago</div></div>
@@ -721,7 +721,7 @@ button{font-family:inherit;cursor:pointer}
           </div>
           <div class="hl-card" onclick="openPage('agent-007.html')">
             <div class="hl-ico" style="background:rgba(212,160,60,.1);border-color:rgba(212,160,60,.2)">🎯</div>
-            <div><div class="hl-title">Agent-007 Hub</div><div class="hl-desc">All 7 agents: Oscar, Ms. Money Penny, Vanessa, Nexus, Lexi, Codex, Dr. Devin.</div><span class="hl-tag" style="background:rgba(212,160,60,.12);color:var(--gold)">INTELLIGENCE</span></div>
+            <div><div class="hl-title">Agent-007 Hub</div><div class="hl-desc">All 7 agents: Master Oscar, Ms. Money Penny, Vanessa, Nexus, Lexi, Codex, Dr. Devin.</div><span class="hl-tag" style="background:rgba(212,160,60,.12);color:var(--gold)">INTELLIGENCE</span></div>
           </div>
           <div class="hl-card" onclick="showPanel('models')">
             <div class="hl-ico" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.2)">🧠</div>
@@ -791,8 +791,8 @@ button{font-family:inherit;cursor:pointer}
               <div class="ac-row"><div class="ac-avatar" style="background:rgba(0,212,255,.08)">🔮</div><span class="ac-name">Nexus</span><div class="ac-status"></div></div>
               <div class="ac-role">Intelligence Oracle</div>
             </div>
-            <div class="agent-card" onclick="selectAgent(this,'Oscar','Operations & Deals · 001','🎩','rgba(212,160,60,0.08)')">
-              <div class="ac-row"><div class="ac-avatar" style="background:rgba(212,160,60,.08)">🎩</div><span class="ac-name">Oscar</span><div class="ac-status"></div></div>
+            <div class="agent-card" onclick="selectAgent(this,'Master Oscar','Operations & Deals · 001','🎩','rgba(212,160,60,0.08)')">
+              <div class="ac-row"><div class="ac-avatar" style="background:rgba(212,160,60,.08)">🎩</div><span class="ac-name">Master Oscar</span><div class="ac-status"></div></div>
               <div class="ac-role">Operations & Deals</div>
             </div>
             <div class="agent-card" onclick="selectAgent(this,'Ms. Vanessa','Brand & PR · 003','👑','rgba(155,89,182,0.12)')">
@@ -988,7 +988,7 @@ button{font-family:inherit;cursor:pointer}
               </div>
               <div class="ace-card" onclick="openHF('Qwen/Qwen-AgentWorld-35B-A3B')">
                 <div class="ace-card-title">⚡ Qwen/Qwen-AgentWorld-35B-A3B · 35B MoE</div>
-                <div class="ace-card-desc">45.5k downloads. Purpose-built for agentic tasks — perfect for Oscar, Dr. Devin, and multi-step reasoning agents.</div>
+                <div class="ace-card-desc">45.5k downloads. Purpose-built for agentic tasks — perfect for Master Oscar, Dr. Devin, and multi-step reasoning agents.</div>
                 <div class="ace-card-ver">Text Generation · 9 days ago · 524 likes</div>
               </div>
             </div>
@@ -1186,7 +1186,7 @@ nvcc --version</div>
           <div class="rp-agent" onclick="openPage('moneypenny.html?mode=lexi')"><div class="rp-agent-ico" style="background:rgba(243,156,18,.12)">⚡</div><div class="rp-agent-name">Lexi</div><div class="rp-status-dot online"></div></div>
           <div class="rp-agent" onclick="openPage('moneypenny.html?mode=codex')"><div class="rp-agent-ico" style="background:rgba(46,204,113,.1)">🤖</div><div class="rp-agent-name">Sir Codex</div><div class="rp-status-dot online"></div></div>
           <div class="rp-agent" onclick="openPage('moneypenny.html?mode=nexus')"><div class="rp-agent-ico" style="background:rgba(0,212,255,.08)">🔮</div><div class="rp-agent-name">Nexus</div><div class="rp-status-dot online"></div></div>
-          <div class="rp-agent" onclick="openPage('moneypenny.html?mode=oscar')"><div class="rp-agent-ico" style="background:rgba(212,160,60,.08)">🎩</div><div class="rp-agent-name">Oscar</div><div class="rp-status-dot online"></div></div>
+          <div class="rp-agent" onclick="openPage('moneypenny.html?mode=oscar')"><div class="rp-agent-ico" style="background:rgba(212,160,60,.08)">🎩</div><div class="rp-agent-name">Master Oscar</div><div class="rp-status-dot online"></div></div>
           <div class="rp-agent" onclick="openPage('moneypenny.html?mode=vanessa')"><div class="rp-agent-ico" style="background:rgba(155,89,182,.12)">👑</div><div class="rp-agent-name">Ms. Vanessa</div><div class="rp-status-dot away"></div></div>
         </div>
         <div class="rp-section">
@@ -1326,11 +1326,11 @@ function selectAgent(el, name, role, icon, bg) {
   el.classList.add('active');
   const endMap = {
     'Dr. Devin': '/ai/devin', 'Ms. Money Penny': '/ai/moneypenny', 'Lexi': '/ai/lexi',
-    'Sir Codex': '/ai/codex', 'Nexus': '/ai/nexus', 'Oscar': '/ai/oscar', 'Ms. Vanessa': '/ai/vanessa'
+    'Sir Codex': '/ai/codex', 'Nexus': '/ai/nexus', 'Master Oscar': '/ai/oscar', 'Ms. Vanessa': '/ai/vanessa'
   };
   const colorMap = {
     'Dr. Devin': '#f85149', 'Ms. Money Penny': '#e879f9', 'Lexi': '#f0883e',
-    'Sir Codex': '#3fb950', 'Nexus': '#39d0d8', 'Oscar': '#d4a03c', 'Ms. Vanessa': '#a78bfa'
+    'Sir Codex': '#3fb950', 'Nexus': '#39d0d8', 'Master Oscar': '#d4a03c', 'Ms. Vanessa': '#a78bfa'
   };
   activeAgent = { name, role, icon, bg, endpoint: endMap[name] || '/ai/devin', color: colorMap[name] || '#d4a03c' };
   document.getElementById('chatName').textContent = name;

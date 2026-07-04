@@ -57,7 +57,7 @@
       <div class="pw-section active" id="pw-section-links">
         <label>Agent</label>
         <select id="pw-agent">
-          <option value="moneypenny" ${AGENT === 'moneypenny' ? 'selected' : ''}>Money Penny</option>
+          <option value="moneypenny" ${AGENT === 'moneypenny' ? 'selected' : ''}>Ms. Money Penny</option>
           <option value="agent007" ${AGENT === 'agent007' ? 'selected' : ''}>AGENT-007</option>
           <option value="oscar" ${AGENT === 'oscar' ? 'selected' : ''}>OSCAR</option>
           <option value="nexus" ${AGENT === 'nexus' ? 'selected' : ''}>Nexus</option>

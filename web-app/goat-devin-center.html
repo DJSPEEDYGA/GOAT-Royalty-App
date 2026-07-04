@@ -186,12 +186,12 @@ body { display: flex; }
   <div class="section-title">Sessions</div>
   <div class="nav-item" onclick="restoreSession('patch')"><span class="icon">🩺</span> Patch Repair</div>
   <div class="nav-item" onclick="restoreSession('epk')"><span class="icon">🎬</span> Investor EPK</div>
-  <div class="nav-item" onclick="restoreSession('oscar')"><span class="icon">🎵</span> Oscar Launch</div>
+  <div class="nav-item" onclick="restoreSession('oscar')"><span class="icon">🎵</span> Master Oscar Launch</div>
   <div class="nav-item" onclick="restoreSession('royalty')"><span class="icon">💰</span> Royalty Audit</div>
 
   <div class="section-title">Agents</div>
   <div class="nav-item" onclick="launchAgent('moneypenny')"><span class="icon">💎</span> Ms. Money Penny</div>
-  <div class="nav-item" onclick="launchAgent('oscar')"><span class="icon">🎵</span> Oscar</div>
+  <div class="nav-item" onclick="launchAgent('oscar')"><span class="icon">🎵</span> Master Oscar</div>
   <div class="nav-item" onclick="launchAgent('agent007')"><span class="icon">🎯</span> Agent-007</div>
   <div class="nav-item" onclick="launchAgent('vanessa')"><span class="icon">🎙️</span> Vanessa</div>
   <div class="nav-item" onclick="launchAgent('nexus')"><span class="icon">🔗</span> Nexus</div>
@@ -246,7 +246,7 @@ body { display: flex; }
         <div class="icon">🩺</div><div class="title">Patch Health</div><div class="desc">Check every agent's model, server, and data links.</div>
       </div>
       <div class="quick-card" onclick="quickCommand('Open touch studio')">
-        <div class="icon">🎚️</div><div class="title">Touch Studio</div><div class="desc">Knobs, faders, XY pad, and drum pads for Oscar.</div>
+        <div class="icon">🎚️</div><div class="title">Touch Studio</div><div class="desc">Knobs, faders, XY pad, and drum pads for Master Oscar.</div>
       </div>
       <div class="quick-card" onclick="quickCommand('Build investor EPK page')">
         <div class="icon">🎬</div><div class="title">Investor EPK</div><div class="desc">Publish the latest demo video to the public site.</div>
@@ -666,7 +666,7 @@ async function sendMain() {
   if (text.startsWith('/health')) { addStream('assistant', await slashHealth(text)); return; }
   if (text.startsWith('/studio')) { toggleRightPanel('studio'); addStream('assistant', 'Touch Studio opened in the right panel.'); return; }
   if (text.startsWith('/models')) { addStream('assistant', await slashModels()); return; }
-  if (text.startsWith('/deploy')) { addStream('assistant', 'Deployment options:\n- Oscar: python3 chat_server.py\n- EPK: push to prod server\n- Patch: already running'); return; }
+  if (text.startsWith('/deploy')) { addStream('assistant', 'Deployment options:\n- Master Oscar: python3 chat_server.py\n- EPK: push to prod server\n- Patch: already running'); return; }
 
   try {
     const r = await fetch(INTEL + '/ai/devin', {
@@ -771,7 +771,7 @@ document.getElementById('defaultEngine').addEventListener('change', saveSettings
 function renderAgentSettings() {
   const list = document.getElementById('agentSettingsList');
   const agents = [
-    {id:'oscar', name:'Oscar', role:'Artist & Creative'},
+    {id:'oscar', name:'Master Oscar', role:'Artist & Creative'},
     {id:'moneypenny', name:'Ms. Money Penny', role:'Royalties & Business'},
     {id:'vanessa', name:'Vanessa', role:'Marketing & Voice'},
     {id:'nexus', name:'Nexus', role:'Network & Distribution'},

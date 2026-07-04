@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Oscar Console — GOAT Force AI</title>
-<meta name="description" content="Oscar AI Console — GOAT Force. Touch Studio, Generative UI, Voice, Customization.">
+<title>Master Oscar Console — GOAT Force AI</title>
+<meta name="description" content="Master Oscar AI Console — GOAT Force. Touch Studio, Generative UI, Voice, Customization.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
@@ -295,7 +295,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
 
 <!-- ══════════════════════════════════════════════════════ TOP BAR -->
 <div id="topbar">
-  <div class="brand">🐐 Oscar<span class="brand-sub"> · GOAT Force AI</span></div>
+  <div class="brand">🐐 Master Oscar<span class="brand-sub"> · GOAT Force AI</span></div>
   <div id="conn-dot" title="AI Engine Status"></div>
 
   <div id="model-wrap">
@@ -342,7 +342,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
       <!-- Welcome screen shown when no messages -->
       <div id="welcome">
         <div class="w-logo">🐐</div>
-        <h2>Oscar is ready.</h2>
+        <h2>Master Oscar is ready.</h2>
         <p>Your personal GOAT Force AI — music, royalties, business, beats. Ask anything.</p>
         <div class="quick-prompts">
           <div class="qp" onclick="send('Check my catalog stats')">📁 Catalog stats</div>
@@ -358,7 +358,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
     <div id="input-area">
       <div id="input-row">
         <button class="mic-btn" id="mic-btn" onclick="toggleMic()" title="Voice Input">🎙️</button>
-        <textarea id="input-box" placeholder="Talk to Oscar…" rows="1"
+        <textarea id="input-box" placeholder="Talk to Master Oscar…" rows="1"
           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"
           oninput="autoResize(this)"></textarea>
         <button class="send-btn" onclick="sendMsg()" id="send-btn" title="Send">➤</button>
@@ -415,7 +415,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
           </div>
           <button class="gui-btn" onclick="openEPK()">📄 Open EPK PDF</button>
           <button class="gui-btn" onclick="window.open('http://72.61.193.184/epk/','_blank')">🌐 Public EPK Link</button>
-          <button class="gui-btn" onclick="send('Summarize the investor pitch for GOAT Force')">🤖 Ask Oscar About It</button>
+          <button class="gui-btn" onclick="send('Summarize the investor pitch for GOAT Force')">🤖 Ask Master Oscar About It</button>
         </div>
       </div>
     </div>
@@ -436,7 +436,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
     <!-- STATS pane -->
     <div class="ws-pane" id="pane-stats">
       <div class="gui-card">
-        <h3>🧠 Oscar System</h3>
+        <h3>🧠 Master Oscar System</h3>
         <div id="stats-cpu" style="font-size:12px;color:var(--dim);margin-bottom:6px;">CPU: –</div>
         <div id="stats-ram" style="font-size:12px;color:var(--dim);margin-bottom:6px;">RAM: –</div>
         <div id="stats-model" style="font-size:12px;color:var(--dim);">Model: –</div>
@@ -457,7 +457,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
 <div id="settings-modal">
   <div class="settings-box">
     <button class="settings-close" onclick="closeSettings()">✕</button>
-    <h2>⚙️ Customize Oscar</h2>
+    <h2>⚙️ Customize Master Oscar</h2>
 
     <div class="set-row">
       <label class="set-label">Accent Color</label>
@@ -465,8 +465,8 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
     </div>
 
     <div class="set-row">
-      <label class="set-label">Oscar Name / Greeting</label>
-      <input class="set-input" id="set-name" placeholder="Oscar" value="Oscar">
+      <label class="set-label">Master Oscar Name / Greeting</label>
+      <input class="set-input" id="set-name" placeholder="Master Oscar" value="Master Oscar">
     </div>
 
     <div class="set-row">
@@ -481,7 +481,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
 
     <div class="set-row">
       <div class="set-toggle">
-        <span>Auto-speak Oscar's replies</span>
+        <span>Auto-speak Master Oscar's replies</span>
         <label class="toggle-switch">
           <input type="checkbox" id="set-voice" checked>
           <span class="toggle-slider"></span>
@@ -517,7 +517,7 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
 <div id="touch-studio">
   <div class="studio-topbar">
     <div style="font-size:24px;">🎛️</div>
-    <h2>Oscar Studio — Touch Console</h2>
+    <h2>Master Oscar Studio — Touch Console</h2>
     <button class="studio-close" onclick="closeStudio()">✕ Close</button>
   </div>
 
@@ -564,11 +564,11 @@ input:checked+.toggle-slider::before{transform:translateX(18px);}
 const S={
   chats:[],current:null,streaming:false,
   voiceEnabled:true,wsOpen:true,sidebarOpen:true,
-  settings:{accent:'#d4a03c',name:'Oscar',bg:'',logo:'',voice:true,workspace:true,rasp:true},
+  settings:{accent:'#d4a03c',name:'Master Oscar',bg:'',logo:'',voice:true,workspace:true,rasp:true},
   model:'',
 };
 
-const RASP=`You are Oscar — the GOAT Force AI assistant for DJ Speedy GA. You are knowledgeable about music production, royalties, catalog management, the music business, and the GOAT Force ecosystem. You are direct, professional, and always helpful. When asked to show data or UI, respond with a JSON block inside triple backticks tagged as "ui" (e.g. \`\`\`ui\n{...}\n\`\`\`). Keep responses concise and actionable. You are the master agent of GOAT Force.`;
+const RASP=`You are Master Oscar — the GOAT Force AI assistant for DJ Speedy GA. You are knowledgeable about music production, royalties, catalog management, the music business, and the GOAT Force ecosystem. You are direct, professional, and always helpful. When asked to show data or UI, respond with a JSON block inside triple backticks tagged as "ui" (e.g. \`\`\`ui\n{...}\n\`\`\`). Keep responses concise and actionable. You are the master agent of GOAT Force.`;
 
 // ── Accent colors ────────────────────────────────────────
 const ACCENTS=[
@@ -824,7 +824,7 @@ function showWelcome(show){
     w.style.alignItems='center';w.style.justifyContent='center';
     w.style.flex='1';w.style.padding='32px 16px';w.style.textAlign='center';w.style.color='var(--dim)';
     w.innerHTML=`<div style="font-size:56px;margin-bottom:16px;filter:drop-shadow(0 0 24px var(--glow))">🐐</div>
-      <h2 style="font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px;">Oscar is ready.</h2>
+      <h2 style="font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px;">Master Oscar is ready.</h2>
       <p style="max-width:400px;line-height:1.7;">Your GOAT Force AI — music, royalties, business, beats. Ask anything.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:20px;">
         <div class="qp" onclick="send('Check my catalog stats')">📁 Catalog stats</div>
@@ -934,7 +934,7 @@ async function sendMsg(){
   // typing indicator
   const typing=document.createElement('div');
   typing.className='msg';
-  typing.innerHTML=`<div class="msg-avatar">🐐</div><div class="msg-body"><div class="msg-name">${S.settings.name||'Oscar'}</div><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  typing.innerHTML=`<div class="msg-avatar">🐐</div><div class="msg-body"><div class="msg-name">${S.settings.name||'Master Oscar'}</div><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
   document.getElementById('msgs').appendChild(typing);
   scrollBottom();
 
@@ -1158,7 +1158,7 @@ function setupXY(){
 function openStudio(){document.getElementById('touch-studio').classList.add('open');}
 function closeStudio(){document.getElementById('touch-studio').classList.remove('open');}
 
-// send touch events to Oscar (non-blocking)
+// send touch events to Master Oscar (non-blocking)
 function studioOscarPost(action){
   if(!S.model)return;
   fetch('/ollama/api/chat',{

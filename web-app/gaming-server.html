@@ -129,7 +129,7 @@ h1 span{color:var(--gold);}
   <a class="nav-logo" href="goat-launcher-hub.html">🐐 GOAT</a>
   <div class="nav-links">
     <a href="goat-launcher-hub.html">🚀 Hub</a>
-    <a href="http://127.0.0.1:3333/" target="_blank" class="hot">🐐 Oscar</a>
+    <a href="http://127.0.0.1:3333/" target="_blank" class="hot">🐐 Master Oscar</a>
     <a href="powerhouse.html">⚡ Powerhouse</a>
     <a href="agents-brain.html">🤖 AI Brain</a>
     <a href="#ubuntu" class="g">🐧 Ubuntu</a>
@@ -252,7 +252,7 @@ nvidia-smi</div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <h4>Install Ollama AI engine (runs Oscar locally on this server)</h4>
+            <h4>Install Ollama AI engine (runs Master Oscar locally on this server)</h4>
             <div class="cmd" onclick="copy(this.innerText.split('\n').slice(0,-1).join('\n'))">curl -fsSL https://ollama.com/install.sh | sh
 ollama serve &
 sleep 3
@@ -264,7 +264,7 @@ ollama run llama3.2:3b "Hello from GOAT Force"</div>
         <div class="step">
           <div class="step-num">4</div>
           <div class="step-body">
-            <h4>Clone GOAT Royalty App + start Oscar Console</h4>
+            <h4>Clone GOAT Royalty App + start Master Oscar Console</h4>
             <div class="cmd" onclick="copy(this.innerText.split('\n').slice(0,-1).join('\n'))">git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git ~/goat
 cd ~/goat
 bash start-goat.sh</div>
@@ -273,25 +273,25 @@ bash start-goat.sh</div>
         <div class="step">
           <div class="step-num">5</div>
           <div class="step-body">
-            <h4>Open firewall ports + make Oscar accessible on your network</h4>
-            <div class="cmd" onclick="copy(this.innerText.split('\n').slice(0,-1).join('\n'))">sudo ufw allow 3333/tcp   # Oscar Console
+            <h4>Open firewall ports + make Master Oscar accessible on your network</h4>
+            <div class="cmd" onclick="copy(this.innerText.split('\n').slice(0,-1).join('\n'))">sudo ufw allow 3333/tcp   # Master Oscar Console
 sudo ufw allow 3334/tcp   # Agent 007
 sudo ufw allow 8090/tcp   # Web App
 sudo ufw allow 5500/tcp   # Intel Brain
 sudo ufw allow 22/tcp     # SSH
 sudo ufw enable
-# Oscar will now be accessible from any device on your network at:
+# Master Oscar will now be accessible from any device on your network at:
 # http://YOUR-SERVER-IP:3333/</div>
-            <div class="note">Find your server IP: <strong>ip a | grep inet</strong> — look for 192.168.x.x or 10.x.x.x. Everyone on your WiFi can hit Oscar at that address.</div>
+            <div class="note">Find your server IP: <strong>ip a | grep inet</strong> — look for 192.168.x.x or 10.x.x.x. Everyone on your WiFi can hit Master Oscar at that address.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">6</div>
           <div class="step-body">
-            <h4>Auto-start Oscar on boot</h4>
+            <h4>Auto-start Master Oscar on boot</h4>
             <div class="cmd" onclick="copy(this.innerText.split('\n').slice(0,-1).join('\n'))">sudo tee /etc/systemd/system/goat-oscar.service << 'EOF'
 [Unit]
-Description=GOAT Oscar Console
+Description=GOAT Master Oscar Console
 After=network.target
 
 [Service]
@@ -353,12 +353,12 @@ sudo systemctl start goat-oscar</div>
         <div class="step">
           <div class="step-num">4</div>
           <div class="step-body">
-            <h4>Run Oscar Console inside the VM</h4>
+            <h4>Run Master Oscar Console inside the VM</h4>
             <div class="cmd" onclick="copy(this.innerText.split('\n').slice(0,-1).join('\n'))">sudo apt install -y git python3 curl
 git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git ~/goat
 curl -fsSL https://ollama.com/install.sh | sh
 cd ~/goat && bash start-goat.sh</div>
-            <div class="note">Oscar will run on port 3333 inside the VM. On Mac host, access it at <strong>http://localhost:3333</strong> (UTM NAT mode) or the VM's bridged IP.</div>
+            <div class="note">Master Oscar will run on port 3333 inside the VM. On Mac host, access it at <strong>http://localhost:3333</strong> (UTM NAT mode) or the VM's bridged IP.</div>
           </div>
         </div>
       </div>
@@ -405,7 +405,7 @@ sdkmanager --help</div>
             <div class="cmd" onclick="copy(this.innerText.split('\n').slice(0,-1).join('\n'))">ollama pull llama3.1:8b         # 8B — needs 8GB VRAM
 ollama pull mixtral:8x7b        # 47B — needs 26GB VRAM (or 64GB RAM)
 ollama pull codellama:13b       # Code specialist
-# Oscar will auto-detect the GPU-accelerated models</div>
+# Master Oscar will auto-detect the GPU-accelerated models</div>
             <div class="note">With a 24GB GPU (RTX 3090/4090/A5000) you can run the 13B+ models at full speed — 10-40x faster than CPU-only. The 70B models need 2x GPUs or 64GB RAM.</div>
           </div>
         </div>
@@ -429,7 +429,7 @@ ollama pull codellama:13b       # Code specialist
       </div>
       <div class="card c">
         <h3>What Jetson Does for GOAT</h3>
-        <p>Jetson Orin is a small GPU computer (~$500-800). Run Oscar locally at the edge. No cloud needed. 40 TOPS of AI compute. Perfect for a live venue AI rig, tour setup, or server rack card.</p>
+        <p>Jetson Orin is a small GPU computer (~$500-800). Run Master Oscar locally at the edge. No cloud needed. 40 TOPS of AI compute. Perfect for a live venue AI rig, tour setup, or server rack card.</p>
         <div class="tags"><span class="tag tc">40 TOPS</span><span class="tag tg">Edge AI</span><span class="tag tp">CUDA 12</span></div>
       </div>
     </div>
@@ -437,7 +437,7 @@ ollama pull codellama:13b       # Code specialist
     <div class="tabs" id="jetson-tabs">
       <div class="tab active" onclick="switchTab('jetson','sdk')">1. SDK Manager Setup</div>
       <div class="tab" onclick="switchTab('jetson','flash')">2. Flash Jetson</div>
-      <div class="tab" onclick="switchTab('jetson','oscar')">3. Oscar on Jetson</div>
+      <div class="tab Master Oscar on Jetson</div>
       <div class="tab" onclick="switchTab('jetson','docker')">4. Docker Images</div>
     </div>
 
@@ -539,7 +539,7 @@ sudo ./flash.sh jetson-orin-nano-devkit mmcblk0p1</div>
       </div>
     </div>
 
-    <!-- Tab: Oscar on Jetson -->
+    <!-- Tab: Master Oscar on Jetson -->
     <div class="tab-pane" id="jetson-oscar">
       <div class="steps">
         <div class="step">
@@ -556,7 +556,7 @@ ollama serve &</div>
         <div class="step">
           <div class="step-num">2</div>
           <div class="step-body">
-            <h4>Clone GOAT + start Oscar</h4>
+            <h4>Clone GOAT + start Master Oscar</h4>
             <div class="cmd" onclick="copy(this.innerText.split('\n').slice(0,-1).join('\n'))">sudo apt install -y git python3
 git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git ~/goat
 cd ~/goat && bash start-goat.sh</div>
@@ -565,8 +565,8 @@ cd ~/goat && bash start-goat.sh</div>
         <div class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <h4>Access Oscar from Mac (same network)</h4>
-            <p>Oscar runs on port 3333 on the Jetson. From your Mac Studio, open:</p>
+            <h4>Access Master Oscar from Mac (same network)</h4>
+            <p>Master Oscar runs on port 3333 on the Jetson. From your Mac Studio, open:</p>
             <div class="cmd" onclick="copy('open http://JETSON-IP:3333/')">open http://JETSON-IP:3333/
 # Replace JETSON-IP with the Jetson's LAN IP (e.g. 192.168.1.55)
 # Find it on Jetson with: hostname -I</div>
@@ -704,7 +704,7 @@ sudo nginx -t && sudo systemctl reload nginx</div>
 echo "192.168.1.SERVER-IP  goat.local" | sudo tee -a /etc/hosts
 
 ## Then open:
-open http://goat.local/oscar/   # Oscar Console
+open http://goat.local/oscar/   # Master Oscar Console
 open http://goat.local/hub/     # Launcher Hub
 open http://goat.local/ai/      # Ollama API</div>
         </div>

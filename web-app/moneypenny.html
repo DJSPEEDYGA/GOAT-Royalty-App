@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ms. Ms. Money Penny — GOAT Force Command Center</title>
+<title>Ms. Money Penny — GOAT Force Command Center</title>
 <link rel="stylesheet" href="css/goat-brand.css">
 <style>
 /* ── Override font to mono like dr-devin ── */
@@ -58,20 +58,24 @@ body > * { position: relative; z-index: 1; }
 .goat-nav { border-bottom: 2px solid rgba(193,18,31,0.45); }
 .goat-nav .nav-brand { display: flex; align-items: center; gap: 12px; }
 .goat-nav .nav-brand img { height: 40px; border-radius: 10px; filter: drop-shadow(0 0 12px rgba(193,18,31,0.6)); }
-.goat-nav .nav-brand span { font-size: 17px; font-weight: 900; color: #fff; letter-spacing: 0.5px; }
+.goat-nav .nav-brand span { font-size: 17px; font-weight: 900; color: #fff !important; letter-spacing: 0.5px; }
 .goat-nav .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
-.goat-nav .nav-links a {
-  color: #e0e0e0;
-  text-decoration: none;
+.goat-nav .nav-links a,
+.goat-nav .nav-links a:link,
+.goat-nav .nav-links a:visited {
+  color: #e8e8e8 !important;
+  text-decoration: none !important;
   padding: 7px 13px;
   border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
   transition: all 0.2s;
   white-space: nowrap;
+  -webkit-text-fill-color: #e8e8e8 !important;
 }
-.goat-nav .nav-links a:hover { background: rgba(193,18,31,0.22); color: var(--goat-gold); transform: translateY(-1px); }
-.goat-nav .nav-links a.active { background: linear-gradient(135deg,#c1121f,#8b0000); color: #fff; box-shadow: 0 0 18px rgba(193,18,31,0.5); }
+.goat-nav .nav-links a:hover { background: rgba(193,18,31,0.22) !important; color: #f0c070 !important; -webkit-text-fill-color: #f0c070 !important; transform: translateY(-1px); }
+.goat-nav .nav-links a.active { background: linear-gradient(135deg,#c1121f,#8b0000) !important; color: #fff !important; -webkit-text-fill-color: #fff !important; box-shadow: 0 0 18px rgba(193,18,31,0.5); }
 
 /* ── Layout ── */
 .ai-layout {
@@ -605,7 +609,7 @@ body > * { position: relative; z-index: 1; }
     <a href="index.html">Home</a>
     <a href="goat-devin-center.html">🎯 Devin Center</a>
     <a href="agent-007.html">Agent 007</a>
-    <a href="moneypenny.html" class="active">Ms. Ms. Money Penny</a>
+    <a href="moneypenny.html" class="active">Ms. Money Penny</a>
     <a href="studio-hub.html">Studio Hub</a>
     <a href="agent-status.html">Agent Status</a>
     <a href="dr-devin.html">🩺 Dr. Devin</a>
@@ -629,7 +633,7 @@ body > * { position: relative; z-index: 1; }
           <div style="font-size:12px;color:#fff;">Ms. Money Penny</div>
           <div style="font-size:9px;font-weight:500;color:#777;">Royalties & Business</div>
         </div>
-        <span class="badge">Gemini</span>
+        <span class="badge">002</span>
       </button>
       <button class="persona-btn" onclick="setPersona('codex')" id="btnCodex">
         <span>🤖</span>
@@ -639,10 +643,10 @@ body > * { position: relative; z-index: 1; }
         </div>
         <span class="badge">006</span>
       </button>
-      <button class="persona-btn" onclick="setPersona('oscar')" id="btnOscar">
+      <button class="persona: Master Oscar">
         <span>🎩</span>
         <div>
-          <div style="font-size:12px;color:#fff;">Oscar</div>
+          <div style="font-size:12px;color:#fff;">Master Oscar</div>
           <div style="font-size:9px;font-weight:500;color:#777;">Operations & Deals</div>
         </div>
         <span class="badge">001</span>
@@ -706,6 +710,23 @@ body > * { position: relative; z-index: 1; }
       </button>
     </div>
 
+    <!-- AI Model Selector -->
+    <div class="special-ops" id="modelSelectorPanel">
+      <div class="special-ops-title">🤖 AI Model — 56 Local</div>
+      <select id="modelSelect" onchange="setModel(this.value)" style="
+        width:100%; padding:8px 10px; border-radius:10px;
+        border:1px solid rgba(193,18,31,0.35);
+        background:rgba(193,18,31,0.07);
+        color:#e8e8e8; font-size:11px;
+        font-family:'JetBrains Mono',monospace;
+        cursor:pointer; margin-bottom:6px;
+        outline:none; appearance:none; -webkit-appearance:none;
+      ">
+        <option value="">— loading models... —</option>
+      </select>
+      <div id="modelStatus" style="font-size:10px;color:#555;padding:0 2px;line-height:1.5;"></div>
+    </div>
+
     <!-- Command Deck -->
     <div class="special-ops">
       <div class="special-ops-title">🎛️ Command Deck</div>
@@ -732,7 +753,7 @@ body > * { position: relative; z-index: 1; }
     <!-- Agent status -->
     <div class="status-panel">
       <div class="section-title" style="padding:0 0 8px;">Agent Network</div>
-      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Oscar</div><span class="status-role">001 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Master Oscar</div><span class="status-role">001 · Online</span></div>
       <div class="status-row"><div class="status-left"><span class="status-dot"></span> Ms. Money Penny</div><span class="status-role">002 · Online</span></div>
       <div class="status-row"><div class="status-left"><span class="status-dot"></span> Ms. Vanessa</div><span class="status-role">003 · Online</span></div>
       <div class="status-row"><div class="status-left"><span class="status-dot"></span> Nexus</div><span class="status-role">004 · Online</span></div>
@@ -759,7 +780,7 @@ body > * { position: relative; z-index: 1; }
         <p id="personaRole">GOAT Force Royalty & Business Intelligence</p>
       </div>
       <span class="codename-tag" id="codenameTag">CODENAME: DIAMOND</span>
-      <span class="engine-tag" id="engineTag">Gemini + GPT-4o</span>
+      <span class="engine-tag" id="engineTag">Ollama Local AI</span>
     </div>
 
     <div class="chat-messages" id="chatMessages"></div>
@@ -852,16 +873,63 @@ body > * { position: relative; z-index: 1; }
 <script>
 const INTEL = 'http://localhost:5500';
 
-let currentPersona = 'moneypenny';
-let chatHistory    = [];
-let isTyping       = false;
+let currentPersona  = 'moneypenny';
+let chatHistory     = [];
+let isTyping        = false;
+let selectedModel   = '';   // '' = let server auto-pick best model
+
+// ── Model Selector ─────────────────────────────────────────────────
+async function loadModelList() {
+  const sel    = document.getElementById('modelSelect');
+  const status = document.getElementById('modelStatus');
+  try {
+    const r = await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(5000) });
+    if (!r.ok) throw new Error('Ollama offline');
+    const data   = await r.json();
+    const models = (data.models || []).sort((a, b) => a.name.localeCompare(b.name));
+
+    sel.innerHTML = '<option value="">⚡ Auto (server picks best)</option>';
+    models.forEach(m => {
+      const sizeGB = m.size ? (m.size / 1e9).toFixed(1) + 'GB' : '';
+      const opt    = document.createElement('option');
+      opt.value       = m.name;
+      opt.textContent = `${m.name}${sizeGB ? '  ·  ' + sizeGB : ''}`;
+      sel.appendChild(opt);
+    });
+
+    // Restore last used model
+    const saved = localStorage.getItem('goat_mp_model');
+    if (saved && models.find(m => m.name === saved)) {
+      sel.value    = saved;
+      selectedModel = saved;
+    }
+
+    status.innerHTML = `<span style="color:#00ff88;">✅ ${models.length} models on drive</span>`;
+    document.getElementById('modelSelectorPanel').querySelector('.special-ops-title').textContent =
+      `🤖 AI Model — ${models.length} Local`;
+  } catch (e) {
+    sel.innerHTML = '<option value="">⚠ Ollama offline — restart server</option>';
+    status.innerHTML = `<span style="color:#f59e0b;">Start: ollama serve</span>`;
+  }
+}
+
+function setModel(val) {
+  selectedModel = val;
+  if (val) localStorage.setItem('goat_mp_model', val);
+  const tag = document.getElementById('engineTag');
+  tag.textContent = val ? `Model: ${val}` : 'Ollama Local AI';
+  const status = document.getElementById('modelStatus');
+  status.innerHTML = val
+    ? `<span style="color:#f0c070;">🎯 Locked: ${val}</span>`
+    : `<span style="color:#555;">Auto-selecting best model</span>`;
+}
 
 const PERSONAS = {
   moneypenny: {
     name:     'Ms. Money Penny',
     codename: 'CODENAME: DIAMOND',
     role:     'GOAT Force Royalty & Business Intelligence',
-    engine:   'Gemini + GPT-4o',
+    engine:   'Ollama Local AI',
     endpoint: '/ai/moneypenny',
     placeholder: 'Ask Ms. Money Penny about royalties, sync licensing, distribution, music business...',
     welcome: `🐐 What's good, Boss? Ms. Money Penny here — your AI powerhouse for GOAT Force Records.
@@ -908,13 +976,13 @@ What do we need to build?`,
     ]
   },
   oscar: {
-    name:     'Oscar',
+    name:     'Master Oscar',
     codename: 'CODENAME: DEALMAKER',
     role:     'GOAT Force Chief Operations & Deal Architect',
     engine:   'GPT-4o',
     endpoint: '/ai/oscar',
-    placeholder: 'Ask Oscar about deals, contracts, operations, and business strategy...',
-    welcome: `Oscar here — Agent 001, GOAT Force Intelligence Division. I'm the deal-maker and operations commander. I negotiate contracts, structure partnerships, and make sure DJ Speedy gets maximum value from every deal. Got a contract that needs reviewing? A deal on the table? Bring it.`,
+    placeholder: 'Ask Master Oscar about deals, contracts, operations, and business strategy...',
+    welcome: `Master Oscar here — Agent 001, GOAT Force Intelligence Division. I'm the deal-maker and operations commander. I negotiate contracts, structure partnerships, and make sure DJ Speedy gets maximum value from every deal. Got a contract that needs reviewing? A deal on the table? Bring it.`,
     prompts: [
       '📋 Review this recording contract for red flags',
       '💰 What should a fair 360 deal look like?',
@@ -1115,8 +1183,8 @@ async function sendMessage() {
     const r = await fetch(INTEL + PERSONAS[currentPersona].endpoint, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({message, history: chatHistory.slice(-10)}),
-      signal: AbortSignal.timeout(45000)
+      body: JSON.stringify({message, history: chatHistory.slice(-10), model: selectedModel || undefined}),
+      signal: AbortSignal.timeout(180000)
     });
     const d = await r.json();
     setTyping(false);
@@ -1287,6 +1355,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const persona = (modeParam && PERSONAS[modeParam]) ? modeParam : 'moneypenny';
   setPersona(persona);
   checkServerStatus();
+  loadModelList();
 
   const savedColor = localStorage.getItem('goat_penny_accent');
   if (savedColor) setAccent(savedColor);
@@ -1309,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <option value="moneypenny">002 — Ms. Money Penny (default)</option>
         <option value="drdevin">007 — Dr. Devin</option>
         <option value="codex">006 — Sir Codex</option>
-        <option value="oscar">001 — Oscar</option>
+        <option value="oscar">001 — Master Oscar</option>
         <option value="nexus">004 — Nexus</option>
         <option value="lexi">005 — Lexi</option>
         <option value="vanessa">003 — Ms. Vanessa</option>

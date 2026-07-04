@@ -3,8 +3,12 @@
 
 <div align="center">
 
-**Built by DJ Speedy / Harvey L. Miller Jr.**
+**Built by DJ Speedy (Harvey L. Miller Jr.)**
+*Music Producer & DJ • Business Partner with Waka Flocka Flame (AI + Music Industry since Waka was 18; DJ Speedy now 50)*
+
 *ASCAP Writer • Publisher • FASTASSMAN Publishing Inc. • Sony The Orchard Partner*
+
+> Only AGENT007 AND MONEY PENNY are the personal original LLMs built by DJ Speedy + Money Penny. Lexi (Waka's baby) runs the evidence + creative guard on Thor for the crew.
 
 [![Version](https://img.shields.io/badge/Version-3.0-brightgreen?style=for-the-badge)](#)
 [![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20iPad%20%7C%20Desktop-blue?style=for-the-badge)](#)

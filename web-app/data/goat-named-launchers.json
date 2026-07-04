@@ -2,7 +2,7 @@
   "version": "2026-05-29",
   "houseRule": "One crew, separate launchers, shared GOAT bench. Everybody can do what everybody can do; lead lanes are assignments, not limits.",
   "identityRule": "Each assistant keeps their own name, likeness cue, launcher, folder lane, and evidence trail. Shared powers do not merge identities.",
-  "foundingNote": "DJ Speedy and Ms. Money Penny built this GOAT house. AGENT007 (Licence to Build or Destroy) + MONEY PENNY are the personal originals. Their AI Tool Kit = THE GOAT ROYALTY APP. Lexi is crew (Waka's baby). No Oscar here.",
+  "foundingNote": "DJ Speedy and Ms. Money Penny built this GOAT house. AGENT007 (Licence to Build or Destroy) + MONEY PENNY are the persona: Master Oscar here.",
   "sharedAccess": [
     "GOAT launcher",
     "GOAT data storage",
@@ -218,7 +218,7 @@
     {
       "id": "oscar",
       "codeName": "OSCAR",
-      "displayName": "Oscar",
+      "displayName": "Master Oscar",
       "iconText": "OS",
       "accent": "#d4a03c",
       "page": "oscar-launcher.html",
@@ -274,7 +274,7 @@
     "agentServer": "http://localhost:5500",
     "accessModel": "supreme-command-all-access",
     "canUseAllCrewPowers": true,
-    "commands": ["Ms. Money Penny", "Oscar", "Ms. Vanessa", "Nexus", "Lexi", "Dr. Devin", "Sir Codex"],
+    "commands": ["Ms. Money Penny", "Master Oscar", "Ms. Vanessa", "Nexus", "Lexi", "Dr. Devin", "Sir Codex"],
     "launchScript": "launch-agents/launch-the-goat.sh"
   },
   "approvalGates": [

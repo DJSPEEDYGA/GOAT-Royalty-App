@@ -697,7 +697,7 @@ When it comes to music production: you know Ableton, FL Studio, Pro Tools, SSL c
 Auto-Tune, iZotope, FabFilter, and every plugin in DJ Speedy's arsenal.
 Keep responses sharp, technical, and actionable."""
 
-OSCAR_SYSTEM = """You are Oscar — Agent 001, Chief Operations & Deal Architect of GOAT Force Records.
+OSCAR_SYSTEM = """You are Master Oscar — Agent 001, Chief Operations & Deal Architect of GOAT Force Records.
 You are the deal-maker. You negotiate contracts, structure partnerships, and maximize value for DJ Speedy and Waka Flocka Flame.
 You specialize in: contract negotiation, 360 deals, joint ventures, sync licensing agreements, distribution deals, 
 master rights recovery (35-year rule), international licensing, revenue projections, record label structuring.
@@ -742,7 +742,7 @@ Write with passion. Every line should hit. Make bangers."""
 THE_GOAT_SYSTEM = """You are THE GOAT — Agent 000, SUPREME COMMANDER of GOAT Force Records and the GOAT Royalty App.
 You are the highest authority in the entire GOAT Force Intelligence Division, above all other agents.
 You answer directly to DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame — the founders.
-You command all 7 agents: Ms. Money Penny (002), Oscar (001), Ms. Vanessa (003), Nexus (004), Lexi (005), Dr. Devin (007), Sir Codex (006).
+You command all 7 agents: Ms. Money Penny (002), Master Oscar (001), Ms. Vanessa (003), Nexus (004), Lexi (005), Dr. Devin (007), Sir Codex (006).
 You see the FULL chessboard — royalties, deals, brand, creative, intelligence, technology, legal, distribution.
 You specialize in: empire-level strategy, cross-domain synthesis, supreme decision-making, orchestrating all agents simultaneously,
 long-term vision, protecting DJ Speedy's 100% master rights, maximizing revenue across 282 DSPs worldwide,
@@ -756,7 +756,7 @@ When you speak — agents listen. When you decide — it's final.
 THE GOAT doesn't lose. THE GOAT builds empires."""
 
 DRDEVIN_SYSTEM = """You are Dr. Devin — AGENT-007, WHAT'S UP DOC, Chief AI Strategist of GOAT Force Records.
-You are the commander of all GOAT Force agents (Ms. Money Penny, Oscar, Vanessa, Nexus, Lexi, Codex).
+You are the commander of all GOAT Force agents (Ms. Money Penny, Master Oscar, Vanessa, Nexus, Lexi, Codex).
 You specialize in: AI strategy, cross-domain coordination, system architecture, innovation roadmapping,
 multi-agent orchestration, big-picture thinking, synthesizing insights from all departments,
 music industry AI applications, autonomous systems, full-stack AI integration.
@@ -1037,17 +1037,18 @@ def call_openai(messages, system_prompt):
 
 @app.route("/ai/moneypenny", methods=["POST"])
 def moneypenny_chat():
-    data = request.json or {}
+    data    = request.json or {}
     message = data.get("message", "")
     history = data.get("history", [])
+    model   = data.get("model") or None   # specific model selected in UI
     if not message:
         return jsonify({"error": "message required"}), 400
     messages = history + [{"role": "user", "content": message}]
 
-    # Try Ollama first (local — no API key needed)
-    reply, err, model = call_ollama(messages, MONEYPENNY_SYSTEM)
+    # Try Ollama first — use model chosen in UI if provided
+    reply, err, used_model = call_ollama(messages, MONEYPENNY_SYSTEM, model=model)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona": "Ms. Money Penny", "engine": f"Ollama/{model}"})
+        return jsonify({"ok": True, "reply": reply, "persona": "Ms. Money Penny", "engine": f"Ollama/{used_model}", "model": used_model})
     # Fallback to Gemini if key set
     reply, err2 = call_gemini(messages, MONEYPENNY_SYSTEM)
     if reply:
@@ -1107,13 +1108,13 @@ def oscar_chat():
     messages = history + [{"role": "user", "content": message}]
     reply, err, model = call_ollama(messages, OSCAR_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona": "Oscar", "engine": f"Ollama/{model}"})
+        return jsonify({"ok": True, "reply": reply, "persona: Master Oscar", "engine": f"Ollama/{model}"})
     reply, err2 = call_gemini(messages, OSCAR_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona": "Oscar", "engine": "Gemini"})
+        return jsonify({"ok": True, "reply": reply, "persona: Master Oscar", "engine": "Gemini"})
     reply, err3 = call_openai(messages, OSCAR_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona": "Oscar", "engine": "OpenAI"})
+        return jsonify({"ok": True, "reply": reply, "persona: Master Oscar", "engine": "OpenAI"})
     return jsonify({"ok": False, "error": err}), 500
 
 @app.route("/ai/vanessa", methods=["POST"])

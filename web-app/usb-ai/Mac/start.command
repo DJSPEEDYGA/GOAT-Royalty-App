@@ -1,13 +1,13 @@
 #!/bin/bash
 # ===================================================
-#  Oscar Console — GOAT Force AI (Mac)
+#  Master Oscar Console — GOAT Force AI (Mac)
 # ===================================================
 
 echo "==================================================="
-echo "    🐐 Oscar Console — GOAT Force AI (Mac)"
+echo "    🐐 Master Oscar Console — GOAT Force AI (Mac)"
 echo "==================================================="
 echo ""
-echo "  Launches Ollama AI + Oscar Console."
+echo "  Launches Ollama AI + Master Oscar Console."
 echo "  Touch Studio · Gen UI · Voice · Customize"
 echo "  All chats auto-save to the USB drive."
 echo ""
