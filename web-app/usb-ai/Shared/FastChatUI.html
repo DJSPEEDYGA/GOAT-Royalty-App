@@ -46,12 +46,13 @@
 html,body{height:100%;overflow:hidden}
 body{
   font-family:'Inter',-apple-system,sans-serif;
-  background:var(--bg);
+  background:#0a0c10; /* slightly deeper to frame the card nicely */
   color:var(--text);
   display:flex;
   flex-direction:column;
   font-size:14px;
   line-height:1.6;
+  align-items: center; /* helps center the #lexi-frame card */
 }
 
 /* ── Top Header Bar ────────────────────────────────────── */
@@ -153,11 +154,36 @@ body{
   box-shadow:0 0 4px var(--accent);
 }
 
-/* ── App layout ────────────────────────────────────────── */
+/* ── Lexi contained app window (original shape/size fix) ──
+   Everything (top bar + sidebar + chat) lives inside one nice bordered card.
+   This is the "original" desktop-like contained look the user wants at 72.61.193.184:8080/
+*/
+#lexi-frame {
+  max-width: 1200px;
+  margin: 20px auto;
+  height: calc(100vh - 40px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Inner horizontal layout: sidebar | main chat */
 #app{
   display:flex;
-  flex:1;
-  overflow:hidden;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0; /* important for flex child scrolling */
+}
+
+/* Top bar now lives inside the nice frame — clean integration */
+#lexi-frame #top-bar {
+  border-bottom: 1px solid var(--border);
+  border-radius: 12px 12px 0 0;
+  flex-shrink: 0;
 }
 
 /* ── Sidebar ───────────────────────────────────────────── */
@@ -512,6 +538,9 @@ body{
 </style>
 </head>
 <body>
+
+<!-- ── Contained Lexi window (fixes full-bleed / wrong shape on live site) -->
+<div id="lexi-frame">
 
 <!-- ── Top bar ─────────────────────────────────────────── -->
 <div id="top-bar">
@@ -1202,5 +1231,6 @@ function stopGen() { if (abortCtrl) abortCtrl.abort(); }
   setInterval(fetchModels, 15000); // model list refresh
 })();
 </script>
+</div> <!-- /#lexi-frame (the contained original shape/size card) -->
 </body>
 </html>

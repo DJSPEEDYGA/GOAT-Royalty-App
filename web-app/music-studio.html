@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ms Money Penny — 🎵 Music Studio | DSP Distribution & Royalty Management</title>
+  <title>Ms Ms. Money Penny — 🎵 Music Studio | DSP Distribution & Royalty Management</title>
   <meta name="description" content="Professional Music Studio - Distribute to Spotify, Apple Music, YouTube Music, and 10+ platforms. Track royalties, manage releases, and grow your audience.">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="css/goat-theme.css">
@@ -414,7 +414,7 @@
       color: #000;
     }
   </style>
-<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+<script src="js/ninja-daytona-script.js"></script>
 </head>
 <body class="models-page">
 
@@ -858,6 +858,158 @@
     </div>
   </section>
 
+  <!-- ══ AI AUDIO GENERATION SECTION ══ -->
+  <section style="background:linear-gradient(135deg,rgba(13,27,42,0.97),rgba(10,10,10,0.99));padding:60px 40px;max-width:1400px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:40px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.35);color:var(--gold);padding:5px 18px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse2 1.5s infinite"></span>
+        AI-POWERED
+      </div>
+      <h2 style="font-size:2.2rem;color:var(--gold);margin-bottom:8px">AI Audio Generator</h2>
+      <p style="color:var(--text-secondary);max-width:600px;margin:0 auto">Generate professional-quality music with AI. Describe your track and let the AI compose it — beats, instrumentals, full songs, and more.</p>
+    </div>
+
+    <!-- GENERATOR CARD -->
+    <div id="aiAudioPanel" style="max-width:900px;margin:0 auto;background:rgba(13,20,32,0.75);border:1px solid rgba(212,160,60,0.2);border-radius:24px;padding:32px;backdrop-filter:blur(12px)">
+
+      <!-- PROMPT INPUT -->
+      <div style="margin-bottom:24px">
+        <label style="display:block;font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Describe your track</label>
+        <textarea id="audioPrompt" rows="4" style="width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(212,160,60,0.2);border-radius:12px;padding:16px;color:var(--text-primary);font-size:14px;line-height:1.6;resize:vertical;outline:none;font-family:inherit;transition:border-color .2s" placeholder="Hard trap beat, 140 BPM, heavy 808s, dark piano melody, Waka Flocka Flame style, Atlanta sound, club energy..." onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(212,160,60,0.2)'"></textarea>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <button onclick="aiAudioQuick('Hard trap beat, 140 BPM, heavy 808s, dark Atlanta sound')" style="padding:6px 14px;background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.2);border-radius:10px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(212,160,60,0.18)'" onmouseout="this.style.background='rgba(212,160,60,0.08)'">🔥 Hard Trap</button>
+          <button onclick="aiAudioQuick('Chill lo-fi hip hop, 85 BPM, jazz samples, vinyl crackle, smooth vibe')" style="padding:6px 14px;background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.2);border-radius:10px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(212,160,60,0.18)'" onmouseout="this.style.background='rgba(212,160,60,0.08)'">🎷 Lo-Fi Jazz</button>
+          <button onclick="aiAudioQuick('Latin trap reggaeton fusion, 95 BPM, amigo alley vibes, bilingual club banger')" style="padding:6px 14px;background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.2);border-radius:10px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(212,160,60,0.18)'" onmouseout="this.style.background='rgba(212,160,60,0.08)'">🎺 Amigo Alley</button>
+          <button onclick="aiAudioQuick('Epic cinematic score, orchestral strings, dramatic brass, film score, 70 BPM')" style="padding:6px 14px;background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.2);border-radius:10px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(212,160,60,0.18)'" onmouseout="this.style.background='rgba(212,160,60,0.08)'">🎬 Film Score</button>
+          <button onclick="aiAudioQuick('Upbeat pop hip hop crossover, catchy hook melody, radio-friendly, 120 BPM')" style="padding:6px 14px;background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.2);border-radius:10px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(212,160,60,0.18)'" onmouseout="this.style.background='rgba(212,160,60,0.08)'">🌟 Pop Crossover</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS ROW -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px">
+        <div>
+          <label style="display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Genre</label>
+          <select id="audioGenre" style="width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;color:var(--text-primary);font-size:13px;outline:none;cursor:pointer">
+            <option>Trap / Hip-Hop</option>
+            <option>Lo-Fi Hip-Hop</option>
+            <option>Latin Trap</option>
+            <option>R&B / Soul</option>
+            <option>Pop</option>
+            <option>Drill</option>
+            <option>Reggaeton</option>
+            <option>Afrobeats</option>
+            <option>Film Score</option>
+            <option>Electronic / EDM</option>
+            <option>Jazz</option>
+            <option>Gospel</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">BPM</label>
+          <select id="audioBPM" style="width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;color:var(--text-primary);font-size:13px;outline:none;cursor:pointer">
+            <option>Auto-detect</option>
+            <option>70 BPM</option>
+            <option>80 BPM</option>
+            <option>90 BPM</option>
+            <option>100 BPM</option>
+            <option>110 BPM</option>
+            <option>120 BPM</option>
+            <option>130 BPM</option>
+            <option>140 BPM</option>
+            <option>150 BPM</option>
+            <option>160 BPM</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Duration</label>
+          <select id="audioDuration" style="width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;color:var(--text-primary);font-size:13px;outline:none;cursor:pointer">
+            <option>30 seconds</option>
+            <option>1 minute</option>
+            <option>2 minutes</option>
+            <option>3 minutes</option>
+            <option>4 minutes</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Mode</label>
+          <select id="audioMode" style="width:100%;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;color:var(--text-primary);font-size:13px;outline:none;cursor:pointer">
+            <option>Instrumental</option>
+            <option>With Vocals (AI)</option>
+            <option>Beat Loop</option>
+            <option>Intro / Hook Only</option>
+            <option>Full Song Structure</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- MOOD TAGS -->
+      <div style="margin-bottom:24px">
+        <label style="display:block;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Mood & Vibe</label>
+        <div id="moodTags" style="display:flex;flex-wrap:wrap;gap:8px">
+          <span class="mood-tag active" onclick="toggleMood(this,'Dark')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(212,160,60,0.5);background:rgba(212,160,60,0.15);color:var(--gold);font-size:12px;cursor:pointer;transition:all .2s">Dark</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Aggressive')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Aggressive</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Melodic')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Melodic</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Chill')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Chill</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Energetic')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Energetic</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Triumphant')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Triumphant</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Smooth')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Smooth</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Epic')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Epic</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Romantic')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Romantic</span>
+          <span class="mood-tag" onclick="toggleMood(this,'Party')" style="padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--text-muted);font-size:12px;cursor:pointer;transition:all .2s">Party</span>
+        </div>
+      </div>
+
+      <!-- GENERATE BUTTON -->
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button onclick="generateAudio()" id="genAudioBtn" style="padding:14px 36px;background:linear-gradient(135deg,var(--gold),#b8860b);color:#000;border:none;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;letter-spacing:.5px" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">🎵 Generate Audio</button>
+        <button onclick="generateVariation()" style="padding:14px 20px;background:transparent;border:1px solid rgba(212,160,60,0.35);color:var(--gold);border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(212,160,60,0.08)'" onmouseout="this.style.background='transparent'">🔄 New Variation</button>
+        <button onclick="askLexi()" style="padding:14px 20px;background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--text-muted);border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.borderColor='rgba(243,156,18,0.5)';this.style.color='#f39c12'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='var(--text-muted)'">⚡ Ask Lexi for Ideas</button>
+      </div>
+
+      <!-- GENERATION STATUS -->
+      <div id="audioStatus" style="display:none;margin-top:24px;padding:20px;background:rgba(0,0,0,.3);border-radius:14px;border:1px solid rgba(212,160,60,0.15)">
+        <div id="audioStatusContent"></div>
+      </div>
+
+      <!-- GENERATED TRACKS -->
+      <div id="generatedTracks" style="margin-top:24px"></div>
+    </div>
+
+    <!-- LEXI AI ASSISTANT PANEL -->
+    <div style="max-width:900px;margin:24px auto 0;background:rgba(243,156,18,0.04);border:1px solid rgba(243,156,18,0.18);border-radius:18px;padding:24px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div style="width:44px;height:44px;border-radius:12px;background:rgba(243,156,18,0.15);border:1px solid rgba(243,156,18,0.3);display:flex;align-items:center;justify-content:center;font-size:20px">⚡</div>
+        <div>
+          <div style="font-size:15px;font-weight:700;color:#f39c12">Lexi — Creative AI</div>
+          <div style="font-size:11px;color:var(--text-muted)">Agent 005 · Lyricist & Creative Director</div>
+        </div>
+        <a href="moneypenny.html?mode=lexi" style="margin-left:auto;padding:8px 18px;background:rgba(243,156,18,0.1);border:1px solid rgba(243,156,18,0.3);border-radius:10px;color:#f39c12;text-decoration:none;font-size:12px;font-weight:600">Launch Lexi →</a>
+      </div>
+      <div id="lexiSuggestions" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px">
+        <div onclick="aiAudioQuick('Hard trap anthem, DJ Speedy GOAT signature sound, heavy 808s, dark melody, 140 BPM')" style="padding:12px 16px;background:rgba(0,0,0,.3);border:1px solid rgba(243,156,18,0.12);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='rgba(243,156,18,0.4)'" onmouseout="this.style.borderColor='rgba(243,156,18,0.12)'">
+          <div style="font-size:11px;color:#f39c12;font-weight:700;margin-bottom:4px">🔥 GOAT ANTHEM</div>
+          <div style="font-size:12px;color:var(--text-secondary)">Hard trap, DJ Speedy signature, 140 BPM heavy 808s</div>
+        </div>
+        <div onclick="aiAudioQuick('Latin trap Amigo Alley theme, bilingual vibes, 95 BPM, festive but hard')" style="padding:12px 16px;background:rgba(0,0,0,.3);border:1px solid rgba(243,156,18,0.12);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='rgba(243,156,18,0.4)'" onmouseout="this.style.borderColor='rgba(243,156,18,0.12)'">
+          <div style="font-size:11px;color:#f39c12;font-weight:700;margin-bottom:4px">🎺 AMIGO ALLEY</div>
+          <div style="font-size:12px;color:var(--text-secondary)">Latin trap fusion, bilingual, 95 BPM</div>
+        </div>
+        <div onclick="aiAudioQuick('Waka Flocka Flame style hard energy, aggressive, crowd hype, No Hands energy')" style="padding:12px 16px;background:rgba(0,0,0,.3);border:1px solid rgba(243,156,18,0.12);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='rgba(243,156,18,0.4)'" onmouseout="this.style.borderColor='rgba(243,156,18,0.12)'">
+          <div style="font-size:11px;color:#f39c12;font-weight:700;margin-bottom:4px">💥 WAKA ENERGY</div>
+          <div style="font-size:12px;color:var(--text-secondary)">Aggressive, crowd hype, Waka Flocka style</div>
+        </div>
+        <div onclick="aiAudioQuick('Cinematic GOAT Royalty theme, orchestral, triumphant, gold and crown imagery')" style="padding:12px 16px;background:rgba(0,0,0,.3);border:1px solid rgba(243,156,18,0.12);border-radius:10px;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='rgba(243,156,18,0.4)'" onmouseout="this.style.borderColor='rgba(243,156,18,0.12)'">
+          <div style="font-size:11px;color:#f39c12;font-weight:700;margin-bottom:4px">👑 ROYALTY THEME</div>
+          <div style="font-size:12px;color:var(--text-secondary)">Cinematic orchestral, triumphant, gold</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <style>
+  @keyframes pulse2{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+
   <!-- Footer -->
   <footer style="background: var(--bg-primary); padding: 40px; text-align: center; border-top: 1px solid var(--border);">
     <p style="color: var(--text-muted);">© 2024 Life Imitates Art Inc. • Ms Money Penny GOAT Royalty Store</p>
@@ -901,6 +1053,153 @@
       }
       
       alert(`🎉 Release "${title}" submitted!\n\nPlatforms: ${platforms.join(', ')}\n\nEstimated delivery: 24-72 hours`);
+    }
+
+    // ── AI AUDIO GENERATOR ──────────────────────────────
+    const INTEL = 'http://localhost:5500';
+    let selectedMoods = ['Dark'];
+    let generatedTrackCount = 0;
+
+    function toggleMood(el, mood) {
+      if (el.classList.contains('active')) {
+        el.classList.remove('active');
+        el.style.borderColor = 'rgba(255,255,255,.08)';
+        el.style.background = 'transparent';
+        el.style.color = 'var(--text-muted)';
+        selectedMoods = selectedMoods.filter(m => m !== mood);
+      } else {
+        el.classList.add('active');
+        el.style.borderColor = 'rgba(212,160,60,0.5)';
+        el.style.background = 'rgba(212,160,60,0.15)';
+        el.style.color = 'var(--gold)';
+        selectedMoods.push(mood);
+      }
+    }
+
+    function aiAudioQuick(prompt) {
+      document.getElementById('audioPrompt').value = prompt;
+      document.getElementById('audioPrompt').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function askLexi() {
+      window.open('moneypenny.html?mode=lexi', '_blank');
+    }
+
+    function setAudioStatus(html) {
+      const el = document.getElementById('audioStatus');
+      el.style.display = 'block';
+      document.getElementById('audioStatusContent').innerHTML = html;
+    }
+
+    async function generateAudio() {
+      const prompt = document.getElementById('audioPrompt').value.trim();
+      if (!prompt) { alert('Please describe your track first'); return; }
+
+      const genre = document.getElementById('audioGenre').value;
+      const bpm = document.getElementById('audioBPM').value;
+      const duration = document.getElementById('audioDuration').value;
+      const mode = document.getElementById('audioMode').value;
+      const moods = selectedMoods.join(', ') || 'Dark';
+
+      const btn = document.getElementById('genAudioBtn');
+      btn.disabled = true;
+      btn.textContent = '⏳ Generating...';
+
+      const fullPrompt = `${prompt}. Genre: ${genre}. BPM: ${bpm}. Duration: ${duration}. Mode: ${mode}. Mood: ${moods}.`;
+
+      setAudioStatus(`
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:32px;height:32px;border:3px solid rgba(212,160,60,0.3);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;flex-shrink:0"></div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:4px">Generating your track...</div>
+            <div style="font-size:12px;color:var(--text-muted)">${fullPrompt.substring(0, 100)}...</div>
+          </div>
+        </div>
+      `);
+
+      try {
+        const r = await fetch(INTEL + '/ai/audio-generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: fullPrompt, genre, bpm, duration, mode, moods }),
+          signal: AbortSignal.timeout(60000)
+        });
+        const d = await r.json();
+
+        if (d.ok && (d.audio_url || d.task_id)) {
+          renderGeneratedTrack(d, prompt, genre, bpm);
+          setAudioStatus(`<span style="color:var(--success)">✅ Track generated successfully!</span>`);
+          setTimeout(() => { document.getElementById('audioStatus').style.display = 'none'; }, 3000);
+        } else {
+          showAudioFallback(prompt, genre, bpm, duration, mode, moods, d.error);
+        }
+      } catch (e) {
+        showAudioFallback(prompt, genre, bpm, duration, mode, moods, e.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🎵 Generate Audio';
+      }
+    }
+
+    function generateVariation() {
+      const prompt = document.getElementById('audioPrompt').value.trim();
+      if (!prompt) { alert('Enter a prompt first, then generate a variation'); return; }
+      generateAudio();
+    }
+
+    function showAudioFallback(prompt, genre, bpm, duration, mode, moods, errMsg) {
+      generatedTrackCount++;
+      const trackNum = generatedTrackCount;
+      const sampleTrack = {
+        title: `GOAT Track ${String(trackNum).padStart(3,'0')}`,
+        genre, bpm, duration, mode, moods,
+        prompt
+      };
+      renderGeneratedTrack(sampleTrack, prompt, genre, bpm);
+      setAudioStatus(`
+        <div style="font-size:12px;color:var(--warning)">⚠ AI audio server not connected (${errMsg || 'offline'}).<br>
+        To enable AI generation, connect your Suno API key or run the GOAT Intel server.<br>
+        <a href="moneypenny.html?mode=codex" style="color:var(--gold)">Ask Codex to set it up →</a></div>
+      `);
+    }
+
+    function renderGeneratedTrack(data, prompt, genre, bpm) {
+      generatedTrackCount++;
+      const tracks = document.getElementById('generatedTracks');
+      const title = data.title || `GOAT Track ${String(generatedTrackCount).padStart(3,'0')}`;
+      const dur = data.duration || document.getElementById('audioDuration').value;
+      const trackEl = document.createElement('div');
+      trackEl.style.cssText = 'background:rgba(0,0,0,.3);border:1px solid rgba(212,160,60,0.2);border-radius:16px;padding:20px;margin-bottom:14px;animation:fadeIn .4s ease';
+      trackEl.innerHTML = `
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,rgba(212,160,60,0.25),rgba(212,160,60,0.05));border:1px solid rgba(212,160,60,0.3);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🎵</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:3px">${title}</div>
+            <div style="font-size:11px;color:var(--text-muted)">${genre || 'Trap'} · ${bpm || 'Auto BPM'} · ${dur}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${prompt.substring(0, 60)}...</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-shrink:0">
+            ${data.audio_url ? `<audio controls src="${data.audio_url}" style="height:36px;border-radius:8px"></audio>` : `
+              <button onclick="this.textContent='▶ Playing...';setTimeout(()=>this.textContent='▶ Preview',2000)" style="padding:8px 16px;background:rgba(212,160,60,0.15);border:1px solid rgba(212,160,60,0.3);border-radius:8px;color:var(--gold);font-size:12px;cursor:pointer;font-family:inherit">▶ Preview</button>
+            `}
+            <button onclick="downloadTrack('${title}')" style="padding:8px 12px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.25);border-radius:8px;color:var(--success);font-size:12px;cursor:pointer;font-family:inherit">⬇ Save</button>
+            <button onclick="this.closest('div[style]').remove()" style="padding:8px 10px;background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:8px;color:var(--text-muted);font-size:12px;cursor:pointer;font-family:inherit">✕</button>
+          </div>
+        </div>
+      `;
+      tracks.insertBefore(trackEl, tracks.firstChild);
+    }
+
+    function downloadTrack(title) {
+      alert(`💾 "${title}" would be saved to your GOAT Sound Library.\n\nConnect the Intel server to enable real downloads.`);
+    }
+
+    // Add fadeIn keyframe dynamically
+    if (!document.querySelector('#audioFadeIn')) {
+      const s = document.createElement('style');
+      s.id = 'audioFadeIn';
+      s.textContent = '@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}';
+      document.head.appendChild(s);
     }
   </script>
 </body>

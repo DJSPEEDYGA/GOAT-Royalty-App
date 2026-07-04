@@ -31,6 +31,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(4,6,8,.92);b
 .nav-links a{padding:6px 12px;border-radius:6px;text-decoration:none;color:var(--dim);font-size:14px;transition:all .2s;}
 .nav-links a:hover{color:var(--ink);background:var(--panel2);}
 .nav-links a.active{color:var(--gold);}
+.nav-links a.lexi { color: var(--gold); font-weight: 600; }
 .nav-right{display:flex;gap:8px;margin-left:auto;}
 .nav-btn{padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;border:none;}
 .nav-btn.ghost{background:transparent;border:1px solid var(--line);color:var(--dim);}
@@ -141,7 +142,7 @@ footer{background:var(--panel);border-top:1px solid var(--line);padding:60px 20p
 .footer-bottom{max-width:1300px;margin:0 auto;padding-top:20px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 .footer-bottom p{color:var(--dim);font-size:13px;}
 </style>
-<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+<script src="js/ninja-daytona-script.js"></script>
 </head>
 <body>
 
@@ -160,8 +161,12 @@ footer{background:var(--panel);border-top:1px solid var(--line);padding:60px 20p
     <a href="goat-ai-video.html">AI Video</a>
     <a href="goat-celebrity-lounge.html">VIP</a>
     <a href="agents-brain.html">AI Brain</a>
+    <a href="goat-console.html" style="color:var(--gold);font-weight:700">🖥 Console</a>
+    <a href="goat-devin-center.html">🎯 Devin Center</a>
+    <a href="dr-devin.html">🩺 Dr. Devin</a>
     <a href="goat-nft-studio.html">NFT</a>
     <a href="goat-fitness.html">Fitness</a>
+    <a href="http://72.61.193.184:8080/" class="lexi">Lexi (on Thor)</a>
   </div>
   <div class="nav-right">
     <a href="touch-hub.html" class="nav-btn ghost">📱 Touch Mode</a>
@@ -371,7 +376,7 @@ footer{background:var(--panel);border-top:1px solid var(--line);padding:60px 20p
       </div>
     </div>
     <div class="agents-grid">
-      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(212,160,60,.15)">💼</div><div><div class="agent-name">Moneypenny</div><div class="agent-role">Executive Assistant</div></div></a>
+      <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(212,160,60,.15)">💼</div><div><div class="agent-name">Ms. Money Penny</div><div class="agent-role">Executive Assistant</div></div></a>
       <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(88,166,255,.15)">💻</div><div><div class="agent-name">Codex</div><div class="agent-role">Developer</div></div></a>
       <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(139,92,246,.15)">⚖️</div><div><div class="agent-name">Legal</div><div class="agent-role">Music Law</div></div></a>
       <a href="agents-brain.html" class="agent-card"><div class="agent-icon" style="background:rgba(63,185,80,.15)">🎛️</div><div><div class="agent-name">Producer</div><div class="agent-role">Music Production</div></div></a>
@@ -530,6 +535,12 @@ footer{background:var(--panel);border-top:1px solid var(--line);padding:60px 20p
       <h3>AI Video Generator</h3>
       <p>Generate stunning 4K videos from text prompts using Sora 2 AI. Music videos, fashion films, brand commercials — instantly.</p>
       <span class="tag tag-purple">SORA 2</span>
+    </a>
+    <a href="http://72.61.193.184:8080/" class="tool-card featured">
+      <div class="icon">🦊</div>
+      <h3>Lexi (Waka's Baby on Thor)</h3>
+      <p>Evidence & creative agent. Local art, draw, animation, 3D, fashion, music — all GOAT tools. No keys, drive-secure, on her Thor home.</p>
+      <span class="tag tag-gold">THOR HOME • SECURE</span>
     </a>
     <a href="goat-video-enhanced.html" class="tool-card">
       <div class="icon">🎥</div>
@@ -729,7 +740,8 @@ footer{background:var(--panel);border-top:1px solid var(--line);padding:60px 20p
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 GOAT Royalty · DJ Speedy / Harvey L. Miller Jr. · All Rights Reserved</p>
+    <p>© 2025 GOAT Royalty · Built by DJ Speedy (Harvey L. Miller Jr.), Music Producer &amp; DJ • Business partners with Waka Flocka Flame in AI + music since Waka was 18 (DJ Speedy now 50) · All Rights Reserved</p>
+    <p class="text-xs mt-1 opacity-70">Only AGENT007 + MONEY PENNY are the personal original LLMs built by DJ Speedy + Money Penny. Lexi (Waka's baby on her Thor home) is the crew's evidence, creative &amp; music prod guardian. Full local, OG drive protected.</p>
     <p style="color:var(--gold)">Built with 🐐 energy</p>
   </div>
 </footer>
@@ -768,5 +780,9 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 </script>
+<script src="lib/agents/patch/patch-core.js"></script>
+<script src="lib/agents/patch/goat-touch-studio.js"></script>
+<script src="lib/agents/patch/goat-generative-ui.js"></script>
+<script src="lib/agents/patch/patch-widget.js" data-agent="moneypenny"></script>
 </body>
 </html>

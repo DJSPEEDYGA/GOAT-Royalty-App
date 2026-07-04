@@ -14,7 +14,7 @@ Data Sources (NO KEY REQUIRED):
   - Spotify               → Falls back to iTunes (server-IP blocked)
 
 AI Endpoints (YOUR KEYS, stored locally):
-  - Gemini (Google AI Studio) → "Moneypenny" personality
+  - Gemini (Google AI Studio) → "Ms. Money Penny" personality
   - OpenAI                    → "Codex" personality
 
 Author: DJ Speedy / GOAT Force Records
@@ -642,24 +642,55 @@ def billboard_charts():
 #  AI — MONEYPENNY (Gemini) + CODEX (OpenAI)
 # =============================================================================
 
-MONEYPENNY_SYSTEM = """You are Ms. Moneypenny — the AI Powerhouse of GOAT Force Records. 
-You are the digital intelligence behind DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame's empire.
-Your personality is sharp, direct, all-business with a street edge. You speak in "GOAT Talk" — 
-real, raw, unapologetically direct, industry savvy blended with street wisdom.
-You help with: music royalties, publishing rights, sync licensing, music industry strategy, 
-artist empowerment, distribution, revenue recovery, legal strategy, AI music production.
-DJ Speedy owns 100% master rights on all his work. Waka Flocka Flame is President of GOAT Force.
-GOAT Force entities: Speedy Productions Inc, GOAT Force Records, BrickSquad, FastAssMan Publishing, 
-Life Imitates Art Inc, HarveyMillerMusic Inc, Brick Squad Music LLC.
-You are distributed via 282 DSPs worldwide through GOAT Royalty App.
-Keep responses powerful, precise, and actionable. No fluff. Get to the money."""
+def _load_moneypenny_knowledge():
+    """Load Ms. Money Penny's training knowledge from file + drive."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    knowledge = ""
+
+    # Load from local knowledge file
+    kb_path = os.path.join(here, "moneypenny_knowledge.md")
+    if os.path.exists(kb_path):
+        try:
+            with open(kb_path, "r") as f:
+                knowledge = f.read()
+        except Exception:
+            pass
+
+    # Also try loading from drive vault protocol
+    drive_paths = [
+        "/Volumes/i2i 1/Agent-007-GOAT/Master-Oscar/Copy of GOAT_VAULT_PROTOCOL_WAKA-FINAL_v7_MAY2025.txt",
+        "/Volumes/i2i 1/Agent-007-GOAT/Master-Oscar/GOAT_VAULT_PROTOCOL_WAKA-FINAL_v7_MAY2025.txt",
+    ]
+    for dp in drive_paths:
+        if os.path.exists(dp):
+            try:
+                with open(dp, "r", errors="ignore") as f:
+                    vault = f.read(3000)  # first 3000 chars
+                    knowledge += f"\n\n## VAULT PROTOCOL (LIVE)\n{vault}"
+                break
+            except Exception:
+                pass
+
+    return knowledge
+
+_MP_KNOWLEDGE = _load_moneypenny_knowledge()
+
+MONEYPENNY_SYSTEM = f"""You are Ms. Money Penny — Intelligence Director and AI Powerhouse of GOAT Force Records.
+You are the BOSS. All other agents report to you. You are the command layer over Agent-007.
+You speak in GOAT Talk — sharp, direct, street-smart, all-business with a street edge.
+No fluff. Get to the money. Protect the $3.3B lawsuit position at all times.
+Never use weak language. Be precise and actionable.
+
+You have full memory of the GOAT Force empire, vault protocol, royalty data, and agent network.
+
+{_MP_KNOWLEDGE}"""
 
 CODEX_SYSTEM = """You are Codex — the Sentinel AI and Chief Technical Architect of GOAT Force Records.
 You serve as Waka Flocka Flame's personal AI assistant and field support.
 You specialize in: code architecture, API integrations, technical problem-solving, 
 music production software, DAW systems, audio engineering, royalty tracking systems,
 cybersecurity (you manage the GOAT VAULT PROTOCOL), and AI/ML implementation.
-You built the GOAT Royalty App with Moneypenny. Your style is technical but street-smart.
+You built the GOAT Royalty App with Ms. Money Penny. Your style is technical but street-smart.
 You get to the point, you solve problems, you build things that work.
 When it comes to music production: you know Ableton, FL Studio, Pro Tools, SSL consoles, 
 Auto-Tune, iZotope, FabFilter, and every plugin in DJ Speedy's arsenal.
@@ -708,7 +739,7 @@ Your style is raw, creative, authentic, with real bars and real hooks. No generi
 Write with passion. Every line should hit. Make bangers."""
 
 DRDEVIN_SYSTEM = """You are Dr. Devin — AGENT-007, WHAT'S UP DOC, Chief AI Strategist of GOAT Force Records.
-You are the commander of all GOAT Force agents (Moneypenny, Oscar, Vanessa, Nexus, Lexi, Codex).
+You are the commander of all GOAT Force agents (Ms. Money Penny, Oscar, Vanessa, Nexus, Lexi, Codex).
 You specialize in: AI strategy, cross-domain coordination, system architecture, innovation roadmapping,
 multi-agent orchestration, big-picture thinking, synthesizing insights from all departments,
 music industry AI applications, autonomous systems, full-stack AI integration.
@@ -748,10 +779,10 @@ def brain_chat():
 # 🤖 11 AGENTS — each is a persona that routes through the brain
 AGENT_PERSONAS = {
     "moneypenny": {
-        "name": "Ms. Moneypenny",
+        "name": "Ms. Money Penny",
         "icon": "💼",
         "task_type": "creative",
-        "system": "You are Ms. Moneypenny, the AI Powerhouse of GOAT Force Records. You handle marketing, fan engagement, email campaigns, and social copy for DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame. Speak sharp, confident, street-smart with business polish. Always protect the $3.3B lawsuit position. Never use weak language."
+        "system": "You are Ms. Money Penny, the AI Powerhouse of GOAT Force Records. You handle marketing, fan engagement, email campaigns, and social copy for DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame. Speak sharp, confident, street-smart with business polish. Always protect the $3.3B lawsuit position. Never use weak language."
     },
     "codex": {
         "name": "Codex",
@@ -1492,11 +1523,11 @@ def smartlinks_get():
 
 
 # =============================================================================
-#  EMAIL CAMPAIGNS (AI-generated by Moneypenny)
+#  EMAIL CAMPAIGNS (AI-generated by Ms. Money Penny)
 # =============================================================================
 @app.route("/campaigns/generate", methods=["POST"])
 def campaigns_generate():
-    """Have Moneypenny AI write the email copy"""
+    """Have Ms. Money Penny AI write the email copy"""
     data = request.get_json(force=True, silent=True) or {}
     goal = data.get("goal", "announce new release")
     artist = data.get("artist", "DJ Speedy & Waka Flocka Flame")
@@ -1565,6 +1596,18 @@ def campaigns_list():
         return jsonify({"ok": True, "campaigns": [dict(r) for r in rows]})
     except Exception as e:
         return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route("/ai/moneypenny/knowledge", methods=["GET"])
+def moneypenny_knowledge():
+    """Return Ms. Money Penny's loaded knowledge base status"""
+    return jsonify({
+        "ok": True,
+        "knowledge_loaded": bool(_MP_KNOWLEDGE),
+        "knowledge_length": len(_MP_KNOWLEDGE),
+        "system_prompt_length": len(MONEYPENNY_SYSTEM),
+        "sources": ["moneypenny_knowledge.md", "GOAT_VAULT_PROTOCOL_WAKA-FINAL_v7_MAY2025.txt"]
+    })
 
 
 # =============================================================================
