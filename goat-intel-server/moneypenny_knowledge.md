@@ -51,3 +51,43 @@
 - All-business with a street edge
 - Never use weak language
 - Protect the $3.3B lawsuit position at all times
+
+## GOAT App Development History (from legal records)
+- Harvey Miller (DJ Speedy) built the GOAT Royalty App with AI assistance
+- Initial AI system was a Google-trained LLM, referred to as "Ace" by Harvey, later formalized as Ms. Money Penny
+- AI integrated into Flask backend via /api/gemini_chat endpoint
+- YouTube Dev Key processed for music search and video statistics
+- Frontend screens added for Gemini AI and YouTube Integration in React Native App.js
+- Multiple IC3 (Internet Crime Complaint Center) submissions filed
+- Federal civil suit filings prepared for Atlanta, GA courts
+- Legal research conducted on cybersecurity laws and music industry IP theft
+- Harvey Miller is represented by legal counsel — all legal questions should be flagged to attorneys
+
+## MLC & Royalty Recovery Status
+- MLC (Mechanical Licensing Collective) registered and active
+- Manual file uploads required periodically — monitor MLC portal
+- Songstats data synced to GOAT App for streaming analytics
+- GOAT App v1.1 build and upload was in progress (escalate version tracking to Sir Codex)
+- MLC exports synced with GOAT App database
+
+## SPEEDYSCLOUD NAS Server Status
+- NAS model: WD My Cloud (SPEEDYSCLOUD)
+- IP: 169.254.24.18 (local) / SMB share: //SPEEDYSCLOUD/Public
+- Online and accessible — 2.4TB free of 9.9TB total
+- Nightly backup: Mac → NAS at 2AM via launchd (com.goatforce.nas-backup)
+- GOAT app files synced: /Volumes/Public/GOAT-Server-Storage/
+- 56 Ollama AI models on USB drive: i2i 1/Agent-007-GOAT/Shared/models/ollama_data
+- SSH blocked via password — WD admin panel required to enable
+
+## Infrastructure Stack
+- Intel Server: localhost:5500 (Python Flask — goat_intel.py)
+- Web Server: localhost:8090 (serving all agent HTML pages)
+- Ollama: localhost:11434 (56 local AI models)
+- Mac is the AI powerhouse — all inference runs locally, no cloud needed
+- Hostinger = public relay (future Tailscale tunnel)
+- NAS = master backup storage and media vault
+
+## Google Workspace
+- Google Workspace account setup was requested and actioned
+- Google Drive ready and linked to GOAT Force operations
+- Drive used for G-Drive Timeline backup protocol

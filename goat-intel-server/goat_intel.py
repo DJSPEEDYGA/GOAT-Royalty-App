@@ -1108,13 +1108,13 @@ def oscar_chat():
     messages = history + [{"role": "user", "content": message}]
     reply, err, model = call_ollama(messages, OSCAR_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona: Master Oscar", "engine": f"Ollama/{model}"})
+        return jsonify({"ok": True, "reply": reply, "persona": "Master Oscar", "engine": f"Ollama/{model}"})
     reply, err2 = call_gemini(messages, OSCAR_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona: Master Oscar", "engine": "Gemini"})
+        return jsonify({"ok": True, "reply": reply, "persona": "Master Oscar", "engine": "Gemini"})
     reply, err3 = call_openai(messages, OSCAR_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona: Master Oscar", "engine": "OpenAI"})
+        return jsonify({"ok": True, "reply": reply, "persona": "Master Oscar", "engine": "OpenAI"})
     return jsonify({"ok": False, "error": err}), 500
 
 @app.route("/ai/vanessa", methods=["POST"])
