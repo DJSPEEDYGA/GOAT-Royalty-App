@@ -10,7 +10,12 @@ const fs    = require('fs');
 
 // ── Which agent am I? ────────────────────────────────────────
 const TARGET  = process.env.GOAT_APP_TARGET || 'index';
-const WEBROOT = '/Users/be100radio/GOAT-Royalty-App/web-app';
+// Web root: bundled copy inside app Resources, or fall back to dev path
+const BUNDLED = path.join(process.resourcesPath || '', 'web-app');
+const DEV_PATH = path.join(__dirname, '..', 'web-app');
+const WEBROOT = fs.existsSync(BUNDLED) ? BUNDLED
+              : fs.existsSync(DEV_PATH) ? DEV_PATH
+              : '/Users/be100radio/GOAT-Royalty-App/web-app';
 const SERVER  = 'http://127.0.0.1:8090';
 
 const AGENTS = {
