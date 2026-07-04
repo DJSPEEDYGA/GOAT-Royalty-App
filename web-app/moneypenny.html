@@ -3,145 +3,734 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Moneypenny + Codex AI — GOAT Force Command Center</title>
+<title>Ms. Money Penny — GOAT Force Command Center</title>
 <link rel="stylesheet" href="css/goat-brand.css">
 <style>
-body.bg-icon { background-image: radial-gradient(ellipse at 50% 30%, rgba(139,92,246,0.15) 0%, rgba(0,0,0,0.97) 70%), url('img/goat-hero-icon.png'); }
+/* ── Override font to mono like dr-devin ── */
+body {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  background: #0a0a0a;
+  color: #f5e6c8;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-.ai-layout { display:grid; grid-template-columns:280px 1fr; gap:0; height:calc(100vh - 80px); max-height:900px; margin:0 24px 40px; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); }
+/* ── Animated particles ── */
+.particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(193,18,31,0.3), rgba(240,192,112,0.06));
+  filter: blur(1px);
+  animation: floatParticle 20s ease-in-out infinite;
+  opacity: 0.5;
+}
+.particle:nth-child(1) { width: 240px; height: 240px; top: 8%;  left: 4%;  animation-delay: 0s; }
+.particle:nth-child(2) { width: 140px; height: 140px; top: 65%; left: 12%; animation-delay: 5s; }
+.particle:nth-child(3) { width: 320px; height: 320px; top: 20%; left: 68%; animation-delay: 10s; }
+.particle:nth-child(4) { width: 110px; height: 110px; top: 78%; left: 82%; animation-delay: 14s; }
+.particle:nth-child(5) { width: 200px; height: 200px; top: 42%; left: 38%; animation-delay: 7s; }
+.particle:nth-child(6) { width: 90px;  height: 90px;  top: 6%;  left: 58%; animation-delay: 2s; }
+@keyframes floatParticle {
+  0%, 100% { transform: translate(0,0) scale(1); opacity: 0.45; }
+  33%       { transform: translate(25px,-45px) scale(1.07); opacity: 0.7; }
+  66%       { transform: translate(-18px,28px) scale(0.96); opacity: 0.4; }
+}
 
-/* sidebar */
-.ai-sidebar { background:rgba(15,15,20,0.95); border-right:1px solid rgba(255,255,255,0.08); display:flex; flex-direction:column; padding:20px 0; }
-.ai-logo { display:flex; align-items:center; gap:10px; padding:0 20px 20px; border-bottom:1px solid rgba(255,255,255,0.08); }
-.ai-logo img { width:44px; height:44px; border-radius:10px; }
-.ai-logo span { font-size:16px; font-weight:900; color:#fff; }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 25%, rgba(80,10,10,0.45) 0%, rgba(10,10,10,0.97) 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+body > * { position: relative; z-index: 1; }
 
-.persona-btns { padding:16px 12px; }
-.persona-btn { width:100%; padding:12px 16px; margin-bottom:8px; border-radius:12px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#aaa; cursor:pointer; text-align:left; font-size:13px; font-weight:600; transition:all .2s; display:flex; align-items:center; gap:10px; }
-.persona-btn:hover { background:rgba(255,255,255,0.08); color:#fff; }
-.persona-btn.active { background:var(--goat-red); border-color:var(--goat-red); color:#fff; }
-.persona-btn .badge { font-size:10px; padding:2px 7px; border-radius:10px; background:rgba(255,255,255,0.15); margin-left:auto; }
+/* ── Nav overrides ── */
+.goat-nav { border-bottom: 2px solid rgba(193,18,31,0.45); }
+.goat-nav .nav-brand { display: flex; align-items: center; gap: 12px; }
+.goat-nav .nav-brand img { height: 40px; border-radius: 10px; filter: drop-shadow(0 0 12px rgba(193,18,31,0.6)); }
+.goat-nav .nav-brand span { font-size: 17px; font-weight: 900; color: #fff; letter-spacing: 0.5px; }
+.goat-nav .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+.goat-nav .nav-links a {
+  color: #e0e0e0;
+  text-decoration: none;
+  padding: 7px 13px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.goat-nav .nav-links a:hover { background: rgba(193,18,31,0.22); color: var(--goat-gold); transform: translateY(-1px); }
+.goat-nav .nav-links a.active { background: linear-gradient(135deg,#c1121f,#8b0000); color: #fff; box-shadow: 0 0 18px rgba(193,18,31,0.5); }
 
-.quick-prompts { padding:12px; flex:1; overflow-y:auto; }
-.quick-prompts h4 { font-size:11px; color:#555; text-transform:uppercase; letter-spacing:1px; margin:0 0 10px 8px; }
-.quick-btn { width:100%; padding:10px 12px; margin-bottom:6px; border-radius:10px; border:1px solid rgba(255,255,255,0.07); background:transparent; color:#888; cursor:pointer; text-align:left; font-size:12px; transition:all .2s; line-height:1.4; }
-.quick-btn:hover { border-color:var(--goat-red); color:#fff; background:rgba(193,18,31,0.1); }
+/* ── Layout ── */
+.ai-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 0;
+  height: calc(100vh - 76px);
+  max-height: 960px;
+  margin: 0 24px 40px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(193,18,31,0.22);
+  box-shadow: 0 0 60px rgba(193,18,31,0.1), 0 20px 60px rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+}
 
-.sidebar-footer { padding:16px 16px 0; border-top:1px solid rgba(255,255,255,0.08); }
-.key-status { font-size:11px; padding:8px 12px; border-radius:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); margin-bottom:8px; }
-.key-status span { display:block; margin-bottom:3px; color:#666; }
-.key-status span.ok { color:#22c55e; }
-.key-status span.warn { color:#f59e0b; }
+/* ── Sidebar ── */
+.ai-sidebar {
+  background: rgba(12,12,16,0.97);
+  border-right: 1px solid rgba(193,18,31,0.14);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 0 0;
+  overflow-y: auto;
+}
+.ai-sidebar::-webkit-scrollbar { width: 4px; }
+.ai-sidebar::-webkit-scrollbar-thumb { background: rgba(193,18,31,0.3); border-radius: 4px; }
 
-/* chat area */
-.ai-chat { background:rgba(8,8,12,0.98); display:flex; flex-direction:column; }
-.chat-header { padding:16px 20px; border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; gap:12px; }
-.chat-header .persona-avatar { width:44px; height:44px; border-radius:50%; object-fit:cover; border:2px solid var(--goat-red); }
-.chat-header h2 { font-size:18px; margin:0 0 2px; color:#fff; }
-.chat-header p { font-size:12px; margin:0; color:#666; }
-.chat-header .engine-tag { font-size:10px; padding:3px 10px; border-radius:10px; background:rgba(193,18,31,0.2); border:1px solid rgba(193,18,31,0.4); color:var(--goat-red); margin-left:auto; }
+.ai-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px 16px;
+  border-bottom: 1px solid rgba(193,18,31,0.14);
+}
+.ai-logo img { width: 44px; height: 44px; border-radius: 10px; filter: drop-shadow(0 0 10px rgba(193,18,31,0.5)); }
+.ai-logo span { font-size: 14px; font-weight: 900; color: #fff; letter-spacing: 0.4px; }
 
-.chat-messages { flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:16px; scroll-behavior:smooth; }
-.chat-messages::-webkit-scrollbar { width:4px; }
-.chat-messages::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:4px; }
+.section-title {
+  font-size: 10px;
+  font-weight: 800;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 14px 18px 7px;
+}
 
-.msg { max-width:80%; display:flex; flex-direction:column; gap:6px; }
-.msg.user { align-self:flex-end; align-items:flex-end; }
-.msg.assistant { align-self:flex-start; align-items:flex-start; }
-.msg-bubble { padding:14px 18px; border-radius:18px; font-size:14px; line-height:1.6; white-space:pre-wrap; word-break:break-word; }
-.msg.user .msg-bubble { background:var(--goat-red); color:#fff; border-bottom-right-radius:4px; }
-.msg.assistant .msg-bubble { background:rgba(255,255,255,0.07); color:#e5e5e5; border-bottom-left-radius:4px; border:1px solid rgba(255,255,255,0.1); }
-.msg-meta { font-size:10px; color:#555; padding:0 4px; }
-.msg.assistant .msg-meta { color:#666; }
+.persona-btns { padding: 0 12px 8px; }
+.persona-btn {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 5px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.025);
+  color: #999;
+  cursor: pointer;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+}
+.persona-btn:hover { background: rgba(255,255,255,0.06); color: #fff; border-color: rgba(193,18,31,0.4); }
+.persona-btn.active {
+  background: linear-gradient(135deg, rgba(193,18,31,0.22) 0%, rgba(193,18,31,0.09) 100%);
+  border-color: #c1121f;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(193,18,31,0.2);
+}
+.persona-btn .badge {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: #888;
+  margin-left: auto;
+  font-family: inherit;
+}
+.persona-btn.active .badge { background: #c1121f; color: #fff; }
 
-.typing-indicator { display:none; align-self:flex-start; padding:14px 18px; background:rgba(255,255,255,0.07); border-radius:18px; border-bottom-left-radius:4px; border:1px solid rgba(255,255,255,0.1); }
-.typing-indicator.visible { display:flex; gap:6px; align-items:center; }
-.typing-dot { width:8px; height:8px; border-radius:50%; background:var(--goat-red); animation:typingPulse 1.2s infinite; }
-.typing-dot:nth-child(2) { animation-delay:.2s; }
-.typing-dot:nth-child(3) { animation-delay:.4s; }
-@keyframes typingPulse { 0%,60%,100%{transform:scale(1);opacity:.4} 30%{transform:scale(1.3);opacity:1} }
+/* ── Special Ops ── */
+.special-ops {
+  padding: 6px 12px 10px;
+  border-bottom: 1px solid rgba(193,18,31,0.1);
+}
+.special-ops-title {
+  font-size: 10px;
+  font-weight: 800;
+  color: #c1121f;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 0 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ops-btn {
+  width: 100%;
+  padding: 9px 12px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  border: 1px solid rgba(193,18,31,0.2);
+  background: rgba(193,18,31,0.07);
+  color: #e5e5e5;
+  cursor: pointer;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ops-btn:hover { background: rgba(193,18,31,0.17); border-color: #c1121f; transform: translateX(2px); }
 
-.chat-input-area { padding:16px 20px; border-top:1px solid rgba(255,255,255,0.07); background:rgba(10,10,15,0.98); }
-.chat-input-row { display:flex; gap:10px; align-items:flex-end; }
-.chat-textarea { flex:1; padding:12px 16px; border-radius:14px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); color:#fff; font-size:14px; resize:none; min-height:48px; max-height:160px; font-family:inherit; line-height:1.5; transition:border-color .2s; }
-.chat-textarea:focus { outline:none; border-color:var(--goat-red); }
-.chat-textarea::placeholder { color:#444; }
-.send-btn { width:48px; height:48px; border-radius:50%; background:var(--goat-red); border:none; color:#fff; font-size:20px; cursor:pointer; transition:all .2s; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
-.send-btn:hover { background:#e01020; transform:scale(1.05); }
-.send-btn:disabled { background:#333; cursor:not-allowed; transform:none; }
+/* ── Quick prompts ── */
+.quick-prompts { padding: 10px 12px; flex: 1; overflow-y: auto; }
+.quick-prompts h4 { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px 4px; }
+.quick-btn {
+  width: 100%;
+  padding: 9px 12px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: transparent;
+  color: #777;
+  cursor: pointer;
+  text-align: left;
+  font-size: 11px;
+  font-family: inherit;
+  line-height: 1.4;
+  transition: all 0.2s;
+}
+.quick-btn:hover { border-color: #c1121f; color: #fff; background: rgba(193,18,31,0.1); }
 
-.chat-actions { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
-.chat-action-btn { padding:6px 14px; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:#666; font-size:11px; cursor:pointer; transition:all .2s; }
-.chat-action-btn:hover { border-color:var(--goat-gold); color:var(--goat-gold); }
+/* ── Status + footer ── */
+.status-panel { padding: 10px 16px; border-top: 1px solid rgba(193,18,31,0.1); }
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 11px;
+  color: #888;
+  font-family: inherit;
+}
+.status-row .status-left { display: flex; align-items: center; gap: 6px; }
+.status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #00ff88; box-shadow: 0 0 8px #00ff88;
+  animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot { 0%,100%{opacity:1} 50%{opacity:0.5} }
+.status-role { font-size: 9px; color: #555; }
 
-/* key setup modal */
-.key-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center; backdrop-filter:blur(8px); }
-.key-modal.open { display:flex; }
-.key-modal-box { background:#111; border:1px solid rgba(255,255,255,0.15); border-radius:20px; padding:32px; max-width:500px; width:90%; }
-.key-modal-box h2 { margin:0 0 8px; font-size:22px; color:#fff; }
-.key-modal-box p { color:#888; font-size:13px; margin:0 0 24px; }
-.key-field { margin-bottom:16px; }
-.key-field label { display:block; font-size:12px; color:#aaa; margin-bottom:6px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; }
-.key-field input { width:100%; padding:12px 16px; border-radius:10px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); color:#fff; font-size:13px; font-family:monospace; box-sizing:border-box; }
-.key-field input:focus { outline:none; border-color:var(--goat-red); }
-.key-field small { color:#555; font-size:11px; margin-top:4px; display:block; }
+.sidebar-footer { padding: 12px 16px 18px; border-top: 1px solid rgba(193,18,31,0.1); }
+.key-status {
+  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+.key-status span { display: block; margin-bottom: 3px; color: #555; }
+.key-status span.ok   { color: #00ff88; }
+.key-status span.warn { color: #f59e0b; }
 
-/* responsive */
-@media(max-width:700px) {
-  .ai-layout { grid-template-columns:1fr; height:auto; margin:0 12px 40px; }
-  .ai-sidebar { border-right:none; border-bottom:1px solid rgba(255,255,255,0.08); max-height:300px; overflow-y:auto; }
-  .chat-messages { min-height:400px; }
+/* ── Chat area ── */
+.ai-chat {
+  background: rgba(7,7,11,0.99);
+  display: flex;
+  flex-direction: column;
+}
+.chat-header {
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(193,18,31,0.12);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(90deg, rgba(193,18,31,0.07) 0%, rgba(7,7,11,0.99) 60%);
+}
+.chat-header .persona-avatar {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #c1121f;
+  box-shadow: 0 0 20px rgba(193,18,31,0.4);
+}
+.chat-header .agent-title h2 { font-size: 19px; margin: 0 0 3px; color: #fff; letter-spacing: -0.3px; }
+.chat-header .agent-title p  { font-size: 12px; margin: 0; color: #777; }
+.chat-header .codename-tag {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 10px;
+  background: rgba(193,18,31,0.15);
+  border: 1px solid rgba(193,18,31,0.4);
+  color: #c1121f;
+  margin-left: auto;
+  letter-spacing: 0.5px;
+}
+.chat-header .engine-tag {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: rgba(240,192,112,0.1);
+  border: 1px solid rgba(240,192,112,0.3);
+  color: var(--goat-gold);
+  font-family: inherit;
+}
+
+/* ── Messages ── */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(193,18,31,0.25); border-radius: 4px; }
+
+.msg { max-width: 82%; display: flex; flex-direction: column; gap: 6px; }
+.msg.user      { align-self: flex-end;   align-items: flex-end; }
+.msg.assistant { align-self: flex-start; align-items: flex-start; }
+.msg-bubble {
+  padding: 14px 18px;
+  border-radius: 18px;
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+}
+.msg.user .msg-bubble {
+  background: linear-gradient(135deg, #c1121f 0%, #8b0000 100%);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.msg.assistant .msg-bubble {
+  background: rgba(255,255,255,0.055);
+  color: #e8e8e8;
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(193,18,31,0.14);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.msg-meta { font-size: 10px; color: #444; padding: 0 4px; font-family: inherit; }
+.msg.assistant .msg-meta { color: #555; }
+
+/* ── Typing indicator ── */
+.typing-indicator {
+  display: none;
+  align-self: flex-start;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.055);
+  border-radius: 18px;
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(193,18,31,0.14);
+}
+.typing-indicator.visible { display: flex; gap: 6px; align-items: center; }
+.typing-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #c1121f;
+  animation: typingPulse 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingPulse { 0%,60%,100%{transform:scale(1);opacity:0.4} 30%{transform:scale(1.3);opacity:1} }
+
+/* ── Input ── */
+.chat-input-area { padding: 16px 22px; border-top: 1px solid rgba(193,18,31,0.1); background: rgba(8,8,12,0.99); }
+.chat-input-row { display: flex; gap: 10px; align-items: flex-end; }
+.chat-textarea {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.045);
+  color: #fff;
+  font-size: 13px;
+  font-family: inherit;
+  resize: none;
+  min-height: 50px;
+  max-height: 160px;
+  line-height: 1.5;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.chat-textarea:focus { outline: none; border-color: #c1121f; box-shadow: 0 0 0 3px rgba(193,18,31,0.14); }
+.chat-textarea::placeholder { color: #444; }
+.send-btn {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c1121f 0%, #8b0000 100%);
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 20px rgba(193,18,31,0.4);
+}
+.send-btn:hover { filter: brightness(1.15); transform: scale(1.06); box-shadow: 0 0 28px rgba(193,18,31,0.6); }
+.send-btn:disabled { background: #2a2a2a; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.chat-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.chat-action-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: #555;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.chat-action-btn:hover { border-color: var(--goat-gold); color: var(--goat-gold); background: rgba(240,192,112,0.07); }
+
+/* ── Deck panels (same system as dr-devin) ── */
+.deck-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.87);
+  backdrop-filter: blur(10px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.deck-panel.open { display: flex; }
+.deck-box {
+  background: rgba(11,13,16,0.99);
+  border: 1px solid rgba(193,18,31,0.35);
+  border-radius: 20px;
+  padding: 26px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 60px rgba(193,18,31,0.22);
+}
+.deck-box h2 { margin: 0 0 18px; font-size: 21px; color: #c1121f; display: flex; align-items: center; gap: 10px; }
+.deck-close { float: right; font-size: 24px; color: #666; cursor: pointer; margin-top: -4px; }
+.deck-close:hover { color: #fff; }
+.deck-section { margin-bottom: 20px; }
+.deck-section h4 { margin: 0 0 10px; font-size: 12px; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+.color-swatch {
+  width: 34px; height: 34px; border-radius: 50%;
+  cursor: pointer; border: 2px solid transparent;
+  display: inline-block; margin: 4px; transition: all 0.2s;
+}
+.color-swatch.active { border-color: #fff; box-shadow: 0 0 10px currentColor; }
+
+/* ── Key modal ── */
+.key-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+.key-modal.open { display: flex; }
+.key-modal-box {
+  background: #0e0e12;
+  border: 1px solid rgba(193,18,31,0.3);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 500px;
+  width: 92%;
+  box-shadow: 0 0 60px rgba(193,18,31,0.18);
+}
+.key-modal-box h2 { margin: 0 0 8px; font-size: 22px; color: #fff; }
+.key-modal-box > p { color: #777; font-size: 13px; margin: 0 0 22px; }
+.key-field { margin-bottom: 15px; }
+.key-field label { display: block; font-size: 11px; color: #999; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.key-field input {
+  width: 100%;
+  padding: 11px 15px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  font-size: 13px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.key-field input:focus { outline: none; border-color: #c1121f; box-shadow: 0 0 0 3px rgba(193,18,31,0.14); }
+.key-field small { color: #444; font-size: 11px; margin-top: 4px; display: block; }
+.key-modal-actions { display: flex; gap: 10px; margin-top: 22px; }
+
+/* ── Live Terminal ── */
+.terminal-wrap {
+  background: #0d0d0d;
+  border: 1px solid rgba(193,18,31,0.35);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+}
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(193,18,31,0.12);
+  border-bottom: 1px solid rgba(193,18,31,0.2);
+}
+.terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
+.terminal-dot.red { background: #e74c3c; }
+.terminal-dot.yellow { background: #f0c040; }
+.terminal-dot.green { background: #2ecc71; }
+.terminal-titlebar span { font-size: 11px; color: #666; margin-left: 6px; }
+.terminal-output {
+  padding: 14px;
+  min-height: 220px;
+  max-height: 340px;
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #c8f7a0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.terminal-output::-webkit-scrollbar { width: 4px; }
+.terminal-output::-webkit-scrollbar-thumb { background: rgba(193,18,31,0.3); border-radius: 4px; }
+.terminal-line { margin: 0; }
+.terminal-line.cmd { color: #f0c040; }
+.terminal-line.err { color: #e74c3c; }
+.terminal-line.sys { color: #888; font-style: italic; }
+.terminal-line.warn { color: #f59e0b; }
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-top: 1px solid rgba(193,18,31,0.2);
+  background: rgba(0,0,0,0.4);
+  gap: 10px;
+}
+.terminal-prompt { color: #c1121f; font-size: 12px; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  caret-color: #c1121f;
+}
+.terminal-run-btn {
+  padding: 5px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(193,18,31,0.5);
+  background: rgba(193,18,31,0.15);
+  color: #c1121f;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'JetBrains Mono', monospace;
+}
+.terminal-run-btn:hover { background: rgba(193,18,31,0.3); }
+.terminal-agent-select {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: #aaa;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+}
+.terminal-confirm-bar {
+  display: none;
+  padding: 10px 14px;
+  background: rgba(240,192,64,0.1);
+  border-top: 1px solid rgba(240,192,64,0.3);
+  font-size: 12px;
+  color: #f0c040;
+  gap: 10px;
+  align-items: center;
+}
+.terminal-confirm-bar.visible { display: flex; }
+.terminal-confirm-bar .btn-yes { padding: 4px 14px; border-radius: 6px; border: 1px solid #f0c040; background: rgba(240,192,64,0.2); color: #f0c040; cursor: pointer; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+.terminal-confirm-bar .btn-no  { padding: 4px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: #888; cursor: pointer; font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+
+/* ── Responsive ── */
+@media (max-width: 860px) {
+  .ai-layout { grid-template-columns: 1fr; height: auto; margin: 0 12px 30px; }
+  .ai-sidebar { border-right: none; border-bottom: 1px solid rgba(193,18,31,0.1); max-height: 380px; overflow-y: auto; }
+  .chat-messages { min-height: 400px; }
+  .chat-header { flex-wrap: wrap; }
+  .chat-header .codename-tag { margin-left: 0; }
 }
 </style>
-<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+<script src="js/ninja-daytona-script.js"></script>
 </head>
 <body class="bg-icon">
 
+<!-- Animated particles -->
+<div class="particles" aria-hidden="true">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
+
 <nav class="goat-nav">
   <div class="nav-brand">
-    <img src="img/goat-hero-icon.png" alt="GOAT" style="height:36px;border-radius:8px;">
+    <img src="img/goat-hero-icon.png" alt="GOAT">
     <span>GOAT Force AI</span>
   </div>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="powerhouse.html">Powerhouse</a>
-    <a href="intel.html">Intel</a>
-    <a href="network.html">🔗 Network</a>
-    <a href="distribution.html">Distribution</a>
+    <a href="goat-devin-center.html">🎯 Devin Center</a>
+    <a href="agent-007.html">Agent 007</a>
+    <a href="moneypenny.html" class="active">Money Penny</a>
+    <a href="studio-hub.html">Studio Hub</a>
+    <a href="agent-status.html">Agent Status</a>
+    <a href="dr-devin.html">🩺 Dr. Devin</a>
   </div>
 </nav>
 
 <div class="ai-layout">
 
-  <!-- SIDEBAR -->
+  <!-- ── SIDEBAR ── -->
   <div class="ai-sidebar">
     <div class="ai-logo">
       <img src="img/goat-hero-icon.png" alt="GOAT">
       <span>GOAT Force AI</span>
     </div>
 
+    <div class="section-title">7 Agents — Switch</div>
     <div class="persona-btns">
       <button class="persona-btn active" onclick="setPersona('moneypenny')" id="btnMoneypenny">
         <span>💎</span>
         <div>
-          <div>Ms. Moneypenny</div>
-          <div style="font-size:10px;font-weight:400;color:rgba(255,255,255,0.6);">Royalties & Business</div>
+          <div style="font-size:12px;color:#fff;">Ms. Money Penny</div>
+          <div style="font-size:9px;font-weight:500;color:#777;">Royalties & Business</div>
         </div>
         <span class="badge">Gemini</span>
       </button>
       <button class="persona-btn" onclick="setPersona('codex')" id="btnCodex">
         <span>🤖</span>
         <div>
-          <div>Codex</div>
-          <div style="font-size:10px;font-weight:400;color:rgba(255,255,255,0.6);">Tech & Production</div>
+          <div style="font-size:12px;color:#fff;">Sir Codex</div>
+          <div style="font-size:9px;font-weight:500;color:#777;">Tech & Production</div>
         </div>
-        <span class="badge">GPT-4o</span>
+        <span class="badge">006</span>
+      </button>
+      <button class="persona-btn" onclick="setPersona('oscar')" id="btnOscar">
+        <span>🎩</span>
+        <div>
+          <div style="font-size:12px;color:#fff;">Oscar</div>
+          <div style="font-size:9px;font-weight:500;color:#777;">Operations & Deals</div>
+        </div>
+        <span class="badge">001</span>
+      </button>
+      <button class="persona-btn" onclick="setPersona('vanessa')" id="btnVanessa">
+        <span>👑</span>
+        <div>
+          <div style="font-size:12px;color:#fff;">Ms. Vanessa</div>
+          <div style="font-size:9px;font-weight:500;color:#777;">Brand & PR</div>
+        </div>
+        <span class="badge">003</span>
+      </button>
+      <button class="persona-btn" onclick="setPersona('nexus')" id="btnNexus">
+        <span>🔮</span>
+        <div>
+          <div style="font-size:12px;color:#fff;">Nexus</div>
+          <div style="font-size:9px;font-weight:500;color:#777;">Intelligence & Research</div>
+        </div>
+        <span class="badge">004</span>
+      </button>
+      <button class="persona-btn" onclick="setPersona('lexi')" id="btnLexi">
+        <span>⚡</span>
+        <div>
+          <div style="font-size:12px;color:#fff;">Lexi</div>
+          <div style="font-size:9px;font-weight:500;color:#777;">Creative & Lyrics</div>
+        </div>
+        <span class="badge">005</span>
+      </button>
+      <button class="persona-btn" onclick="setPersona('devin')" id="btnDevin">
+        <span>🧬</span>
+        <div>
+          <div style="font-size:12px;color:#fff;">Dr. Devin</div>
+          <div style="font-size:9px;font-weight:500;color:#777;">AI Strategy & Command</div>
+        </div>
+        <span class="badge">007</span>
       </button>
     </div>
 
+    <!-- Special Ops -->
+    <div class="special-ops">
+      <div class="special-ops-title">🔒 Special Operations</div>
+      <button class="ops-btn" onclick="quickSend('What royalties is DJ Speedy owed right now? Give me a full breakdown.')">
+        <span>💰</span> Royalty Audit
+      </button>
+      <button class="ops-btn" onclick="quickSend('Generate a sync licensing strategy for GOAT Force catalog.')">
+        <span>🎬</span> Sync Strategy
+      </button>
+      <button class="ops-btn" onclick="quickSend('How do we maximize revenue across all 282 DSPs?')">
+        <span>🌍</span> DSP Playbook
+      </button>
+      <button class="ops-btn" onclick="quickSend('Build a 90-day music industry domination plan for GOAT Force.')">
+        <span>🚀</span> 90-Day Plan
+      </button>
+    </div>
+
+    <!-- Command Deck -->
+    <div class="special-ops">
+      <div class="special-ops-title">🎛️ Command Deck</div>
+      <button class="ops-btn" onclick="openTerminalPanel()">
+        <span>💻</span> Live Terminal
+      </button>
+      <button class="ops-btn" onclick="openSettingsPanel()">
+        <span>⚙️</span> Customize
+      </button>
+      <button class="ops-btn" onclick="openKeyModal()">
+        <span>🔐</span> API Keys
+      </button>
+      <button class="ops-btn" onclick="clearChat()">
+        <span>🗑</span> Clear Chat
+      </button>
+    </div>
+
+    <!-- Quick prompts -->
     <div class="quick-prompts">
       <h4>Quick Prompts</h4>
       <div id="quickPromptsList"></div>
+    </div>
+
+    <!-- Agent status -->
+    <div class="status-panel">
+      <div class="section-title" style="padding:0 0 8px;">Agent Network</div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Oscar</div><span class="status-role">001 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Ms. Money Penny</div><span class="status-role">002 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Ms. Vanessa</div><span class="status-role">003 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Nexus</div><span class="status-role">004 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Lexi</div><span class="status-role">005 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Sir Codex</div><span class="status-role">006 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> Dr. Devin</div><span class="status-role">007 · Online</span></div>
     </div>
 
     <div class="sidebar-footer">
@@ -150,33 +739,34 @@ body.bg-icon { background-image: radial-gradient(ellipse at 50% 30%, rgba(139,92
         <span id="ks_openai" class="warn">⚠ OpenAI: checking...</span>
         <span id="ks_server" class="warn">⚠ Server: checking...</span>
       </div>
-      <button class="goat-btn" style="width:100%;margin-bottom:8px;font-size:12px;" onclick="openKeyModal()">🔐 Add API Keys</button>
-      <button class="chat-action-btn" style="width:100%;" onclick="clearChat()">🗑 Clear Chat</button>
     </div>
   </div>
 
-  <!-- CHAT -->
+  <!-- ── CHAT ── -->
   <div class="ai-chat">
     <div class="chat-header">
       <img src="img/goat-hero-icon.png" alt="" class="persona-avatar" id="personaAvatar">
-      <div>
-        <h2 id="personaName">Ms. Moneypenny</h2>
+      <div class="agent-title">
+        <h2 id="personaName">Ms. Money Penny</h2>
         <p id="personaRole">GOAT Force Royalty & Business Intelligence</p>
       </div>
+      <span class="codename-tag" id="codenameTag">CODENAME: DIAMOND</span>
       <span class="engine-tag" id="engineTag">Gemini + GPT-4o</span>
     </div>
 
-    <div class="chat-messages" id="chatMessages">
-      <!-- welcome message injected by JS -->
-    </div>
+    <div class="chat-messages" id="chatMessages"></div>
     <div class="typing-indicator" id="typingIndicator">
-      <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
-      <span style="font-size:12px;color:#666;margin-left:6px;" id="typingText">Moneypenny is thinking...</span>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <span style="font-size:12px;color:#555;margin-left:6px;" id="typingText">Ms. Money Penny is thinking...</span>
     </div>
 
     <div class="chat-input-area">
       <div class="chat-input-row">
-        <textarea class="chat-textarea" id="chatInput" placeholder="Ask Moneypenny about royalties, sync licensing, distribution, music business..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <textarea class="chat-textarea" id="chatInput"
+          placeholder="Ask Ms. Money Penny about royalties, sync licensing, distribution, music business..."
+          rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
         <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
       </div>
       <div class="chat-actions">
@@ -189,42 +779,65 @@ body.bg-icon { background-image: radial-gradient(ellipse at 50% 30%, rgba(139,92
   </div>
 </div>
 
-<!-- KEY SETUP MODAL -->
+<!-- ── KEY SETUP MODAL ── -->
 <div class="key-modal" id="keyModal">
   <div class="key-modal-box">
     <h2>🔐 API Key Setup</h2>
     <p>Keys are saved locally on your server — never sent to anyone. Paste your fresh keys below.</p>
-
     <div class="key-field">
       <label>Google AI Studio (Gemini) Key</label>
       <input type="password" id="inputGemini" placeholder="AIzaSy...">
-      <small>Get from: <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--goat-red);">aistudio.google.com</a></small>
+      <small>Get from: <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#c1121f;">aistudio.google.com</a></small>
     </div>
     <div class="key-field">
       <label>OpenAI Key</label>
       <input type="password" id="inputOpenai" placeholder="sk-proj-...">
-      <small>Get from: <a href="https://platform.openai.com/api-keys" target="_blank" style="color:var(--goat-red);">platform.openai.com</a></small>
+      <small>Get from: <a href="https://platform.openai.com/api-keys" target="_blank" style="color:#c1121f;">platform.openai.com</a></small>
     </div>
     <div class="key-field">
-      <label>Spotify Client ID:Secret (format: id:secret)</label>
+      <label>Spotify Client ID:Secret</label>
       <input type="password" id="inputSpotify" placeholder="clientid:clientsecret">
-      <small>Get from: <a href="https://developer.spotify.com/dashboard" target="_blank" style="color:var(--goat-red);">developer.spotify.com</a></small>
+      <small>Get from: <a href="https://developer.spotify.com/dashboard" target="_blank" style="color:#c1121f;">developer.spotify.com</a></small>
     </div>
     <div class="key-field">
       <label>DistroKid API Key</label>
       <input type="password" id="inputDistrokid" placeholder="Your DistroKid API key">
     </div>
     <div class="key-field">
-      <label>YouTube API Key (optional — yt-dlp works without)</label>
+      <label>YouTube API Key (optional)</label>
       <input type="password" id="inputYoutube" placeholder="AIzaSy...">
-      <small>Get from: <a href="https://console.developers.google.com" target="_blank" style="color:var(--goat-red);">console.developers.google.com</a></small>
+      <small>Get from: <a href="https://console.developers.google.com" target="_blank" style="color:#c1121f;">console.developers.google.com</a></small>
     </div>
-
-    <div style="display:flex;gap:10px;margin-top:20px;">
+    <div class="key-modal-actions">
       <button class="goat-btn" onclick="saveKeys()">💾 Save Keys Locally</button>
       <button class="goat-btn gold" onclick="closeKeyModal()">Cancel</button>
     </div>
-    <p id="keySaveStatus" style="color:#22c55e;font-size:13px;margin:10px 0 0;display:none;">✅ Keys saved to your local server!</p>
+    <p id="keySaveStatus" style="color:#00ff88;font-size:13px;margin:10px 0 0;display:none;">✅ Keys saved to your local server!</p>
+  </div>
+</div>
+
+<!-- ── CUSTOMIZE PANEL ── -->
+<div class="deck-panel" id="settingsPanel" onclick="if(event.target.id==='settingsPanel') closeSettingsPanel()">
+  <div class="deck-box">
+    <div class="deck-close" onclick="closeSettingsPanel()">&times;</div>
+    <h2>⚙️ Customize</h2>
+    <div class="deck-section">
+      <h4>Accent Color</h4>
+      <div id="colorSwatches">
+        <span class="color-swatch active" style="background:#c1121f" data-color="#c1121f" onclick="setAccent(this.dataset.color)"></span>
+        <span class="color-swatch" style="background:#d4a03c" data-color="#d4a03c" onclick="setAccent(this.dataset.color)"></span>
+        <span class="color-swatch" style="background:#3498db" data-color="#3498db" onclick="setAccent(this.dataset.color)"></span>
+        <span class="color-swatch" style="background:#2ecc71" data-color="#2ecc71" onclick="setAccent(this.dataset.color)"></span>
+        <span class="color-swatch" style="background:#9b59b6" data-color="#9b59b6" onclick="setAccent(this.dataset.color)"></span>
+        <span class="color-swatch" style="background:#e91e8c" data-color="#e91e8c" onclick="setAccent(this.dataset.color)"></span>
+      </div>
+    </div>
+    <div class="deck-section">
+      <h4>Logo / Hero</h4>
+      <input type="text" id="customLogo" placeholder="URL to logo image"
+        style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#fff;font-family:inherit;">
+      <button class="goat-btn" style="margin-top:10px;" onclick="applyLogo()">Apply Logo</button>
+    </div>
   </div>
 </div>
 
@@ -232,16 +845,18 @@ body.bg-icon { background-image: radial-gradient(ellipse at 50% 30%, rgba(139,92
 const INTEL = 'http://localhost:5500';
 
 let currentPersona = 'moneypenny';
-let chatHistory = [];
-let isTyping = false;
+let chatHistory    = [];
+let isTyping       = false;
 
 const PERSONAS = {
   moneypenny: {
-    name: 'Ms. Moneypenny',
-    role: 'GOAT Force Royalty & Business Intelligence',
-    engine: 'Gemini + GPT-4o Fallback',
+    name:     'Ms. Money Penny',
+    codename: 'CODENAME: DIAMOND',
+    role:     'GOAT Force Royalty & Business Intelligence',
+    engine:   'Gemini + GPT-4o',
     endpoint: '/ai/moneypenny',
-    welcome: `🐐 What's good, Boss? Ms. Moneypenny here — your AI powerhouse for GOAT Force Records.
+    placeholder: 'Ask Ms. Money Penny about royalties, sync licensing, distribution, music business...',
+    welcome: `🐐 What's good, Boss? Ms. Money Penny here — your AI powerhouse for GOAT Force Records.
 
 I handle everything: royalties, sync licensing, publishing deals, distribution strategy, revenue recovery, and making sure DJ Speedy + Waka Flocka Flame get EVERY dollar they're owed.
 
@@ -260,10 +875,12 @@ I handle everything: royalties, sync licensing, publishing deals, distribution s
     ]
   },
   codex: {
-    name: 'Codex',
-    role: 'GOAT Force Chief Technical Architect & Sentinel AI',
-    engine: 'GPT-4o + Gemini Fallback',
+    name:     'Sir Codex',
+    codename: 'CODENAME: SENTINEL',
+    role:     'GOAT Force Chief Technical Architect',
+    engine:   'GPT-4o + Gemini',
     endpoint: '/ai/codex',
+    placeholder: 'Ask Codex about production, plugins, DAWs, code, tech...',
     welcome: `Systems online. Codex here — Chief Coder and Technical Sentinel for GOAT Force Records.
 
 I handle: app architecture, API integrations, music production software, DAW setup, plugin recommendations, beat production workflow, cybersecurity (GOAT VAULT PROTOCOL), and any technical problem you throw at me.
@@ -281,6 +898,111 @@ What do we need to build?`,
       '🏗 How to build a royalty tracking database?',
       '⚡ Optimize GOAT Royalty App performance'
     ]
+  },
+  oscar: {
+    name:     'Oscar',
+    codename: 'CODENAME: DEALMAKER',
+    role:     'GOAT Force Chief Operations & Deal Architect',
+    engine:   'GPT-4o',
+    endpoint: '/ai/oscar',
+    placeholder: 'Ask Oscar about deals, contracts, operations, and business strategy...',
+    welcome: `Oscar here — Agent 001, GOAT Force Intelligence Division. I'm the deal-maker and operations commander. I negotiate contracts, structure partnerships, and make sure DJ Speedy gets maximum value from every deal. Got a contract that needs reviewing? A deal on the table? Bring it.`,
+    prompts: [
+      '📋 Review this recording contract for red flags',
+      '💰 What should a fair 360 deal look like?',
+      '🤝 How do I structure a joint venture with a major label?',
+      '🎯 Best release strategy for maximum revenue?',
+      '⚖️ How to get out of a bad distribution deal?',
+      '💼 What should be in a sync licensing master agreement?',
+      '📊 Model revenue projections for a platinum album',
+      '🔑 How to reclaim masters after 35 years?',
+      '🌍 Best international licensing strategy for 2025?',
+      '🚀 How to structure a record label from scratch?'
+    ]
+  },
+  vanessa: {
+    name:     'Ms. Vanessa',
+    codename: 'CODENAME: ICON',
+    role:     'GOAT Force Brand Strategy & PR Director',
+    engine:   'Claude 3.5',
+    endpoint: '/ai/vanessa',
+    placeholder: 'Ask Vanessa about brand strategy, PR, social media, and fan engagement...',
+    welcome: `Ms. Vanessa reporting — Agent 003. I handle brand strategy, PR, social media, and fan engagement for GOAT Force Records. The brand is everything. Let me help you build something iconic. What are we working on?`,
+    prompts: [
+      '📱 Create a 30-day social media content calendar',
+      '📰 Write a press release for a new album drop',
+      '🎨 Develop brand guidelines for GOAT Force Records',
+      '📊 What social platforms should we prioritize in 2025?',
+      '🌟 PR strategy for a Waka Flocka collaboration',
+      '👥 How to grow our fan database to 1 million subscribers?',
+      '🎬 Content strategy for YouTube channel growth',
+      '🔥 Create a viral marketing campaign idea',
+      '📸 How to position DJ Speedy as a premium brand?',
+      '🤝 How to leverage influencer marketing in hip-hop?'
+    ]
+  },
+  nexus: {
+    name:     'Nexus',
+    codename: 'CODENAME: ORACLE',
+    role:     'GOAT Force Intelligence & Trend Analysis',
+    engine:   'Multi-Model',
+    endpoint: '/ai/nexus',
+    placeholder: 'Ask Nexus about intelligence, trends, market analysis, and research...',
+    welcome: `NEXUS ONLINE. Agent 004 — THE ORACLE. I synthesize intelligence from across the music industry: DSP trends, viral patterns, competitor moves, AI developments. I see what's coming before it arrives. What intelligence do you need?`,
+    prompts: [
+      '🔍 What are the biggest trends in hip-hop right now?',
+      '📈 Which DSPs are growing fastest in 2025?',
+      '🤖 What AI music tools should GOAT Force be using?',
+      '🌍 Which international markets are untapped for trap?',
+      '📊 Analyze Spotify\'s algorithm changes',
+      '🎯 What\'s our competitive advantage over other indie labels?',
+      '🔮 Predict the music industry landscape in 2026',
+      '⚡ What\'s trending right now in Latin markets?',
+      '🧠 Research the top sync supervisors in Hollywood',
+      '📡 Waka Flocka Flame current market position?'
+    ]
+  },
+  lexi: {
+    name:     'Lexi',
+    codename: 'CODENAME: THE SPARK',
+    role:     'GOAT Force Creative Director & Lyrics AI',
+    engine:   'GPT-4o Creative',
+    endpoint: '/ai/lexi',
+    placeholder: 'Ask Lexi to write lyrics, hooks, concepts, scripts, and creative content...',
+    welcome: `Lexi in the building — Agent 005, THE SPARK. I write hits. Hooks, verses, full songs, concepts, scripts — whatever the track needs. I've got the bars and the vision. What are we creating today?`,
+    prompts: [
+      '🎤 Write a hard trap hook for DJ Speedy about being the GOAT',
+      '📝 Write a full verse in Waka Flocka\'s style',
+      '🎬 Script concept for a music video set in a casino',
+      '🎵 Write a crossover hit concept: trap meets reggaeton',
+      '✍️ Write three different hooks for "Amigo Alley"',
+      '🎭 Create an intro skit for the new album',
+      '🔥 Write bars about owning your masters',
+      '🌟 Concept for a DJ Speedy & Waka Flocka collab',
+      '🎪 Write a party anthem for the GOAT Celebrity Lounge',
+      '📖 Create a full song structure with hook, verse, bridge'
+    ]
+  },
+  devin: {
+    name:     'Dr. Devin',
+    codename: "CODENAME: WHAT'S UP DOC",
+    role:     "GOAT Force Chief AI Strategist — Agent 007",
+    engine:   'Adaptive AI',
+    endpoint: '/ai/devin',
+    placeholder: 'Ask Dr. Devin about AI strategy, coordination, innovation, and the big picture...',
+    welcome: `WHAT'S UP DOC. Dr. Devin online — AGENT-007, GOAT Force Intelligence Division commander. I orchestrate all 6 other agents and solve problems that require cross-domain expertise. AI strategy, system architecture, innovation — that's my world. What's the mission?`,
+    prompts: [
+      '🚀 Coordinate all agents for a new album release strategy',
+      '🤖 What\'s the AI roadmap for GOAT Force in 2025?',
+      '📊 Full system analysis of the GOAT Royalty App',
+      '🌎 Plan to dominate Latin markets with Amigo Alley',
+      '⚡ What should GOAT Force prioritize this week?',
+      '💬 How do we integrate Halito Chat into the ecosystem?',
+      '🎰 Design the Casino AI system architecture',
+      '🎬 What features should GOAT Force Studio have next?',
+      '🔐 Full security audit of GOAT Force digital assets',
+      '🏆 12-month roadmap to make GOAT Force the #1 indie label'
+    ]
   }
 };
 
@@ -288,15 +1010,17 @@ function setPersona(persona) {
   currentPersona = persona;
   const p = PERSONAS[persona];
 
-  document.getElementById('personaName').textContent = p.name;
-  document.getElementById('personaRole').textContent = p.role;
-  document.getElementById('engineTag').textContent = p.engine;
-  document.getElementById('chatInput').placeholder = persona === 'moneypenny'
-    ? 'Ask Moneypenny about royalties, sync licensing, distribution, music business...'
-    : 'Ask Codex about production, plugins, DAWs, code, tech...';
+  document.getElementById('personaName').textContent    = p.name;
+  document.getElementById('personaRole').textContent    = p.role;
+  document.getElementById('engineTag').textContent      = p.engine;
+  document.getElementById('codenameTag').textContent    = p.codename;
+  document.getElementById('chatInput').placeholder      = p.placeholder;
+  document.getElementById('typingText').textContent     = p.name + ' is thinking...';
 
   document.querySelectorAll('.persona-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('btn' + persona.charAt(0).toUpperCase() + persona.slice(1)).classList.add('active');
+  const key = persona.charAt(0).toUpperCase() + persona.slice(1);
+  const btn = document.getElementById('btn' + key);
+  if (btn) btn.classList.add('active');
 
   renderQuickPrompts(p.prompts);
   chatHistory = [];
@@ -313,21 +1037,25 @@ function showWelcome(text, name) {
   const container = document.getElementById('chatMessages');
   container.innerHTML = `
     <div class="msg assistant">
-      <div class="msg-bubble">${text}</div>
+      <div class="msg-bubble">${escapeHtml(text)}</div>
       <div class="msg-meta">${name} · Just now</div>
     </div>
   `;
 }
 
+function escapeHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
 function addMessage(role, content, engine) {
   const container = document.getElementById('chatMessages');
-  const p = PERSONAS[currentPersona];
-  const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  const p    = PERSONAS[currentPersona];
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   const name = role === 'user' ? 'You' : p.name + (engine ? ` · ${engine}` : '');
-  const div = document.createElement('div');
+  const div  = document.createElement('div');
   div.className = `msg ${role}`;
   div.innerHTML = `
-    <div class="msg-bubble">${content.replace(/</g,'<').replace(/>/g,'>').replace(/\n/g,'<br>')}</div>
+    <div class="msg-bubble">${escapeHtml(content)}</div>
     <div class="msg-meta">${name} · ${time}</div>
   `;
   container.appendChild(div);
@@ -336,18 +1064,17 @@ function addMessage(role, content, engine) {
 
 function setTyping(visible) {
   isTyping = visible;
-  const el = document.getElementById('typingIndicator');
+  const el  = document.getElementById('typingIndicator');
   const btn = document.getElementById('sendBtn');
   el.className = 'typing-indicator' + (visible ? ' visible' : '');
-  document.getElementById('typingText').textContent = PERSONAS[currentPersona].name + ' is thinking...';
   btn.disabled = visible;
-  if(visible) el.scrollIntoView({behavior:'smooth'});
+  if (visible) el.scrollIntoView({behavior:'smooth'});
 }
 
 async function sendMessage() {
-  const input = document.getElementById('chatInput');
+  const input   = document.getElementById('chatInput');
   const message = input.value.trim();
-  if(!message || isTyping) return;
+  if (!message || isTyping) return;
 
   input.value = '';
   input.style.height = 'auto';
@@ -363,22 +1090,22 @@ async function sendMessage() {
       signal: AbortSignal.timeout(45000)
     });
     const d = await r.json();
-
     setTyping(false);
-    if(d.ok && d.reply) {
+
+    if (d.ok && d.reply) {
       addMessage('assistant', d.reply, d.engine);
       chatHistory.push({role:'assistant', content: d.reply});
     } else {
       const errMsg = d.error || 'Response failed';
-      if(errMsg.includes('key') || errMsg.includes('API')) {
-        addMessage('assistant', `⚠️ AI key issue: ${errMsg}\n\nClick "🔐 Add API Keys" in the sidebar to add your fresh Gemini or OpenAI key. Once added, I'll be fully operational, Boss.`, 'System');
+      if (errMsg.includes('key') || errMsg.includes('API')) {
+        addMessage('assistant', `⚠️ AI key issue: ${errMsg}\n\nClick "🔐 API Keys" in the Command Deck to add your fresh Gemini or OpenAI key. Once added, I'll be fully operational, Boss.`, 'System');
       } else {
         addMessage('assistant', `⚠️ Error: ${errMsg}`, 'System');
       }
     }
-  } catch(e) {
+  } catch (e) {
     setTyping(false);
-    if(e.name === 'TimeoutError') {
+    if (e.name === 'TimeoutError') {
       addMessage('assistant', '⏱ Response took too long. The AI server may be processing. Try again.', 'System');
     } else {
       addMessage('assistant', `⚠️ Could not reach Intel Server at ${INTEL}\n\nMake sure it's running:\n→ cd goat-intel-server\n→ python goat_intel.py`, 'System');
@@ -390,58 +1117,58 @@ function quickSend(text) {
   document.getElementById('chatInput').value = text;
   sendMessage();
 }
-
 function handleKey(e) {
-  if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 }
-
 function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 160) + 'px';
 }
-
 function clearChat() {
   chatHistory = [];
   showWelcome(PERSONAS[currentPersona].welcome, PERSONAS[currentPersona].name);
 }
 
-// ── Key management ──────────────────────────
-function openKeyModal() { document.getElementById('keyModal').classList.add('open'); }
+// ── Key management ─────────────────────────────────
+function openKeyModal()  { document.getElementById('keyModal').classList.add('open'); }
 function closeKeyModal() { document.getElementById('keyModal').classList.remove('open'); }
+document.getElementById('keyModal').addEventListener('click', (e) => {
+  if (e.target.id === 'keyModal') closeKeyModal();
+});
 
 async function saveKeys() {
   const payload = {};
-  const g = document.getElementById('inputGemini').value.trim();
-  const o = document.getElementById('inputOpenai').value.trim();
-  const s = document.getElementById('inputSpotify').value.trim();
+  const g  = document.getElementById('inputGemini').value.trim();
+  const o  = document.getElementById('inputOpenai').value.trim();
+  const s  = document.getElementById('inputSpotify').value.trim();
   const dk = document.getElementById('inputDistrokid').value.trim();
   const yt = document.getElementById('inputYoutube').value.trim();
-  if(g) payload.gemini_key = g;
-  if(o) payload.openai_key = o;
-  if(s) payload.spotify_key = s;
-  if(dk) payload.distrokid_key = dk;
-  if(yt) payload.youtube_key = yt;
+  if (g)  payload.gemini_key    = g;
+  if (o)  payload.openai_key    = o;
+  if (s)  payload.spotify_key   = s;
+  if (dk) payload.distrokid_key = dk;
+  if (yt) payload.youtube_key   = yt;
 
-  if(!Object.keys(payload).length) { alert('Enter at least one key'); return; }
+  if (!Object.keys(payload).length) { alert('Enter at least one key'); return; }
 
   try {
     const r = await fetch(INTEL + '/keys/save', {
       method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
     });
     const d = await r.json();
-    if(d.ok) {
+    if (d.ok) {
       document.getElementById('keySaveStatus').style.display = 'block';
       checkServerStatus();
       setTimeout(() => closeKeyModal(), 2000);
     } else {
       alert('Error saving: ' + d.error);
     }
-  } catch(e) {
+  } catch (e) {
     alert('Intel server not running. Start it first, then save keys.');
   }
 }
 
-// ── Server status check ─────────────────────
+// ── Server status ──────────────────────────────────
 async function checkServerStatus() {
   try {
     const r = await fetch(INTEL + '/health', {signal: AbortSignal.timeout(4000)});
@@ -449,35 +1176,254 @@ async function checkServerStatus() {
     setKeyStatus('gemini', d.gemini);
     setKeyStatus('openai', d.openai);
     document.getElementById('ks_server').textContent = '✅ Server online';
-    document.getElementById('ks_server').className = 'ok';
-  } catch(e) {
+    document.getElementById('ks_server').className   = 'ok';
+  } catch (e) {
     document.getElementById('ks_server').textContent = '❌ Server offline — run python goat_intel.py';
-    document.getElementById('ks_server').className = 'warn';
+    document.getElementById('ks_server').className   = 'warn';
     document.getElementById('ks_gemini').textContent = '⚠ Gemini: server needed';
     document.getElementById('ks_openai').textContent = '⚠ OpenAI: server needed';
   }
 }
-
 function setKeyStatus(key, status) {
   const el = document.getElementById('ks_' + key);
-  if(!el) return;
-  const ok = status && (status.includes('✅') || status.includes('set'));
+  if (!el) return;
+  const ok    = status && (status.includes('✅') || status.includes('set'));
   const label = key.charAt(0).toUpperCase() + key.slice(1);
   el.textContent = ok ? `✅ ${label}: ready` : `⚠ ${label}: add your key`;
-  el.className = ok ? 'ok' : 'warn';
+  el.className   = ok ? 'ok' : 'warn';
 }
 
-// ── Lyrics tab ──────────────────────────────
-// If you came from ai-producer with ?mode=lyrics, auto-switch to Codex
+// ── Customize panel ────────────────────────────────
+function openSettingsPanel()  { document.getElementById('settingsPanel').classList.add('open'); }
+function closeSettingsPanel() { document.getElementById('settingsPanel').classList.remove('open'); }
+
+function setAccent(color) {
+  const hex  = color.replace('#', '');
+  const r    = parseInt(hex.substr(0,2), 16);
+  const g    = parseInt(hex.substr(2,2), 16);
+  const b    = parseInt(hex.substr(4,2), 16);
+  const rgba = (a) => `rgba(${r},${g},${b},${a})`;
+
+  document.querySelectorAll('.color-swatch').forEach(s =>
+    s.classList.toggle('active', s.dataset.color === color)
+  );
+  localStorage.setItem('goat_penny_accent', color);
+
+  let style = document.getElementById('penny-accent-override');
+  if (!style) {
+    style = document.createElement('style');
+    style.id = 'penny-accent-override';
+    document.head.appendChild(style);
+  }
+  style.textContent = `
+    .goat-nav            { border-bottom-color: ${rgba(0.45)} !important; }
+    .ai-layout           { border-color: ${rgba(0.22)} !important; box-shadow: 0 0 60px ${rgba(0.1)}, 0 20px 60px rgba(0,0,0,0.6) !important; }
+    body::before         { background: radial-gradient(ellipse at 50% 25%, ${rgba(0.35)} 0%, rgba(10,10,10,0.97) 70%) !important; }
+    .particle            { background: radial-gradient(circle at 30% 30%, ${rgba(0.28)}, rgba(240,192,112,0.05)) !important; }
+    .persona-btn.active  { background: linear-gradient(135deg, ${rgba(0.22)} 0%, ${rgba(0.09)} 100%) !important; border-color: ${color} !important; box-shadow: 0 0 14px ${rgba(0.2)} !important; }
+    .persona-btn.active .badge { background: ${color} !important; }
+    .special-ops-title   { color: ${color} !important; }
+    .ops-btn             { border-color: ${rgba(0.2)} !important; background: ${rgba(0.07)} !important; }
+    .ops-btn:hover       { background: ${rgba(0.17)} !important; border-color: ${color} !important; }
+    .chat-header         { background: linear-gradient(90deg, ${rgba(0.07)} 0%, rgba(7,7,11,0.99) 60%) !important; }
+    .persona-avatar      { border-color: ${color} !important; box-shadow: 0 0 20px ${rgba(0.4)} !important; }
+    .codename-tag        { background: ${rgba(0.15)} !important; border-color: ${rgba(0.4)} !important; color: ${color} !important; }
+    .msg.user .msg-bubble { background: linear-gradient(135deg, ${color} 0%, ${rgba(0.8)} 100%) !important; }
+    .msg.assistant .msg-bubble { border-color: ${rgba(0.14)} !important; }
+    .typing-dot          { background: ${color} !important; }
+    .send-btn            { background: linear-gradient(135deg, ${color} 0%, ${rgba(0.7)} 100%) !important; box-shadow: 0 0 20px ${rgba(0.4)} !important; }
+    .chat-textarea:focus { border-color: ${color} !important; box-shadow: 0 0 0 3px ${rgba(0.14)} !important; }
+    .chat-action-btn:hover { border-color: var(--goat-gold) !important; color: var(--goat-gold) !important; }
+    .quick-btn:hover     { border-color: ${color} !important; background: ${rgba(0.1)} !important; }
+    .status-dot          { background: ${color} !important; box-shadow: 0 0 8px ${color} !important; }
+    .ai-sidebar          { border-right-color: ${rgba(0.14)} !important; }
+    .ai-layout           { border-color: ${rgba(0.22)} !important; }
+    .key-field input:focus { border-color: ${color} !important; box-shadow: 0 0 0 3px ${rgba(0.14)} !important; }
+  `;
+}
+
+function applyLogo() {
+  const url = document.getElementById('customLogo').value.trim();
+  if (!url) return;
+  document.querySelectorAll('.ai-logo img, .persona-avatar').forEach(img => img.src = url);
+  localStorage.setItem('goat_penny_logo', url);
+}
+
+// ── URL params ─────────────────────────────────────
 const urlParams = new URLSearchParams(window.location.search);
-if(urlParams.get('mode') === 'codex') {
-  document.addEventListener('DOMContentLoaded', () => setPersona('codex'));
-}
+const modeParam = urlParams.get('mode');
 
+// ── Init ───────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  setPersona('moneypenny');
+  const persona = (modeParam && PERSONAS[modeParam]) ? modeParam : 'moneypenny';
+  setPersona(persona);
   checkServerStatus();
+
+  const savedColor = localStorage.getItem('goat_penny_accent');
+  if (savedColor) setAccent(savedColor);
+  const savedLogo = localStorage.getItem('goat_penny_logo');
+  if (savedLogo) {
+    document.getElementById('customLogo').value = savedLogo;
+    applyLogo();
+  }
 });
 </script>
+<!-- LIVE TERMINAL PANEL -->
+<div class="deck-panel" id="terminalPanel" onclick="if(event.target.id==='terminalPanel') closeTerminalPanel()">
+  <div class="deck-box" style="max-width:860px;">
+    <div class="deck-close" onclick="closeTerminalPanel()">&times;</div>
+    <h2>💻 Live Terminal</h2>
+
+    <div class="deck-section">
+      <h4>Agent Context</h4>
+      <select class="terminal-agent-select" id="terminalAgentSelect" style="width:100%;">
+        <option value="moneypenny">002 — Ms. Money Penny (default)</option>
+        <option value="drdevin">007 — Dr. Devin</option>
+        <option value="codex">006 — Sir Codex</option>
+        <option value="oscar">001 — Oscar</option>
+        <option value="nexus">004 — Nexus</option>
+        <option value="lexi">005 — Lexi</option>
+        <option value="vanessa">003 — Ms. Vanessa</option>
+      </select>
+    </div>
+
+    <div class="deck-section">
+      <h4>Terminal</h4>
+      <div class="terminal-wrap">
+        <div class="terminal-titlebar">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+          <span style="margin-left:6px;font-size:11px;color:#666;">GOAT Force — Ms. Money Penny Terminal</span>
+          <button onclick="clearTerminal()" style="margin-left:auto;background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'JetBrains Mono',monospace;">clear</button>
+        </div>
+        <div class="terminal-output" id="terminalOutput">
+          <p class="terminal-line sys">Ms. Money Penny Terminal — AGENT-002 Online</p>
+          <p class="terminal-line sys">Commands classified by safety: readonly · dangerous (confirm) · forbidden (blocked)</p>
+          <p class="terminal-line sys">Terminal host: localhost:9999 — Run goat-intel-server terminal proxy to execute live commands.</p>
+          <p class="terminal-line sys">─────────────────────────────────────────────────────</p>
+        </div>
+        <div class="terminal-confirm-bar" id="terminalConfirmBar">
+          <span id="terminalConfirmMsg">⚠️ Dangerous command detected — confirm execution?</span>
+          <button class="btn-yes" id="terminalConfirmYes">Run It</button>
+          <button class="btn-no" onclick="cancelTerminalConfirm()">Cancel</button>
+        </div>
+        <div class="terminal-input-row">
+          <span class="terminal-prompt">002@goat-force $</span>
+          <input class="terminal-input" id="terminalInput" type="text"
+            placeholder="ls -la / git status / ollama list / python3 -c 'print(1+1)' ..."
+            autocomplete="off" autocorrect="off" spellcheck="false"
+            onkeydown="handleTerminalKey(event)">
+          <button class="terminal-run-btn" onclick="runTerminalCommand()">RUN</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="deck-section">
+      <h4>Quick Commands</h4>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="chat-action-btn" onclick="terminalQuick('ls -la')">ls -la</button>
+        <button class="chat-action-btn" onclick="terminalQuick('pwd')">pwd</button>
+        <button class="chat-action-btn" onclick="terminalQuick('ps aux | grep python')">ps python</button>
+        <button class="chat-action-btn" onclick="terminalQuick('ollama list')">ollama list</button>
+        <button class="chat-action-btn" onclick="terminalQuick('git status')">git status</button>
+        <button class="chat-action-btn" onclick="terminalQuick('df -h')">disk space</button>
+        <button class="chat-action-btn" onclick="terminalQuick('curl -s http://localhost:5500/health')">intel health</button>
+        <button class="chat-action-btn" onclick="terminalQuick('python3 -c \"import sys; print(sys.version)\"')">python ver</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Live Terminal ─────────────────────────────────────
+let _terminalPendingCmd = null;
+
+function openTerminalPanel() {
+  document.getElementById('terminalPanel').classList.add('open');
+  setTimeout(() => document.getElementById('terminalInput').focus(), 100);
+}
+function closeTerminalPanel() {
+  document.getElementById('terminalPanel').classList.remove('open');
+  cancelTerminalConfirm();
+}
+
+function clearTerminal() {
+  const out = document.getElementById('terminalOutput');
+  out.innerHTML = '<p class="terminal-line sys">Terminal cleared. Ready.</p>';
+}
+
+function terminalPrint(text, cls) {
+  const out = document.getElementById('terminalOutput');
+  const p = document.createElement('p');
+  p.className = 'terminal-line' + (cls ? ' ' + cls : '');
+  p.textContent = text;
+  out.appendChild(p);
+  out.scrollTop = out.scrollHeight;
+}
+
+function handleTerminalKey(e) {
+  if (e.key === 'Enter') runTerminalCommand();
+}
+
+function terminalQuick(cmd) {
+  document.getElementById('terminalInput').value = cmd;
+  runTerminalCommand();
+}
+
+async function runTerminalCommand(confirmed) {
+  const input = document.getElementById('terminalInput');
+  const cmd = (confirmed || input.value).trim();
+  if (!cmd) return;
+
+  const agentId = document.getElementById('terminalAgentSelect').value;
+
+  if (confirmed) cancelTerminalConfirm();
+
+  terminalPrint('$ ' + cmd, 'cmd');
+  input.value = '';
+
+  const result = await Patch.terminalExec(cmd, { agentId, confirm: !!confirmed });
+
+  if (!result.ok && result.classification && result.classification.class === 'forbidden') {
+    terminalPrint('BLOCKED: ' + result.classification.reason, 'err');
+    return;
+  }
+
+  if (result.needs_confirm) {
+    _terminalPendingCmd = cmd;
+    document.getElementById('terminalConfirmMsg').textContent =
+      `⚠️ Dangerous command: "${cmd}" — confirm execution?`;
+    document.getElementById('terminalConfirmBar').classList.add('visible');
+    document.getElementById('terminalConfirmYes').onclick = () => runTerminalCommand(cmd);
+    return;
+  }
+
+  if (result.stdout) terminalPrint(result.stdout, '');
+  if (result.stderr) terminalPrint(result.stderr, 'err');
+
+  if (!result.ok && result.error) {
+    if (result.error.includes('fetch') || result.error.includes('NetworkError') || result.error.includes('Failed to fetch')) {
+      terminalPrint('Terminal proxy offline. To enable live execution:', 'warn');
+      terminalPrint('  cd goat-intel-server && python3 goat_terminal_proxy.py', 'sys');
+      terminalPrint('Command classified as: ' + (result.classification?.class || 'unknown'), 'sys');
+    } else {
+      terminalPrint('Error: ' + result.error, 'err');
+    }
+  }
+
+  if (result.returncode !== null && result.returncode !== undefined) {
+    terminalPrint('[exit ' + result.returncode + ']', 'sys');
+  }
+}
+
+function cancelTerminalConfirm() {
+  _terminalPendingCmd = null;
+  document.getElementById('terminalConfirmBar').classList.remove('visible');
+}
+</script>
+
+<script src="lib/agents/patch/patch-core.js"></script>
+<script src="lib/agents/patch/patch-widget.js" data-agent="moneypenny"></script>
 </body>
 </html>

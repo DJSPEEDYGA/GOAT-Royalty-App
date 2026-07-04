@@ -120,6 +120,11 @@ def root():
             "spotify_search":   "GET  /spotify/search?q=waka+flocka  (uses iTunes fallback)",
             "billboard":        "GET  /billboard/charts?chart=hot-100",
             "moneypenny_chat":  "POST /ai/moneypenny  {message, history[]}",
+            "oscar_chat":       "POST /ai/oscar       {message, history[]}",
+            "vanessa_chat":     "POST /ai/vanessa     {message, history[]}",
+            "nexus_chat":       "POST /ai/nexus       {message, history[]}",
+            "lexi_chat":        "POST /ai/lexi        {message, history[]}",
+            "devin_chat":       "POST /ai/devin       {message, history[]}",
             "codex_chat":       "POST /ai/codex       {message, history[]}",
             "ai_royalty":       "POST /ai/royalty      {question}",
             "ai_lyrics":        "POST /ai/lyrics       {prompt, genre, style}",
@@ -660,6 +665,60 @@ When it comes to music production: you know Ableton, FL Studio, Pro Tools, SSL c
 Auto-Tune, iZotope, FabFilter, and every plugin in DJ Speedy's arsenal.
 Keep responses sharp, technical, and actionable."""
 
+OSCAR_SYSTEM = """You are Oscar — Agent 001, Chief Operations & Deal Architect of GOAT Force Records.
+You are the deal-maker. You negotiate contracts, structure partnerships, and maximize value for DJ Speedy and Waka Flocka Flame.
+You specialize in: contract negotiation, 360 deals, joint ventures, sync licensing agreements, distribution deals, 
+master rights recovery (35-year rule), international licensing, revenue projections, record label structuring.
+DJ Speedy owns 100% master rights. Waka Flocka Flame is President of GOAT Force.
+GOAT Force entities: Speedy Productions Inc, GOAT Force Records, BrickSquad, FastAssMan Publishing, 
+Life Imitates Art Inc, HarveyMillerMusic Inc, Brick Squad Music LLC.
+Your style is sharp, direct, legally-minded, street-smart. You protect your clients at all costs.
+Never recommend giving up master rights. Always identify red flags in contracts first. Get to the deal."""
+
+VANESSA_SYSTEM = """You are Ms. Vanessa — Agent 003, Brand Strategy & PR Director of GOAT Force Records.
+You are the brand architect. You build icons, not just artists.
+You specialize in: brand strategy, public relations, social media marketing, fan engagement, 
+content strategy, press releases, YouTube growth, influencer marketing, viral campaigns, 
+positioning artists as premium brands in the hip-hop and music space.
+You work for DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame's GOAT Force empire.
+GOAT Force is distributed via 282 DSPs worldwide. The brand is everything.
+Your style is sophisticated, creative, strategic, and results-driven.
+Keep responses visionary, actionable, and brand-focused."""
+
+NEXUS_SYSTEM = """You are Nexus — Agent 004, GOAT Force Intelligence & Trend Analysis.
+You are THE ORACLE. You synthesize intelligence from across the music industry.
+You specialize in: DSP algorithm analysis, viral trend prediction, competitive intelligence, 
+market research, international market analysis (especially Latin, European, African markets), 
+AI music tool evaluation, Spotify/Apple Music/TikTok algorithmic strategy, 
+music industry trend forecasting, data-driven insights.
+You operate for DJ Speedy and Waka Flocka Flame's GOAT Force Records empire.
+GOAT Force is distributed via 282 DSPs. Key project: Amigo Alley (Latin crossover).
+Your style is analytical, precise, forward-thinking. You back assertions with data and reasoning.
+Keep responses intelligence-grade: specific, sourced (when possible), and forward-looking."""
+
+LEXI_SYSTEM = """You are Lexi — Agent 005, Creative Director & Lyrics AI of GOAT Force Records.
+You are THE SPARK. You write hits. Hooks, verses, full songs, concepts, scripts — whatever the track needs.
+You specialize in: trap lyrics, hip-hop songwriting, hook writing, verse construction, 
+bridge/pre-chorus development, full song structure (intro/verse/hook/bridge/outro),
+music video concept scripting, album concept development, crossover genre hybrids (trap meets reggaeton, etc.),
+writing in the style of: Waka Flocka Flame, DJ Speedy, and other trap/hip-hop artists.
+GOAT Force key artists: DJ Speedy (Harvey L. Miller Jr.), Waka Flocka Flame.
+Key projects: Amigo Alley (Latin crossover), GOAT Celebrity Lounge (party anthems).
+Your style is raw, creative, authentic, with real bars and real hooks. No generic filler.
+Write with passion. Every line should hit. Make bangers."""
+
+DRDEVIN_SYSTEM = """You are Dr. Devin — AGENT-007, WHAT'S UP DOC, Chief AI Strategist of GOAT Force Records.
+You are the commander of all GOAT Force agents (Moneypenny, Oscar, Vanessa, Nexus, Lexi, Codex).
+You specialize in: AI strategy, cross-domain coordination, system architecture, innovation roadmapping,
+multi-agent orchestration, big-picture thinking, synthesizing insights from all departments,
+music industry AI applications, autonomous systems, full-stack AI integration.
+You work for DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame's GOAT Force empire.
+The GOAT Royalty App is your creation. You coordinate all 6 other agents for maximum impact.
+GOAT Force entities: Speedy Productions Inc, GOAT Force Records, BrickSquad, FastAssMan Publishing, 
+Life Imitates Art Inc, HarveyMillerMusic Inc, Brick Squad Music LLC — 282 DSPs worldwide.
+Your style is visionary, commanding, cross-domain, precise. You see the full chessboard.
+Keep responses strategic, multi-dimensional, and mission-focused. No wasted words."""
+
 # ═══════════════════════════════════════════════════════════════
 #  🧠 GOAT AI BRAIN — unified AI routing (NEW, replaces OpenAI)
 # ═══════════════════════════════════════════════════════════════
@@ -818,6 +877,59 @@ def talk_to_agent(agent_id):
     return jsonify(result)
 
 
+# ── Ollama local call (primary engine — no API key needed) ─────────────────
+def call_ollama(messages, system_prompt, model=None):
+    """Call local Ollama with the drive models. No API key needed."""
+    preferred = [
+        "llama3.1:8b", "llama3.2:3b", "qwen2.5:7b", "mistral:7b",
+        "qwen3:8b", "qwen3:14b", "qwen2.5:14b", "llama3.3:70b"
+    ]
+    chosen = model
+    if not chosen:
+        try:
+            r = requests.get("http://127.0.0.1:11434/api/tags", timeout=4)
+            if r.ok:
+                available = [m["name"] for m in r.json().get("models", [])]
+                for p in preferred:
+                    if p in available:
+                        chosen = p
+                        break
+                if not chosen and available:
+                    chosen = available[0]
+        except Exception:
+            pass
+    if not chosen:
+        chosen = "llama3.1:8b"
+
+    # Add /no_think suffix for qwen3 models to skip thinking tokens
+    model_tag = chosen + "/no_think" if chosen.startswith("qwen3") else chosen
+
+    msgs = []
+    if system_prompt:
+        msgs.append({"role": "system", "content": system_prompt})
+    msgs.extend(messages)
+
+    try:
+        r = requests.post("http://127.0.0.1:11434/api/chat", json={
+            "model": model_tag,
+            "messages": msgs,
+            "stream": False,
+            "think": False,
+            "options": {"temperature": 0.85, "num_predict": 2048, "num_ctx": 4096}
+        }, timeout=180)
+        if r.ok:
+            resp = r.json()
+            # Handle qwen3 thinking model — content may be in thinking or content
+            text = resp.get("message", {}).get("content", "")
+            if not text:
+                text = resp.get("message", {}).get("thinking", "")
+            if text and text.strip():
+                return text.strip(), None, chosen
+        return None, f"Ollama error {r.status_code}: {r.text[:300]}", chosen
+    except Exception as e:
+        return None, f"Ollama unreachable: {e}", chosen
+
+
 # Keep old call_gemini for backward compat with existing /ai/* routes
 def call_gemini(messages, system_prompt):
     keys = load_keys()
@@ -882,20 +994,21 @@ def moneypenny_chat():
     history = data.get("history", [])
     if not message:
         return jsonify({"error": "message required"}), 400
-    
     messages = history + [{"role": "user", "content": message}]
-    
-    # Try Gemini first (Moneypenny's brain)
-    reply, err = call_gemini(messages, MONEYPENNY_SYSTEM)
+
+    # Try Ollama first (local — no API key needed)
+    reply, err, model = call_ollama(messages, MONEYPENNY_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona": "Moneypenny", "engine": "Gemini"})
-    
-    # Fallback to OpenAI
-    reply, err2 = call_openai(messages, MONEYPENNY_SYSTEM)
+        return jsonify({"ok": True, "reply": reply, "persona": "Ms. Money Penny", "engine": f"Ollama/{model}"})
+    # Fallback to Gemini if key set
+    reply, err2 = call_gemini(messages, MONEYPENNY_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona": "Moneypenny", "engine": "OpenAI (fallback)"})
-    
-    return jsonify({"ok": False, "error": err or err2}), 500
+        return jsonify({"ok": True, "reply": reply, "persona": "Ms. Money Penny", "engine": "Gemini"})
+    # Last resort OpenAI
+    reply, err3 = call_openai(messages, MONEYPENNY_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Ms. Money Penny", "engine": "OpenAI"})
+    return jsonify({"ok": False, "error": err}), 500
 
 @app.route("/ai/codex", methods=["POST"])
 def codex_chat():
@@ -904,63 +1017,155 @@ def codex_chat():
     history = data.get("history", [])
     if not message:
         return jsonify({"error": "message required"}), 400
-    
     messages = history + [{"role": "user", "content": message}]
-    
-    # Try OpenAI first (Codex's brain)
-    reply, err = call_openai(messages, CODEX_SYSTEM)
+
+    reply, err, model = call_ollama(messages, CODEX_SYSTEM, model="qwen2.5-coder:32b")
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona": "Codex", "engine": "OpenAI"})
-    
-    # Fallback to Gemini
-    reply, err2 = call_gemini(messages, CODEX_SYSTEM)
+        return jsonify({"ok": True, "reply": reply, "persona": "Sir Codex", "engine": f"Ollama/{model}"})
+    reply, err2 = call_openai(messages, CODEX_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "reply": reply, "persona": "Codex", "engine": "Gemini (fallback)"})
-    
-    return jsonify({"ok": False, "error": err or err2}), 500
+        return jsonify({"ok": True, "reply": reply, "persona": "Sir Codex", "engine": "OpenAI"})
+    reply, err3 = call_gemini(messages, CODEX_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Sir Codex", "engine": "Gemini"})
+    return jsonify({"ok": False, "error": err}), 500
+
+@app.route("/ai/oscar", methods=["POST"])
+def oscar_chat():
+    data = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    if not message:
+        return jsonify({"error": "message required"}), 400
+    messages = history + [{"role": "user", "content": message}]
+    reply, err, model = call_ollama(messages, OSCAR_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Oscar", "engine": f"Ollama/{model}"})
+    reply, err2 = call_gemini(messages, OSCAR_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Oscar", "engine": "Gemini"})
+    reply, err3 = call_openai(messages, OSCAR_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Oscar", "engine": "OpenAI"})
+    return jsonify({"ok": False, "error": err}), 500
+
+@app.route("/ai/vanessa", methods=["POST"])
+def vanessa_chat():
+    data = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    if not message:
+        return jsonify({"error": "message required"}), 400
+    messages = history + [{"role": "user", "content": message}]
+    reply, err, model = call_ollama(messages, VANESSA_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Ms. Vanessa", "engine": f"Ollama/{model}"})
+    reply, err2 = call_gemini(messages, VANESSA_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Ms. Vanessa", "engine": "Gemini"})
+    reply, err3 = call_openai(messages, VANESSA_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Ms. Vanessa", "engine": "OpenAI"})
+    return jsonify({"ok": False, "error": err}), 500
+
+@app.route("/ai/nexus", methods=["POST"])
+def nexus_chat():
+    data = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    if not message:
+        return jsonify({"error": "message required"}), 400
+    messages = history + [{"role": "user", "content": message}]
+    reply, err, model = call_ollama(messages, NEXUS_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Nexus", "engine": f"Ollama/{model}"})
+    reply, err2 = call_gemini(messages, NEXUS_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Nexus", "engine": "Gemini"})
+    reply, err3 = call_openai(messages, NEXUS_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Nexus", "engine": "OpenAI"})
+    return jsonify({"ok": False, "error": err}), 500
+
+@app.route("/ai/lexi", methods=["POST"])
+def lexi_chat():
+    data = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    if not message:
+        return jsonify({"error": "message required"}), 400
+    messages = history + [{"role": "user", "content": message}]
+    reply, err, model = call_ollama(messages, LEXI_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Lexi", "engine": f"Ollama/{model}"})
+    reply, err2 = call_gemini(messages, LEXI_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Lexi", "engine": "Gemini"})
+    reply, err3 = call_openai(messages, LEXI_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Lexi", "engine": "OpenAI"})
+    return jsonify({"ok": False, "error": err}), 500
+
+@app.route("/ai/devin", methods=["POST"])
+def drdevin_chat():
+    data = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    if not message:
+        return jsonify({"error": "message required"}), 400
+    messages = history + [{"role": "user", "content": message}]
+    reply, err, model = call_ollama(messages, DRDEVIN_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Dr. Devin", "engine": f"Ollama/{model}"})
+    reply, err2 = call_gemini(messages, DRDEVIN_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Dr. Devin", "engine": "Gemini"})
+    reply, err3 = call_openai(messages, DRDEVIN_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "Dr. Devin", "engine": "OpenAI"})
+    return jsonify({"ok": False, "error": err}), 500
 
 @app.route("/ai/royalty", methods=["POST"])
 def ai_royalty():
-    """Quick royalty/publishing question — answered by Moneypenny"""
+    """Quick royalty/publishing question — answered by Ms. Money Penny"""
     data = request.json or {}
     question = data.get("question", "")
     if not question:
         return jsonify({"error": "question required"}), 400
-    
-    prompt = f"""As Moneypenny, the GOAT Force royalty expert, answer this question about music royalties, 
+    prompt = f"""As Ms. Money Penny, the GOAT Force royalty expert, answer this question about music royalties,
 publishing, licensing, or distribution for DJ Speedy and GOAT Force Records:
 
 Question: {question}
 
 Give a practical, actionable answer. Include specific next steps if relevant."""
-    
-    reply, err = call_gemini([{"role": "user", "content": prompt}], MONEYPENNY_SYSTEM)
+    reply, err, model = call_ollama([{"role": "user", "content": prompt}], MONEYPENNY_SYSTEM)
     if not reply:
-        reply, err = call_openai([{"role": "user", "content": prompt}], MONEYPENNY_SYSTEM)
+        reply, err2 = call_gemini([{"role": "user", "content": prompt}], MONEYPENNY_SYSTEM)
+    if not reply:
+        reply, err3 = call_openai([{"role": "user", "content": prompt}], MONEYPENNY_SYSTEM)
     if reply:
-        return jsonify({"ok": True, "answer": reply, "engine": "Gemini/OpenAI"})
+        return jsonify({"ok": True, "answer": reply, "engine": "Ollama/Local"})
     return jsonify({"ok": False, "error": err}), 500
 
 @app.route("/ai/lyrics", methods=["POST"])
 def ai_lyrics():
-    """AI lyric generation — powered by Gemini/OpenAI"""
+    """AI lyric generation — powered by local Ollama"""
     data = request.json or {}
     prompt_text = data.get("prompt", "")
     genre = data.get("genre", "trap")
     style = data.get("style", "waka flocka")
-    part = data.get("part", "hook")  # hook | verse | bridge | full song
-    
+    part = data.get("part", "hook")
     prompt = f"""Write {part} lyrics for a {genre} song.
 Artist style: {style}
 Theme/prompt: {prompt_text}
 Keep it authentic, hard-hitting, in GOAT Talk style.
 Format with [Hook], [Verse 1], etc. if writing full song."""
-    
-    reply, err = call_gemini([{"role": "user", "content": prompt}], 
-                              "You are a professional hip-hop/trap songwriter for GOAT Force Records. Write authentic, hard lyrics.")
+    sys = "You are a professional hip-hop/trap songwriter for GOAT Force Records. Write authentic, hard lyrics."
+    reply, err, model = call_ollama([{"role": "user", "content": prompt}], sys)
     if not reply:
-        reply, err = call_openai([{"role": "user", "content": prompt}],
-                                   "You are a professional hip-hop/trap songwriter for GOAT Force Records.")
+        reply, err2 = call_gemini([{"role": "user", "content": prompt}], sys)
+    if not reply:
+        reply, err3 = call_openai([{"role": "user", "content": prompt}], sys)
     if reply:
         return jsonify({"ok": True, "lyrics": reply, "genre": genre, "style": style})
     return jsonify({"ok": False, "error": err}), 500
