@@ -253,6 +253,30 @@
       ]
     }
   ],
+  "the-goat": {
+    "id": "the-goat",
+    "codeName": "THE_GOAT",
+    "displayName": "THE GOAT",
+    "iconText": "🐐",
+    "accent": "#FFD700",
+    "accentAlt": "#c1121f",
+    "page": "the-goat.html",
+    "home": "the-goat.html",
+    "folderLane": "BackupVault/GOAT-Crew-Homes/THE-GOAT",
+    "likenessCue": "GOAT superhero — red cape, gold G emblem, GOAT Royalty logo",
+    "logo": "img/goat-hero-icon.png",
+    "identityBoundary": "THE GOAT is the Supreme Commander above all agents. Final authority on all GOAT Force decisions.",
+    "lane": "Supreme command — empire strategy, cross-agent orchestration, final decisions",
+    "lead": "Everything. THE GOAT sees the full chessboard.",
+    "status": "Supreme Commander — Agent 000",
+    "rank": "000",
+    "endpoint": "/ai/the-goat",
+    "agentServer": "http://localhost:5500",
+    "accessModel": "supreme-command-all-access",
+    "canUseAllCrewPowers": true,
+    "commands": ["Ms. Money Penny", "Oscar", "Ms. Vanessa", "Nexus", "Lexi", "Dr. Devin", "Sir Codex"],
+    "launchScript": "launch-agents/launch-the-goat.sh"
+  },
   "approvalGates": [
     "publishing",
     "external sending",

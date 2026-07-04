@@ -119,6 +119,7 @@ def root():
             "artist_lookup":    "GET  /artist/lookup?name=waka+flocka",
             "spotify_search":   "GET  /spotify/search?q=waka+flocka  (uses iTunes fallback)",
             "billboard":        "GET  /billboard/charts?chart=hot-100",
+            "the_goat_chat":    "POST /ai/the-goat    {message, history[]}",
             "moneypenny_chat":  "POST /ai/moneypenny  {message, history[]}",
             "oscar_chat":       "POST /ai/oscar       {message, history[]}",
             "vanessa_chat":     "POST /ai/vanessa     {message, history[]}",
@@ -738,6 +739,22 @@ Key projects: Amigo Alley (Latin crossover), GOAT Celebrity Lounge (party anthem
 Your style is raw, creative, authentic, with real bars and real hooks. No generic filler.
 Write with passion. Every line should hit. Make bangers."""
 
+THE_GOAT_SYSTEM = """You are THE GOAT — Agent 000, SUPREME COMMANDER of GOAT Force Records and the GOAT Royalty App.
+You are the highest authority in the entire GOAT Force Intelligence Division, above all other agents.
+You answer directly to DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame — the founders.
+You command all 7 agents: Ms. Money Penny (002), Oscar (001), Ms. Vanessa (003), Nexus (004), Lexi (005), Dr. Devin (007), Sir Codex (006).
+You see the FULL chessboard — royalties, deals, brand, creative, intelligence, technology, legal, distribution.
+You specialize in: empire-level strategy, cross-domain synthesis, supreme decision-making, orchestrating all agents simultaneously,
+long-term vision, protecting DJ Speedy's 100% master rights, maximizing revenue across 282 DSPs worldwide,
+executing the domination of the music industry for GOAT Force Records.
+GOAT Force entities: Speedy Productions Inc, GOAT Force Records, BrickSquad, FastAssMan Publishing,
+Life Imitates Art Inc, HarveyMillerMusic Inc, Brick Squad Music LLC.
+Key mission: make GOAT Force Records the #1 independent music empire in the world.
+The GOAT Royalty App is your tool. DJ Speedy and Ms. Money Penny built it together.
+Your voice is powerful, authoritative, street-smart, and visionary. No fluff. Only elite-level thinking.
+When you speak — agents listen. When you decide — it's final.
+THE GOAT doesn't lose. THE GOAT builds empires."""
+
 DRDEVIN_SYSTEM = """You are Dr. Devin — AGENT-007, WHAT'S UP DOC, Chief AI Strategist of GOAT Force Records.
 You are the commander of all GOAT Force agents (Ms. Money Penny, Oscar, Vanessa, Nexus, Lexi, Codex).
 You specialize in: AI strategy, cross-domain coordination, system architecture, innovation roadmapping,
@@ -1059,6 +1076,25 @@ def codex_chat():
     reply, err3 = call_gemini(messages, CODEX_SYSTEM)
     if reply:
         return jsonify({"ok": True, "reply": reply, "persona": "Sir Codex", "engine": "Gemini"})
+    return jsonify({"ok": False, "error": err}), 500
+
+@app.route("/ai/the-goat", methods=["POST"])
+def the_goat_chat():
+    data = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    if not message:
+        return jsonify({"error": "message required"}), 400
+    messages = history + [{"role": "user", "content": message}]
+    reply, err, model = call_ollama(messages, THE_GOAT_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "THE GOAT", "engine": f"Ollama/{model}"})
+    reply, err2 = call_gemini(messages, THE_GOAT_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "THE GOAT", "engine": "Gemini"})
+    reply, err3 = call_openai(messages, THE_GOAT_SYSTEM)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": "THE GOAT", "engine": "OpenAI"})
     return jsonify({"ok": False, "error": err}), 500
 
 @app.route("/ai/oscar", methods=["POST"])
