@@ -851,6 +851,25 @@ h1, h2, h3 { text-shadow: none !important; }
       <a class="persona-btn" href="autopilot-launcher.html"><span class="agent-icon">🤖</span><div class="agent-info"><div class="agent-name">Autopilot</div><div class="agent-role">Autonomous Execution</div></div><span class="agent-num">014</span></a>
     </div>
 
+    
+    <!-- GOAT VAULT ACCESS -->
+    <div class="special-ops" id="vaultPanel">
+      <div class="special-ops-title">🔐 GOAT Vault</div>
+      <button class="ops-btn" onclick="vaultStatus()"><span class="ops-icon">🧠</span> What Do I Know?</button>
+      <button class="ops-btn" onclick="vaultISRC()"><span class="ops-icon">🎵</span> ISRC Lookup</button>
+      <button class="ops-btn" onclick="vaultPublishing()"><span class="ops-icon">📚</span> Publishing Search</button>
+      <button class="ops-btn" onclick="vaultList()"><span class="ops-icon">📁</span> Vault Documents</button>
+      <div id="vaultStatusBar" style="display:none;font-size:10px;padding:6px 8px;background:rgba(57,148,188,0.08);border:1px solid rgba(57,148,188,0.2);border-radius:3px;margin:4px 12px;color:#8C8C8C;line-height:1.6;word-break:break-word;"></div>
+    </div>
+
+    <!-- MEMORY PANEL -->
+    <div class="special-ops" id="memoryPanel">
+      <div class="special-ops-title">💾 Memory</div>
+      <div id="memoryFacts" style="padding:0 12px 4px;font-size:10px;color:#666;line-height:1.6;min-height:20px;">Loading memories...</div>
+      <button class="ops-btn" onclick="saveMemoryPrompt()"><span class="ops-icon">💾</span> Save a Fact</button>
+      <button class="ops-btn" onclick="loadMemory()"><span class="ops-icon">🔄</span> Refresh Memory</button>
+    </div>
+
     <div class="special-ops">
       <div class="special-ops-title">🎛️ Command Deck</div>
       <button class="ops-btn" onclick="openStudioPanel()">
@@ -1442,6 +1461,89 @@ function applyLogo() {
 })();
 
 document.addEventListener('DOMContentLoaded', init);
+
+// ── GOAT VAULT + MEMORY ──────────────────────────────────────────────────────
+async function vaultStatus() {
+  const bar = document.getElementById('vaultStatusBar');
+  if (!bar) return;
+  bar.style.display = 'block';
+  bar.textContent = '🧠 Loading...';
+  try {
+    const r = await fetch(INTEL + '/ai/moneypenny/status', {signal: AbortSignal.timeout(6000)});
+    const d = await r.json();
+    if (d.ok) {
+      bar.innerHTML = '<strong style="color:#3994BC">LOADED</strong><br>' +
+        '📄 ' + d.knowledge_file.size_kb + 'KB knowledge<br>' +
+        '🎵 ' + d.catalog.isrc_tracks + ' ISRCs | 📚 ' + d.catalog.bsm_works + ' BSM works<br>' +
+        '📁 ' + d.vault_documents.length + ' vault docs | 💾 ' + d.memory_facts + ' memories';
+    } else { bar.textContent = '❌ Status unavailable'; }
+  } catch(e) { bar.textContent = '❌ Server offline'; }
+}
+async function vaultISRC() {
+  const q = prompt('Search ISRCs — track name or artist:'); if (!q) return;
+  const bar = document.getElementById('vaultStatusBar');
+  if (bar) { bar.style.display='block'; bar.textContent='🔍 Searching ISRCs...'; }
+  try {
+    const r = await fetch(INTEL + '/vault/catalog/isrc?title=' + encodeURIComponent(q), {signal: AbortSignal.timeout(6000)});
+    const d = await r.json();
+    if (d.results && d.results.length) {
+      if (bar) bar.innerHTML = '<strong style="color:#3994BC">ISRC: ' + d.results.length + ' found</strong><br>' +
+        d.results.slice(0,4).map(row => '• ' + Object.values(row).filter(Boolean).slice(0,3).join(' | ')).join('<br>');
+      quickSend('ISRC results for "' + q + '": ' + JSON.stringify(d.results.slice(0,3)) + '. Give me details on these tracks.');
+    } else { if (bar) bar.textContent = 'No ISRCs found for "' + q + '"'; }
+  } catch(e) { if (bar) bar.textContent = '❌ Vault search failed'; }
+}
+async function vaultPublishing() {
+  const q = prompt('Search BSM Publishing — title or writer:'); if (!q) return;
+  const bar = document.getElementById('vaultStatusBar');
+  if (bar) { bar.style.display='block'; bar.textContent='🔍 Searching publishing...'; }
+  try {
+    const r = await fetch(INTEL + '/vault/catalog/publishing?title=' + encodeURIComponent(q), {signal: AbortSignal.timeout(6000)});
+    const d = await r.json();
+    if (d.results && d.results.length) {
+      if (bar) bar.innerHTML = '<strong style="color:#3994BC">BSM: ' + d.results.length + ' found</strong><br>' +
+        d.results.slice(0,4).map(row => '• ' + Object.values(row).filter(Boolean).slice(0,3).join(' | ')).join('<br>');
+      quickSend('BSM Publishing results for "' + q + '": ' + JSON.stringify(d.results.slice(0,3)) + '. What do these tell us?');
+    } else { if (bar) bar.textContent = 'No publishing records for "' + q + '"'; }
+  } catch(e) { if (bar) bar.textContent = '❌ Vault search failed'; }
+}
+async function vaultList() {
+  const bar = document.getElementById('vaultStatusBar');
+  if (!bar) return;
+  bar.style.display = 'block'; bar.textContent = '📁 Loading vault...';
+  try {
+    const r = await fetch(INTEL + '/vault/list', {signal: AbortSignal.timeout(6000)});
+    const d = await r.json();
+    if (d.vault && d.vault.length) {
+      bar.innerHTML = '<strong style="color:#3994BC">Vault (' + d.count + ' docs)</strong><br>' + d.vault.map(f => '• ' + f).join('<br>');
+    } else { bar.textContent = 'Vault empty or server offline'; }
+  } catch(e) { bar.textContent = '❌ Vault unavailable'; }
+}
+async function loadMemory() {
+  const el = document.getElementById('memoryFacts');
+  if (!el) return;
+  try {
+    const r = await fetch(INTEL + '/memory/load', {signal: AbortSignal.timeout(4000)});
+    const d = await r.json();
+    if (d.ok && d.total > 0) {
+      el.innerHTML = '<strong style="color:#3994BC">' + d.total + ' facts saved</strong><br>' +
+        d.facts.slice(-5).map(f => '• ' + f.fact.slice(0,55) + (f.fact.length>55?'...':'')).join('<br>');
+    } else { el.textContent = 'No memories saved yet.'; }
+  } catch(e) { el.textContent = 'Memory offline.'; }
+}
+async function saveMemoryPrompt() {
+  const fact = prompt('Save a fact to memory:');
+  if (!fact || !fact.trim()) return;
+  try {
+    const r = await fetch(INTEL + '/memory/save', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({fact: fact.trim(), agent: 'lexi'})
+    });
+    const d = await r.json();
+    if (d.ok) { loadMemory(); addMessage('assistant', '💾 Saved to memory. I now have ' + d.total + ' facts stored.'); }
+  } catch(e) { alert('Could not save — server offline'); }
+}
+
 </script>
 
 <!-- TOUCH STUDIO PANEL -->
