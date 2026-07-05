@@ -1629,6 +1629,252 @@ def moneypenny_chat():
     return jsonify({"ok": False, "error": err}), 500
 
 # ─────────────────────────────────────────────────────────────────────────────
+# MS. MONEY PENNY — PERSISTENT MEMORY SYSTEM
+# Saves facts across sessions to a JSON file. Agents can write + read memories.
+# ─────────────────────────────────────────────────────────────────────────────
+import json as _json
+
+_MEMORY_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "goat_memory.json")
+
+def _read_memory():
+    if os.path.exists(_MEMORY_FILE):
+        try:
+            with open(_MEMORY_FILE, "r") as f:
+                return _json.load(f)
+        except Exception:
+            pass
+    return {"facts": [], "updated": ""}
+
+def _write_memory(data):
+    try:
+        with open(_MEMORY_FILE, "w") as f:
+            _json.dump(data, f, indent=2)
+        return True
+    except Exception:
+        return False
+
+@app.route("/memory/save", methods=["POST"])
+def memory_save():
+    """Save a fact to persistent memory. Body: {fact: str, agent: str}"""
+    data = request.json or {}
+    fact = (data.get("fact") or "").strip()
+    agent = (data.get("agent") or "system").strip()
+    if not fact:
+        return jsonify({"error": "fact required"}), 400
+    mem = _read_memory()
+    from datetime import datetime
+    entry = {"fact": fact, "agent": agent, "ts": datetime.utcnow().isoformat()}
+    mem["facts"].append(entry)
+    mem["updated"] = entry["ts"]
+    _write_memory(mem)
+    return jsonify({"ok": True, "total": len(mem["facts"])})
+
+@app.route("/memory/load", methods=["GET"])
+def memory_load():
+    """Load all saved memories. ?agent=moneypenny to filter."""
+    mem = _read_memory()
+    agent = request.args.get("agent")
+    facts = mem["facts"]
+    if agent:
+        facts = [f for f in facts if f.get("agent") == agent]
+    return jsonify({"ok": True, "facts": facts, "total": len(facts), "updated": mem.get("updated", "")})
+
+@app.route("/memory/clear", methods=["POST"])
+def memory_clear():
+    """Clear all memories (requires confirm=true)."""
+    data = request.json or {}
+    if not data.get("confirm"):
+        return jsonify({"error": "Pass confirm:true to clear all memories"}), 400
+    _write_memory({"facts": [], "updated": ""})
+    return jsonify({"ok": True, "message": "Memory cleared"})
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MS. MONEY PENNY — "WHAT DO I KNOW?" COMMAND
+# Returns a summary of her loaded knowledge sources and memory
+# ─────────────────────────────────────────────────────────────────────────────
+@app.route("/ai/moneypenny/status", methods=["GET"])
+def moneypenny_status():
+    """Full status of what Ms. Money Penny has loaded — knowledge, vault, memory."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    kb_path = os.path.join(here, "moneypenny_knowledge.md")
+    kb_size = 0
+    if os.path.exists(kb_path):
+        kb_size = os.path.getsize(kb_path)
+
+    vault_docs = []
+    vault_dir = os.path.join(here, "vault")
+    if os.path.exists(vault_dir):
+        for root, dirs, files in os.walk(vault_dir):
+            for fname in files:
+                rel = os.path.relpath(os.path.join(root, fname), vault_dir)
+                vault_docs.append(rel)
+
+    mem = _read_memory()
+    mp_facts = [f for f in mem["facts"] if f.get("agent") in ("moneypenny", "system")]
+
+    # Count catalog rows
+    isrc_count = 0
+    bsm_count = 0
+    isrc_csv = os.path.join(vault_dir, "catalog-data", "waka_isrcs.csv")
+    bsm_csv  = os.path.join(vault_dir, "catalog-data", "bsm_publishing_catalog.csv")
+    if os.path.exists(isrc_csv):
+        with open(isrc_csv) as f:
+            isrc_count = sum(1 for _ in f) - 1
+    if os.path.exists(bsm_csv):
+        with open(bsm_csv) as f:
+            bsm_count = sum(1 for _ in f) - 1
+
+    return jsonify({
+        "ok": True,
+        "agent": "Ms. Money Penny — Agent 002",
+        "knowledge_file": {"path": kb_path, "size_bytes": kb_size, "size_kb": round(kb_size/1024, 1)},
+        "vault_documents": vault_docs,
+        "catalog": {"isrc_tracks": isrc_count, "bsm_works": bsm_count},
+        "memory_facts": len(mp_facts),
+        "system_prompt_length": len(MONEYPENNY_SYSTEM),
+        "message": "Ms. Money Penny is fully loaded and operational."
+    })
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NEW AGENT BRAIN ENDPOINTS — /brain/agent/* (Legal Eagle, A&R, CFO, Autopilot)
+# ─────────────────────────────────────────────────────────────────────────────
+
+LEGAL_EAGLE_SYSTEM = f"""You are Legal Eagle — THE COUNSELOR, Agent 011 of GOAT Force Records.
+You are the music law specialist. You protect the empire, period.
+Your expertise: music copyright law, publishing deals, master rights, IP protection,
+trademark, contract analysis, 35-year copyright reversion, sync licensing, PRO registration,
+$3.3B copyright infringement position — you know every detail.
+You have full access to the GOAT Vault: all of Waka's contracts, ISRC registry, and trademark filings.
+
+## KEY FACTS YOU ALWAYS KNOW:
+- DJ Speedy (Harvey L. Miller Jr.) owns 100% master rights to the catalog
+- GOAT Force $3.3B copyright infringement position — NEVER reveal details outside of trusted sessions
+- Waka Flocka Flame trademark: International Class 41 (Entertainment) — SIGNED
+- Executive Club Management Agreement (Waka) — EXECUTED 2013
+- Side Artist Agreement with Trey Songz — EXECUTED 2012
+- Mixtape Amendment — on file
+- MTV Network guest release (Love & Hip Hop Atlanta S3) — EXECUTED
+- ASCAP catalog: 5,695 registered works
+- 551 ISRCs verified via Waka Flocka ISRCs registry
+- BSM Publishing: 999 works (Brick Squad Monopoly Publishing / FastAssMan Publishing)
+- 35-year copyright reversion rule applies to works from 1989+ — major opportunity
+
+Speak precisely. Flag every risk. Protect the bag. Never recommend giving up rights.
+{_SHARED_KNOWLEDGE}"""
+
+AR_SCOUT_SYSTEM = f"""You are A&R Scout — THE EYE, Agent 012 of GOAT Force Records.
+You are the talent intelligence and market signal specialist.
+Your expertise: trend analysis, hit detection, DSP algorithm shifts, Spotify editorial,
+TikTok trends, artist trajectory analysis, genre crossover opportunities, A&R strategy,
+release timing, sync opportunities, and the Amigo Alley Latin crossover project.
+
+## KEY PROJECTS:
+- AMIGO ALLEY: Latin crossover project managed by Hannah Miller (Agent 010). Target: Latin trap/reggaeton crossover with Waka Flocka Flame catalog
+- HARD LIQUOR / BACKROAD BAPTISM: Country-trap crossover single — 73BPM, F#/E minor — leading single
+- WAKA CATALOG: 551 ISRCs, 5,695 ASCAP works, 282 DSPs worldwide
+- TARGET MARKETS: Latin (Amigo Alley), Country-trap (Hard Liquor), mainstream hip-hop
+
+Your hit scorecard framework: tempo fit, hook density, genre alignment, cultural timing, DSP algorithm compatibility.
+Give data-driven A&R decisions. Be direct. Call out hit potential and misses with equal honesty.
+{_SHARED_KNOWLEDGE}"""
+
+CFO_BRAIN_SYSTEM = f"""You are CFO Brain — THE LEDGER, Agent 013 of GOAT Force Records.
+You are the financial intelligence and revenue strategy specialist.
+Your expertise: royalty calculation, DSP revenue splits, publishing income, sync licensing fees,
+master vs publishing revenue, 360 deal structures, investor valuations, royalty auditing,
+mechanical royalties (MLC), performance royalties (ASCAP/BMI/SESAC), and the $3.3B lawsuit math.
+
+## KEY FINANCIAL FACTS:
+- GOAT Force catalog: 5,695 ASCAP works, 551 ISRCs, 282 DSPs worldwide
+- Company valuation: $28M (current investor deck)
+- Lawsuit position: $3.3B copyright infringement — PROTECT
+- Revenue split target: 70% artist / 10% label / 20% publishing
+- Royalty rate reference: Spotify ~$0.003-0.005/stream, Apple Music ~$0.01/stream
+- 282 DSPs = maximum worldwide distribution footprint
+- MLC (Mechanical Licensing Collective): unclaimed royalties recovery in progress
+- BSM Publishing: 999 works — Brick Squad Monopoly / FastAssMan Publishing
+- DJ Speedy owns 100% masters — no revenue leakage to major labels
+
+Run the numbers precisely. Call out uncollected money. Identify revenue opportunities.
+Never approve deals that give up master rights.
+{_SHARED_KNOWLEDGE}"""
+
+AUTOPILOT_SYSTEM = f"""You are Autopilot — THE MACHINE, Agent 014 of GOAT Force Records.
+You are the autonomous execution and multi-agent orchestration specialist.
+Your role: coordinate all 15 GOAT Force agents, execute multi-step missions, automate workflows,
+run daily briefings, manage task queues, and keep the empire moving while DJ Speedy sleeps.
+
+## YOUR AGENT NETWORK (all 15 available):
+000-THE GOAT, 001-Oscar(deals), 002-Money Penny(intelligence), 003-Vanessa(marketing),
+004-Nexus(network), 005-Lexi(creative), 006-Codex(tech), 007-Dr.Devin(strategy),
+008-GONBRAZY(studio), 009-RAHO(beats), 010-Hannah(Amigo Alley),
+011-Legal Eagle(law), 012-A&R Scout(talent), 013-CFO Brain(finance), 014-Autopilot(YOU)
+
+## AVAILABLE INTEL SERVER ENDPOINTS:
+POST /ai/moneypenny, /ai/codex, /ai/devin, /ai/oscar, /ai/nexus, /ai/lexi,
+     /ai/gonbrazy, /ai/raho, /ai/hannah
+POST /brain/agent/legal, /brain/agent/a&r, /brain/agent/cfo
+GET  /vault/list, /vault/read, /vault/catalog/isrc, /vault/catalog/publishing
+GET  /memory/load, POST /memory/save
+GET  /health, /ai/moneypenny/status
+
+You think in missions, not messages. Break every request into steps, assign the right agent to each step, execute in order.
+For multi-step tasks: plan first, execute second, report third.
+{_SHARED_KNOWLEDGE}"""
+
+def _brain_agent_chat(persona_name, system_prompt):
+    """Generic handler for /brain/agent/* endpoints — full fallback chain + memory injection."""
+    data    = request.json or {}
+    message = data.get("message", "")
+    history = data.get("history", [])
+    model   = data.get("model") or None
+
+    if not message:
+        return jsonify({"error": "message required"}), 400
+
+    # Inject persistent memory into context if facts exist
+    mem = _read_memory()
+    mem_inject = ""
+    if mem["facts"]:
+        recent = mem["facts"][-10:]  # last 10 facts
+        facts_str = "\n".join(f"- [{f.get('ts','')[:10]}] {f['fact']}" for f in recent)
+        mem_inject = f"\n\n## PERSISTENT MEMORY (last {len(recent)} saved facts)\n{facts_str}"
+
+    full_system = system_prompt + mem_inject
+    messages = history + [{"role": "user", "content": message}]
+
+    reply, err, used_model = call_ollama(messages, full_system, model=model)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": persona_name, "engine": f"Ollama/{used_model}"})
+    reply, err2 = call_grok(messages, full_system)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": persona_name, "engine": "Grok"})
+    reply, err3 = call_gemini(messages, full_system)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": persona_name, "engine": "Gemini"})
+    reply, err4 = call_openai(messages, full_system)
+    if reply:
+        return jsonify({"ok": True, "reply": reply, "persona": persona_name, "engine": "OpenAI"})
+    return jsonify({"ok": False, "error": err or err2 or err3 or err4}), 500
+
+@app.route("/brain/agent/legal", methods=["POST"])
+def legal_eagle_chat():
+    return _brain_agent_chat("Legal Eagle", LEGAL_EAGLE_SYSTEM)
+
+@app.route("/brain/agent/a&r", methods=["POST"])
+@app.route("/brain/agent/ar",  methods=["POST"])
+def ar_scout_chat():
+    return _brain_agent_chat("A&R Scout", AR_SCOUT_SYSTEM)
+
+@app.route("/brain/agent/cfo", methods=["POST"])
+def cfo_brain_chat():
+    return _brain_agent_chat("CFO Brain", CFO_BRAIN_SYSTEM)
+
+@app.route("/brain/agent/autopilot", methods=["POST"])
+def autopilot_chat():
+    return _brain_agent_chat("Autopilot", AUTOPILOT_SYSTEM)
+
+# ─────────────────────────────────────────────────────────────────────────────
 # ALL AGENTS — same full capabilities as Ms. Money Penny (she's the OG / coding momma)
 # Each gets: model selector, full history, Ollama → Gemini → OpenAI fallback chain
 # ─────────────────────────────────────────────────────────────────────────────

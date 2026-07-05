@@ -836,6 +836,36 @@ h1, h2, h3, .agent-hero-name, .nav-brand span {
       <a class="persona-btn" href="autopilot-launcher.html"><span class="agent-icon">🤖</span><div class="agent-info"><div class="agent-name">Autopilot</div><div class="agent-role">Autonomous Execution</div></div><span class="agent-num">014</span></a>
     </div>
 
+    <!-- VAULT ACCESS PANEL -->
+    <div class="special-ops" id="vaultPanel">
+      <div class="special-ops-title">🔐 GOAT Vault</div>
+      <button class="ops-btn" onclick="vaultStatus()" title="Check what Money Penny knows">
+        <span>🧠</span> What Do I Know?
+      </button>
+      <button class="ops-btn" onclick="vaultISRC()" title="Search ISRC registry">
+        <span>🎵</span> ISRC Lookup
+      </button>
+      <button class="ops-btn" onclick="vaultPublishing()" title="Search BSM Publishing catalog">
+        <span>📚</span> Publishing Search
+      </button>
+      <button class="ops-btn" onclick="vaultList()" title="List all vault documents">
+        <span>📁</span> Vault Documents
+      </button>
+      <div id="vaultStatusBar" style="display:none;font-size:10px;padding:6px 8px;background:rgba(193,18,31,0.08);border:1px solid rgba(193,18,31,0.2);border-radius:4px;margin:4px 12px;color:#aaa;line-height:1.6;word-break:break-word;"></div>
+    </div>
+
+    <!-- MEMORY PANEL -->
+    <div class="special-ops" id="memoryPanel">
+      <div class="special-ops-title">💾 Memory</div>
+      <div id="memoryFacts" style="padding:0 12px 4px;font-size:10px;color:#666;line-height:1.6;min-height:20px;">Loading memories...</div>
+      <button class="ops-btn" onclick="saveMemoryPrompt()">
+        <span>💾</span> Save a Fact
+      </button>
+      <button class="ops-btn" onclick="loadMemory()">
+        <span>🔄</span> Refresh Memory
+      </button>
+    </div>
+
     <!-- Special Ops -->
     <div class="special-ops">
       <div class="special-ops-title">🔒 Special Operations</div>
@@ -1711,6 +1741,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setPersona(persona);
   checkServerStatus();
   loadModelList();
+  loadMemory();
 
   const savedColor = localStorage.getItem('goat_penny_accent');
   if (savedColor) setAccent(savedColor);
@@ -1720,6 +1751,136 @@ document.addEventListener('DOMContentLoaded', () => {
     applyLogo();
   }
 });
+
+// ── GOAT VAULT + MEMORY FUNCTIONS ──────────────────────────────────────────
+async function vaultStatus() {
+  const bar = document.getElementById('vaultStatusBar');
+  bar.style.display = 'block';
+  bar.textContent = '🧠 Loading knowledge status...';
+  try {
+    const r = await fetch(INTEL + '/ai/moneypenny/status', {signal: AbortSignal.timeout(6000)});
+    const d = await r.json();
+    if (d.ok) {
+      bar.innerHTML = `
+        <strong style="color:#c1121f">Ms. Money Penny — LOADED</strong><br>
+        📄 Knowledge: ${d.knowledge_file.size_kb}KB<br>
+        🎵 ISRCs: ${d.catalog.isrc_tracks} tracks<br>
+        📚 BSM Works: ${d.catalog.bsm_works}<br>
+        📁 Vault Docs: ${d.vault_documents.length}<br>
+        💾 Memory Facts: ${d.memory_facts}<br>
+        🔤 System Prompt: ${(d.system_prompt_length/1000).toFixed(1)}K chars
+      `;
+    } else {
+      bar.textContent = '❌ Could not load status';
+    }
+  } catch(e) {
+    bar.textContent = '❌ Server offline — start goat_intel.py first';
+  }
+}
+
+async function vaultISRC() {
+  const title = prompt('Search ISRCs — enter track name or artist:');
+  if (!title) return;
+  const bar = document.getElementById('vaultStatusBar');
+  bar.style.display = 'block';
+  bar.textContent = `🔍 Searching ISRCs for "${title}"...`;
+  try {
+    const r = await fetch(`${INTEL}/vault/catalog/isrc?title=${encodeURIComponent(title)}`, {signal: AbortSignal.timeout(6000)});
+    const d = await r.json();
+    if (d.results && d.results.length) {
+      const lines = d.results.slice(0, 5).map(row => {
+        const vals = Object.values(row).filter(Boolean).slice(0, 3).join(' | ');
+        return `• ${vals}`;
+      }).join('<br>');
+      bar.innerHTML = `<strong style="color:#c1121f">ISRC Results (${d.results.length} found)</strong><br>${lines}${d.results.length > 5 ? '<br>...and more' : ''}`;
+      // Also inject into chat
+      quickSend(`ISRC search results for "${title}": ${JSON.stringify(d.results.slice(0,3))}. Give me the details on these tracks.`);
+    } else {
+      bar.textContent = `No ISRCs found for "${title}"`;
+    }
+  } catch(e) {
+    bar.textContent = '❌ Vault search failed — server may be offline';
+  }
+}
+
+async function vaultPublishing() {
+  const title = prompt('Search BSM Publishing — enter title or writer name:');
+  if (!title) return;
+  const bar = document.getElementById('vaultStatusBar');
+  bar.style.display = 'block';
+  bar.textContent = `🔍 Searching BSM Publishing for "${title}"...`;
+  try {
+    const r = await fetch(`${INTEL}/vault/catalog/publishing?title=${encodeURIComponent(title)}`, {signal: AbortSignal.timeout(6000)});
+    const d = await r.json();
+    if (d.results && d.results.length) {
+      const lines = d.results.slice(0, 5).map(row => {
+        const vals = Object.values(row).filter(Boolean).slice(0, 3).join(' | ');
+        return `• ${vals}`;
+      }).join('<br>');
+      bar.innerHTML = `<strong style="color:#c1121f">Publishing Results (${d.results.length} found)</strong><br>${lines}${d.results.length > 5 ? '<br>...and more' : ''}`;
+      quickSend(`BSM Publishing search for "${title}": ${JSON.stringify(d.results.slice(0,3))}. What do these publishing registrations tell us?`);
+    } else {
+      bar.textContent = `No publishing records found for "${title}"`;
+    }
+  } catch(e) {
+    bar.textContent = '❌ Vault search failed';
+  }
+}
+
+async function vaultList() {
+  const bar = document.getElementById('vaultStatusBar');
+  bar.style.display = 'block';
+  bar.textContent = '📁 Loading vault documents...';
+  try {
+    const r = await fetch(INTEL + '/vault/list', {signal: AbortSignal.timeout(6000)});
+    const d = await r.json();
+    if (d.vault && d.vault.length) {
+      bar.innerHTML = `<strong style="color:#c1121f">Vault (${d.count} docs)</strong><br>` +
+        d.vault.map(f => `• ${f}`).join('<br>');
+    } else {
+      bar.textContent = 'Vault is empty or server offline';
+    }
+  } catch(e) {
+    bar.textContent = '❌ Could not reach vault';
+  }
+}
+
+async function loadMemory() {
+  const el = document.getElementById('memoryFacts');
+  if (!el) return;
+  try {
+    const r = await fetch(INTEL + '/memory/load', {signal: AbortSignal.timeout(4000)});
+    const d = await r.json();
+    if (d.ok && d.total > 0) {
+      const recent = d.facts.slice(-5);
+      el.innerHTML = `<strong style="color:#c1121f">${d.total} facts saved</strong><br>` +
+        recent.map(f => `• ${f.fact.slice(0, 60)}${f.fact.length > 60 ? '...' : ''}`).join('<br>');
+    } else {
+      el.textContent = 'No memories saved yet.';
+    }
+  } catch(e) {
+    el.textContent = 'Memory offline — start server first.';
+  }
+}
+
+async function saveMemoryPrompt() {
+  const fact = prompt('What fact should I remember? Be specific:');
+  if (!fact || !fact.trim()) return;
+  try {
+    const r = await fetch(INTEL + '/memory/save', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({fact: fact.trim(), agent: 'moneypenny'})
+    });
+    const d = await r.json();
+    if (d.ok) {
+      loadMemory();
+      addMessage('assistant', `💾 Got it. I've saved that to memory. I now have ${d.total} facts stored. I won't forget.`);
+    }
+  } catch(e) {
+    alert('Could not save — server offline');
+  }
+}
 </script>
 <!-- LIVE TERMINAL PANEL -->
 <div class="deck-panel" id="terminalPanel" onclick="if(event.target.id==='terminalPanel') closeTerminalPanel()">
