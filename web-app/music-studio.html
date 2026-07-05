@@ -429,6 +429,7 @@
     .tb-btn.gold{background:linear-gradient(135deg,var(--gold),var(--accent-light));color:#000;}
     .tb-btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
   </style>
+  <link rel="stylesheet" href="css/goat-touch.css">
 </head>
 <body>
 
@@ -1212,5 +1213,496 @@
       document.head.appendChild(s);
     }
   </script>
+
+  <!-- ===== GOAT FORCE PRODUCTION HUB ===== -->
+  <style>
+    .prod-hub { background: #060a0f; padding: 60px 0 40px; }
+    .prod-hub-inner { max-width: 1400px; margin: 0 auto; padding: 0 28px; }
+    .prod-section-title {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 1.3rem; font-weight: 800; color: var(--gold);
+      letter-spacing: 1px; text-transform: uppercase;
+      margin: 40px 0 18px; padding-bottom: 10px;
+      border-bottom: 1px solid rgba(212,160,60,0.2);
+    }
+    /* App launcher grid */
+    .app-launcher-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 14px; margin-bottom: 10px;
+    }
+    .app-launcher-card {
+      background: linear-gradient(135deg, #0d1b2a, #111820);
+      border: 1px solid rgba(212,160,60,0.15);
+      border-radius: 16px; padding: 20px 12px;
+      text-align: center; cursor: pointer;
+      transition: all 0.2s; text-decoration: none;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .app-launcher-card:hover {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, #1a2a3a, #151e28);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(212,160,60,0.18);
+    }
+    .app-launcher-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; flex-shrink: 0;
+    }
+    .app-launcher-name { font-size: 12px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+    .app-launcher-tag { font-size: 10px; color: var(--text-muted); }
+    /* Track player */
+    .track-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+    .track-card {
+      background: #0d1b2a; border: 1px solid rgba(212,160,60,0.15);
+      border-radius: 14px; padding: 16px 18px;
+      display: flex; align-items: center; gap: 14px;
+      transition: border-color 0.2s;
+    }
+    .track-card:hover { border-color: var(--gold); }
+    .track-art {
+      width: 52px; height: 52px; border-radius: 10px;
+      background: linear-gradient(135deg, rgba(212,160,60,0.3), rgba(212,160,60,0.05));
+      border: 1px solid rgba(212,160,60,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .track-info { flex: 1; min-width: 0; }
+    .track-title { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
+    .track-meta { font-size: 11px; color: var(--text-muted); }
+    .track-audio { width: 100%; margin-top: 8px; height: 30px; border-radius: 6px; accent-color: var(--gold); }
+    /* Drumkit grid */
+    .drumkit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .drumkit-card {
+      background: #0d1b2a; border: 1px solid rgba(212,160,60,0.12);
+      border-radius: 12px; padding: 16px;
+      display: flex; align-items: center; gap: 12px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .drumkit-card:hover { border-color: rgba(212,160,60,0.5); background: #111e2e; }
+    .drumkit-icon { font-size: 24px; flex-shrink: 0; }
+    .drumkit-name { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+    .drumkit-meta { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+    /* Video grid */
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .video-card {
+      background: #0d1b2a; border: 1px solid rgba(212,160,60,0.15);
+      border-radius: 14px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .video-card:hover { border-color: var(--gold); }
+    .video-card video { width: 100%; display: block; max-height: 180px; object-fit: cover; }
+    .video-card-info { padding: 12px 14px; }
+    .video-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+    .video-card-meta { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    /* NAS quick access */
+    .nas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 14px; }
+    .nas-card {
+      background: #0d1b2a; border: 1px solid rgba(93,173,226,0.2);
+      border-radius: 12px; padding: 16px 18px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .nas-icon { font-size: 28px; flex-shrink: 0; }
+    .nas-label { font-size: 13px; font-weight: 700; color: var(--text-primary); }
+    .nas-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .nas-btn {
+      margin-left: auto; padding: 6px 14px;
+      background: rgba(93,173,226,0.1); border: 1px solid rgba(93,173,226,0.3);
+      border-radius: 8px; color: var(--info); font-size: 11px;
+      cursor: pointer; font-family: inherit; white-space: nowrap;
+    }
+    .nas-btn:hover { background: rgba(93,173,226,0.2); }
+  </style>
+
+  <div class="prod-hub">
+    <div class="prod-hub-inner">
+
+      <!-- ── APP LAUNCHERS ── -->
+      <div class="prod-section-title">🚀 Production App Launchers</div>
+      <div class="app-launcher-grid">
+
+        <a class="app-launcher-card" onclick="launchApp('FL Studio 2025')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#ff6600,#ff9900)">🎹</div>
+          <div class="app-launcher-name">FL Studio 2025</div>
+          <div class="app-launcher-tag">DAW · Production</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('FL Studio 2024')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#e55c00,#ff7700)">🎹</div>
+          <div class="app-launcher-name">FL Studio 2024</div>
+          <div class="app-launcher-tag">DAW · Backup</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('Final Draft 13')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#1a4fd6,#3b7ff0)">📝</div>
+          <div class="app-launcher-name">Final Draft 13</div>
+          <div class="app-launcher-tag">Screenwriting</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('Final Cut Pro')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#333,#555)">🎬</div>
+          <div class="app-launcher-name">Final Cut Pro</div>
+          <div class="app-launcher-tag">Video Editing</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('Epic Games Launcher')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#0e0e0e,#333)">🎮</div>
+          <div class="app-launcher-name">Epic Games</div>
+          <div class="app-launcher-tag">Unreal · MetaHuman</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('MPC 3')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#c8102e,#e8304e)">🥁</div>
+          <div class="app-launcher-name">MPC 3</div>
+          <div class="app-launcher-tag">Beat Machine</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('MPC Beats')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#a00020,#c8102e)">🥁</div>
+          <div class="app-launcher-name">MPC Beats</div>
+          <div class="app-launcher-tag">Free DAW</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('SpectraLayers 11')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#6a0dad,#9b30ff)">🔊</div>
+          <div class="app-launcher-name">SpectraLayers 11</div>
+          <div class="app-launcher-tag">Audio Restoration</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('Splice')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#00b4d8,#0096b7)">🎵</div>
+          <div class="app-launcher-name">Splice</div>
+          <div class="app-launcher-tag">Samples · Plugins</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('Splice INSTRUMENT')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#0077a8,#00a8d8)">🎸</div>
+          <div class="app-launcher-name">Splice Instrument</div>
+          <div class="app-launcher-tag">Virtual Instruments</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('Source-Connect')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#1e6b2e,#2ea04b)">🔌</div>
+          <div class="app-launcher-name">Source Connect</div>
+          <div class="app-launcher-tag">Remote Studio</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('GOAT Royalty App')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#c1121f,#d4a03c)">🐐</div>
+          <div class="app-launcher-name">GOAT App</div>
+          <div class="app-launcher-tag">Royalty Command</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('UTM')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#0078d4,#50a0ff)">🖥</div>
+          <div class="app-launcher-name">UTM / Win 11</div>
+          <div class="app-launcher-tag">Virtual Machine</div>
+        </a>
+
+        <a class="app-launcher-card" onclick="launchApp('GitHub')">
+          <div class="app-launcher-icon" style="background:linear-gradient(135deg,#161b22,#30363d)">🐙</div>
+          <div class="app-launcher-name">GitHub</div>
+          <div class="app-launcher-tag">Code · Repos</div>
+        </a>
+
+      </div>
+
+      <!-- ── DJ SPEEDY TRACKS ── -->
+      <div class="prod-section-title">🎤 DJ Speedy — My Tracks</div>
+      <div class="track-grid">
+
+        <div class="track-card">
+          <div class="track-art">🎵</div>
+          <div class="track-info">
+            <div class="track-title">Old School Chevy</div>
+            <div class="track-meta">feat. Harvey Miller & Ray Rush</div>
+            <audio class="track-audio" controls src="audio/old-school-chevy.mp3"></audio>
+          </div>
+        </div>
+
+        <div class="track-card">
+          <div class="track-art">🎵</div>
+          <div class="track-info">
+            <div class="track-title">Daddy's Lil Girl</div>
+            <div class="track-meta">EM8 · 85 BPM</div>
+            <audio class="track-audio" controls src="audio/daddys-lil-girl.mp3"></audio>
+          </div>
+        </div>
+
+        <div class="track-card">
+          <div class="track-art">🎵</div>
+          <div class="track-info">
+            <div class="track-title">26RICO · 82 BPM</div>
+            <div class="track-meta">NAS · Stems Available</div>
+            <div class="track-meta" style="margin-top:6px">
+              <button onclick="openNASTrack('26RICO-82-_2.m4a')" style="padding:6px 14px;background:rgba(212,160,60,0.15);border:1px solid rgba(212,160,60,0.3);border-radius:8px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit">▶ Play from NAS</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="track-card">
+          <div class="track-art">🎵</div>
+          <div class="track-info">
+            <div class="track-title">Angels & Demons DEMO</div>
+            <div class="track-meta">NAS · Work in Progress</div>
+            <div class="track-meta" style="margin-top:6px">
+              <button onclick="openNASTrack('Angels & Demons DEMOOO 2.m4a')" style="padding:6px 14px;background:rgba(212,160,60,0.15);border:1px solid rgba(212,160,60,0.3);border-radius:8px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit">▶ Play from NAS</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="track-card">
+          <div class="track-art">🎵</div>
+          <div class="track-info">
+            <div class="track-title">Hard Liquor [WIP]</div>
+            <div class="track-meta">NAS · Work in Progress</div>
+            <div class="track-meta" style="margin-top:6px">
+              <button onclick="openNASTrack('Hard Liquor [WIP1].m4a')" style="padding:6px 14px;background:rgba(212,160,60,0.15);border:1px solid rgba(212,160,60,0.3);border-radius:8px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit">▶ Play from NAS</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="track-card">
+          <div class="track-art">🎵</div>
+          <div class="track-info">
+            <div class="track-title">Shift Gears · 162 BPM</div>
+            <div class="track-meta">aaki x mannylyrical</div>
+            <div class="track-meta" style="margin-top:6px">
+              <button onclick="openNASTrack('shift gears 162bpm - aaki x mannylyrical (glo, intro, hard).m4a')" style="padding:6px 14px;background:rgba(212,160,60,0.15);border:1px solid rgba(212,160,60,0.3);border-radius:8px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit">▶ Play from NAS</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── STEMS ── -->
+      <div class="prod-section-title">🎛 Stems Library</div>
+      <div class="drumkit-grid">
+        <div class="drumkit-card">
+          <div class="drumkit-icon">🎸</div>
+          <div>
+            <div class="drumkit-name">Faithfire Victory</div>
+            <div class="drumkit-meta">75 BPM · Full Stems · NAS</div>
+          </div>
+        </div>
+        <div class="drumkit-card">
+          <div class="drumkit-icon">🎸</div>
+          <div>
+            <div class="drumkit-name">Magic City Nashville</div>
+            <div class="drumkit-meta">127 BPM · Full Stems · NAS</div>
+          </div>
+        </div>
+        <div class="drumkit-card">
+          <div class="drumkit-icon">🎸</div>
+          <div>
+            <div class="drumkit-name">26RICO</div>
+            <div class="drumkit-meta">148 BPM · Master · NAS</div>
+          </div>
+        </div>
+        <div class="drumkit-card">
+          <div class="drumkit-icon">🎸</div>
+          <div>
+            <div class="drumkit-name">QAJ</div>
+            <div class="drumkit-meta">130 BPM · Master · NAS</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DRUMKITS ── -->
+      <div class="prod-section-title">🥁 WooH Drumkits — C Room</div>
+      <div class="drumkit-grid" id="drumkitGrid">
+        <div class="drumkit-card"><div class="drumkit-icon">🥁</div><div><div class="drumkit-name">@kyd.and.cambria</div><div class="drumkit-meta">Yeat x KanKan · Drum + Loop Kit</div></div></div>
+        <div class="drumkit-card"><div class="drumkit-icon">🥁</div><div><div class="drumkit-name">DMV3 Drum Kit</div><div class="drumkit-meta">C Room Collection</div></div></div>
+        <div class="drumkit-card"><div class="drumkit-icon">🥁</div><div><div class="drumkit-name">808 Studio HQ</div><div class="drumkit-meta">Mixed Drum Kit</div></div></div>
+        <div class="drumkit-card"><div class="drumkit-icon">🥁</div><div><div class="drumkit-name">808 x1 [SBB]</div><div class="drumkit-meta">WAV · One Shot</div></div></div>
+        <div class="drumkit-card"><div class="drumkit-icon">🥁</div><div><div class="drumkit-name">88WXLF'S Drumkit</div><div class="drumkit-meta">C Room Collection</div></div></div>
+        <div class="drumkit-card"><div class="drumkit-icon">🥁</div><div><div class="drumkit-name">B-Wheezy Kit</div><div class="drumkit-meta">Full Kit · ZIP</div></div></div>
+        <div class="drumkit-card"><div class="drumkit-icon">🥁</div><div><div class="drumkit-name">Based1 & Pilgrim</div><div class="drumkit-meta">Mirage · One Shot Kit</div></div></div>
+        <div class="drumkit-card"><div class="drumkit-icon">🥁</div><div><div class="drumkit-name">808 Drum Kit v2</div><div class="drumkit-meta">C Room Collection</div></div></div>
+      </div>
+
+      <!-- ── FLYING GOAT VIDEOS ── -->
+      <div class="prod-section-title">🐐 Flying GOAT — Animated</div>
+      <div class="video-grid">
+        <div class="video-card">
+          <video controls src="videos/flying-goat-1.mp4" preload="metadata"></video>
+          <div class="video-card-info"><div class="video-card-title">Flying GOAT · Take 1</div><div class="video-card-meta">Animated · MP4</div></div>
+        </div>
+        <div class="video-card">
+          <video controls src="videos/flying-goat-2.mp4" preload="metadata"></video>
+          <div class="video-card-info"><div class="video-card-title">Flying GOAT · Take 2</div><div class="video-card-meta">Animated · MP4</div></div>
+        </div>
+        <div class="video-card">
+          <video controls src="videos/flying-goat-3.mp4" preload="metadata"></video>
+          <div class="video-card-info"><div class="video-card-title">Flying GOAT · Take 3</div><div class="video-card-meta">Animated · MP4</div></div>
+        </div>
+        <div class="video-card">
+          <video controls src="videos/flying-goat-16.mp4" preload="metadata"></video>
+          <div class="video-card-info"><div class="video-card-title">Flying GOAT · Take 16</div><div class="video-card-meta">Animated · MP4</div></div>
+        </div>
+      </div>
+
+      <!-- ── NAS STORAGE ── -->
+      <div class="prod-section-title">💾 SPEEDYSCLOUD NAS — Quick Access</div>
+      <div class="nas-grid">
+        <div class="nas-card">
+          <div class="nas-icon">🎵</div>
+          <div><div class="nas-label">Production / Stems</div><div class="nas-sub">Full stems library on NAS</div></div>
+          <button class="nas-btn" onclick="window.open('smb://SPEEDYSCLOUD/_smb._tcp.local/Public/GOAT-Server-Storage/Production/Stems')">Open</button>
+        </div>
+        <div class="nas-card">
+          <div class="nas-icon">🥁</div>
+          <div><div class="nas-label">WooH Drumkits</div><div class="nas-sub">Full kit library on NAS</div></div>
+          <button class="nas-btn" onclick="window.open('smb://SPEEDYSCLOUD._smb._tcp.local/Public/GOAT-Server-Storage/Production/WooH-Drumkits')">Open</button>
+        </div>
+        <div class="nas-card">
+          <div class="nas-icon">🎬</div>
+          <div><div class="nas-label">Pro Tools Sessions</div><div class="nas-sub">Saved sessions on NAS</div></div>
+          <button class="nas-btn" onclick="window.open('smb://SPEEDYSCLOUD._smb._tcp.local/Public/GOAT-Server-Storage/pro-tools-sessions')">Open</button>
+        </div>
+        <div class="nas-card">
+          <div class="nas-icon">🎮</div>
+          <div><div class="nas-label">Windows Software</div><div class="nas-sub">Epic, NVIDIA, Unreal on NAS</div></div>
+          <button class="nas-btn" onclick="window.open('smb://SPEEDYSCLOUD._smb._tcp.local/Public/GOAT-Server-Storage/Windows-Software')">Open</button>
+        </div>
+        <div class="nas-card">
+          <div class="nas-icon">🤖</div>
+          <div><div class="nas-label">AI Models · 56 loaded</div><div class="nas-sub">Ollama on Mac · 25GB VRAM</div></div>
+          <button class="nas-btn" onclick="window.open('http://192.168.1.145:11434')">Status</button>
+        </div>
+        <div class="nas-card">
+          <div class="nas-icon">🌐</div>
+          <div><div class="nas-label">GOAT App on NAS</div><div class="nas-sub">24/7 · 192.168.2.2:8090</div></div>
+          <button class="nas-btn" onclick="window.open('http://192.168.2.2:8090')">Open</button>
+        </div>
+      </div>
+
+      <!-- ── LLM CONTROLS ── -->
+      <div class="prod-section-title">🧠 AI Model Controls</div>
+      <div style="background:#0d1b2a;border:1px solid rgba(212,160,60,0.15);border-radius:16px;padding:24px;margin-bottom:20px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+          <div>
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:8px">ACTIVE MODEL</label>
+            <select id="studioModelSelect" onchange="setStudioModel(this.value)" style="width:100%;background:#060a0f;border:1px solid rgba(212,160,60,0.3);border-radius:8px;padding:10px 14px;color:var(--text-primary);font-size:13px;font-family:inherit">
+              <option value="">Loading models...</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:8px">INTEL SERVER</label>
+            <div style="display:flex;gap:8px">
+              <div id="studioIntelStatus" style="flex:1;background:#060a0f;border:1px solid rgba(212,160,60,0.2);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--text-muted)">Checking...</div>
+              <button onclick="checkStudioStatus()" style="padding:10px 16px;background:rgba(212,160,60,0.1);border:1px solid rgba(212,160,60,0.3);border-radius:8px;color:var(--gold);font-size:12px;cursor:pointer;font-family:inherit">Refresh</button>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:8px">ASK AI ABOUT YOUR MUSIC</label>
+            <div style="display:flex;gap:8px">
+              <input id="studioAiInput" type="text" placeholder="e.g. what BPM should I use for trap?" style="flex:1;background:#060a0f;border:1px solid rgba(212,160,60,0.2);border-radius:8px;padding:10px 14px;color:var(--text-primary);font-size:12px;font-family:inherit" onkeydown="if(event.key==='Enter')askStudioAI()">
+              <button onclick="askStudioAI()" style="padding:10px 16px;background:linear-gradient(135deg,var(--gold),#c49030);border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">Ask</button>
+            </div>
+            <div id="studioAiReply" style="margin-top:10px;font-size:12px;color:var(--text-secondary);min-height:20px;line-height:1.6"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const INTEL_STUDIO = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://127.0.0.1:5500' : `http://${window.location.hostname}:5500`;
+
+    function launchApp(appName) {
+      const appMap = {
+        'FL Studio 2025': 'flstudio2025',
+        'FL Studio 2024': 'flstudio2024',
+        'Final Draft 13': 'finaldraft',
+        'Final Cut Pro': 'finalcutpro',
+        'Epic Games Launcher': 'epicgameslauncher',
+        'MPC 3': 'mpc3',
+        'MPC Beats': 'mpcbeats',
+        'SpectraLayers 11': 'spectralayers',
+        'Splice': 'splice',
+        'Splice INSTRUMENT': 'spliceinstrument',
+        'Source-Connect': 'sourceconnect',
+        'GOAT Royalty App': 'goatroyaltyapp',
+        'UTM': 'utm',
+        'GitHub': 'github'
+      };
+      fetch(`${INTEL_STUDIO}/system/launch-app`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({app: appName})
+      }).catch(() => {
+        // Fallback - try open directly
+        alert(`Launching ${appName}...\n\nTip: Intel server handles app launches automatically when connected.`);
+      });
+    }
+
+    function openNASTrack(filename) {
+      const url = `http://192.168.2.2:8090/Production/Stems/${encodeURIComponent(filename)}`;
+      window.open(url, '_blank');
+    }
+
+    async function loadStudioModels() {
+      try {
+        const r = await fetch('http://127.0.0.1:11434/api/tags', {signal: AbortSignal.timeout(4000)});
+        const d = await r.json();
+        const sel = document.getElementById('studioModelSelect');
+        const current = localStorage.getItem('goat_ollama_model') || 'llama3.1:8b';
+        sel.innerHTML = d.models.map(m =>
+          `<option value="${m.name}" ${m.name===current?'selected':''}>${m.name} (${(m.size/1e9).toFixed(1)}GB)</option>`
+        ).join('');
+      } catch(e) {
+        document.getElementById('studioModelSelect').innerHTML = '<option>Ollama offline</option>';
+      }
+    }
+
+    function setStudioModel(model) {
+      localStorage.setItem('goat_ollama_model', model);
+      document.getElementById('studioAiReply').textContent = `✅ Model set to ${model}`;
+      setTimeout(() => { document.getElementById('studioAiReply').textContent = ''; }, 2000);
+    }
+
+    async function checkStudioStatus() {
+      const el = document.getElementById('studioIntelStatus');
+      el.textContent = 'Checking...';
+      try {
+        const r = await fetch(`${INTEL_STUDIO}/health`, {signal: AbortSignal.timeout(4000)});
+        const d = await r.json();
+        el.style.color = '#2ecc71';
+        el.textContent = `✅ Intel Online · ${d.time || 'now'}`;
+      } catch(e) {
+        el.style.color = '#e74c3c';
+        el.textContent = '❌ Intel server offline';
+      }
+    }
+
+    async function askStudioAI() {
+      const input = document.getElementById('studioAiInput');
+      const reply = document.getElementById('studioAiReply');
+      const msg = input.value.trim();
+      if (!msg) return;
+      reply.textContent = '...thinking';
+      try {
+        const r = await fetch(`${INTEL_STUDIO}/ai/moneypenny`, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({message: msg}),
+          signal: AbortSignal.timeout(30000)
+        });
+        const d = await r.json();
+        reply.textContent = d.reply || d.error || 'No response';
+      } catch(e) {
+        reply.textContent = '❌ AI offline — start the intel server';
+      }
+    }
+
+    // Init
+    loadStudioModels();
+    checkStudioStatus();
+  </script>
+  <script src="js/goat-touch.js"></script>
+  <script src="js/goat-agent-controls.js"></script>
 </body>
 </html>

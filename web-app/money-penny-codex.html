@@ -13,33 +13,38 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
-            color: #fff;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            background: #080a0c;
+            color: #e8eaf5;
             min-height: 100vh;
         }
+
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background: url('assets/goat-superman.jpg') center center / 500px no-repeat;
+            opacity: 0.04; filter: grayscale(100%);
+        }
+        body > * { position: relative; z-index: 1; }
         
         .bg-effects {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
         }
         
         .glow-orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.3;
+            opacity: 0.18;
             animation: float 20s ease-in-out infinite;
         }
         
-        .orb-1 { width: 400px; height: 400px; background: #FFD700; top: -100px; left: -100px; }
-        .orb-2 { width: 300px; height: 300px; background: #00D4FF; bottom: -50px; right: -50px; animation-delay: -10s; }
-        .orb-3 { width: 200px; height: 200px; background: #FF6B35; top: 50%; left: 50%; animation-delay: -5s; }
+        .orb-1 { width: 400px; height: 400px; background: #f0c040; top: -100px; left: -100px; }
+        .orb-2 { width: 300px; height: 300px; background: #c1121f; bottom: -50px; right: -50px; animation-delay: -10s; }
+        .orb-3 { width: 200px; height: 200px; background: #f0c040; top: 50%; left: 50%; animation-delay: -5s; }
         
         @keyframes float {
             0%, 100% { transform: translate(0, 0); }
@@ -166,7 +171,7 @@
         }
         
         .badge-featured { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
-        .badge-new { background: #00D4FF; color: #000; }
+        .badge-new { background: #00d4aa; color: #000; }
         .badge-popular { background: #FF6B35; color: #fff; }
         .badge-local { background: #10B981; color: #fff; }
         
@@ -434,6 +439,7 @@
     </style>
 <!-- Third-party script removed: local credential storage must stay private. -->
   <link rel="stylesheet" href="css/local-fonts.css">
+  <link rel="stylesheet" href="css/goat-touch.css">
 </head>
 <body>
     <div class="bg-effects">
@@ -1004,5 +1010,7 @@ ${model.name}:`;
         // Initialize
         checkOllamaStatus();
     </script>
+  <script src="js/goat-touch.js"></script>
+  <script src="js/goat-agent-controls.js"></script>
 </body>
 </html>

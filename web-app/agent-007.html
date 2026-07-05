@@ -6,130 +6,312 @@
 <title>AGENT-007 | GOAT Force Intelligence Division</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="css/goat-brand.css">
+<link rel="stylesheet" href="css/goat-touch.css">
 <style>
 :root {
-  --bg-0:#030609;--bg-1:#050a14;--bg-2:#080c14;--bg-3:#0d1420;--bg-4:#111928;--bg-5:#1a2336;
-  --gold:#d4a03c;--gold2:#f0c040;--gold-glow:rgba(212,160,60,0.18);
-  --border:rgba(212,160,60,0.14);--border-hi:rgba(212,160,60,0.50);
-  --text:#f0ece4;--sub:#8a8070;
-  --red:#e74c3c;--green:#2ecc71;--blue:#3498db;--purple:#9b59b6;
-  --cyan:#00d4ff;--orange:#f39c12;--pink:#e91e8c;--teal:#1abc9c;
+  --bg-0:#080a0c; --bg-1:#050a14; --bg-2:#080c14; --bg-3:#0d1420; --bg-4:#111928; --bg-5:#1a2336;
+  --gold:#d4a03c; --gold2:#f0c040; --gold-glow:rgba(212,160,60,0.18);
+  --border:rgba(212,160,60,0.14); --border-hi:rgba(212,160,60,0.50);
+  --text:#f0ece4; --sub:rgba(255,255,255,0.45);
+  --red:#e74c3c; --green:#2ecc71; --blue:#3498db; --purple:#9b59b6;
+  --cyan:#00d4ff; --orange:#f39c12; --pink:#e91e8c; --teal:#1abc9c;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg-0);color:var(--text);font-family:'Inter','Segoe UI',sans-serif;min-height:100vh;overflow-x:hidden}
+body {
+  background: #080a0c;
+  color: var(--text);
+  font-family: 'Inter','Segoe UI',sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-/* ── ANIMATED BACKGROUND ── */
-.bg-anim{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.bg-anim::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,60,0.06) 0%,transparent 70%);top:-200px;left:-200px;animation:drift1 18s ease-in-out infinite}
-.bg-anim::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(155,89,182,0.07) 0%,transparent 70%);bottom:-100px;right:-100px;animation:drift2 22s ease-in-out infinite}
-@keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,40px)}}
-@keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-50px,-30px)}}
+/* GOAT Superman watermark */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: url('assets/goat-superman.jpg') center center / 500px no-repeat;
+  opacity: 0.04;
+  filter: grayscale(100%);
+}
+body > * { position: relative; z-index: 1; }
 
-/* ── HERO ── */
-.hero{position:relative;z-index:1;text-align:center;padding:80px 20px 60px;background:linear-gradient(180deg,rgba(212,160,60,0.04) 0%,transparent 100%);border-bottom:1px solid var(--border)}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,160,60,0.08);border:1px solid var(--border-hi);color:var(--gold);padding:6px 20px;border-radius:30px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px}
-.hero-badge .pulse{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
-.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px;margin-bottom:6px}
-.hero .codename{font-size:clamp(1rem,3vw,1.4rem);color:var(--sub);font-weight:500;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
-.hero p{max-width:700px;margin:0 auto 30px;color:var(--sub);line-height:1.7;font-size:15px}
-.hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
-.h-stat .val{font-size:2rem;font-weight:900;color:var(--gold)}
-.h-stat .lbl{font-size:11px;color:var(--sub);text-transform:uppercase;letter-spacing:1px}
+/* Floating gold particles */
+.particles {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.particle {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(240,192,64,0.2), rgba(212,160,60,0.04));
+  filter: blur(1px);
+  animation: floatParticle 20s ease-in-out infinite;
+  opacity: 0.5;
+}
+.particle:nth-child(1){width:280px;height:280px;top:8%;left:4%;animation-delay:0s}
+.particle:nth-child(2){width:170px;height:170px;top:62%;left:12%;animation-delay:5s}
+.particle:nth-child(3){width:380px;height:380px;top:22%;left:66%;animation-delay:10s}
+.particle:nth-child(4){width:130px;height:130px;top:76%;left:76%;animation-delay:15s}
+.particle:nth-child(5){width:240px;height:240px;top:44%;left:36%;animation-delay:7s}
+.particle:nth-child(6){width:110px;height:110px;top:6%;left:50%;animation-delay:3s}
+@keyframes floatParticle {
+  0%,100%{transform:translate(0,0) scale(1);opacity:0.4}
+  33%{transform:translate(40px,-60px) scale(1.08);opacity:0.6}
+  66%{transform:translate(-25px,35px) scale(0.94);opacity:0.35}
+}
 
-/* ── NAV STRIP ── */
-.nav-strip{position:relative;z-index:10;background:rgba(8,12,20,0.95);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;top:0;backdrop-filter:blur(16px)}
-.nav-strip a{color:var(--sub);text-decoration:none;padding:14px 12px;font-size:12px;font-weight:600;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
-.nav-strip a:hover,.nav-strip a.active{color:var(--gold);border-bottom-color:var(--gold)}
-.nav-brand{font-size:16px;font-weight:900;color:var(--gold);margin-right:16px;white-space:nowrap}
+/* NAV — glassmorphism dark */
+.nav-strip {
+  position: relative; z-index: 10;
+  background: rgba(8,10,12,0.92);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  top: 0; backdrop-filter: blur(16px);
+}
+.nav-strip a { color: rgba(255,255,255,0.45); text-decoration: none; padding: 14px 12px; font-size: 12px; font-weight: 600; border-bottom: 2px solid transparent; transition: all .2s; white-space: nowrap; }
+.nav-strip a:hover,.nav-strip a.active { color: #fff; border-bottom-color: var(--gold2); }
+.nav-brand {
+  font-size: 16px; font-weight: 900; margin-right: 16px; white-space: nowrap;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 18px rgba(255,255,255,0.5), 0 0 35px rgba(255,255,255,0.25);
+}
 .nav-spacer{flex:1}
 
-/* ── SECTION ── */
-section{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:60px 24px}
-.section-title{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:var(--gold);margin-bottom:6px}
-.section-sub{color:var(--sub);margin-bottom:40px;font-size:14px}
+/* HERO BANNER */
+.agent-hero {
+  margin: 0 24px 0;
+  padding: 20px 28px;
+  border-bottom: none;
+  border-radius: 18px 18px 0 0;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  background: linear-gradient(90deg, rgba(212,160,60,0.12) 0%, rgba(8,10,12,0.9) 70%);
+}
+.agent-hero-left { display: flex; align-items: center; gap: 18px; }
+.agent-hero-emoji { font-size: 64px; line-height: 1; filter: drop-shadow(0 0 16px rgba(255,255,255,0.3)); }
+.agent-hero-name {
+  margin: 0 0 4px; font-size: 32px; font-weight: 900; letter-spacing: -0.5px; color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 18px rgba(255,255,255,0.5), 0 0 35px rgba(255,255,255,0.25);
+}
+.agent-hero-role { margin: 0; font-size: 13px; color: rgba(255,255,255,0.55); font-weight: 500; }
+.agent-hero-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.hero-badge { font-size: 10px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; }
+.hero-badge.gold    { background: rgba(240,192,64,0.15);  border: 1px solid rgba(240,192,64,0.4);  color: #f0c040; }
+.hero-badge.green   { background: rgba(0,255,136,0.12);   border: 1px solid rgba(0,255,136,0.35);  color: #00ff88; }
+.hero-badge.white   { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); }
+.hero-badge.codename{ background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);color: rgba(255,255,255,0.5); font-size: 9px; }
+.hero-badge.pulse-dot::before {
+  content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: #2ecc71; box-shadow: 0 0 6px #2ecc71; margin-right: 6px;
+  animation: pDot 1.5s infinite;
+}
+@keyframes pDot{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* ── AGENT GRID ── */
-.agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px}
+/* HERO STATS */
+.hero-stats-row {
+  display: flex; gap: 0; flex-wrap: wrap;
+  background: rgba(8,10,12,0.85);
+  border: 1px solid rgba(212,160,60,0.14);
+  border-top: none;
+  margin: 0 24px;
+}
+.h-stat {
+  flex: 1; min-width: 100px;
+  padding: 18px 20px;
+  border-right: 1px solid rgba(212,160,60,0.1);
+  text-align: center;
+}
+.h-stat:last-child { border-right: none; }
+.h-stat .val { font-size: 1.8rem; font-weight: 900; color: var(--gold2); }
+.h-stat .lbl { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
 
-.agent-card{background:rgba(13,20,32,0.75);border:1px solid var(--border);border-radius:20px;padding:28px;position:relative;overflow:hidden;transition:all .35s cubic-bezier(.4,0,.2,1);cursor:pointer;backdrop-filter:blur(8px)}
-.agent-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--agent-color,var(--gold)),transparent);opacity:0;transition:opacity .35s}
-.agent-card:hover{transform:translateY(-6px);border-color:var(--agent-color,var(--gold));box-shadow:0 16px 60px rgba(0,0,0,.5),0 0 40px rgba(var(--agent-rgb,212,160,60),.12)}
-.agent-card:hover::before{opacity:1}
+/* SECTION */
+section { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 48px 24px; }
+.section-title {
+  font-size: clamp(1.4rem,3vw,2rem); font-weight: 800; margin-bottom: 6px;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 18px rgba(255,255,255,0.5), 0 0 35px rgba(255,255,255,0.25);
+}
+.section-sub { color: rgba(255,255,255,0.35); margin-bottom: 36px; font-size: 14px; }
 
-.agent-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px}
-.agent-avatar{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;border:2px solid var(--agent-color,var(--gold));position:relative;background:rgba(0,0,0,.3)}
-.agent-avatar .online-dot{position:absolute;bottom:-2px;right:-2px;width:14px;height:14px;border-radius:50%;border:2px solid var(--bg-3);animation:statusPulse 2s infinite}
+/* AGENT GRID */
+.agent-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(340px,1fr)); gap: 24px; }
+
+.agent-card {
+  background: rgba(13,20,32,0.85);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px;
+  position: relative; overflow: hidden;
+  transition: all .35s cubic-bezier(.4,0,.2,1);
+  cursor: pointer; backdrop-filter: blur(8px);
+}
+.agent-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--agent-color, var(--gold)), transparent);
+  opacity: 0; transition: opacity .35s;
+}
+.agent-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--agent-color, var(--gold));
+  box-shadow: 0 16px 60px rgba(0,0,0,.5), 0 0 40px rgba(var(--agent-rgb,212,160,60),.12);
+}
+.agent-card:hover::before { opacity: 1; }
+
+.agent-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.agent-avatar {
+  width: 64px; height: 64px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+  border: 2px solid var(--agent-color, var(--gold));
+  position: relative; background: rgba(0,0,0,.3);
+}
+.agent-avatar .online-dot {
+  position: absolute; bottom: -2px; right: -2px;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 2px solid var(--bg-3); animation: statusPulse 2s infinite;
+}
 @keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.5}}
-.agent-number{position:absolute;top:-6px;left:-6px;font-size:10px;font-weight:700;background:var(--agent-color,var(--gold));color:#000;border-radius:6px;padding:2px 5px;letter-spacing:.5px}
-.agent-info{flex:1}
-.agent-name{font-size:18px;font-weight:800;color:var(--text);margin-bottom:3px}
-.agent-codename{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--agent-color,var(--gold));margin-bottom:6px}
-.agent-role{font-size:12px;color:var(--sub);line-height:1.4}
-.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:6px}
-.status-badge.online{background:rgba(46,204,113,.15);border:1px solid rgba(46,204,113,.3);color:var(--green)}
-.status-badge.standby{background:rgba(243,156,18,.1);border:1px solid rgba(243,156,18,.25);color:var(--orange)}
-.status-badge.offline{background:rgba(231,76,60,.1);border:1px solid rgba(231,76,60,.2);color:var(--red)}
+.agent-number {
+  position: absolute; top: -6px; left: -6px;
+  font-size: 10px; font-weight: 700;
+  background: var(--agent-color, var(--gold));
+  color: #000; border-radius: 6px; padding: 2px 5px; letter-spacing: .5px;
+}
+.agent-info { flex: 1; }
+.agent-name {
+  font-size: 18px; font-weight: 800; margin-bottom: 3px;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.7), 0 0 18px rgba(255,255,255,0.3);
+}
+.agent-codename { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--agent-color, var(--gold)); margin-bottom: 6px; }
+.agent-role { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.4; }
+.status-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 12px; font-size: 10px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px;
+}
+.status-badge.online  { background: rgba(46,204,113,.15); border: 1px solid rgba(46,204,113,.3);  color: var(--green); }
+.status-badge.standby { background: rgba(243,156,18,.1);  border: 1px solid rgba(243,156,18,.25); color: var(--orange); }
+.status-badge.offline { background: rgba(231,76,60,.1);   border: 1px solid rgba(231,76,60,.2);   color: var(--red); }
 
-.agent-skills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
-.skill-tag{font-size:10px;padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--sub);font-weight:500}
+.agent-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.skill-tag {
+  font-size: 10px; padding: 4px 10px; border-radius: 10px;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  color: rgba(255,255,255,0.35); font-weight: 500;
+}
 
-.agent-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px;padding:14px;background:rgba(0,0,0,.25);border-radius:12px}
-.a-stat .val{font-size:16px;font-weight:700;color:var(--agent-color,var(--gold))}
-.a-stat .lbl{font-size:9px;color:var(--sub);text-transform:uppercase;letter-spacing:.5px}
+.agent-stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;
+  margin-bottom: 20px; padding: 14px;
+  background: rgba(0,0,0,.25); border-radius: 12px;
+}
+.a-stat .val { font-size: 16px; font-weight: 700; color: var(--agent-color, var(--gold)); }
+.a-stat .lbl { font-size: 9px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: .5px; }
 
-.agent-actions{display:flex;gap:8px}
-.btn-launch{flex:1;padding:11px 16px;border-radius:12px;border:1px solid var(--agent-color,var(--gold));background:transparent;color:var(--agent-color,var(--gold));font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px}
-.btn-launch:hover{background:var(--agent-color,var(--gold));color:#000}
-.btn-brief{padding:11px 14px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--sub);font-size:12px;cursor:pointer;transition:all .2s;font-family:inherit}
-.btn-brief:hover{border-color:var(--gold);color:var(--gold)}
+.agent-actions { display: flex; gap: 8px; }
+.btn-launch {
+  flex: 1; padding: 11px 16px; border-radius: 12px;
+  border: 1px solid var(--agent-color, var(--gold));
+  background: transparent; color: var(--agent-color, var(--gold));
+  font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s;
+  font-family: inherit; text-decoration: none;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btn-launch:hover { background: var(--agent-color, var(--gold)); color: #000; }
+.btn-brief {
+  padding: 11px 14px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent; color: rgba(255,255,255,0.4);
+  font-size: 12px; cursor: pointer; transition: all .2s; font-family: inherit;
+}
+.btn-brief:hover { border-color: var(--gold2); color: var(--gold2); }
 
-/* ── COMMAND CONSOLE ── */
-.console-panel{background:rgba(8,12,20,0.85);border:1px solid var(--border);border-radius:20px;padding:28px;margin-top:40px;backdrop-filter:blur(8px)}
-.console-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.console-dots{display:flex;gap:6px}
-.c-dot{width:12px;height:12px;border-radius:50%}
-.console-title{font-size:13px;font-weight:700;color:var(--gold);font-family:'JetBrains Mono',monospace;letter-spacing:1px}
-.console-body{font-family:'JetBrains Mono','Fira Code',monospace;font-size:12px;line-height:1.8;color:var(--sub);max-height:240px;overflow-y:auto}
-.console-line{display:flex;gap:10px}
-.cl-time{color:rgba(212,160,60,.4);flex-shrink:0}
-.cl-agent{font-weight:700;flex-shrink:0}
-.cl-msg{color:var(--text)}
-.cl-msg.ok{color:var(--green)}
-.cl-msg.warn{color:var(--orange)}
-.cl-msg.info{color:var(--cyan)}
-.cl-msg.cmd{color:var(--purple)}
+/* COMMAND CONSOLE */
+.console-panel {
+  background: rgba(8,10,12,0.92);
+  border: 1px solid rgba(212,160,60,0.15);
+  border-radius: 20px; padding: 28px; margin-top: 40px; backdrop-filter: blur(8px);
+}
+.console-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; padding-bottom: 16px;
+  border-bottom: 1px solid rgba(212,160,60,0.1);
+}
+.console-dots { display: flex; gap: 6px; }
+.c-dot { width: 12px; height: 12px; border-radius: 50%; }
+.console-title {
+  font-size: 13px; font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.7), 0 0 18px rgba(255,255,255,0.3);
+  font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;
+}
+.console-body {
+  font-family: 'JetBrains Mono','Fira Code',monospace;
+  font-size: 12px; line-height: 1.8;
+  color: rgba(255,255,255,0.4);
+  max-height: 240px; overflow-y: auto;
+}
+.console-line { display: flex; gap: 10px; }
+.cl-time  { color: rgba(212,160,60,.4); flex-shrink: 0; }
+.cl-agent { font-weight: 700; flex-shrink: 0; }
+.cl-msg   { color: var(--text); }
+.cl-msg.ok   { color: var(--green); }
+.cl-msg.warn { color: var(--orange); }
+.cl-msg.info { color: var(--cyan); }
+.cl-msg.cmd  { color: var(--purple); }
 
-/* ── BRIEFING MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
-.modal-overlay.open{display:flex}
-.modal-box{background:var(--bg-3);border:1px solid var(--border-hi);border-radius:24px;padding:36px;max-width:560px;width:90%;max-height:85vh;overflow-y:auto}
-.modal-box h2{font-size:22px;font-weight:800;color:var(--gold);margin-bottom:4px}
-.modal-box .m-sub{font-size:12px;color:var(--sub);margin-bottom:24px;letter-spacing:2px;text-transform:uppercase}
-.modal-section{margin-bottom:20px}
-.modal-section h3{font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-.modal-section p,.modal-section li{font-size:13px;color:var(--sub);line-height:1.6}
-.modal-section ul{padding-left:18px}
-.modal-section li{margin-bottom:4px}
-.modal-close{display:flex;justify-content:flex-end;margin-top:24px}
-.btn-close{padding:10px 24px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--sub);cursor:pointer;font-family:inherit;font-size:13px;transition:all .2s}
-.btn-close:hover{border-color:var(--gold);color:var(--gold)}
+/* BRIEFING MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.85); z-index: 200;
+  align-items: center; justify-content: center; backdrop-filter: blur(10px);
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--bg-3);
+  border: 1px solid var(--border-hi);
+  border-radius: 24px; padding: 36px;
+  max-width: 560px; width: 90%; max-height: 85vh; overflow-y: auto;
+}
+.modal-box h2 {
+  font-size: 22px; font-weight: 800; margin-bottom: 4px;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 18px rgba(255,255,255,0.4);
+}
+.modal-box .m-sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-bottom: 24px; letter-spacing: 2px; text-transform: uppercase; }
+.modal-section { margin-bottom: 20px; }
+.modal-section h3 { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(212,160,60,0.1); }
+.modal-section p,.modal-section li { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+.modal-section ul { padding-left: 18px; }
+.modal-section li { margin-bottom: 4px; }
+.modal-close { display: flex; justify-content: flex-end; margin-top: 24px; }
+.btn-close {
+  padding: 10px 24px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent; color: rgba(255,255,255,0.4);
+  cursor: pointer; font-family: inherit; font-size: 13px; transition: all .2s;
+}
+.btn-close:hover { border-color: var(--gold2); color: var(--gold2); }
 
 @media(max-width:700px){
   .agent-grid{grid-template-columns:1fr}
-  .hero{padding:60px 16px 40px}
-  .hero-stats{gap:24px}
-  section{padding:40px 16px}
+  .agent-hero{margin:0 12px 0;border-radius:14px 14px 0 0;padding:16px 18px}
+  .hero-stats-row{margin:0 12px}
+  section{padding:32px 16px}
+  .h-stat{padding:14px 12px}
 }
 </style>
 </head>
 <body>
 
-<div class="bg-anim"></div>
+<div class="particles" aria-hidden="true">
+  <div class="particle"></div><div class="particle"></div>
+  <div class="particle"></div><div class="particle"></div>
+  <div class="particle"></div><div class="particle"></div>
+</div>
 
 <!-- NAV -->
 <nav class="nav-strip">
-  <span class="nav-brand">🐐 GOAT Force</span>
+  <span class="nav-brand">🐐 GOAT Force AI</span>
   <a href="index.html">Home</a>
   <a href="moneypenny.html">AI Chat</a>
   <a href="studio-hub.html">Studio</a>
@@ -140,18 +322,30 @@ section{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:60px 
   <a href="goat-auth.html">Login</a>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge"><span class="pulse"></span> INTELLIGENCE DIVISION ACTIVE</div>
-  <h1>AGENT-007</h1>
-  <div class="codename">GOAT Force Operations Command</div>
-  <p>Seven elite AI agents. One mission — to make GOAT Force Records and DJ Speedy untouchable. Each agent is a specialized expert deployed across royalties, tech, creative, security, and strategy.</p>
-  <div class="hero-stats">
-    <div class="h-stat"><div class="val">7</div><div class="lbl">Active Agents</div></div>
-    <div class="h-stat"><div class="val">24/7</div><div class="lbl">Operations</div></div>
-    <div class="h-stat"><div class="val">282</div><div class="lbl">DSPs Monitored</div></div>
-    <div class="h-stat"><div class="val">100%</div><div class="lbl">Master Rights</div></div>
+<!-- HERO BANNER -->
+<div class="agent-hero">
+  <div class="agent-hero-left">
+    <div class="agent-hero-emoji">🐐</div>
+    <div>
+      <h1 class="agent-hero-name">AGENT-007</h1>
+      <p class="agent-hero-role">GOAT Force Operations Command · Seven Elite AI Agents</p>
+    </div>
   </div>
+  <div class="agent-hero-badges">
+    <span class="hero-badge gold pulse-dot">Intelligence Division Active</span>
+    <span class="hero-badge green">7 Agents Online</span>
+    <span class="hero-badge white">24/7 Ops</span>
+    <span class="hero-badge codename">CODENAME: GOAT FORCE OPS</span>
+  </div>
+</div>
+
+<!-- HERO STATS -->
+<div class="hero-stats-row">
+  <div class="h-stat"><div class="val">7</div><div class="lbl">Active Agents</div></div>
+  <div class="h-stat"><div class="val">24/7</div><div class="lbl">Operations</div></div>
+  <div class="h-stat"><div class="val">282</div><div class="lbl">DSPs Monitored</div></div>
+  <div class="h-stat"><div class="val">100%</div><div class="lbl">Master Rights</div></div>
+  <div class="h-stat"><div class="val">5,954</div><div class="lbl">Tracks</div></div>
 </div>
 
 <!-- AGENTS -->
@@ -279,8 +473,8 @@ const AGENTS = [
     name: 'Nexus',
     codename: 'THE ORACLE',
     role: 'AI Research, Intelligence & Trend Analysis',
-    color: '#00d4ff',
-    rgb: '0,212,255',
+    color: '#00d4aa',
+    rgb: '0,212,170',
     status: 'online',
     engine: 'Multi-Model',
     url: 'moneypenny.html?mode=nexus',
@@ -371,18 +565,18 @@ const AGENTS = [
 ];
 
 const LOG_MESSAGES = [
-  { agent: 'NEXUS', color: '#00d4ff', msg: 'Scanning 282 DSPs for royalty discrepancies...', type: 'info' },
+  { agent: 'NEXUS',    color: '#00d4ff', msg: 'Scanning 282 DSPs for royalty discrepancies...', type: 'info' },
   { agent: 'MONEYPENNY', color: '#e91e8c', msg: 'Q2 royalty statement compiled. $47,284 recovered.', type: 'ok' },
-  { agent: 'CODEX', color: '#2ecc71', msg: 'GOAT Royalty App v2.1 — build successful.', type: 'ok' },
-  { agent: 'LEXI', color: '#f39c12', msg: 'New hook written: "Straight to the Top (GOAT Mix)"', type: 'info' },
-  { agent: 'OSCAR', color: '#d4a03c', msg: 'Sync license deal — major streaming platform — PENDING REVIEW', type: 'warn' },
-  { agent: 'VANESSA', color: '#9b59b6', msg: 'Instagram campaign live. 2.4M reach in 6 hours.', type: 'ok' },
-  { agent: 'DR. DEVIN', color: '#e74c3c', msg: 'All agents nominal. GOAT Force operations at 100%.', type: 'cmd' },
-  { agent: 'NEXUS', color: '#00d4ff', msg: 'Trend alert: "amigo alley" tag trending in Latin markets', type: 'warn' },
-  { agent: 'CODEX', color: '#2ecc71', msg: 'API integration: Halito Chat v3 — connected to all Studio modules', type: 'ok' },
+  { agent: 'CODEX',    color: '#2ecc71', msg: 'GOAT Royalty App v2.1 — build successful.', type: 'ok' },
+  { agent: 'LEXI',     color: '#f39c12', msg: 'New hook written: "Straight to the Top (GOAT Mix)"', type: 'info' },
+  { agent: 'OSCAR',    color: '#d4a03c', msg: 'Sync license deal — major streaming platform — PENDING REVIEW', type: 'warn' },
+  { agent: 'VANESSA',  color: '#9b59b6', msg: 'Instagram campaign live. 2.4M reach in 6 hours.', type: 'ok' },
+  { agent: 'DR. DEVIN',color: '#e74c3c', msg: 'All agents nominal. GOAT Force operations at 100%.', type: 'cmd' },
+  { agent: 'NEXUS',    color: '#00d4ff', msg: 'Trend alert: "amigo alley" tag trending in Latin markets', type: 'warn' },
+  { agent: 'CODEX',    color: '#2ecc71', msg: 'API integration: Halito Chat v3 — connected to all Studio modules', type: 'ok' },
   { agent: 'MONEYPENNY', color: '#e91e8c', msg: 'Tidal payout discrepancy detected. Escalating to Master Oscar.', type: 'warn' },
-  { agent: 'LEXI', color: '#f39c12', msg: 'Script draft complete: "Casino Night" — 94 pages', type: 'ok' },
-  { agent: 'DR. DEVIN', color: '#e74c3c', msg: 'AGENT-007 hub fully operational. Mission: THE GOAT ROYALTY APP.', type: 'cmd' }
+  { agent: 'LEXI',     color: '#f39c12', msg: 'Script draft complete: "Casino Night" — 94 pages', type: 'ok' },
+  { agent: 'DR. DEVIN',color: '#e74c3c', msg: 'AGENT-007 hub fully operational. Mission: THE GOAT ROYALTY APP.', type: 'cmd' }
 ];
 
 function renderAgents() {
@@ -480,5 +674,7 @@ setInterval(() => {
   logIdx++;
 }, 6000);
 </script>
+<script src="js/goat-touch.js"></script>
+<script src="js/goat-agent-controls.js"></script>
 </body>
 </html>

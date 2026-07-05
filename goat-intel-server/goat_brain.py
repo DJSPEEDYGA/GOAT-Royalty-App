@@ -57,9 +57,11 @@ def load_nvidia_key():
 # ============================================================
 def call_ollama(messages, system_prompt, model=None):
     """Call local Ollama server — auto-picks best available model from drive."""
+    # Power model first — DJ Speedy has llama3.1:70b + all big models on drive
     preferred = [
-        "llama3.1:8b", "llama3.2:3b", "qwen2.5:7b", "mistral:7b",
-        "qwen3:8b", "qwen3:14b", "qwen2.5:14b", "llama3.3:70b"
+        "llama3.1:70b", "llama3.3:70b", "qwen3:32b", "qwen2.5:32b",
+        "deepseek-r1:32b", "qwen3:14b", "qwen2.5:14b", "llama3.1:8b",
+        "qwen3:8b", "qwen2.5:7b", "mistral:7b", "llama3.2:3b"
     ]
     try:
         ping = requests.get(f"{OLLAMA_URL}/api/tags", timeout=3)

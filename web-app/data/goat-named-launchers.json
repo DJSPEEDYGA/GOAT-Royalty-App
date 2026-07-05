@@ -1,5 +1,5 @@
 {
-  "version": "2026-05-29",
+  "version": "2026-07-04",
   "houseRule": "One crew, separate launchers, shared GOAT bench. Everybody can do what everybody can do; lead lanes are assignments, not limits.",
   "identityRule": "Each assistant keeps their own name, likeness cue, launcher, folder lane, and evidence trail. Shared powers do not merge identities.",
   "foundingNote": "DJ Speedy and Ms. Money Penny built this GOAT house. AGENT007 (Licence to Build or Destroy) + MONEY PENNY are the persona: Master Oscar here.",
@@ -251,30 +251,152 @@
         "Pixel Streaming / UE5 route",
         "CUDA Core / NVIDIA developer lane"
       ]
+    },
+    {
+      "id": "gonbrazy",
+      "codeName": "GONBRAZY",
+      "displayName": "GONBRAZY",
+      "iconText": "GB",
+      "accent": "#f39c12",
+      "page": "gonbrazy-launcher.html",
+      "home": "music-studio.html?mode=gonbrazy",
+      "folderLane": "BackupVault/GOAT-Crew-Homes/GONBRAZY",
+      "likenessCue": "GB / orange gold",
+      "identityBoundary": "GONBRAZY owns mixing, mastering, session production, and C Room management.",
+      "lane": "Studio boss lane \u2014 mixing, mastering, C Room sessions, Pro Tools, session management.",
+      "lead": "Studio production and mixing",
+      "status": "active studio boss \u2014 C Room sessions active",
+      "accessModel": "one-crew-equal-all-tools-access",
+      "canUseAllCrewPowers": true,
+      "cRoom": [
+        "HEAD2SOLID SESSIONS",
+        "Icky Sessions",
+        "Jimmy Rocket",
+        "EMPHAMUS VERSE",
+        "JimmyMGHU",
+        "JNOTE SESSIONS"
+      ],
+      "sessionPackets": [
+        "pro-tools-mix-copilot",
+        "codex-mix-mentor",
+        "world-class-sound-genre-study",
+        "hard-liquor-next-single"
+      ],
+      "sharedPowers": [
+        "music and audio",
+        "Pro Tools",
+        "FL Studio",
+        "mixing",
+        "mastering",
+        "C Room sessions",
+        "session packets",
+        "GOAT app",
+        "catalog"
+      ]
+    },
+    {
+      "id": "wooh-da-kid",
+      "codeName": "WOOH_DA_KID",
+      "displayName": "Wooh Da Kid",
+      "iconText": "WK",
+      "accent": "#1abc9c",
+      "page": "wooh-da-kid-launcher.html",
+      "home": "music-studio.html?mode=wooh",
+      "folderLane": "BackupVault/GOAT-Crew-Homes/Wooh-Da-Kid",
+      "likenessCue": "WK / teal green \u2014 Tony Starks / Gangsta Nerd",
+      "identityBoundary": "Wooh Da Kid (Tony Starks) owns beat production, FL Studio, DJ Speedy collaboration, and tech-nerd studio ops.",
+      "lane": "Beat maestro lane \u2014 FL Studio guru, DJ Speedy production buddy, studio manager, tech guru.",
+      "lead": "Beat production and FL Studio",
+      "status": "active \u2014 Waka new country single + hard-liquor next single in progress",
+      "codename": "TONY STARKS / GANGSTA NERD",
+      "accessModel": "one-crew-equal-all-tools-access",
+      "canUseAllCrewPowers": true,
+      "cRoom": [
+        "HEAD2SOLID SESSIONS",
+        "Icky Sessions",
+        "Jimmy Rocket",
+        "EMPHAMUS VERSE",
+        "JimmyMGHU",
+        "JNOTE SESSIONS"
+      ],
+      "sessionPackets": [
+        "wooh-da-kid-fl-studio-training",
+        "world-class-sound-genre-study",
+        "hard-liquor-next-single",
+        "waka-new-country-single"
+      ],
+      "sharedPowers": [
+        "music and audio",
+        "FL Studio",
+        "beat making",
+        "mixing",
+        "C Room sessions",
+        "session packets",
+        "GOAT app",
+        "catalog"
+      ]
+    },
+    {
+      "id": "hannah-miller",
+      "codeName": "HANNAH_MILLER",
+      "displayName": "Hannah Miller",
+      "iconText": "HM",
+      "accent": "#e91e8c",
+      "page": "hannah-miller-launcher.html",
+      "home": "amigo-alley.html",
+      "folderLane": "BackupVault/GOAT-Crew-Homes/Hannah-Miller",
+      "likenessCue": "HM / hot pink \u2014 Amigo Alley web keeper",
+      "identityBoundary": "Hannah Miller owns the Amigo Alley website, Latin crossover marketing, and web presence.",
+      "lane": "Amigo Alley web keeper \u2014 Latin crossover, website, marketing, content.",
+      "lead": "Amigo Alley Latin crossover web presence",
+      "status": "active \u2014 Amigo Alley Latin crossover in progress",
+      "accessModel": "one-crew-equal-all-tools-access",
+      "canUseAllCrewPowers": true,
+      "sessionPackets": [
+        "hannah-miller-anigo-alley"
+      ],
+      "sharedPowers": [
+        "GOAT app",
+        "catalog",
+        "marketing",
+        "Amigo Alley",
+        "content creation",
+        "web management",
+        "royalties",
+        "social media"
+      ]
     }
   ],
   "the-goat": {
     "id": "the-goat",
     "codeName": "THE_GOAT",
     "displayName": "THE GOAT",
-    "iconText": "🐐",
+    "iconText": "\ud83d\udc10",
     "accent": "#FFD700",
     "accentAlt": "#c1121f",
     "page": "the-goat.html",
     "home": "the-goat.html",
     "folderLane": "BackupVault/GOAT-Crew-Homes/THE-GOAT",
-    "likenessCue": "GOAT superhero — red cape, gold G emblem, GOAT Royalty logo",
+    "likenessCue": "GOAT superhero \u2014 red cape, gold G emblem, GOAT Royalty logo",
     "logo": "img/goat-hero-icon.png",
     "identityBoundary": "THE GOAT is the Supreme Commander above all agents. Final authority on all GOAT Force decisions.",
-    "lane": "Supreme command — empire strategy, cross-agent orchestration, final decisions",
+    "lane": "Supreme command \u2014 empire strategy, cross-agent orchestration, final decisions",
     "lead": "Everything. THE GOAT sees the full chessboard.",
-    "status": "Supreme Commander — Agent 000",
+    "status": "Supreme Commander \u2014 Agent 000",
     "rank": "000",
     "endpoint": "/ai/the-goat",
     "agentServer": "http://localhost:5500",
     "accessModel": "supreme-command-all-access",
     "canUseAllCrewPowers": true,
-    "commands": ["Ms. Money Penny", "Master Oscar", "Ms. Vanessa", "Nexus", "Lexi", "Dr. Devin", "Sir Codex"],
+    "commands": [
+      "Ms. Money Penny",
+      "Master Oscar",
+      "Ms. Vanessa",
+      "Nexus",
+      "Lexi",
+      "Dr. Devin",
+      "Sir Codex"
+    ],
     "launchScript": "launch-agents/launch-the-goat.sh"
   },
   "approvalGates": [

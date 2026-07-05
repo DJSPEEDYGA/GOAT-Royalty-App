@@ -76,6 +76,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .ai-action-btn:hover{border-color:var(--purple);color:var(--purple);background:rgba(155,89,182,.1)}
 </style>
 
+  <link rel="stylesheet" href="css/goat-touch.css">
 </head>
 <body>
 <div id="app">
@@ -608,5 +609,7 @@ function init(){
 window.addEventListener('DOMContentLoaded',init);
 window.addEventListener('resize',()=>{if(currentView==='score')drawScore();});
 </script>
+  <script src="js/goat-touch.js"></script>
+  <script src="js/goat-agent-controls.js"></script>
 </body>
 </html>

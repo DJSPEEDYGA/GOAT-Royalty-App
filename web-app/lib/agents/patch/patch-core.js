@@ -214,56 +214,52 @@
       return { agentId: report.agentId, fixed: fixes.length === 0, fixes };
     }
 
-    /** ── Safe Self-Coding ── */
+    /** ── Safe Self-Coding — permission-gated via /api/self-code ── */
 
-    selfCode(request) {
-      const prompt = String(request).trim();
-      if (!prompt) return { ok: false, error: 'Empty request' };
-
-      const forbidden = ['rm -rf', 'sudo', 'mkfs', 'dd if=', 'curl .*\\|', 'wget .*\\|', 'eval(', 'Function(', 'setTimeout\\(.*\\{.*\\}', 'fetch\\(.*//'];
-      for (const p of forbidden) {
-        if (new RegExp(p, 'i').test(prompt)) {
-          return { ok: false, error: 'Request contains potentially unsafe pattern: ' + p };
-        }
+    /**
+     * Propose a file edit. Returns a diff for DJ Speedy to review.
+     * Does NOT apply anything until confirmSelfCode() is called.
+     * @param {string} filePath  - absolute path inside ~/GOAT-Royalty-App
+     * @param {string} newContent - full new file content
+     * @param {string} reason    - why the agent wants to make this change
+     * @param {string} agentId   - which agent is proposing
+     */
+    async proposeSelfCode(filePath, newContent, reason, agentId = 'drdevin') {
+      try {
+        const r = await fetch('http://localhost:5500/api/self-code', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ file_path: filePath, new_content: newContent, reason, confirm: false, agent_id: agentId }),
+        });
+        return await r.json();
+      } catch (e) {
+        return { ok: false, error: e.message };
       }
-
-      return {
-        ok: true,
-        request: prompt,
-        mode: 'sandbox',
-        note: 'This is a safe suggestion. To apply, copy the generated code into a file and review it before saving.',
-        generated: null
-      };
     }
 
-    generateCodeSnippet(request) {
-      const safe = this.selfCode(request);
-      if (!safe.ok) return safe;
-      const prompt = safe.request;
-
-      let code = '';
-      if (/model.*link|link.*model/i.test(prompt)) {
-        code = `// Example: link an agent to a new model directory
-Patch.setModelDir('moneypenny', '/Volumes/NewDrive/Money-Penny-Models/models');
-Patch.setDataDir('moneypenny', '/Volumes/NewDrive/Money-Penny-Models');
-`;
-      } else if (/health.*check|check.*health/i.test(prompt)) {
-        code = `// Example: run a health check for Money Penny
-Patch.healthCheck('moneypenny').then(report => {
-  console.log(report);
-  if (!report.healthy) {
-    Patch.selfHeal(report).then(fix => console.log(fix));
-  }
-});
-`;
-      } else if (/hello|hi|greet/i.test(prompt)) {
-        code = `console.log('Hello from Dr. Devin (Patch)!');`;
-      } else {
-        code = `// TODO: implement "${prompt.replace(/"/g, '\\"')}"
-// Review this stub before applying it.
-`;
+    /**
+     * Apply a previously proposed self-code change after DJ Speedy approved.
+     * @param {string} filePath  - same path as in proposeSelfCode
+     * @param {string} newContent - same newContent as in proposeSelfCode
+     * @param {string} reason
+     * @param {string} agentId
+     */
+    async confirmSelfCode(filePath, newContent, reason, agentId = 'drdevin') {
+      try {
+        const r = await fetch('http://localhost:5500/api/self-code', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ file_path: filePath, new_content: newContent, reason, confirm: true, agent_id: agentId }),
+        });
+        return await r.json();
+      } catch (e) {
+        return { ok: false, error: e.message };
       }
-      return { ...safe, generated: code };
+    }
+
+    /** Legacy sync stub — kept for compatibility */
+    selfCode(request) {
+      return { ok: true, request: String(request).trim(), mode: 'use proposeSelfCode()', generated: null };
     }
 
     /** ── Propagation ── */
@@ -320,7 +316,8 @@ Patch.healthCheck('moneypenny').then(report => {
     async terminalExec(cmd, options = {}) {
       const agentId = options.agentId || 'drdevin';
       const agent = this.getAgent(agentId);
-      const host = (options.terminalHost || agent.terminalHost || 'localhost:9999').replace(/^https?:\/\//, '');
+      // Default to GOAT Intel Server on 5500 — single server, no extra process needed
+      const host = (options.terminalHost || agent.terminalHost || 'localhost:5500').replace(/^https?:\/\//, '');
       const cwd = options.cwd || agent.defaultDataDir || '/Users/be100radio/GOAT-Royalty-App';
       const confirm = !!options.confirm;
 

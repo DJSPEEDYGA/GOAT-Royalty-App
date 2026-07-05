@@ -3,854 +3,869 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐐 GOAT Force — Master Launcher Hub</title>
-<link rel="icon" href="favicon.ico">
+<title>GOAT Force — Supreme Command Center</title>
+<link rel="stylesheet" href="css/goat-brand.css">
+<link rel="stylesheet" href="css/goat-theme.css">
 <style>
 :root {
-  --bg:#030608;--panel:#0d1117;--panel2:#161b22;--gold:#d4a03c;--gold2:#f0c040;
-  --green:#3fb950;--blue:#e8e8e8;--red:#e63946;--purple:#a78bfa;--cyan:#00d4ff;
-  --ink:#f0ece4;--dim:#8b949e;--line:#21262d;--glow:rgba(212,160,60,.2);
+  --hub-gold: #FFD700;
+  --hub-gold2: #f0c040;
+  --hub-gold3: #c89b3c;
+  --hub-gold-glow: rgba(255,215,0,0.25);
+  --hub-red: #e74c3c;
+  --hub-green: #2ecc71;
+  --hub-blue: #3498db;
+  --hub-purple: #9b59b6;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--ink);font-family:'JetBrains Mono','SF Mono','Fira Code',monospace;overflow-x:hidden;}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:rgba(3,6,8,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(193,18,31,0.35);display:flex;align-items:center;padding:0 20px;gap:12px;}
-nav img{width:32px;height:32px;border-radius:8px;object-fit:cover;}
-.nav-title{font-size:16px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.nav-links{display:flex;gap:4px;margin-left:16px;flex-wrap:wrap;}
-.nav-links a{font-size:12px;color:var(--dim);padding:4px 10px;border-radius:6px;text-decoration:none;transition:.15s;}
-.nav-links a:hover{color:var(--ink);background:var(--panel2);}
-.nav-right{margin-left:auto;display:flex;gap:8px;align-items:center;}
-.pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(63,185,80,.15);color:var(--green);}
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: #080a0c;
+  color: #f5e6c8;
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-/* HERO */
-.hero{padding:80px 20px 32px;text-align:center;background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(212,160,60,.08),transparent);}
-.hero img{width:80px;height:80px;border-radius:18px;box-shadow:0 0 48px var(--glow);margin-bottom:16px;}
-.hero h1{font-size:clamp(28px,4vw,48px);font-weight:900;letter-spacing:-1px;}
-.hero h1 span{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.hero p{color:var(--dim);font-size:14px;margin-top:8px;}
+/* GOAT Superman watermark */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: url('assets/goat-superman.jpg') center center / 500px no-repeat;
+  opacity: 0.04;
+  filter: grayscale(100%);
+}
+body > * { position: relative; z-index: 1; }
 
-/* SECTION */
-.wrap{max-width:1400px;margin:0 auto;padding:0 16px 60px;}
-.sec{margin-bottom:48px;}
-.sec-head{display:flex;align-items:center;gap:10px;padding:10px 0 12px;border-bottom:1px solid var(--line);margin-bottom:14px;}
-.sec-head .ico{font-size:20px;}
-.sec-head h2{font-size:17px;font-weight:700;}
-.sec-head .cnt{margin-left:auto;font-size:11px;color:var(--dim);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:2px 8px;}
+/* Floating gold particles */
+.particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,215,0,0.2), rgba(212,160,60,0.04));
+  filter: blur(1px);
+  animation: floatParticle 20s ease-in-out infinite;
+  opacity: 0.5;
+}
+.particle:nth-child(1) { width: 300px; height: 300px; top: 5%;  left: 5%;  animation-delay: 0s; }
+.particle:nth-child(2) { width: 180px; height: 180px; top: 65%; left: 10%; animation-delay: 5s; }
+.particle:nth-child(3) { width: 400px; height: 400px; top: 20%; left: 65%; animation-delay: 10s; background: radial-gradient(circle at 30% 30%, rgba(193,18,31,0.12), rgba(0,0,0,0)); }
+.particle:nth-child(4) { width: 140px; height: 140px; top: 78%; left: 78%; animation-delay: 15s; }
+.particle:nth-child(5) { width: 260px; height: 260px; top: 45%; left: 38%; animation-delay: 7s; }
+.particle:nth-child(6) { width: 120px; height: 120px; top: 8%;  left: 52%; animation-delay: 3s; background: radial-gradient(circle at 30% 30%, rgba(52,152,219,0.12), rgba(0,0,0,0)); }
+@keyframes floatParticle {
+  0%,100% { transform: translate(0,0) scale(1); opacity: 0.4; }
+  33%     { transform: translate(40px,-60px) scale(1.08); opacity: 0.6; }
+  66%     { transform: translate(-25px,35px) scale(0.94); opacity: 0.35; }
+}
 
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;}
-.grid-wide{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
+/* NAV — glassmorphism dark */
+.goat-nav {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(8,10,12,0.92) !important;
+  backdrop-filter: blur(16px);
+}
+.goat-nav .nav-brand span,
+.goat-nav span[style*="color:#fff"],
+.goat-nav span[style*="font-weight:900"] {
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 18px rgba(255,255,255,0.5), 0 0 35px rgba(255,255,255,0.25) !important;
+}
+.goat-nav-links a:hover { background: rgba(255,215,0,0.15); color: var(--hub-gold); }
+.goat-nav-links a.active { background: linear-gradient(135deg,rgba(184,134,11,0.3),rgba(139,105,20,0.3)); box-shadow: 0 0 20px rgba(255,215,0,0.2); color: #fff !important; }
 
-/* CARD */
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;align-items:flex-start;gap:12px;text-decoration:none;color:var(--ink);transition:.15s;cursor:pointer;position:relative;}
-.card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 24px rgba(212,160,60,.12);}
-.card.g:hover{border-color:var(--green);box-shadow:0 6px 24px rgba(63,185,80,.12);}
-.card.b:hover{border-color:#e8e8e8;box-shadow:0 6px 24px rgba(220,220,220,.08);}
-.card.r:hover{border-color:var(--red);box-shadow:0 6px 24px rgba(230,57,70,.12);}
-.card.p:hover{border-color:var(--purple);box-shadow:0 6px 24px rgba(167,139,250,.12);}
-.card.c:hover{border-color:var(--cyan);box-shadow:0 6px 24px rgba(0,212,255,.12);}
-.ci{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.cb{flex:1;min-width:0;}
-.cn{font-size:13px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.cd{font-size:11px;color:var(--dim);line-height:1.5;}
-.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
-.tag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;text-transform:uppercase;}
-.tg{background:rgba(212,160,60,.12);color:var(--gold);}
-.tgr{background:rgba(63,185,80,.12);color:var(--green);}
-.tb{background:rgba(220,220,220,.1);color:#e8e8e8;}
-.tr{background:rgba(230,57,70,.12);color:var(--red);}
-.tp{background:rgba(167,139,250,.12);color:var(--purple);}
-.tc{background:rgba(0,212,255,.12);color:var(--cyan);}
-.td{background:rgba(139,148,158,.08);color:var(--dim);}
+/* HUB LAYOUT */
+.hub-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 0;
+  height: calc(100vh - 80px);
+  margin: 0 24px 40px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255,215,0,0.2);
+  box-shadow: 0 0 60px rgba(255,215,0,0.1), 0 20px 60px rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+}
 
-/* STATUS BAR */
-.status-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-bottom:32px;}
-.sb{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.dg{background:var(--green);box-shadow:0 0 6px var(--green);}
-.dy{background:#d29922;box-shadow:0 0 6px #d29922;}
-.dr{background:var(--red);box-shadow:0 0 6px var(--red);}
-.dd{background:var(--dim);}
-.sl{font-size:12px;font-weight:600;}
-.ss{font-size:10px;color:var(--dim);}
+/* SIDEBAR */
+.hub-sidebar {
+  background: rgba(12,10,6,0.97);
+  border-right: 1px solid rgba(255,215,0,0.12);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+.hub-sidebar::-webkit-scrollbar { width: 4px; }
+.hub-sidebar::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.25); border-radius: 4px; }
 
-/* TOAST */
-#toast{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;font-weight:700;font-size:13px;padding:10px 22px;border-radius:10px;z-index:999;}
+/* Video bg in sidebar */
+.sidebar-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.08) saturate(1.5);
+  pointer-events: none;
+}
+.hub-sidebar > *:not(.sidebar-video-bg) { position: relative; z-index: 1; }
 
-@media(max-width:600px){.grid{grid-template-columns:1fr;}.nav-links{display:none;}}
+.hub-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 18px 16px;
+  border-bottom: 1px solid rgba(255,215,0,0.12);
+  flex-shrink: 0;
+}
+.hub-logo img { width: 44px; height: 44px; border-radius: 10px; filter: drop-shadow(0 0 12px rgba(255,215,0,0.5)); }
+.hub-logo-text { flex: 1; }
+.hub-logo-text .title {
+  font-size: 14px; font-weight: 900; letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 18px rgba(255,255,255,0.5), 0 0 35px rgba(255,255,255,0.25);
+}
+.hub-logo-text .sub { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+.hub-logo .intel-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--hub-green);
+  box-shadow: 0 0 8px var(--hub-green);
+  animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+.sec-label {
+  font-size: 10px; font-weight: 800; color: #555;
+  text-transform: uppercase; letter-spacing: 1.2px;
+  padding: 14px 18px 8px;
+  flex-shrink: 0;
+}
+
+/* Agent quick-switch */
+.persona-btns { padding: 0 12px 8px; flex-shrink: 0; }
+.persona-btn {
+  width: 100%; padding: 10px 12px; margin-bottom: 5px;
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.03); color: #aaa;
+  cursor: pointer; text-align: left; font-size: 12px;
+  font-weight: 700; transition: all 0.2s;
+  display: flex; align-items: center; gap: 8px;
+  text-decoration: none; font-family: 'JetBrains Mono', monospace;
+}
+.persona-btn:hover { background: rgba(255,255,255,0.07); color: #fff; border-color: rgba(255,215,0,0.35); }
+.persona-btn.active {
+  background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0.08) 100%);
+  border-color: var(--hub-gold);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(255,215,0,0.15);
+}
+.persona-btn .agent-icon { font-size: 16px; width: 24px; text-align: center; }
+.persona-btn .agent-info { flex: 1; }
+.persona-btn .agent-name { font-size: 12px; color: #fff; }
+.persona-btn .agent-role { font-size: 9px; font-weight: 500; color: #666; }
+.agent-num {
+  font-size: 9px; padding: 2px 6px; border-radius: 8px;
+  background: rgba(255,255,255,0.08); color: #777;
+  font-family: 'JetBrains Mono', monospace;
+}
+.persona-btn.active .agent-num { background: var(--hub-gold); color: #000; font-weight: 900; }
+
+/* Special ops */
+.special-ops {
+  padding: 8px 12px 10px; border-bottom: 1px solid rgba(255,215,0,0.08); flex-shrink: 0;
+}
+.special-ops-title {
+  font-size: 10px; font-weight: 800; color: var(--hub-gold);
+  text-transform: uppercase; letter-spacing: 1.2px;
+  padding: 0 6px 8px; display: flex; align-items: center; gap: 6px;
+}
+.ops-btn {
+  width: 100%; padding: 9px 12px; margin-bottom: 5px;
+  border-radius: 10px; border: 1px solid rgba(255,215,0,0.18);
+  background: rgba(255,215,0,0.06); color: #e5e5e5;
+  cursor: pointer; text-align: left; font-size: 11px;
+  font-weight: 600; transition: all 0.2s;
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  text-decoration: none;
+}
+.ops-btn:hover { background: rgba(255,215,0,0.14); border-color: var(--hub-gold); transform: translateX(2px); }
+.ops-btn .ops-icon { font-size: 13px; }
+
+/* Status panel */
+.status-panel { padding: 12px 16px; border-bottom: 1px solid rgba(255,215,0,0.08); flex-shrink: 0; }
+.status-panel-title { font-size: 10px; font-weight: 800; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.status-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 0; font-size: 11px; color: #aaa; font-family: 'JetBrains Mono', monospace;
+}
+.status-row .status-left { display: flex; align-items: center; gap: 6px; }
+.status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--hub-green); box-shadow: 0 0 8px var(--hub-green);
+  animation: pulseDot 2s infinite;
+}
+.status-dot.offline { background: #555; box-shadow: none; animation: none; }
+.status-role { font-size: 9px; color: #555; }
+
+/* Terminal */
+.terminal-wrap {
+  background: #0d0d0d; border: 1px solid rgba(255,215,0,0.25);
+  border-radius: 12px; overflow: hidden; font-family: 'JetBrains Mono', monospace;
+  margin: 10px 12px; flex-shrink: 0;
+}
+.terminal-titlebar {
+  display: flex; align-items: center; gap: 8px; padding: 8px 14px;
+  background: rgba(255,215,0,0.08); border-bottom: 1px solid rgba(255,215,0,0.15);
+}
+.terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
+.terminal-dot.red    { background: #e74c3c; }
+.terminal-dot.yellow { background: #f0c040; }
+.terminal-dot.green  { background: #2ecc71; }
+.terminal-titlebar span { font-size: 11px; color: #666; margin-left: 6px; }
+.terminal-output {
+  padding: 12px 14px; min-height: 140px; max-height: 180px;
+  overflow-y: auto; font-size: 11px; line-height: 1.6;
+  color: #c8f7a0; white-space: pre-wrap;
+}
+.terminal-output::-webkit-scrollbar { width: 4px; }
+.terminal-output::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.2); border-radius: 4px; }
+.terminal-line.cmd  { color: var(--hub-gold2); }
+.terminal-line.err  { color: var(--hub-red); }
+.terminal-line.sys  { color: #666; font-style: italic; }
+.terminal-line.ok   { color: var(--hub-green); }
+.terminal-input-row {
+  display: flex; align-items: center; padding: 8px 14px;
+  border-top: 1px solid rgba(255,215,0,0.12);
+  background: rgba(0,0,0,0.4); gap: 8px;
+}
+.terminal-prompt { color: var(--hub-gold); font-size: 12px; white-space: nowrap; }
+.terminal-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  color: #fff; font-size: 12px; font-family: 'JetBrains Mono', monospace;
+  caret-color: var(--hub-gold);
+}
+.terminal-run-btn {
+  padding: 4px 12px; border-radius: 6px;
+  border: 1px solid rgba(255,215,0,0.4);
+  background: rgba(255,215,0,0.12); color: var(--hub-gold);
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  font-family: 'JetBrains Mono', monospace; transition: all 0.2s;
+}
+.terminal-run-btn:hover { background: rgba(255,215,0,0.22); }
+
+/* MAIN AREA */
+.hub-main {
+  background: rgba(6,5,3,0.98);
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.hub-main::-webkit-scrollbar { width: 4px; }
+.hub-main::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.2); border-radius: 4px; }
+
+/* Hero strip */
+.hub-hero {
+  position: relative; overflow: hidden; flex-shrink: 0;
+  min-height: 280px; display: flex; align-items: flex-end; padding: 32px 32px 28px;
+  background: linear-gradient(180deg, rgba(6,5,3,0) 0%, rgba(6,5,3,0.98) 100%);
+}
+.hub-hero video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+  filter: brightness(0.22) saturate(1.4);
+}
+.hub-hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, rgba(6,5,3,0.5) 0%, rgba(6,5,3,0.8) 100%),
+              radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,215,0,0.1) 0%, transparent 70%);
+}
+.hub-hero-content { position: relative; z-index: 2; }
+.hub-hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 20px; margin-bottom: 12px;
+  background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.25);
+  font-size: 11px; color: var(--hub-gold); letter-spacing: 1px; text-transform: uppercase;
+}
+.hub-hero h1 {
+  font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 900; line-height: 1;
+  margin: 0 0 10px; letter-spacing: -1px;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 18px rgba(255,255,255,0.5), 0 0 35px rgba(255,255,255,0.25);
+}
+.hub-hero p { font-size: 13px; color: rgba(255,255,255,0.4); margin: 0 0 20px; letter-spacing: 0.5px; }
+.hub-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+.hstat .num { font-size: 22px; font-weight: 900; color: var(--hub-gold2); }
+.hstat .lbl { font-size: 10px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 1px; }
+
+/* Section headers inside main */
+.main-section { padding: 24px 28px 8px; flex-shrink: 0; }
+.main-section-title {
+  font-size: 11px; font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 18px rgba(255,255,255,0.4);
+  text-transform: uppercase; letter-spacing: 1.5px;
+  padding-bottom: 14px; border-bottom: 1px solid rgba(255,215,0,0.08);
+  display: flex; align-items: center; gap: 8px;
+}
+.main-section-title span { color: var(--hub-gold); }
+
+/* Agent cards grid */
+.agents-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  gap: 12px; padding: 16px 28px;
+}
+.agent-card {
+  background: rgba(18,15,8,0.95); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 16px 16px 14px;
+  border-left: 3px solid var(--accent, rgba(255,215,0,0.4));
+  transition: all 0.2s; cursor: pointer; text-decoration: none;
+  color: #f5e6c8; display: block;
+}
+.agent-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent, rgba(255,215,0,0.4));
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4), -3px 0 0 var(--accent, rgba(255,215,0,0.4));
+  background: rgba(25,20,10,0.98);
+}
+.agent-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.agent-card-icon { font-size: 24px; }
+.agent-card-info { flex: 1; }
+.agent-card-name {
+  font-size: 13px; font-weight: 900; color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 18px rgba(255,255,255,0.2);
+}
+.agent-card-code { font-size: 9px; color: var(--accent, var(--hub-gold)); text-transform: uppercase; letter-spacing: 1px; margin-top: 1px; font-family: 'JetBrains Mono', monospace; }
+.agent-card-num {
+  font-size: 9px; padding: 2px 7px; border-radius: 8px;
+  background: rgba(255,255,255,0.06); color: #666; font-weight: 700;
+}
+.agent-card-role { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.4; margin-bottom: 12px; }
+.agent-card-footer { display: flex; align-items: center; justify-content: space-between; }
+.agent-card-dot {
+  display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--hub-green);
+}
+.agent-card-dot::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--hub-green); box-shadow: 0 0 6px var(--hub-green);
+  animation: pulseDot 2s infinite;
+}
+.agent-card-launch {
+  padding: 5px 12px; border-radius: 8px; font-size: 10px; font-weight: 700;
+  background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3);
+  color: var(--hub-gold); text-decoration: none; transition: all 0.2s;
+  font-family: 'JetBrains Mono', monospace;
+}
+.agent-card-launch:hover { background: rgba(255,215,0,0.2); color: #fff; }
+
+/* Empire sections */
+.empire-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+  gap: 10px; padding: 12px 28px 20px;
+}
+.empire-btn {
+  display: flex; align-items: center; gap: 8px; padding: 11px 14px;
+  background: rgba(15,12,6,0.9); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px; font-size: 12px; color: rgba(255,255,255,0.6); text-decoration: none;
+  transition: all 0.2s; font-family: 'JetBrains Mono', monospace; font-weight: 600;
+}
+.empire-btn:hover { background: rgba(255,215,0,0.08); border-color: rgba(255,215,0,0.3); color: var(--hub-gold); transform: translateY(-2px); }
+.empire-btn .e-icon { font-size: 18px; }
+
+/* Media gallery */
+.media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; padding: 12px 28px 20px; }
+.media-card {
+  background: rgba(15,12,6,0.95); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; overflow: hidden; transition: all 0.2s;
+}
+.media-card:hover { border-color: rgba(255,215,0,0.25); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.media-card video, .media-card audio { width: 100%; display: block; }
+.media-card video { height: 150px; object-fit: cover; background: #000; }
+.media-card-label { padding: 10px 14px; font-size: 11px; color: rgba(255,255,255,0.4); font-family: 'JetBrains Mono', monospace; }
+.media-card-label strong { display: block; font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 2px; }
+
+/* Investor deck CTA */
+.deck-cta {
+  margin: 8px 28px 20px;
+  background: linear-gradient(135deg, rgba(40,30,0,0.9) 0%, rgba(20,15,5,0.97) 100%);
+  border: 1px solid rgba(255,215,0,0.35);
+  border-radius: 14px; padding: 22px 24px;
+  display: flex; align-items: center; gap: 20px;
+  box-shadow: 0 0 30px rgba(255,215,0,0.06);
+}
+.deck-cta-icon { font-size: 3rem; filter: drop-shadow(0 0 12px rgba(255,215,0,0.4)); }
+.deck-cta-text { flex: 1; }
+.deck-cta-text h3 {
+  font-size: 17px; font-weight: 900; margin: 0 0 4px;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 18px rgba(255,255,255,0.4);
+}
+.deck-cta-text p { font-size: 12px; color: rgba(255,255,255,0.4); margin: 0; }
+.deck-cta-btn {
+  padding: 12px 24px; border-radius: 10px; font-size: 13px; font-weight: 800;
+  background: linear-gradient(135deg, var(--hub-gold), var(--hub-gold2));
+  color: #000; text-decoration: none; white-space: nowrap;
+  transition: all 0.2s; font-family: 'JetBrains Mono', monospace;
+  box-shadow: 0 4px 20px rgba(255,215,0,0.25);
+}
+.deck-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,215,0,0.4); }
+
+/* Intel server card */
+.intel-card {
+  margin: 0 28px 28px;
+  background: rgba(10,8,4,0.97); border: 1px solid rgba(255,215,0,0.15);
+  border-top: 2px solid var(--hub-gold); border-radius: 14px; padding: 18px 22px;
+}
+.intel-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.intel-card-header h4 {
+  font-size: 13px; font-weight: 900; margin: 0;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,255,255,0.7), 0 0 18px rgba(255,255,255,0.3);
+}
+.intel-card-header p { font-size: 10px; color: rgba(255,255,255,0.35); margin: 0; }
+.intel-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.intel-row {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+  background: rgba(255,255,255,0.03); border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06); font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.intel-row .name { color: rgba(255,255,255,0.4); flex: 1; }
+.intel-row .val { font-size: 10px; font-weight: 700; }
+.intel-row .val.ok   { color: var(--hub-green); }
+.intel-row .val.warn { color: #f59e0b; }
+.intel-row .val.off  { color: #555; }
+.intel-actions { display: flex; gap: 8px; }
+.intel-btn {
+  padding: 8px 16px; border-radius: 8px; font-size: 11px; font-weight: 700;
+  cursor: pointer; font-family: 'JetBrains Mono', monospace; transition: all 0.2s;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid;
+}
+.intel-btn.gold { background: linear-gradient(135deg,var(--hub-gold),var(--hub-gold2)); color: #000; border-color: transparent; }
+.intel-btn.ghost { background: transparent; color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.1); }
+.intel-btn.ghost:hover { border-color: var(--hub-gold); color: var(--hub-gold); }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .hub-layout { grid-template-columns: 1fr; height: auto; margin: 0 12px 30px; }
+  .hub-sidebar { border-right: none; border-bottom: 1px solid rgba(255,215,0,0.1); max-height: 380px; }
+  .agents-grid { grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); }
+}
 </style>
+  <link rel="stylesheet" href="css/goat-touch.css">
 </head>
 <body>
 
-<nav>
-  <img src="goat-logo.png" onerror="this.style.display='none'">
-  <span class="nav-title">GOAT Force — Master Hub</span>
-  <div class="nav-links">
-    <a href="#agents" style="color:var(--gold);font-weight:700;">💎 Launchpad</a>
-    <a href="#oscar">🐐 Master Oscar</a>
-    <a href="#agent1" style="color:var(--green);font-weight:700;">💾 AGENT1</a>
-    <a href="#live">Live</a>
-    <a href="#drive">Drive</a>
-    <a href="#deploy">Deploy</a>
-    <a href="#server">Server</a>
-    <a href="#github">GitHub</a>
-    <a href="#hardware">Hardware</a>
-    <a href="#tools">Tools</a>
-    <a href="#epk">Investor EPK</a>
-    <a href="#llm">LLM</a>
-    <a href="#jetson">Jetson</a>
-  </div>
-  <div class="nav-right"><span class="pill">● All Systems</span></div>
-</nav>
-
-<div class="hero">
-  <img src="goat-logo.png" onerror="this.style.display='none'">
-  <h1>GOAT Force <span>Master Launcher</span></h1>
-  <p>DJ Speedy (Harvey L. Miller Jr.) × Waka Flocka Flame — Every tool, agent, server, and drive in one place</p>
+<div class="particles" aria-hidden="true">
+  <div class="particle"></div><div class="particle"></div>
+  <div class="particle"></div><div class="particle"></div>
+  <div class="particle"></div><div class="particle"></div>
 </div>
 
-<div class="wrap">
-
-  <!-- LIVE STATUS -->
-  <div id="live" class="sec">
-    <div class="sec-head"><span class="ico">📡</span><h2>Live System Status</h2></div>
-    <div class="status-bar">
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">Agent-007 Local</div><div class="ss">localhost:3335 · Mac · RUNNING</div></div></div>
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">Ollama Local</div><div class="ss">localhost:11434 · Mac</div></div></div>
-      <div class="sb"><div class="dot" id="d-intel"></div><div><div class="sl">GOAT Intel Brain</div><div class="ss">localhost:5500</div></div></div>
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">Server 2 · Ubuntu</div><div class="ss">72.61.193.184 · LIVE</div></div></div>
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">goat-intel.service</div><div class="ss">72.61.193.184:5500 · systemd</div></div></div>
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">Agent-007 on Server 2</div><div class="ss">72.61.193.184:3335 · systemd</div></div></div>
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">Production VPS</div><div class="ss">2.25.68.216 · DEPLOYED</div></div></div>
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">SDK Manager</div><div class="ss">72.61.193.184 · v2.4.1 ✅</div></div></div>
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">i2i 1 Drive</div><div class="ss">7.3TB · /Volumes/i2i 1 · Mounted</div></div></div>
-      <div class="sb"><div class="dot dg"></div><div><div class="sl">Win11 Boot Drive</div><div class="ss">disk9 · 512GB · READY</div></div></div>
-      <div class="sb"><div class="dot dr"></div><div><div class="sl">Ubuntu disk11</div><div class="ss">248GB · READ-ONLY — fix switch</div></div></div>
+<nav class="goat-nav">
+  <div class="nav-brand">
+    <img src="img/goat-hero-icon.png" alt="GOAT" style="height:36px;border-radius:8px;">
+    <span style="font-weight:900;letter-spacing:0.5px;">GOAT Force AI</span>
+  </div>
+  <div class="nav-links goat-nav-links">
+    <a href="index.html">Home</a>
+    <a href="moneypenny.html">Ms. Money Penny</a>
+    <a href="music-studio.html">Studio</a>
+    <a href="goat-casino.html">Casino</a>
+    <a href="goat-city-rp.html">GTA RP</a>
+    <a href="goat-launcher-hub.html" class="active">Command Hub</a>
+    <a href="dr-devin.html">Dr. Devin</a>
+  </div>
+  <div style="margin-left:auto;display:flex;align-items:center;gap:10px;">
+    <div id="navStatus" style="display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.03);">
+      <span id="navDot" style="width:7px;height:7px;border-radius:50%;background:#555;display:inline-block;"></span>
+      <span id="navLabel">Intel…</span>
     </div>
+    <a href="moneypenny.html" class="goat-btn" style="font-size:12px;padding:8px 16px;">💼 Ms. Money Penny</a>
   </div>
+</nav>
 
-  <!-- ★ GOAT FORCE CONSOLE — PINNED AT TOP ★ -->
-  <div class="sec" style="margin-bottom:20px">
-    <div class="sec-head"><span class="ico">🖥</span><h2>GOAT Force Console</h2><span class="cnt">Unified command center</span></div>
-    <a href="goat-console.html" class="card" style="border-color:rgba(212,160,60,.6);background:linear-gradient(135deg,rgba(212,160,60,.1),rgba(13,17,23,1));max-width:600px;">
-      <div class="ci" style="background:linear-gradient(135deg,rgba(212,160,60,.35),rgba(240,192,64,.15));font-size:26px;width:52px;height:52px;border-radius:13px;">G</div>
-      <div class="cb">
-        <div class="cn" style="color:var(--gold);font-size:15px;">GOAT Force Console — Open Now</div>
-        <div class="cd">All 7 agents · AI Models (53+) · HuggingFace · NVIDIA CUDA 13.3 · ACE for Games · MCP Marketplace · Settings · Session history. Devin-style desktop UI.</div>
-        <div class="tags">
-          <span class="tag tg">ALL AGENTS</span>
-          <span class="tag tc">HUGGINGFACE</span>
-          <span class="tag" style="background:rgba(118,185,0,.12);color:#76b900">NVIDIA ACE</span>
-          <span class="tag tp">MCP</span>
-          <span class="tag tg">53+ MODELS</span>
-        </div>
+<div class="hub-layout">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="hub-sidebar">
+    <video class="sidebar-video-bg" autoplay muted loop playsinline>
+      <source src="video/goat-animated-16.mp4" type="video/mp4">
+      <source src="video/goat-animated-1.mp4" type="video/mp4">
+    </video>
+
+    <div class="hub-logo">
+      <img src="img/goat-logo.png" alt="GOAT">
+      <div class="hub-logo-text">
+        <div class="title">GOAT FORCE</div>
+        <div class="sub">Supreme Command Center</div>
       </div>
-    </a>
-  </div>
-
-  <!-- ★ AGENT LAUNCHPAD — MONEY PENNY FIRST ★ -->
-  <div id="agents" class="sec">
-    <div class="sec-head"><span class="ico">🚀</span><h2>Agent Launchpad</h2><span class="cnt">8 agents · one-click launch</span></div>
-    <div class="grid grid-wide">
-      <a href="launch-agents/launch-moneypenny.command" class="card" style="border-color:rgba(212,160,60,.5);background:linear-gradient(135deg,rgba(212,160,60,.12),rgba(13,17,23,1));">
-        <div class="ci" style="background:linear-gradient(135deg,rgba(212,160,60,.4),rgba(240,192,64,.2));font-size:24px;">💎</div>
-        <div class="cb">
-          <div class="cn" style="color:var(--gold);">Ms. Money Penny · Launch First</div>
-          <div class="cd">Royalties & Business Intelligence. Orchestrates the GOAT Force. Click to launch.</div>
-          <div class="tags"><span class="tag tg">PORT 8090</span><span class="tag tg">EXECUTIVE</span><span class="tag tg">FIRST</span></div>
-        </div>
-      </a>
-      <a href="launch-agents/launch-oscar.command" class="card" style="border-color:rgba(240,192,64,.3);">
-        <div class="ci" style="background:rgba(240,192,64,.15);font-size:22px;">🎵</div>
-        <div class="cb">
-          <div class="cn">Master Oscar · Artist AI</div>
-          <div class="cd">Creative agent with chat, Touch Studio, generative UI, voice, and customization.</div>
-          <div class="tags"><span class="tag tg">PORT 3333</span><span class="tag tc">TOUCH STUDIO</span></div>
-        </div>
-      </a>
-      <a href="launch-agents/launch-agent007.command" class="card" style="border-color:rgba(231,76,60,.3);">
-        <div class="ci" style="background:rgba(231,76,60,.15);font-size:22px;">🎯</div>
-        <div class="cb">
-          <div class="cn">Agent-007 · Intelligence</div>
-          <div class="cd">GOAT Force Intelligence Division. Strategy, coordination, and system command.</div>
-          <div class="tags"><span class="tag tr">INTEL</span><span class="tag tr">AGENT-007</span></div>
-        </div>
-      </a>
-      <a href="launch-agents/launch-vanessa.command" class="card" style="border-color:rgba(233,30,140,.3);">
-        <div class="ci" style="background:rgba(233,30,140,.15);font-size:22px;">🎙️</div>
-        <div class="cb">
-          <div class="cn">Ms. Vanessa · Marketing & Voice</div>
-          <div class="cd">Brand voice, campaigns, and fan engagement. Marketing strategist.</div>
-          <div class="tags"><span class="tag tp">MARKETING</span><span class="tag tp">VOICE</span></div>
-        </div>
-      </a>
-      <a href="launch-agents/launch-nexus.command" class="card" style="border-color:rgba(52,152,219,.3);">
-        <div class="ci" style="background:rgba(52,152,219,.15);font-size:22px;">🔗</div>
-        <div class="cb">
-          <div class="cn">Nexus · Network & Distribution</div>
-          <div class="cd">Distribution, partnerships, and network connections.</div>
-          <div class="tags"><span class="tag tb">NETWORK</span><span class="tag tb">DISTRO</span></div>
-        </div>
-      </a>
-      <a href="launch-agents/launch-lexi.command" class="card" style="border-color:rgba(155,89,182,.3);">
-        <div class="ci" style="background:rgba(155,89,182,.15);font-size:22px;">⚖️</div>
-        <div class="cb">
-          <div class="cn">Lexi · Legal & Compliance</div>
-          <div class="cd">Contracts, rights, royalties, and legal strategy.</div>
-          <div class="tags"><span class="tag tp">LEGAL</span><span class="tag tp">COMPLIANCE</span></div>
-        </div>
-      </a>
-      <a href="launch-agents/launch-codex.command" class="card" style="border-color:rgba(46,204,113,.3);">
-        <div class="ci" style="background:rgba(46,204,113,.15);font-size:22px;">🤖</div>
-        <div class="cb">
-          <div class="cn">Sir Codex · Tech & Production</div>
-          <div class="cd">Code, plugins, DAWs, production tools, and technical architecture.</div>
-          <div class="tags"><span class="tag tgr">TECH</span><span class="tag tgr">PRODUCTION</span></div>
-        </div>
-      </a>
-      <a href="launch-agents/launch-devin.command" class="card" style="border-color:rgba(212,160,60,.3);">
-        <div class="ci" style="background:rgba(212,160,60,.15);font-size:22px;">🩺</div>
-        <div class="cb">
-          <div class="cn">Dr. Devin · Patch & Command</div>
-          <div class="cd">System doctor, health checks, terminal, and unified Devin Center.</div>
-          <div class="tags"><span class="tag tg">PATCH</span><span class="tag tg">COMMAND</span></div>
-        </div>
-      </a>
+      <div class="intel-dot" id="sidebarDot"></div>
     </div>
-  </div>
 
-  <!-- ★ OSCAR CONSOLE — TOP PRIORITY LAUNCH CARD ★ -->
-  <div id="oscar" class="sec">
-    <div class="sec-head"><span class="ico">🐐</span><h2>Master Oscar Console — GOAT Force AI</h2><span class="cnt">Touch Studio · Gen UI · Voice · Customize</span></div>
-    <div class="grid grid-wide">
-      <a href="http://127.0.0.1:3333/" target="_blank" class="card" style="border-color:rgba(212,160,60,.4);background:linear-gradient(135deg,rgba(212,160,60,.07),rgba(13,17,23,1));">
-        <div class="ci" style="background:linear-gradient(135deg,rgba(212,160,60,.3),rgba(240,192,64,.15))">🐐</div>
-        <div class="cb">
-          <div class="cn" style="color:var(--gold);">Master Oscar Console · Launch Now</div>
-          <div class="cd">Full Master Oscar AI — chat, Touch Studio, generative UI, voice, customize colors/logo. Runs at http://127.0.0.1:3333/ — start chat_server.py first.</div>
-          <div class="tags"><span class="tag tg">PORT 3333</span><span class="tag tg">OSCAR AI</span><span class="tag tc">TOUCH STUDIO</span><span class="tag tp">GEN UI</span></div>
-        </div>
-      </a>
-      <div class="card c" onclick="openMaster OscarStudio()">
-        <div class="ci" style="background:rgba(0,212,255,.15)">🎛️</div>
-        <div class="cb"><div class="cn">Touch Studio — Full Screen</div><div class="cd">Open Master Oscar's full-screen touch console — knobs, faders, 16 pads, transport, XY pad. Works on iPad/touchscreen.</div><div class="tags"><span class="tag tc">TOUCH</span><span class="tag tc">STUDIO</span><span class="tag tg">DRAG &amp; DROP</span></div></div>
+    <div class="sec-label">Quick Launch — 15 Agents</div>
+    <div class="persona-btns">
+      <a class="persona-btn active" href="the-goat-launcher.html"><span class="agent-icon">🐐</span><div class="agent-info"><div class="agent-name">THE GOAT</div><div class="agent-role">Supreme Commander</div></div><span class="agent-num">000</span></a>
+      <a class="persona-btn" href="master-oscar-launcher.html"><span class="agent-icon">🎵</span><div class="agent-info"><div class="agent-name">Master Oscar</div><div class="agent-role">Operations & Deals</div></div><span class="agent-num">001</span></a>
+      <a class="persona-btn" href="money-penny-launcher.html"><span class="agent-icon">💎</span><div class="agent-info"><div class="agent-name">Ms. Money Penny</div><div class="agent-role">Intelligence Director</div></div><span class="agent-num">002</span></a>
+      <a class="persona-btn" href="vanessa-launcher.html"><span class="agent-icon">🎙️</span><div class="agent-info"><div class="agent-name">Ms. Vanessa</div><div class="agent-role">Marketing & Voice</div></div><span class="agent-num">003</span></a>
+      <a class="persona-btn" href="nexus-launcher.html"><span class="agent-icon">🔗</span><div class="agent-info"><div class="agent-name">Nexus</div><div class="agent-role">Network & Distribution</div></div><span class="agent-num">004</span></a>
+      <a class="persona-btn" href="lexi-launcher.html"><span class="agent-icon">⚖️</span><div class="agent-info"><div class="agent-name">Lexi</div><div class="agent-role">Creative & Legal</div></div><span class="agent-num">005</span></a>
+      <a class="persona-btn" href="sir-codex-launcher.html"><span class="agent-icon">🤖</span><div class="agent-info"><div class="agent-name">Sir Codex</div><div class="agent-role">Tech & Infrastructure</div></div><span class="agent-num">006</span></a>
+      <a class="persona-btn" href="dr-devin.html"><span class="agent-icon">🩺</span><div class="agent-info"><div class="agent-name">Dr. Devin</div><div class="agent-role">Strategy & Innovation</div></div><span class="agent-num">007</span></a>
+      <a class="persona-btn" href="gonbrazy-launcher.html"><span class="agent-icon">🎚️</span><div class="agent-info"><div class="agent-name">GONBRAZY</div><div class="agent-role">Studio Boss</div></div></a>
+      <a class="persona-btn" href="wooh-da-kid-launcher.html"><span class="agent-icon">🎛️</span><div class="agent-info"><div class="agent-name">Wooh Da Kid</div><div class="agent-role">Beat Maestro</div></div></a>
+      <a class="persona-btn" href="hannah-miller-launcher.html"><span class="agent-icon">🌟</span><div class="agent-info"><div class="agent-name">Hannah Miller</div><div class="agent-role">Amigo Alley</div></div></a>
+      <a class="persona-btn" href="legal-eagle-launcher.html"><span class="agent-icon">⚖️</span><div class="agent-info"><div class="agent-name">Legal Eagle</div><div class="agent-role">Music Law & IP</div></div><span class="agent-num">011</span></a>
+      <a class="persona-btn" href="ar-scout-launcher.html"><span class="agent-icon">🎯</span><div class="agent-info"><div class="agent-name">A&R Scout</div><div class="agent-role">Talent Intelligence</div></div><span class="agent-num">012</span></a>
+      <a class="persona-btn" href="cfo-brain-launcher.html"><span class="agent-icon">📊</span><div class="agent-info"><div class="agent-name">CFO Brain</div><div class="agent-role">Revenue Strategy</div></div><span class="agent-num">013</span></a>
+      <a class="persona-btn" href="autopilot-launcher.html"><span class="agent-icon">🤖</span><div class="agent-info"><div class="agent-name">Autopilot</div><div class="agent-role">Autonomous Execution</div></div><span class="agent-num">014</span></a>
+    </div>
+
+    <div class="special-ops">
+      <div class="special-ops-title">🏰 Empire Launch</div>
+      <a class="ops-btn" href="music-studio.html"><span class="ops-icon">🎵</span> GOAT Force Records</a>
+      <a class="ops-btn" href="goat-casino.html"><span class="ops-icon">🎰</span> GOAT Casino</a>
+      <a class="ops-btn" href="goat-city-rp.html"><span class="ops-icon">🏙️</span> BrickSquaD-Rp GTA</a>
+      <a class="ops-btn" href="goat-celebrity-lounge.html"><span class="ops-icon">🥂</span> Celebrity Lounge</a>
+      <a class="ops-btn" href="beat-maker.html"><span class="ops-icon">🥁</span> Beat Maker</a>
+    </div>
+
+    <div class="status-panel">
+      <div class="status-panel-title">Agent Network</div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span>THE GOAT</div><span class="status-role">000 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span>Ms. Money Penny</div><span class="status-role">002 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span>Dr. Devin</div><span class="status-role">007 · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span>GONBRAZY</div><span class="status-role">Studio · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span>Wooh Da Kid</div><span class="status-role">Studio · Online</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot" id="intelDot2" style="background:#555;box-shadow:none;animation:none;"></span>Intel Server</div><span class="status-role" id="intelLabel2">Checking…</span></div>
+    </div>
+
+    <div class="terminal-wrap">
+      <div class="terminal-titlebar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <span>goat-force command</span>
       </div>
-      <div class="card" onclick="copy('cd ~/GOAT-Royalty-App/web-app/usb-ai/Shared && python3 chat_server.py')">
-        <div class="ci" style="background:rgba(63,185,80,.15)">▶</div>
-        <div class="cb"><div class="cn">Start Master Oscar Server</div><div class="cd">Copies the start command to clipboard. Paste in Terminal to launch Master Oscar on port 3333.</div><div class="tags"><span class="tag tgr">COPY CMD</span><span class="tag tgr">TERMINAL</span></div></div>
+      <div class="terminal-output" id="termOut">
+        <p class="terminal-line sys">GOAT Force Command v3.0 — ready</p>
+        <p class="terminal-line sys">Owner: DJ Speedy · Waka Flocka Flame</p>
+        <p class="terminal-line sys">Fallback chain: Ollama→Grok→Gemini→OpenAI</p>
+        <p class="terminal-line cmd">$ hub --status all-agents</p>
       </div>
-      <div class="card" onclick="copy('pkill -f ollama; pkill -f llama-server; ollama serve &')">
-        <div class="ci" style="background:rgba(200,200,200,.1)">🦙</div>
-        <div class="cb"><div class="cn">Restart Ollama Engine</div><div class="cd">Kills stuck Ollama/llama-server, restarts clean. Fixes "abort trap" crashes. Copies command to clipboard.</div><div class="tags"><span class="tag tb">COPY CMD</span><span class="tag tb">FIX CRASH</span></div></div>
-      </div>
-      <div class="card" onclick="copy('ollama pull llama3.2:3b')">
-        <div class="ci" style="background:rgba(167,139,250,.15)">📥</div>
-        <div class="cb"><div class="cn">Pull Model (3B — fits any Mac)</div><div class="cd">ollama pull llama3.2:3b — safe model that runs on 8GB RAM. Copies pull command to clipboard.</div><div class="tags"><span class="tag tp">COPY CMD</span><span class="tag tp">3B MODEL</span></div></div>
+      <div class="terminal-input-row">
+        <span class="terminal-prompt">goat$</span>
+        <input class="terminal-input" id="termInput" placeholder="ask any agent..." onkeydown="termKey(event)">
+        <button class="terminal-run-btn" onclick="termSend()">RUN</button>
       </div>
     </div>
   </div>
 
-  <!-- i2i DRIVE — AGENTS & AI -->
-  <div id="agents" class="sec">
-    <div class="sec-head"><span class="ico">🤖</span><h2>AI Agents — i2i 1 Drive</h2><span class="cnt">7 agents</span></div>
-    <div class="grid grid-wide">
-      <a href="http://localhost:3335" target="_blank" class="card">
-        <div class="ci" style="background:rgba(212,160,60,.15)">🔫</div>
-        <div class="cb"><div class="cn">Agent-007 · Local Mac</div><div class="cd">DJ Speedy's personal original LLM. FastChatUI. Tool-calling. Voice auto-speak ON. Port 3335.</div><div class="tags"><span class="tag tg">LIVE :3335</span><span class="tag tg">ORIGINAL LLM</span></div></div>
+  <!-- ═══ MAIN PANEL ═══ -->
+  <div class="hub-main" id="hubMain">
+
+    <!-- Hero strip -->
+    <div class="hub-hero">
+      <video autoplay muted loop playsinline>
+        <source src="video/goat-animated-1.mp4" type="video/mp4">
+        <source src="video/goat-animated-2.mp4" type="video/mp4">
+      </video>
+      <div class="hub-hero-overlay"></div>
+      <div class="hub-hero-content">
+        <div class="hub-hero-badge"><span id="heroDot" style="width:7px;height:7px;border-radius:50%;background:#555;display:inline-block;"></span> GOAT Force Intel · <span id="heroStatus">Connecting…</span></div>
+        <h1>SUPREME COMMAND</h1>
+        <p>DJ Speedy · Waka Flocka Flame · GOAT Force Records · Life Imitates Art Inc</p>
+        <div class="hub-stats">
+          <div class="hstat"><div class="num">10</div><div class="lbl">AI Agents</div></div>
+          <div class="hstat"><div class="num">56</div><div class="lbl">Local Models</div></div>
+          <div class="hstat"><div class="num">282</div><div class="lbl">DSPs</div></div>
+          <div class="hstat"><div class="num">5,954</div><div class="lbl">Tracks</div></div>
+          <div class="hstat"><div class="num">$3.3B</div><div class="lbl">Empire</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Investor deck -->
+    <div style="padding:20px 28px 0;">
+      <div class="deck-cta">
+        <div class="deck-cta-icon">📊</div>
+        <div class="deck-cta-text">
+          <h3>GOAT Royalty Investor Deck 2026</h3>
+          <p>Ms. Money Penny — Prepared by Deb Eden · Final Version · 7.6MB</p>
+        </div>
+        <a href="assets/docs/goat-royalty-investor-deck-2026.pdf" target="_blank" class="deck-cta-btn">Open Deck ↗</a>
+      </div>
+      <div class="deck-cta" style="margin-top:10px;background:linear-gradient(135deg,rgba(193,18,31,.15),rgba(255,215,0,.08));border-color:rgba(255,215,0,.3);">
+        <div class="deck-cta-icon">🐐</div>
+        <div class="deck-cta-text">
+          <h3>GOAT Royalty Force — Living Investor EPK</h3>
+          <p>Updated July 2026 · Full monetary valuation · $28M anchor · 115 pages · 14 agents · 36 models · $400K+ studio arsenal · $3.3B catalog position</p>
+        </div>
+        <a href="goat-living-epk.html" class="deck-cta-btn" style="background:linear-gradient(135deg,#c1121f,#d4a03c);color:#0a0408;">Open Living EPK ↗</a>
+      </div>
+    </div>
+
+    <!-- Agent cards -->
+    <div class="main-section">
+      <div class="main-section-title"><span>⚡</span> Agent Command Grid — All 15 Active</div>
+    </div>
+    <div class="agents-grid">
+      <a class="agent-card" href="the-goat-launcher.html" style="--accent:#FFD700;">
+        <div class="agent-card-top"><span class="agent-card-icon">🐐</span><div class="agent-card-info"><div class="agent-card-name">THE GOAT</div><div class="agent-card-code">AGENT 000 · SUPREME COMMANDER</div></div><span class="agent-card-num">000</span></div>
+        <div class="agent-card-role">Supreme Commander. Answers only to DJ Speedy and Waka.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
       </a>
-      <a href="launch-agents/launch-moneypenny.command" class="card" style="border-color:rgba(212,160,60,.4);">
-        <div class="ci" style="background:rgba(167,139,250,.15)">💎</div>
-        <div class="cb"><div class="cn">Money Penny · Executive AI</div><div class="cd">DJ Speedy's personal original AI. Orchestrates all agents. Launch from the hub.</div><div class="tags"><span class="tag tp">ORIGINAL LLM</span><span class="tag tg">LAUNCH</span></div></div>
+      <a class="agent-card" href="master-oscar-launcher.html" style="--accent:#9b59b6;">
+        <div class="agent-card-top"><span class="agent-card-icon">🎵</span><div class="agent-card-info"><div class="agent-card-name">Master Oscar</div><div class="agent-card-code">AGENT 001 · DEALMAKER</div></div><span class="agent-card-num">001</span></div>
+        <div class="agent-card-role">Operations, contracts, business development.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
       </a>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/BRING%20UP%20HANNAH%20MILLER.command')">
-        <div class="ci" style="background:rgba(255,182,193,.15)">👩</div>
-        <div class="cb"><div class="cn">Hannah Miller · Agent</div><div class="cd">Hannah Miller AI agent. Launch from drive via .command file.</div><div class="tags"><span class="tag tp">AGENT</span><span class="tag td">COMMAND</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Master-Master Oscar/')">
-        <div class="ci" style="background:rgba(200,200,200,.1)">🎭</div>
-        <div class="cb"><div class="cn">Master Oscar · Master Agent</div><div class="cd">Master-Master Oscar folder. GOAT Royalty chat agent. Raspy Master Oscar launcher included.</div><div class="tags"><span class="tag tb">MASTER-OSCAR</span><span class="tag td">DRIVE</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/agents/')">
-        <div class="ci" style="background:rgba(63,185,80,.15)">🤖</div>
-        <div class="cb"><div class="cn">Agents Folder</div><div class="cd">All agent definitions, configs, and crew setups on the drive.</div><div class="tags"><span class="tag tgr">AGENTS DIR</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20AGENTS%20BRAIN%20GOAT%20FORCE%20MEDIA.command')">
-        <div class="ci" style="background:rgba(212,160,60,.15)">🧠</div>
-        <div class="cb"><div class="cn">Agents Brain · GOAT Force Media</div><div class="cd">Opens the full GOAT Force Media agents brain. All 11 agents coordinated.</div><div class="tags"><span class="tag tg">COMMAND</span><span class="tag tg">11 AGENTS</span></div></div>
-      </div>
-      <!-- CASINO -->
-      <div class="card r" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20GOAT%20CASINO%20NIGHT.command')">
-        <div class="ci" style="background:rgba(230,57,70,.2)">🎰</div>
-        <div class="cb"><div class="cn">GOAT Casino Night</div><div class="cd">Opens Casino Night mode. VIP access via hidden route.</div><div class="tags"><span class="tag tr">CASINO</span><span class="tag td">COMMAND</span></div></div>
-      </div>
-      <a href="goat-entertainment.html" target="_blank" class="card r">
-        <div class="ci" style="background:rgba(230,57,70,.15)">🎲</div>
-        <div class="cb"><div class="cn">GOAT Casino — Web App</div><div class="cd">Casino/entertainment hub in the web app. Open in browser, no drive needed.</div><div class="tags"><span class="tag tr">CASINO WEB</span><span class="tag tr">ONLINE</span></div></div>
+      <a class="agent-card" href="money-penny-launcher.html" style="--accent:#d4a03c;">
+        <div class="agent-card-top"><span class="agent-card-icon">💎</span><div class="agent-card-info"><div class="agent-card-name">Ms. Money Penny</div><div class="agent-card-code">AGENT 002 · BOSS LADY</div></div><span class="agent-card-num">002</span></div>
+        <div class="agent-card-role">Intelligence Director. The OG. All agents born from her system.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
       </a>
-      <!-- EVERYBODY APP placeholder -->
-      <div class="card p" onclick="copy('cd ~/GOAT-Royalty-App && node src/server.js')">
-        <div class="ci" style="background:rgba(167,139,250,.2)">🌍</div>
-        <div class="cb"><div class="cn">Everybody App — Launch</div><div class="cd">GOAT Force fan/everybody platform. Copies launch command. Runs on local Node server.</div><div class="tags"><span class="tag tp">EVERYBODY</span><span class="tag tp">COPY CMD</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- i2i DRIVE — LAUNCHERS -->
-  <div id="drive" class="sec">
-    <div class="sec-head"><span class="ico">💾</span><h2>i2i 1 Drive — All Launchers</h2><span class="cnt">/Volumes/i2i 1/Agent-007-GOAT</span></div>
-    <div class="grid">
-
-      <!-- STARTUP -->
-      <div class="card g" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/START%20AGENT-007.command')">
-        <div class="ci" style="background:rgba(63,185,80,.15)">▶️</div>
-        <div class="cb"><div class="cn">START AGENT-007</div><div class="cd">Main launcher. Starts Ollama + Agent-007 on port 3335.</div><div class="tags"><span class="tag tgr">START</span><span class="tag tgr">:3335</span></div></div>
-      </div>
-      <div class="card g" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Launch%20AGENT-007.command')">
-        <div class="ci" style="background:rgba(63,185,80,.15)">🚀</div>
-        <div class="cb"><div class="cn">Launch AGENT-007</div><div class="cd">Full launcher with LaunchAgent registration. Auto-restarts on crash.</div><div class="tags"><span class="tag tgr">LAUNCHD</span><span class="tag tgr">AUTO-RESTART</span></div></div>
-      </div>
-      <div class="card g" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/RESTART%20AGENT-007%20SECURE%20LOCAL.command')">
-        <div class="ci" style="background:rgba(63,185,80,.12)">🔄</div>
-        <div class="cb"><div class="cn">Restart Agent-007 Secure</div><div class="cd">Clean restart in secure local mode.</div><div class="tags"><span class="tag tgr">RESTART</span><span class="tag tgr">SECURE</span></div></div>
-      </div>
-
-      <!-- GOAT ROYALTY SUITE -->
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20GOAT%20ROYALTY%20SUITE%20LIVE.command')">
-        <div class="ci" style="background:rgba(212,160,60,.15)">🐐</div>
-        <div class="cb"><div class="cn">Open GOAT Royalty Suite Live</div><div class="cd">Opens full live GOAT Royalty Suite.</div><div class="tags"><span class="tag tg">ROYALTY</span><span class="tag tg">LIVE</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20GOAT%20LIVING%20EPK.command')">
-        <div class="ci" style="background:rgba(212,160,60,.15)">📊</div>
-        <div class="cb"><div class="cn">Open GOAT Living EPK</div><div class="cd">Opens investor EPK. Pitch deck, financials, catalog data.</div><div class="tags"><span class="tag tg">INVESTOR</span><span class="tag tg">EPK</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/INVESTOR%20PACK%20-%20START%20HERE.command')">
-        <div class="ci" style="background:rgba(212,160,60,.2)">💰</div>
-        <div class="cb"><div class="cn">Investor Pack — Start Here</div><div class="cd">Full investor package launcher. Waka Flocka × DJ Speedy deal deck.</div><div class="tags"><span class="tag tg">INVESTOR</span><span class="tag tgr">START HERE</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/SHARE%20GOAT%20LIVING%20EPK%20ON%20LAN.command')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">📡</div>
-        <div class="cb"><div class="cn">Share EPK on LAN</div><div class="cd">Shares GOAT Living EPK over local network.</div><div class="tags"><span class="tag tb">LAN</span><span class="tag tb">SHARE</span></div></div>
-      </div>
-
-      <!-- STUDIO -->
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20GOAT%20STUDIO%20TOOL%20ARSENAL.command')">
-        <div class="ci" style="background:rgba(230,57,70,.12)">🎛️</div>
-        <div class="cb"><div class="cn">GOAT Studio Tool Arsenal</div><div class="cd">Opens full studio tool suite. All DAW tools, plugins, instruments.</div><div class="tags"><span class="tag tr">STUDIO</span><span class="tag td">COMMAND</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20SUPER%20GOAT%20ROYALTIES.command')">
-        <div class="ci" style="background:rgba(212,160,60,.15)">💎</div>
-        <div class="cb"><div class="cn">Super GOAT Royalties</div><div class="cd">Opens Super GOAT Royalties dashboard.</div><div class="tags"><span class="tag tg">ROYALTIES</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20PRO%20TOOLS%20BOOK%20VAULT.command')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">📚</div>
-        <div class="cb"><div class="cn">Pro Tools Book Vault</div><div class="cd">Opens Pro Tools training book library.</div><div class="tags"><span class="tag tb">PRO TOOLS</span><span class="tag tb">BOOKS</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/OPEN%20GOAT%20FORCE%20MEDIA%20+%20CONTROL%20BENCH.command')">
-        <div class="ci" style="background:rgba(212,160,60,.15)">🎚️</div>
-        <div class="cb"><div class="cn">GOAT Force Media + Control Bench</div><div class="cd">Full media control bench. All screens, mixing, monitoring.</div><div class="tags"><span class="tag tg">MEDIA</span><span class="tag tg">CONTROL</span></div></div>
-      </div>
-
-      <!-- TRAINING -->
-      <div class="card b" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LAUNCH%20AGENT-007%20PRO%20TOOLS%20TRAINING.command')">
-        <div class="ci" style="background:rgba(200,200,200,.1)">🎓</div>
-        <div class="cb"><div class="cn">Agent-007 Pro Tools Training</div><div class="cd">Launches Agent-007 in Pro Tools training mode.</div><div class="tags"><span class="tag tb">TRAINING</span><span class="tag tb">PRO TOOLS</span></div></div>
-      </div>
-      <div class="card b" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LAUNCH%20AGENT-007%20WOOH%20FL%20TRAINING.command')">
-        <div class="ci" style="background:rgba(200,200,200,.1)">🎵</div>
-        <div class="cb"><div class="cn">Agent-007 Wooh FL Training</div><div class="cd">Launches Agent-007 FL Studio training for Wooh Da Kid.</div><div class="tags"><span class="tag tb">TRAINING</span><span class="tag tb">FL STUDIO</span></div></div>
-      </div>
-      <div class="card b" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/START-TRAINING.command')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">📖</div>
-        <div class="cb"><div class="cn">Start Training</div><div class="cd">General training session launcher for all agents.</div><div class="tags"><span class="tag tb">TRAINING</span></div></div>
-      </div>
-
-      <!-- SECURITY -->
-      <div class="card r" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/GOAT%20SECURITY%20AUDIT.command')">
-        <div class="ci" style="background:rgba(230,57,70,.15)">🔐</div>
-        <div class="cb"><div class="cn">GOAT Security Audit</div><div class="cd">Full security audit across all systems.</div><div class="tags"><span class="tag tr">SECURITY</span><span class="tag tr">AUDIT</span></div></div>
-      </div>
-      <div class="card r" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/GOAT%20SERVER%20SECURITY%20VERIFY.command')">
-        <div class="ci" style="background:rgba(230,57,70,.12)">🛡️</div>
-        <div class="cb"><div class="cn">Server Security Verify</div><div class="cd">Verifies security posture of all servers.</div><div class="tags"><span class="tag tr">SECURITY</span><span class="tag tr">SERVER</span></div></div>
-      </div>
-      <div class="card r" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/AGENT-007%20SECURITY%20AND%20LLM%20VERIFY.command')">
-        <div class="ci" style="background:rgba(230,57,70,.15)">🔒</div>
-        <div class="cb"><div class="cn">Agent-007 Security + LLM Verify</div><div class="cd">Verifies Agent-007 identity separation and LLM integrity.</div><div class="tags"><span class="tag tr">VERIFY</span><span class="tag tg">LLM</span></div></div>
-      </div>
-      <div class="card r" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/GOAT%20MAC%20SECURITY%20HARDEN.command')">
-        <div class="ci" style="background:rgba(230,57,70,.12)">🔧</div>
-        <div class="cb"><div class="cn">Mac Security Harden</div><div class="cd">Hardens Mac security settings for GOAT studio environment.</div><div class="tags"><span class="tag tr">HARDEN</span><span class="tag tr">MAC</span></div></div>
-      </div>
-
-      <!-- NETWORK / SYSTEM -->
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/CHECK%20LIVE%20SERVER%20LINK%20STATUS.command')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">📡</div>
-        <div class="cb"><div class="cn">Check Live Server Link Status</div><div class="cd">Pings all live servers and checks link health.</div><div class="tags"><span class="tag tb">NETWORK</span><span class="tag tb">STATUS</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/GOAT%20FULL%20SYSTEM%20VERIFY.command')">
-        <div class="ci" style="background:rgba(63,185,80,.12)">✅</div>
-        <div class="cb"><div class="cn">GOAT Full System Verify</div><div class="cd">Full end-to-end system health check across all services.</div><div class="tags"><span class="tag tgr">VERIFY</span><span class="tag tgr">FULL</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/CHECK%20RASPY%20DOWNSTAIRS%20CONNECTION.command')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">🔌</div>
-        <div class="cb"><div class="cn">Check Raspy Downstairs</div><div class="cd">Checks Raspberry Pi / downstairs connection status.</div><div class="tags"><span class="tag tb">NETWORK</span><span class="tag td">RASPY</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/CHECK%20NETWORK%20THEN%20OPEN%20CASINO.command')">
-        <div class="ci" style="background:rgba(230,57,70,.12)">🎰</div>
-        <div class="cb"><div class="cn">Check Network → Open Casino</div><div class="cd">Network check then launches Casino if clear.</div><div class="tags"><span class="tag tr">CASINO</span><span class="tag tb">NETWORK</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/GOAT%20TOUCH%20ANY%20SCREEN.command')">
-        <div class="ci" style="background:rgba(0,212,255,.12)">📱</div>
-        <div class="cb"><div class="cn">GOAT Touch Any Screen</div><div class="cd">Enables touch interface on any connected screen.</div><div class="tags"><span class="tag tc">TOUCH</span></div></div>
-      </div>
-
-      <!-- MODELS -->
-      <div class="card p" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/DOWNLOAD%20ALL%2053%20LOCAL%20MODELS.command')">
-        <div class="ci" style="background:rgba(167,139,250,.15)">🦙</div>
-        <div class="cb"><div class="cn">Download All 53 Local Models</div><div class="cd">Pulls all 53 Ollama models to local storage on the drive.</div><div class="tags"><span class="tag tp">53 MODELS</span><span class="tag tp">OLLAMA</span></div></div>
-      </div>
-      <div class="card p" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/RESUME-LLM-DOWNLOADS.command')">
-        <div class="ci" style="background:rgba(167,139,250,.12)">⏩</div>
-        <div class="cb"><div class="cn">Resume LLM Downloads</div><div class="cd">Resumes any paused model downloads.</div><div class="tags"><span class="tag tp">RESUME</span><span class="tag tp">LLM</span></div></div>
-      </div>
-      <div class="card p" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/PULL-CREATOR-PACK.command')">
-        <div class="ci" style="background:rgba(167,139,250,.12)">📦</div>
-        <div class="cb"><div class="cn">Pull Creator Pack</div><div class="cd">Downloads the full creator model and tool pack.</div><div class="tags"><span class="tag tp">CREATOR</span><span class="tag tp">PACK</span></div></div>
-      </div>
-      <div class="card p" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/STUDIO%20AGENT%20CLONER%20+%20MODEL%20DRIVE%20PICKER.command')">
-        <div class="ci" style="background:rgba(167,139,250,.15)">🔁</div>
-        <div class="cb"><div class="cn">Studio Agent Cloner + Model Picker</div><div class="cd">Clone studio agents and pick which model drive to use.</div><div class="tags"><span class="tag tp">CLONE</span><span class="tag tp">MODEL</span></div></div>
-      </div>
-
-      <!-- FIXES -->
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/FIX%20MACBOOK%20PRO%20ETHERNET%20LINK.command')">
-        <div class="ci" style="background:rgba(139,148,158,.1)">🔧</div>
-        <div class="cb"><div class="cn">Fix MacBook Pro Ethernet</div><div class="cd">Fixes Ethernet link on MacBook Pro.</div><div class="tags"><span class="tag td">FIX</span><span class="tag td">ETHERNET</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/REPAIR%20OSCAR%20PORTS%20ON%20UBUNTU%20DRIVE.command')">
-        <div class="ci" style="background:rgba(139,148,158,.1)">🔌</div>
-        <div class="cb"><div class="cn">Repair Master Oscar Ports · Ubuntu</div><div class="cd">Repairs Master Oscar port bindings on Ubuntu drive.</div><div class="tags"><span class="tag td">REPAIR</span><span class="tag td">UBUNTU</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/FIX%20OSCAR%20UPGRADE%20VISIBILITY.command')">
-        <div class="ci" style="background:rgba(139,148,158,.1)">👁️</div>
-        <div class="cb"><div class="cn">Fix Master Oscar Upgrade Visibility</div><div class="cd">Makes Master Oscar upgrade panel visible after updates.</div><div class="tags"><span class="tag td">FIX</span><span class="tag td">OSCAR</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/ADD%20AGENT-007%20FEATURES%20TO%20OSCAR.command')">
-        <div class="ci" style="background:rgba(212,160,60,.12)">➕</div>
-        <div class="cb"><div class="cn">Add Agent-007 Features to Master Oscar</div><div class="cd">Adds all Agent-007 advanced features into Master Oscar.</div><div class="tags"><span class="tag tg">UPGRADE</span><span class="tag tg">OSCAR</span></div></div>
-      </div>
-
-      <!-- STORAGE -->
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/SETUP%20WD%20CLOUD%20GOAT%20STORAGE.command')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">☁️</div>
-        <div class="cb"><div class="cn">Setup WD Cloud GOAT Storage</div><div class="cd">Sets up WD My Cloud EX4100 integration with GOAT system.</div><div class="tags"><span class="tag tb">WD CLOUD</span><span class="tag tb">STORAGE</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LINK%20WD%20CLOUD%20STORAGE%20TO%20GOAT%20SERVER.command')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">🔗</div>
-        <div class="cb"><div class="cn">Link WD Cloud to Server</div><div class="cd">Links WD Cloud storage to GOAT server for remote access.</div><div class="tags"><span class="tag tb">WD CLOUD</span><span class="tag tb">SERVER</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/COPY%20LATEST%20GOAT%20PACKAGE%20TO%20WD.command')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">📤</div>
-        <div class="cb"><div class="cn">Copy Latest GOAT Package to WD</div><div class="cd">Copies the latest built GOAT package to WD cloud backup.</div><div class="tags"><span class="tag tb">BACKUP</span><span class="tag tb">WD</span></div></div>
-      </div>
-
-      <!-- MISC -->
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Reset%20Client%20Chats.command')">
-        <div class="ci" style="background:rgba(139,148,158,.1)">🗑️</div>
-        <div class="cb"><div class="cn">Reset Client Chats</div><div class="cd">Clears all client chat history and session data.</div><div class="tags"><span class="tag td">RESET</span><span class="tag td">CHATS</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/CHECK%20OSCAR%20AGENT007%20IDENTITY%20SEPARATION.command')">
-        <div class="ci" style="background:rgba(230,57,70,.12)">🆔</div>
-        <div class="cb"><div class="cn">Check Master Oscar/007 Identity Separation</div><div class="cd">Verifies Master Oscar and Agent-007 are properly separated identities.</div><div class="tags"><span class="tag tr">IDENTITY</span><span class="tag tr">VERIFY</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEPLOY -->
-  <div id="deploy" class="sec">
-    <div class="sec-head"><span class="ico">🚀</span><h2>Deploy — Click to Copy Commands</h2><span class="cnt">6 commands</span></div>
-    <div class="grid">
-      <div class="card g" onclick="copy('bash \"/Volumes/i2i 1/Agent-007-GOAT/DEPLOY GOAT ROYALTY + AGENT-007 TO UBUNTU.command\"')">
-        <div class="ci" style="background:rgba(63,185,80,.15)">🚀</div>
-        <div class="cb"><div class="cn">Deploy GOAT + Agent-007 → Ubuntu</div><div class="cd">Builds package from drive, uploads + installs to Hostinger VPS. Prompts for target.</div><div class="tags"><span class="tag tgr">COPY CMD</span><span class="tag tb">VPS</span></div></div>
-      </div>
-      <div class="card" onclick="copy('bash \"/Volumes/i2i 1/Agent-007-GOAT/DEPLOY GOAT LIVING EPK TO SERVER.command\"')">
-        <div class="ci" style="background:rgba(212,160,60,.15)">📊</div>
-        <div class="cb"><div class="cn">Deploy Living EPK → Server</div><div class="cd">Deploys investor EPK to live server.</div><div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tg">EPK</span></div></div>
-      </div>
-      <div class="card" onclick="copy('bash \"/Volumes/i2i 1/Agent-007-GOAT/PREPARE GOAT CITY RP SERVER PACKAGE.command\"')">
-        <div class="ci" style="background:rgba(230,57,70,.15)">🎮</div>
-        <div class="cb"><div class="cn">Prepare GOAT City RP Package</div><div class="cd">Packages GTA FiveM GOAT City RP server for deployment.</div><div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tr">FIVEM</span></div></div>
-      </div>
-      <div class="card" onclick="copy('ssh root@72.61.193.184')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">🔒</div>
-        <div class="cb"><div class="cn">SSH → Server 2 (72.61.193.184)</div><div class="cd">Direct SSH to Ubuntu server. SSH key works.</div><div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tgr">SSH OK</span></div></div>
-      </div>
-      <a href="http://2.25.68.216" target="_blank" class="card g">
-        <div class="ci" style="background:rgba(63,185,80,.15)">🌐</div>
-        <div class="cb"><div class="cn">Production VPS · Live</div><div class="cd">2.25.68.216 · GOAT Royalty web app deployed.</div><div class="tags"><span class="tag tgr">LIVE</span><span class="tag tgr">PRODUCTION</span></div></div>
+      <a class="agent-card" href="vanessa-launcher.html" style="--accent:#e91e63;">
+        <div class="agent-card-top"><span class="agent-card-icon">🎙️</span><div class="agent-card-info"><div class="agent-card-name">Ms. Vanessa</div><div class="agent-card-code">AGENT 003 · ICON</div></div><span class="agent-card-num">003</span></div>
+        <div class="agent-card-role">Brand, marketing, PR, voice of the empire.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
       </a>
-      <div class="card" onclick="copy('bash \"/Volumes/i2i 1/Agent-007-GOAT/SETUP GOAT SERVER SSH KEY.command\"')">
-        <div class="ci" style="background:rgba(212,160,60,.12)">🔑</div>
-        <div class="cb"><div class="cn">Setup GOAT Server SSH Key</div><div class="cd">Installs your SSH key on the server for passwordless login.</div><div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tg">SSH KEY</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SERVER LIVE PAGES -->
-  <div id="server" class="sec">
-    <div class="sec-head"><span class="ico">🌐</span><h2>Server 2 · 72.61.193.184 · 249 Pages Live</h2></div>
-    <div class="grid grid-wide">
-      <a href="http://72.61.193.184" target="_blank" class="card g"><div class="ci" style="background:rgba(63,185,80,.15)">🌐</div><div class="cb"><div class="cn">GOAT Royalty · Home</div><div class="cd">Main live server. 249 HTML pages. Nginx port 80/443/8080.</div><div class="tags"><span class="tag tgr">LIVE</span><span class="tag tgr">PORT 80</span></div></div></a>
-      <a href="http://72.61.193.184/powerhouse.html" target="_blank" class="card g"><div class="ci" style="background:rgba(212,160,60,.15)">⚡</div><div class="cb"><div class="cn">Powerhouse</div><div class="cd">Full 65+ tool suite. Main hub on live server.</div><div class="tags"><span class="tag tgr">LIVE</span><span class="tag tg">FLAGSHIP</span></div></div></a>
-      <a href="http://72.61.193.184:8080" target="_blank" class="card b"><div class="ci" style="background:rgba(200,200,200,.1)">🏪</div><div class="cb"><div class="cn">GOAT Store · Port 8080</div><div class="cd">Investor/client store. Proxied AI brains on single port.</div><div class="tags"><span class="tag tgr">LIVE</span><span class="tag tb">:8080</span></div></div></a>
-      <a href="http://72.61.193.184:3335" target="_blank" class="card g"><div class="ci" style="background:rgba(63,185,80,.15)">🔫</div><div class="cb"><div class="cn">Agent-007 · Server 2</div><div class="cd">Just deployed. Ollama proxy. FastChatUI. Port 3335.</div><div class="tags"><span class="tag tgr">LIVE</span><span class="tag tgr">:3335</span></div></div></a>
-      <a href="http://72.61.193.184/api/intel/" target="_blank" class="card b"><div class="ci" style="background:rgba(200,200,200,.1)">🧠</div><div class="cb"><div class="cn">Intel Brain API</div><div class="cd">goat-intel.service · Money Penny crew brain proxied.</div><div class="tags"><span class="tag tgr">LIVE</span><span class="tag tgr">SYSTEMD</span></div></div></a>
-      <a href="http://72.61.193.184/agents-brain.html" target="_blank" class="card p"><div class="ci" style="background:rgba(167,139,250,.15)">🤖</div><div class="cb"><div class="cn">AI Agents Brain</div><div class="cd">11 agents live. Ollama: gemma2, qwen3.5, gemma4, llama3.2.</div><div class="tags"><span class="tag tgr">LIVE</span><span class="tag tp">11 AGENTS</span></div></div></a>
-      <a href="http://72.61.193.184/goat-apps.html" target="_blank" class="card"><div class="ci" style="background:rgba(212,160,60,.12)">📱</div><div class="cb"><div class="cn">All GOAT Apps Directory</div><div class="cd">Full app directory — all 249 pages.</div><div class="tags"><span class="tag tgr">LIVE</span></div></div></a>
-    </div>
-  </div>
-
-  <!-- GITHUB -->
-  <div id="github" class="sec">
-    <div class="sec-head"><span class="ico">🐙</span><h2>GitHub · DJSPEEDYGA</h2></div>
-    <div class="grid">
-      <a href="https://github.com/DJSPEEDYGA/GOAT-Royalty-App" target="_blank" class="card"><div class="ci" style="background:rgba(255,255,255,.05)">📦</div><div class="cb"><div class="cn">GOAT-Royalty-App</div><div class="cd">Main repo. Node.js backend. 86 HTML pages. All auth fixed. 26/26 tests pass.</div><div class="tags"><span class="tag tgr">26 TESTS ✓</span><span class="tag tgr">PUBLIC</span></div></div></a>
-      <a href="https://github.com/DJSPEEDYGA/GOAT-Royalty-App/tree/main/web-app" target="_blank" class="card"><div class="ci" style="background:rgba(200,200,200,.08)">🌐</div><div class="cb"><div class="cn">Web App Source</div><div class="cd">All 86 frontend pages. Gold theme. Deployed to both servers.</div><div class="tags"><span class="tag tb">WEB-APP</span></div></div></a>
-      <a href="https://github.com/DJSPEEDYGA/GOAT-Royalty-App/tree/main/src" target="_blank" class="card"><div class="ci" style="background:rgba(63,185,80,.12)">⚙️</div><div class="cb"><div class="cn">Backend API</div><div class="cd">Express routes, agents, middleware. All security fixes committed.</div><div class="tags"><span class="tag tgr">BACKEND</span></div></div></a>
-      <a href="https://github.com/DJSPEEDYGA/GOAT-Royalty-App/commits/main" target="_blank" class="card"><div class="ci" style="background:rgba(139,148,158,.1)">📝</div><div class="cb"><div class="cn">Commits</div><div class="cd">Latest: auth middleware fixes, crypto pages, security patches.</div><div class="tags"><span class="tag td">HISTORY</span></div></div></a>
-    </div>
-  </div>
-
-  <!-- HARDWARE -->
-  <div id="hardware" class="sec">
-    <div class="sec-head"><span class="ico">🖥️</span><h2>Hardware — Jetsons + Servers</h2></div>
-    <div class="grid grid-wide">
-      <div class="card c" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Jetson-Thor-Deploy-Kit/')">
-        <div class="ci" style="background:rgba(0,212,255,.15)">⚡</div>
-        <div class="cb"><div class="cn">Jetson Thor — Deploy Kit</div><div class="cd">AGX Thor setup kit. SDK Manager installed on server. Flash via USB-C recovery mode.</div><div class="tags"><span class="tag tc">JETSON</span><span class="tag tc">THOR</span><span class="tag tgr">SDK READY</span></div></div>
-      </div>
-      <div class="card c" onclick="copy('ssh root@72.61.193.184 sdkmanager --cli install --product Jetson')">
-        <div class="ci" style="background:rgba(0,212,255,.15)">🔧</div>
-        <div class="cb"><div class="cn">Flash Jetson AGX Orin</div><div class="cd">SDK Manager v2.4.1 installed on 72.61.193.184. Connect Jetson via USB-C in recovery mode then run.</div><div class="tags"><span class="tag tc">AGX ORIN</span><span class="tag tc">FLASH</span><span class="tag tgr">COPY CMD</span></div></div>
-      </div>
-      <div class="card c">
-        <div class="ci" style="background:rgba(0,212,255,.12)">🤖</div>
-        <div class="cb"><div class="cn">Jetson Nano</div><div class="cd">Flash via SD card. JetPack 6.x. Connect to host Ubuntu machine for SDK Manager flash.</div><div class="tags"><span class="tag tc">NANO</span><span class="tag td">SD CARD</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Thor/')">
-        <div class="ci" style="background:rgba(139,148,158,.1)">🖥️</div>
-        <div class="cb"><div class="cn">Thor · Threadripper Machine</div><div class="cd">Thor folder on drive. Local Ollama endpoint. Runs llama3:70b. Agent-007 home.</div><div class="tags"><span class="tag td">THOR</span><span class="tag tp">THREADRIPPER</span></div></div>
-      </div>
-      <div class="card g">
-        <div class="ci" style="background:rgba(63,185,80,.15)">💾</div>
-        <div class="cb"><div class="cn">Win11 Boot Drive · disk9</div><div class="cd">512GB · Writing Win11 25H2 ISO now via dd. Plug into laptop → install to 1TB internal.</div><div class="tags"><span class="tag td">WRITING…</span><span class="tag tgr">WIN11 25H2</span></div></div>
-      </div>
-      <div class="card b">
-        <div class="ci" style="background:rgba(200,200,200,.1)">🐧</div>
-        <div class="cb"><div class="cn">Ubuntu Drive · disk10 ✅</div><div class="cd">256GB Ubuntu flash drive. Complete. Boot any PC from it for Ubuntu install.</div><div class="tags"><span class="tag tgr">READY</span><span class="tag tb">UBUNTU</span></div></div>
-      </div>
-      <div class="card">
-        <div class="ci" style="background:rgba(139,148,158,.1)">🐧</div>
-        <div class="cb"><div class="cn">Ubuntu Drive · disk11 ⏳</div><div class="cd">248GB · Writing Ubuntu 24.04 LTS ISO now. Will be complete boot drive when done.</div><div class="tags"><span class="tag td">WRITING…</span><span class="tag tb">UBUNTU 24.04</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AGENT1 DRIVE -->
-  <div id="agent1" class="sec">
-    <div class="sec-head"><span class="ico">💾</span><h2>AGENT1 Drive — All Assets</h2><span class="cnt" id="agent1-status">checking…</span></div>
-    <div class="grid grid-wide">
-      <!-- EPK Seed PDF — AGENT1 -->
-      <div class="card" style="border-color:rgba(212,160,60,.4);background:linear-gradient(135deg,rgba(212,160,60,.06),transparent);" onclick="open('file:///Volumes/AGENT1/Master Oscar_Investor_EPK_Seed_2026.pdf')">
-        <div class="ci" style="background:linear-gradient(135deg,rgba(212,160,60,.3),rgba(240,192,64,.1))">📄</div>
-        <div class="cb">
-          <div class="cn" style="color:var(--gold);">Master Oscar Investor EPK — Seed 2026 ★</div>
-          <div class="cd">Master Oscar_Investor_EPK_Seed_2026.pdf — on AGENT1. The real seed-round pitch deck. Open and send to investors.</div>
-          <div class="tags"><span class="tag tg">SEED 2026</span><span class="tag tg">PDF</span><span class="tag tgr">SEND NOW</span></div>
-        </div>
-      </div>
-      <!-- Gaming Server PDF -->
-      <div class="card r" onclick="open('file:///Volumes/AGENT1/gaming%20server.pdf')">
-        <div class="ci" style="background:rgba(230,57,70,.15)">🎮</div>
-        <div class="cb"><div class="cn">Gaming Server Plan</div><div class="cd">gaming server.pdf — GOAT gaming server business plan on AGENT1 drive.</div><div class="tags"><span class="tag tr">GAMING</span><span class="tag tr">PDF</span></div></div>
-      </div>
-      <!-- AGENT1 Catalog Server -->
-      <a href="http://127.0.0.1:3334/api/stats" target="_blank" class="card g">
-        <div class="ci" style="background:rgba(63,185,80,.15)">📁</div>
-        <div class="cb"><div class="cn">Catalog API — 5,954 Entries</div><div class="cd">AGENT1 server.py running on port 3334. Waka Flocka (2,847) · Fastassman (1,892) · Harvey Miller (1,215). Click to check live.</div><div class="tags"><span class="tag tgr">PORT 3334</span><span class="tag tgr">5,954 TRACKS</span></div></div>
+      <a class="agent-card" href="nexus-launcher.html" style="--accent:#00bcd4;">
+        <div class="agent-card-top"><span class="agent-card-icon">🔗</span><div class="agent-card-info"><div class="agent-card-name">Nexus</div><div class="agent-card-code">AGENT 004 · ORACLE</div></div><span class="agent-card-num">004</span></div>
+        <div class="agent-card-role">Intelligence, trends, network, distribution.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
       </a>
-      <!-- Launch scripts -->
-      <div class="card" onclick="copy('bash \"/Volumes/AGENT1/STUFF  SPEEDY NEEDS/launch-oscar-3333.sh\"')">
-        <div class="ci" style="background:rgba(200,200,200,.1)">🚀</div>
-        <div class="cb"><div class="cn">Launch Master Oscar 3333 (AGENT1)</div><div class="cd">Runs launch-oscar-3333.sh from AGENT1. Uses the real Master Oscar drive paths and model store.</div><div class="tags"><span class="tag tb">COPY CMD</span><span class="tag tb">:3333</span></div></div>
-      </div>
-      <div class="card" onclick="copy('bash \"/Volumes/AGENT1/STUFF  SPEEDY NEEDS/launch-agent-007-3334.sh\"')">
-        <div class="ci" style="background:rgba(212,160,60,.15)">🔫</div>
-        <div class="cb"><div class="cn">Launch Agent 007 (port 3334)</div><div class="cd">Runs launch-agent-007-3334.sh from AGENT1. Agent 007 on its own dedicated port.</div><div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tg">:3334</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/AGENT1/STUFF%20%20SPEEDY%20NEEDS/launch-all-oscar-agents.command')">
-        <div class="ci" style="background:rgba(167,139,250,.15)">🤖</div>
-        <div class="cb"><div class="cn">Launch ALL Master Oscar Agents</div><div class="cd">launch-all-oscar-agents.command — starts Ollama + Master Oscar (3333) + Agent 007 (3334) + opens crew pages. One click.</div><div class="tags"><span class="tag tp">ALL AGENTS</span><span class="tag tp">ONE CLICK</span></div></div>
-      </div>
-      <!-- HalitoChat iOS -->
-      <div class="card b" onclick="open('file:///Volumes/AGENT1/HalitoChat-iOS.zip')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">📱</div>
-        <div class="cb"><div class="cn">HalitoChat — iOS App</div><div class="cd">HalitoChat-iOS.zip on AGENT1. iOS chat app. Extract and deploy.</div><div class="tags"><span class="tag tb">iOS</span><span class="tag tb">ZIP</span></div></div>
-      </div>
-      <!-- AGENT1 Generated Art -->
-      <div class="card p" onclick="open('file:///Volumes/AGENT1/Generated%20image%201.png')">
-        <div class="ci" style="background:rgba(167,139,250,.12)">🎨</div>
-        <div class="cb"><div class="cn">GOAT Studio — Generated Art</div><div class="cd">Generated image 1.png — AI-generated GOAT Force studio visual. Use in EPK, slides, marketing.</div><div class="tags"><span class="tag tp">AI ART</span><span class="tag tp">PNG</span></div></div>
-      </div>
-      <!-- NVIDIA SDK / Jetson -->
-      <div class="card" onclick="open('file:///Volumes/AGENT1/')">
-        <div class="ci" style="background:rgba(63,185,80,.12)">🖥️</div>
-        <div class="cb"><div class="cn">NVIDIA SDK Manager + Jetson ISO</div><div class="cd">NVIDIA_SDK_Manager_2.4.1.13529.exe + Jetson ARM64 ISO + Ubuntu 26.04 on AGENT1. All GPU/edge AI tools.</div><div class="tags"><span class="tag tgr">NVIDIA</span><span class="tag tgr">JETSON</span><span class="tag td">GPU</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INVESTOR EPK -->
-  <div id="epk" class="sec">
-    <div class="sec-head"><span class="ico">💼</span><h2>Investor EPK — Ready to Send</h2><span class="cnt">391MB zip</span></div>
-    <div class="grid grid-wide">
-      <!-- AGENT1 EPK first -->
-      <div class="card" style="border-color:rgba(212,160,60,.35);" onclick="open('file:///Volumes/AGENT1/Master Oscar_Investor_EPK_Seed_2026.pdf')">
-        <div class="ci" style="background:rgba(212,160,60,.25)">⭐</div>
-        <div class="cb"><div class="cn">Master Oscar EPK Seed 2026 — AGENT1 ★</div><div class="cd">The latest seed-round PDF on AGENT1. Open and send to investors now.</div><div class="tags"><span class="tag tg">NEWEST</span><span class="tag tg">AGENT1</span><span class="tag tgr">SEND NOW</span></div></div>
-      </div>
-      <a href="http://72.61.193.184/epk/" target="_blank" class="card g">
-        <div class="ci" style="background:rgba(63,185,80,.2)">🌐</div>
-        <div class="cb"><div class="cn">Public Living EPK — Online Now</div><div class="cd">http://72.61.193.184/epk/ — public link, no login. Send this URL to investors, VCs, labels. Auto-plays demo.</div><div class="tags"><span class="tag tgr">PUBLIC</span><span class="tag tgr">LIVE</span><span class="tag tg">SEND LINK</span></div></div>
+      <a class="agent-card" href="lexi-launcher.html" style="--accent:#e91e8c;">
+        <div class="agent-card-top"><span class="agent-card-icon">⚖️</span><div class="agent-card-info"><div class="agent-card-name">Lexi</div><div class="agent-card-code">AGENT 005 · THE SPARK</div></div><span class="agent-card-num">005</span></div>
+        <div class="agent-card-role">Creative & legal. Lyrics, compliance, copyright protection.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
       </a>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Investor-EPK/SEND-TO-INVESTORS/')">
-        <div class="ci" style="background:rgba(212,160,60,.2)">📤</div>
-        <div class="cb"><div class="cn">SEND TO INVESTORS — i2i Drive Pack</div><div class="cd">GOAT-Living-EPK-SEND-THIS-20260628 + ZIP. Final investor pack, ready to send right now.</div><div class="tags"><span class="tag tg">SEND NOW</span><span class="tag tgr">READY</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Investor-EPK/living-epk/index.html')">
-        <div class="ci" style="background:rgba(212,160,60,.15)">🌐</div>
-        <div class="cb"><div class="cn">Living EPK — Web Version</div><div class="cd">Interactive HTML investor EPK. Open in browser. Full pitch, catalog, agent demo.</div><div class="tags"><span class="tag tg">LIVING EPK</span><span class="tag tg">HTML</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Investor-EPK/Master Oscar-GOAT-Royalty-Investor-EPK-2026.docx')">
-        <div class="ci" style="background:rgba(200,200,200,.08)">📄</div>
-        <div class="cb"><div class="cn">Investor EPK — Word Doc</div><div class="cd">Master Oscar-GOAT-Royalty-Investor-EPK-2026.docx — full written deck.</div><div class="tags"><span class="tag tb">DOCX</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Investor-EPK/GOAT-VALUATION-MONEY-ROLLUP-20260628.md')">
-        <div class="ci" style="background:rgba(63,185,80,.12)">💰</div>
-        <div class="cb"><div class="cn">GOAT Valuation + Money Rollup</div><div class="cd">Full valuation breakdown and money rollup as of June 28 2026.</div><div class="tags"><span class="tag tgr">VALUATION</span><span class="tag tgr">MONEY</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Investor-EPK/rendered/')">
-        <div class="ci" style="background:rgba(167,139,250,.12)">🖼️</div>
-        <div class="cb"><div class="cn">Rendered Pages — 12 Slides</div><div class="cd">All 12 rendered investor deck pages as PNG. page-1 through page-12 + contact sheet.</div><div class="tags"><span class="tag tp">12 SLIDES</span><span class="tag tp">PNG</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/Investor-EPK.zip')">
-        <div class="ci" style="background:rgba(212,160,60,.12)">📦</div>
-        <div class="cb"><div class="cn">Investor EPK — Full ZIP</div><div class="cd">391MB complete investor package ZIP. Share or archive.</div><div class="tags"><span class="tag td">391MB ZIP</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- LLM FOLDERS -->
-  <div id="llm" class="sec">
-    <div class="sec-head"><span class="ico">🦙</span><h2>LLM — Models, Training, Portable AI</h2><span class="cnt">/Volumes/i2i 1/Agent-007-GOAT/LLM</span></div>
-    <div class="grid grid-wide">
-      <div class="card p" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LLM/Training-Corpus/')">
-        <div class="ci" style="background:rgba(167,139,250,.15)">📚</div>
-        <div class="cb"><div class="cn">Training Corpus</div><div class="cd">Agent-007 training docs: Pro Tools, FL Studio, Wooh, Studio Security, Touch Screen, Trap Style Bible, Fine-Tune curriculum + video lessons.</div><div class="tags"><span class="tag tp">TRAINING</span><span class="tag tp">CORPUS</span><span class="tag td">MD + MP4</span></div></div>
-      </div>
-      <div class="card p" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LLM/Training-Corpus/Fine-Tune-LLMs/')">
-        <div class="ci" style="background:rgba(167,139,250,.15)">🎓</div>
-        <div class="cb"><div class="cn">Fine-Tune LLMs — Video Course</div><div class="cd">20+ video lessons: Fine-tune Wikipedia, Customer Care, Chat Model, Synthetic Data, Classification. Full curriculum.</div><div class="tags"><span class="tag tp">FINE-TUNE</span><span class="tag tp">20+ VIDEOS</span></div></div>
-      </div>
-      <div class="card b" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LLM/OSCAR-THOR-ONE-FOLDER/')">
-        <div class="ci" style="background:rgba(200,200,200,.1)">🖥️</div>
-        <div class="cb"><div class="cn">Master Oscar-Thor One Folder</div><div class="cd">Complete Master Oscar + Thor setup in one folder. GOAT-Royalty-App, GOAT-Royalty-USB, crew, data, image-runtimes, build scripts.</div><div class="tags"><span class="tag tb">OSCAR</span><span class="tag tb">THOR</span><span class="tag tb">ALL-IN-ONE</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LLM/USB-Uncensored-LLM-main/')">
-        <div class="ci" style="background:rgba(230,57,70,.15)">🔓</div>
-        <div class="cb"><div class="cn">USB Uncensored LLM</div><div class="cd">Full uncensored LLM USB build. LM Studio, models, launchers, AnythingLLM, Portable AI, GOAT Royalty App backup, animated GOAT videos.</div><div class="tags"><span class="tag tr">UNCENSORED</span><span class="tag tr">USB</span><span class="tag td">LM STUDIO</span></div></div>
-      </div>
-      <div class="card g" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LLM/Portable-AI-USB-main/')">
-        <div class="ci" style="background:rgba(63,185,80,.15)">💾</div>
-        <div class="cb"><div class="cn">Portable AI USB</div><div class="cd">Full portable AI setup. Ollama, AnythingLLM, NextJS commerce builds, NHQM, models, linux + windows installers.</div><div class="tags"><span class="tag tgr">PORTABLE</span><span class="tag tgr">USB</span><span class="tag tgr">CROSS-PLATFORM</span></div></div>
-      </div>
-      <div class="card" onclick="open('file:///Volumes/i2i%201/Agent-007-GOAT/LLM/Training/')">
-        <div class="ci" style="background:rgba(167,139,250,.12)">🏋️</div>
-        <div class="cb"><div class="cn">Training Folder</div><div class="cd">Fine-tune LLM training materials and datasets.</div><div class="tags"><span class="tag tp">TRAINING</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- UBUNTU + JETSON + GAMING SERVER -->
-  <div id="jetson" class="sec">
-    <div class="sec-head"><span class="ico">🖥️</span><h2>Ubuntu + Jetson + Gaming Server — Full Deploy</h2><span class="cnt">AGENT1 ISOs</span></div>
-
-    <!-- Full guide link -->
-    <a href="gaming-server.html" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(63,185,80,.08),rgba(57,208,216,.06));border:1px solid rgba(63,185,80,.25);border-radius:12px;padding:18px 22px;text-decoration:none;margin-bottom:20px;transition:.15s;" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='rgba(63,185,80,.25)'">
-      <span style="font-size:32px;">📋</span>
-      <div>
-        <div style="font-size:15px;font-weight:700;color:var(--green);">Open Full Setup Guide — gaming-server.html</div>
-        <div style="font-size:13px;color:var(--dim);margin-top:3px;">Step-by-step: Flash Ubuntu USB · Jetson SDK Manager · Gaming Server · Mac VM (UTM) · GPU AI stack · all copy-to-run commands</div>
-      </div>
-      <span style="margin-left:auto;color:var(--green);font-size:20px;">→</span>
-    </a>
-
-    <div class="grid grid-wide">
-      <!-- Ubuntu ISO -->
-      <div class="card g" style="border-color:rgba(63,185,80,.4);background:linear-gradient(135deg,rgba(63,185,80,.06),transparent);" onclick="copy('bash ~/GOAT-Royalty-App/flash-ubuntu-usb.sh')">
-        <div class="ci" style="background:rgba(63,185,80,.2)">🐧</div>
-        <div class="cb">
-          <div class="cn" style="color:var(--green);">Ubuntu 26.04 — Interactive USB Flasher ★</div>
-          <div class="cd">One-command interactive flasher. Lists all disks, safety-checks internals, asks confirmation, flashes ISO from AGENT1. Click to copy.</div>
-          <div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tg">SAFE</span><span class="tag tg">INTERACTIVE</span></div>
-        </div>
-      </div>
-      <div class="card g" onclick="copy('diskutil unmountDisk /dev/diskN && sudo dd if=\"/Volumes/AGENT1/ubuntu-26.04-desktop-amd64.iso\" of=/dev/rdiskN bs=1m status=progress')">
-        <div class="ci" style="background:rgba(63,185,80,.15)">💾</div>
-        <div class="cb">
-          <div class="cn">dd Flash Command — Ubuntu ISO → USB</div>
-          <div class="cd">Copies the dd flash command. Replace diskN with your actual USB disk number. Takes ~5 min. Erases USB completely.</div>
-          <div class="tags"><span class="tag tg">COPY CMD</span><span class="tag tgr">ERASES USB</span></div>
-        </div>
-      </div>
-      <!-- Mac VM -->
-      <div class="card b" onclick="copy('brew install --cask utm')">
-        <div class="ci" style="background:rgba(200,200,200,.1)">💻</div>
-        <div class="cb">
-          <div class="cn">Run Ubuntu in VM on this Mac (UTM)</div>
-          <div class="cd">UTM = free VM for Apple Silicon. Install UTM → New VM → Emulate → Linux → point to AGENT1 ISO. 8GB RAM, 80GB disk, 4 cores.</div>
-          <div class="tags"><span class="tag tb">COPY: brew install utm</span><span class="tag tb">FREE</span></div>
-        </div>
-      </div>
-      <!-- Gaming Server -->
-      <a href="gaming-server.html#gaming" class="card r">
-        <div class="ci" style="background:rgba(230,57,70,.15)">🎮</div>
-        <div class="cb">
-          <div class="cn">Gaming Server Setup</div>
-          <div class="cd">Full step-by-step: Ubuntu → NVIDIA GPU drivers → SteamCMD → Ollama + GOAT → Nginx proxy → auto-start on boot.</div>
-          <div class="tags"><span class="tag tr">GAMING</span><span class="tag tr">NVIDIA GPU</span><span class="tag tg">+ AI</span></div>
-        </div>
+      <a class="agent-card" href="sir-codex-launcher.html" style="--accent:#00d4aa;">
+        <div class="agent-card-top"><span class="agent-card-icon">🤖</span><div class="agent-card-info"><div class="agent-card-name">Sir Codex</div><div class="agent-card-code">AGENT 006 · SENTINEL</div></div><span class="agent-card-num">006</span></div>
+        <div class="agent-card-role">Technical architect, code, infrastructure.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
       </a>
-      <!-- Jetson ISO -->
-      <div class="card c">
-        <div class="ci" style="background:rgba(0,212,255,.15)">💿</div>
-        <div class="cb">
-          <div class="cn">Jetson r39.2 — ARM64 ISO (4.7GB)</div>
-          <div class="cd">JetPack r39.2.0 for Jetson Orin series. AGX Orin, Orin NX, Orin Nano. CUDA + cuDNN + TensorRT included. On AGENT1.</div>
-          <div class="tags"><span class="tag tc">4.7GB</span><span class="tag tc">ARM64</span><span class="tag tc">JetPack 6.x</span></div>
-        </div>
+      <a class="agent-card" href="dr-devin.html" style="--accent:#58a6ff;">
+        <div class="agent-card-top"><span class="agent-card-icon">🩺</span><div class="agent-card-info"><div class="agent-card-name">Dr. Devin</div><div class="agent-card-code">AGENT 007 · WHAT'S UP DOC</div></div><span class="agent-card-num">007</span></div>
+        <div class="agent-card-role">Chief AI strategist, 57 models, 14 agents coordinated.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
+      </a>
+      <a class="agent-card" href="gonbrazy-launcher.html" style="--accent:#2ecc71;">
+        <div class="agent-card-top"><span class="agent-card-icon">🎚️</span><div class="agent-card-info"><div class="agent-card-name">GONBRAZY</div><div class="agent-card-code">STUDIO BOSS · MIXING & MASTERING</div></div></div>
+        <div class="agent-card-role">Mixing, mastering, session boss. GOAT Force audio chief.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
+      </a>
+      <a class="agent-card" href="wooh-da-kid-launcher.html" style="--accent:#ff6b35;">
+        <div class="agent-card-top"><span class="agent-card-icon">🎛️</span><div class="agent-card-info"><div class="agent-card-name">Wooh Da Kid</div><div class="agent-card-code">TONY STARKS · THE GANGSTA NERD</div></div></div>
+        <div class="agent-card-role">Beat maestro, FL Studio guru, DJ Speedy's production buddy.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
+      </a>
+      <a class="agent-card" href="hannah-miller-launcher.html" style="--accent:#ff9800;">
+        <div class="agent-card-top"><span class="agent-card-icon">🌟</span><div class="agent-card-info"><div class="agent-card-name">Hannah Miller</div><div class="agent-card-code">AMIGO KEEPER · AMIGO ALLEY</div></div></div>
+        <div class="agent-card-role">Latin crossover director. Amigo Alley web keeper.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
+      </a>
+      <a class="agent-card" href="legal-eagle-launcher.html" style="--accent:#f39c12;">
+        <div class="agent-card-top"><span class="agent-card-icon">⚖️</span><div class="agent-card-info"><div class="agent-card-name">Legal Eagle</div><div class="agent-card-code">AGENT 011 · THE COUNSELOR</div></div><span class="agent-card-num">011</span></div>
+        <div class="agent-card-role">Music law, IP protection, contract strategy, $3.3B position.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
+      </a>
+      <a class="agent-card" href="ar-scout-launcher.html" style="--accent:#e74c3c;">
+        <div class="agent-card-top"><span class="agent-card-icon">🎯</span><div class="agent-card-info"><div class="agent-card-name">A&R Scout</div><div class="agent-card-code">AGENT 012 · THE EYE</div></div><span class="agent-card-num">012</span></div>
+        <div class="agent-card-role">Talent intelligence, market signals, hit detection.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
+      </a>
+      <a class="agent-card" href="cfo-brain-launcher.html" style="--accent:#2ecc71;">
+        <div class="agent-card-top"><span class="agent-card-icon">📊</span><div class="agent-card-info"><div class="agent-card-name">CFO Brain</div><div class="agent-card-code">AGENT 013 · THE ARCHITECT</div></div><span class="agent-card-num">013</span></div>
+        <div class="agent-card-role">Revenue strategy, financial modeling, investor relations.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
+      </a>
+      <a class="agent-card" href="autopilot-launcher.html" style="--accent:#9b59b6;">
+        <div class="agent-card-top"><span class="agent-card-icon">🤖</span><div class="agent-card-info"><div class="agent-card-name">Autopilot</div><div class="agent-card-code">AGENT 014 · THE MACHINE</div></div><span class="agent-card-num">014</span></div>
+        <div class="agent-card-role">Autonomous execution, multi-step tasks, system coordination.</div>
+        <div class="agent-card-footer"><span class="agent-card-dot">Online</span><span class="agent-card-launch">LAUNCH →</span></div>
+      </a>
+    </div>
+
+    <!-- Empire sections -->
+    <div class="main-section"><div class="main-section-title"><span>🏰</span> Empire Sections</div></div>
+    <div class="empire-grid">
+      <a class="empire-btn" href="music-studio.html"><span class="e-icon">🎵</span> Music Studio</a>
+      <a class="empire-btn" href="beat-maker.html"><span class="e-icon">🥁</span> Beat Maker</a>
+      <a class="empire-btn" href="vocal-studio.html"><span class="e-icon">🎤</span> Vocal Studio</a>
+      <a class="empire-btn" href="movie-studio.html"><span class="e-icon">🎬</span> Movie Studio</a>
+      <a class="empire-btn" href="production-hub.html"><span class="e-icon">🎛️</span> Production Hub</a>
+      <a class="empire-btn" href="goat-casino.html"><span class="e-icon">🎰</span> GOAT Casino</a>
+      <a class="empire-btn" href="goat-city-rp.html"><span class="e-icon">🏙️</span> GTA City RP</a>
+      <a class="empire-btn" href="goat-celebrity-lounge.html"><span class="e-icon">🥂</span> Celebrity Lounge</a>
+      <a class="empire-btn" href="unreal-copilot.html"><span class="e-icon">🎮</span> Unreal Engine</a>
+      <a class="empire-btn" href="moneypenny.html"><span class="e-icon">💼</span> Royalty Tracker</a>
+      <a class="empire-btn" href="ai-dashboard.html"><span class="e-icon">📊</span> AI Dashboard</a>
+      <a class="empire-btn" href="settings.html"><span class="e-icon">⚙️</span> Settings</a>
+    </div>
+
+    <!-- Media gallery -->
+    <div class="main-section"><div class="main-section-title"><span>🎬</span> GOAT Force Media</div></div>
+    <div class="media-grid">
+      <div class="media-card">
+        <video controls poster="">
+          <source src="video/goat-animated-1.mp4" type="video/mp4">
+        </video>
+        <div class="media-card-label"><strong>Animated GOAT — Take 1</strong>Oct 2025 · 29MB</div>
       </div>
-      <!-- SDK Manager via Docker -->
-      <div class="card c" onclick="copy('docker load -i \"/Volumes/AGENT1/sdkmanager-2.4.1.13529-Ubuntu_22.04_docker.tar.gz\"')">
-        <div class="ci" style="background:rgba(0,212,255,.15)">🐳</div>
-        <div class="cb">
-          <div class="cn">Load SDK Manager Docker (Ubuntu 22.04)</div>
-          <div class="cd">Loads the SDK Manager Docker image from AGENT1 into Docker Desktop. Then run sdkmanager container to flash Jetson.</div>
-          <div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tc">DOCKER</span><span class="tag tc">v2.4.1</span></div>
-        </div>
+      <div class="media-card">
+        <video controls>
+          <source src="video/goat-animated-2.mp4" type="video/mp4">
+        </video>
+        <div class="media-card-label"><strong>Animated GOAT — Take 2</strong>Oct 2025 · 36MB</div>
       </div>
-      <!-- Flash Jetson CLI -->
-      <div class="card c" onclick="copy('ssh root@72.61.193.184 \"sdkmanager --cli install --logintype devzone --product Jetson --target JETSON_AGX_ORIN_TARGETS --targetos Linux --version 6.2 --host --downloads /root/nvidia/sdkm_downloads --log /root/nvidia/logs\"')">
-        <div class="ci" style="background:rgba(0,212,255,.2)">🚀</div>
-        <div class="cb">
-          <div class="cn">Flash Jetson AGX Orin — CLI (Server 2)</div>
-          <div class="cd">SDK Manager CLI flash via SSH to 72.61.193.184. Put Jetson in recovery, USB-C to server, run this.</div>
-          <div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tc">AGX ORIN</span><span class="tag tc">JetPack 6.2</span></div>
-        </div>
+      <div class="media-card">
+        <video controls>
+          <source src="video/goat-royalty-demo.mov" type="video/quicktime">
+        </video>
+        <div class="media-card-label"><strong>GOAT Royalty Demo</strong>Original app demo · 14MB</div>
       </div>
-      <!-- Master Oscar on Jetson -->
-      <div class="card c" onclick="copy('curl -fsSL https://ollama.com/install.sh | sh && git clone https://github.com/DJSPEEDYGA/GOAT-Royalty-App.git ~/goat && cd ~/goat && bash start-goat.sh')">
-        <div class="ci" style="background:rgba(0,212,255,.12)">🐐</div>
-        <div class="cb">
-          <div class="cn">Master Oscar on Jetson — One-Line Deploy</div>
-          <div class="cd">SSH to Jetson after flash → run this. Installs Ollama + clones GOAT + starts Master Oscar on port 3333. GPU-accelerated on Jetson CUDA.</div>
-          <div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tg">GOAT ON GPU</span></div>
-        </div>
+      <div class="media-card" style="padding:12px 14px;">
+        <strong style="font-size:12px;color:rgba(255,255,255,0.8);display:block;margin-bottom:8px;">🎵 Old School Chevy</strong>
+        <audio controls style="width:100%;">
+          <source src="video/old-school-chevy.mp3" type="audio/mpeg">
+        </audio>
+        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:8px;font-family:'JetBrains Mono',monospace;">Harvey Miller &amp; Ray Rush · 8.1MB</div>
       </div>
-      <!-- Copy SDK to server -->
-      <div class="card c" onclick="copy('scp \"/Volumes/AGENT1/sdkmanager_2.4.1-13529_amd64.deb\" goat@SERVER-IP:~')">
-        <div class="ci" style="background:rgba(0,212,255,.12)">📤</div>
-        <div class="cb">
-          <div class="cn">SCP SDK Manager .deb to Linux Machine</div>
-          <div class="cd">Copies the amd64 .deb from AGENT1 to any Ubuntu server over SSH. Replace SERVER-IP with target IP.</div>
-          <div class="tags"><span class="tag tc">COPY CMD</span><span class="tag tc">SCP</span></div>
-        </div>
+      <div class="media-card" style="padding:12px 14px;">
+        <strong style="font-size:12px;color:rgba(255,255,255,0.8);display:block;margin-bottom:8px;">🎵 EM8 85BPM — Daddy's Lil Girl</strong>
+        <audio controls style="width:100%;">
+          <source src="video/em8-85bpm-daddys-lil-girl.mp3" type="audio/mpeg">
+        </audio>
+        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:8px;font-family:'JetBrains Mono',monospace;">Beat · 5.3MB</div>
       </div>
     </div>
-  </div>
 
-  <!-- GOAT WEB APP TOOLS -->
-  <div id="tools" class="sec">
-    <div class="sec-head"><span class="ico">🎛️</span><h2>GOAT Web App · All Tools</h2><span class="cnt">86 pages</span></div>
-    <div class="grid">
-      <a href="powerhouse.html" class="card"><div class="ci" style="background:rgba(212,160,60,.15)">⚡</div><div class="cb"><div class="cn">Powerhouse</div><div class="cd">Main hub — all 65+ tools in one place.</div><div class="tags"><span class="tag tg">FLAGSHIP</span></div></div></a>
-      <a href="studio.html" class="card r"><div class="ci" style="background:rgba(230,57,70,.12)">🎙️</div><div class="cb"><div class="cn">Recording Studio</div><div class="cd">Multi-track, SSL signal chain, real-time monitoring.</div><div class="tags"><span class="tag tr">STUDIO</span></div></div></a>
-      <a href="beat-maker.html" class="card"><div class="ci" style="background:rgba(212,160,60,.12)">🎵</div><div class="cb"><div class="cn">Beat Maker</div><div class="cd">FL Studio-style. Step sequencer, 16 channels.</div><div class="tags"><span class="tag tg">PRO</span></div></div></a>
-      <a href="ssl-mixer.html" class="card"><div class="ci" style="background:rgba(212,160,60,.12)">🎚️</div><div class="cb"><div class="cn">SSL 32-Channel Mixer</div><div class="cd">32-channel SSL 9000 emulation.</div><div class="tags"><span class="tag tg">32CH</span></div></div></a>
-      <a href="mastering.html" class="card b"><div class="ci" style="background:rgba(200,200,200,.08)">💿</div><div class="cb"><div class="cn">AI Mastering Suite</div><div class="cd">Ozone-style dynamics, loudness targeting.</div><div class="tags"><span class="tag tb">AI</span></div></div></a>
-      <a href="vocal-studio.html" class="card p"><div class="ci" style="background:rgba(167,139,250,.12)">🎤</div><div class="cb"><div class="cn">Vocal Studio</div><div class="cd">Auto-Tune, harmony, compression, reverb.</div><div class="tags"><span class="tag tp">VOCAL</span></div></div></a>
-      <a href="autopilot.html" class="card g"><div class="ci" style="background:rgba(63,185,80,.12)">🤖</div><div class="cb"><div class="cn">Autopilot Agent</div><div class="cd">Full automation. Runs tasks while you sleep.</div><div class="tags"><span class="tag tgr">AUTO</span></div></div></a>
-      <a href="royalty-calc.html" class="card"><div class="ci" style="background:rgba(212,160,60,.12)">💰</div><div class="cb"><div class="cn">Royalty Calculator</div><div class="cd">DSP earnings, sync, mechanical with precision.</div><div class="tags"><span class="tag tg">MONEY</span></div></div></a>
-      <a href="catalog.html" class="card b"><div class="ci" style="background:rgba(200,200,200,.08)">📁</div><div class="cb"><div class="cn">Catalog Manager</div><div class="cd">ISRC, ISWC, UPC. 2,980 entries. CWR export.</div><div class="tags"><span class="tag tb">CATALOG</span></div></div></a>
-      <a href="distribution.html" class="card g"><div class="ci" style="background:rgba(63,185,80,.12)">🌍</div><div class="cb"><div class="cn">Distribution</div><div class="cd">Spotify, Apple, Tidal + 50 DSPs.</div><div class="tags"><span class="tag tgr">DSP</span></div></div></a>
-      <a href="goat-crypto-wallet.html" class="card"><div class="ci" style="background:rgba(212,160,60,.12)">💎</div><div class="cb"><div class="cn">Crypto Wallet</div><div class="cd">Multi-chain. ETH, BTC, SOL, GOAT Token.</div><div class="tags"><span class="tag tg">WEB3</span></div></div></a>
-      <a href="goat-nft-studio.html" class="card p"><div class="ci" style="background:rgba(167,139,250,.12)">🖼️</div><div class="cb"><div class="cn">NFT Studio</div><div class="cd">Mint, buy, sell. ETH, Polygon, Solana.</div><div class="tags"><span class="tag tp">NFT</span></div></div></a>
-      <a href="goat-virtual-world-rp.html" class="card r"><div class="ci" style="background:rgba(230,57,70,.12)">🎮</div><div class="cb"><div class="cn">GOAT City RP</div><div class="cd">FiveM virtual world roleplay. GTA RP server.</div><div class="tags"><span class="tag tr">FIVEM</span><span class="tag tr">RP</span></div></div></a>
-      <a href="touch-hub.html" class="card c"><div class="ci" style="background:rgba(0,212,255,.12)">📱</div><div class="cb"><div class="cn">Touch Hub</div><div class="cd">iPad/Surface touch interface. MPC, mixer, piano.</div><div class="tags"><span class="tag tc">TOUCH</span></div></div></a>
-      <a href="agents-brain.html" class="card p"><div class="ci" style="background:rgba(167,139,250,.12)">🧠</div><div class="cb"><div class="cn">AI Brain — All 11 Agents</div><div class="cd">Ms. Money Penny, Sir Codex, Legal, A&R, CFO, Producer and more.</div><div class="tags"><span class="tag tp">11 AGENTS</span></div></div></a>
-      <a href="goat-command-center.html" class="card"><div class="ci" style="background:rgba(212,160,60,.15)">🎯</div><div class="cb"><div class="cn">Command Center</div><div class="cd">Full system command center with status dashboard.</div><div class="tags"><span class="tag tg">HUB</span></div></div></a>
+    <!-- Intel server status -->
+    <div class="main-section"><div class="main-section-title"><span>🧠</span> Intel Server Status</div></div>
+    <div class="intel-card">
+      <div class="intel-card-header">
+        <span style="font-size:2rem;">🖥️</span>
+        <div><h4>GOAT Intel Server v3</h4><p>http://localhost:5500 · Ollama → Grok → Gemini → OpenAI</p></div>
+      </div>
+      <div class="intel-rows" id="intelRows">
+        <div class="intel-row"><span class="name">🟡 Ollama</span><span class="val warn" id="ir_ollama">Checking…</span></div>
+        <div class="intel-row"><span class="name">⚡ Grok</span><span class="val warn" id="ir_grok">Checking…</span></div>
+        <div class="intel-row"><span class="name">💎 Gemini</span><span class="val warn" id="ir_gemini">Checking…</span></div>
+        <div class="intel-row"><span class="name">🤖 OpenAI</span><span class="val warn" id="ir_openai">Checking…</span></div>
+      </div>
+      <div class="intel-actions">
+        <a href="moneypenny.html" class="intel-btn gold">💼 Open Money Penny</a>
+        <button class="intel-btn ghost" onclick="checkIntel()">🔄 Refresh</button>
+        <a href="http://localhost:5500/health" target="_blank" class="intel-btn ghost">🩺 Health Check</a>
+      </div>
     </div>
-  </div>
 
-</div><!-- /wrap -->
-
-<footer style="border-top:1px solid var(--line);padding:24px;text-align:center;color:var(--dim);font-size:12px;">
-  🐐 <span style="color:var(--gold);font-weight:700;">GOAT Force Records</span> · DJ Speedy (Harvey L. Miller Jr.) × Waka Flocka Flame · Agent-007 + Ms. Money Penny are personal original LLMs built by DJ Speedy
-</footer>
-
-<div id="toast">✅ Copied to clipboard!</div>
+  </div><!-- /hub-main -->
+</div><!-- /hub-layout -->
 
 <script>
-function copy(cmd){
-  navigator.clipboard.writeText(cmd).then(()=>{
-    const t=document.getElementById('toast');
-    t.style.display='block';
-    setTimeout(()=>t.style.display='none',2000);
-  });
+const INTEL = 'http://localhost:5500';
+
+// ── Terminal ──────────────────────────────────────────────
+const termOut = document.getElementById('termOut');
+function termLog(msg, cls='') {
+  const p = document.createElement('p');
+  p.className = 'terminal-line ' + cls;
+  p.textContent = msg;
+  termOut.appendChild(p);
+  termOut.scrollTop = termOut.scrollHeight;
 }
-// Check local intel brain
-fetch('http://localhost:5500/health',{signal:AbortSignal.timeout(2500)})
-  .then(r=>{document.getElementById('d-intel').className='dot '+(r.ok?'dg':'dr');})
-  .catch(()=>{document.getElementById('d-intel').className='dot dr';});
-
-// Open Master Oscar Touch Studio (opens Oscar Console then signals it to open studio)
-function openMaster OscarStudio(){
-  const w=window.open('http://127.0.0.1:3333/','oscar_console');
-  setTimeout(()=>{
-    try{w.postMessage({action:'openStudio'},'*');}catch{}
-  },1200);
+function termKey(e) { if (e.key === 'Enter') termSend(); }
+async function termSend() {
+  const inp = document.getElementById('termInput');
+  const cmd = inp.value.trim();
+  if (!cmd) return;
+  inp.value = '';
+  termLog('$ ' + cmd, 'cmd');
+  try {
+    const r = await fetch(INTEL + '/ai/moneypenny', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({message: cmd}),
+      signal: AbortSignal.timeout(30000)
+    });
+    const d = await r.json();
+    if (d.ok && d.reply) {
+      const lines = d.reply.split('\n').slice(0,6);
+      lines.forEach(l => { if (l.trim()) termLog(l); });
+      termLog('─ ' + (d.engine || 'GOAT Intel') + ' ─', 'sys');
+    } else {
+      termLog('ERROR: ' + (d.error || 'no response'), 'err');
+    }
+  } catch(e) {
+    termLog('Intel server offline — start goat_intel.py', 'err');
+  }
 }
 
-// Master Oscar Console connection status badge in nav
-fetch('http://127.0.0.1:3333/',{signal:AbortSignal.timeout(2000)})
-  .then(r=>{if(r.ok){document.querySelector('.pill').style.background='rgba(63,185,80,.2)';document.querySelector('.pill').style.color='#3fb950';document.querySelector('.pill').textContent='● Master Oscar Online';}})
-  .catch(()=>{document.querySelector('.pill').textContent='● Master Oscar Offline';document.querySelector('.pill').style.color='#8b949e';});
+// ── Intel Server Check ─────────────────────────────────────
+async function checkIntel() {
+  try {
+    const r = await fetch(INTEL + '/health', {signal: AbortSignal.timeout(4000)});
+    const d = await r.json();
+    // Nav
+    document.getElementById('navDot').style.background = '#2ecc71';
+    document.getElementById('navDot').style.boxShadow = '0 0 8px #2ecc71';
+    document.getElementById('navLabel').textContent = 'Intel Online';
+    document.getElementById('navLabel').style.color = '#2ecc71';
+    // Hero
+    document.getElementById('heroDot').style.background = '#2ecc71';
+    document.getElementById('heroDot').style.boxShadow = '0 0 8px #2ecc71';
+    document.getElementById('heroStatus').textContent = 'Intel Server Online';
+    // Sidebar
+    document.getElementById('sidebarDot').style.background = '#2ecc71';
+    document.getElementById('sidebarDot').style.boxShadow = '0 0 8px #2ecc71';
+    document.getElementById('intelDot2').style.background = '#2ecc71';
+    document.getElementById('intelDot2').style.boxShadow = '0 0 8px #2ecc71';
+    document.getElementById('intelLabel2').textContent = '5500 · Online';
+    // Intel rows
+    setRow('ir_ollama', d.yt_dlp ? 'Running' : 'Unknown', d.yt_dlp);
+    setRow('ir_grok',   d.grok   || 'Not set', d.grok   && d.grok.includes('✅'));
+    setRow('ir_gemini', d.gemini || 'Not set', d.gemini && d.gemini.includes('✅'));
+    setRow('ir_openai', d.openai || 'Not set', d.openai && d.openai.includes('✅'));
+    termLog('✅ Intel server online — all systems check', 'ok');
+  } catch(e) {
+    ['navDot','heroDot','sidebarDot','intelDot2'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.style.background = '#e74c3c'; el.style.boxShadow = 'none'; }
+    });
+    document.getElementById('navLabel').textContent = 'Intel Offline';
+    document.getElementById('navLabel').style.color = '#e74c3c';
+    document.getElementById('heroStatus').textContent = 'Start goat_intel.py';
+    document.getElementById('intelLabel2').textContent = 'Offline';
+    setRow('ir_ollama', 'Server offline', false);
+    setRow('ir_grok',   'Server offline', false);
+    setRow('ir_gemini', 'Server offline', false);
+    setRow('ir_openai', 'Server offline', false);
+    termLog('⚠ Intel server offline — cd goat-intel-server && python3 goat_intel.py', 'err');
+  }
+}
+function setRow(id, text, ok) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'val ' + (ok ? 'ok' : text.includes('offline') ? 'off' : 'warn');
+}
 
-// AGENT1 Catalog Server status check (port 3334)
-fetch('http://127.0.0.1:3334/api/stats',{signal:AbortSignal.timeout(2500)})
-  .then(r=>r.json())
-  .then(d=>{
-    const el=document.getElementById('agent1-status');
-    if(el)el.textContent=`✅ Online — ${(d.total_entries||5954).toLocaleString()} entries`;
-    if(el)el.style.color='var(--green)';
-  })
-  .catch(()=>{
-    const el=document.getElementById('agent1-status');
-    if(el){el.textContent='Drive mounted — start server to use catalog API';el.style.color='var(--dim)';}
-  });
+// Init
+checkIntel();
+setInterval(checkIntel, 30000);
 </script>
+
+  <script src="js/goat-touch.js"></script>
+  <script src="js/goat-agent-controls.js"></script>
 </body>
 </html>
