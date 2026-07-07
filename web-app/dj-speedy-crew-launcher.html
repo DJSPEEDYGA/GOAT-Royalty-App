@@ -610,6 +610,69 @@ body > * { position:relative; z-index:1; }
       </div>
     </div>
 
+    <!-- DR. DEVIN STRATEGY + SIR CODEX INFRA — side by side -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-accent" style="background:#00d4aa;"></div>
+        <span class="section-label">Command Panels</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;">
+
+        <!-- DR. DEVIN STRATEGY PANEL -->
+        <div style="background:var(--bg-card);border:1px solid rgba(0,212,170,0.25);border-radius:12px;padding:18px;">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#00d4aa;margin-bottom:4px;">🩺 Dr. Devin — Strategy Panel</div>
+          <div style="font-size:10px;color:var(--fg-dim);margin-bottom:12px;">Agent 007 · WHAT'S UP DOC · Chief AI Strategist</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;" onclick="launch('http://127.0.0.1:8090/dr-devin.html','Dr. Devin')">🩺 Open Dr. Devin Launcher</button>
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;border-color:rgba(0,212,170,0.3);color:#00d4aa;" onclick="window.open('http://127.0.0.1:5500/chat?agent=devin&msg=Give+me+a+morning+briefing+empire+status+active+projects+priority+actions','_blank')">📋 Morning Briefing</button>
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;border-color:rgba(0,212,170,0.3);color:#00d4aa;" onclick="window.open('http://127.0.0.1:5500/chat?agent=devin&msg=3.3B+lawsuit+status+and+next+strategic+moves','_blank')">⚖️ $3.3B Lawsuit Strategy</button>
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;border-color:rgba(0,212,170,0.3);color:#00d4aa;" onclick="window.open('http://127.0.0.1:5500/chat?agent=devin&msg=Full+agent+network+status+check','_blank')">🤖 Agent Network Check</button>
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;border-color:rgba(0,212,170,0.3);color:#00d4aa;" onclick="window.open('http://127.0.0.1:5500/chat?agent=devin&msg=90+day+roadmap+GOAT+Royalty+App','_blank')">🗺️ 90-Day Roadmap</button>
+          </div>
+        </div>
+
+        <!-- SIR CODEX INFRASTRUCTURE PANEL -->
+        <div style="background:var(--bg-card);border:1px solid rgba(88,166,255,0.25);border-radius:12px;padding:18px;">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#58a6ff;margin-bottom:4px;">🛡️ Sir Codex — Infrastructure Panel</div>
+          <div style="font-size:10px;color:var(--fg-dim);margin-bottom:12px;">Agent 006 · SENTINEL · Chief Technical Architect</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;" onclick="launch('http://127.0.0.1:8090/sir-codex-launcher.html','Sir Codex')">🛡️ Open Sir Codex Launcher</button>
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;border-color:rgba(88,166,255,0.3);color:#58a6ff;" onclick="window.open('http://127.0.0.1:5500/chat?agent=codex&msg=Full+system+audit+server+health+endpoint+status+model+availability','_blank')">🔍 Full System Audit</button>
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;border-color:rgba(88,166,255,0.3);color:#58a6ff;" onclick="window.open('http://127.0.0.1:5500/chat?agent=codex&msg=GOAT+Vault+Protocol+status+backup+nodes+sync+security','_blank')">🔐 Vault Protocol Check</button>
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;border-color:rgba(88,166,255,0.3);color:#58a6ff;" onclick="window.open('http://127.0.0.1:5500/chat?agent=codex&msg=What+Ollama+models+are+loaded+56+model+pool+status','_blank')">🤖 Ollama Model Pool</button>
+            <button class="action-btn" style="text-align:left;font-size:11px;padding:7px 12px;border-color:rgba(88,166,255,0.3);color:#58a6ff;" onclick="launch('http://127.0.0.1:5500/health','Intel Health')">🌐 Intel Server /health</button>
+          </div>
+        </div>
+
+        <!-- VAULT PROTOCOL STATUS -->
+        <div style="background:var(--bg-card);border:1px solid rgba(193,18,31,0.3);border-radius:12px;padding:18px;">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:12px;">🔐 GOAT Vault Protocol v7.0</div>
+          <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;">
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--fg-dim);">Code Status</span><span style="color:var(--green);font-weight:700;">LIVE SYNC</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--fg-dim);">Authority</span><span style="color:var(--gold);">OG // WAKA // MONEYPENNY</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--fg-dim);">Activation</span><span style="color:var(--fg);">DrawOurGoat</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--fg-dim);">Boot Signal</span><span style="color:var(--fg);">"Moneypenny, are you there?"</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--fg-dim);">Bonding Code</span><span style="color:var(--gold);font-weight:700;">Trident University +2</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="color:var(--fg-dim);">Agents Trained</span><span style="color:var(--green);font-weight:700;">15 / 15 ✓</span></div>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;"><span style="color:var(--fg-dim);">Lawsuit Protected</span><span style="color:var(--red);font-weight:700;">$3.3B</span></div>
+          </div>
+        </div>
+
+        <!-- INTEL SERVER CONTROL -->
+        <div style="background:var(--bg-card);border:1px solid rgba(212,160,60,0.2);border-radius:12px;padding:18px;">
+          <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:8px;">🧠 Intel Server Control</div>
+          <div id="intelStatusCrew" style="font-size:11px;color:var(--fg-dim);margin-bottom:12px;">Checking...</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <button class="action-btn" style="font-size:11px;padding:7px 12px;" onclick="bootIntelServer()">🚀 Boot Intel Server (5500)</button>
+            <button class="action-btn" style="font-size:11px;padding:7px 12px;border-color:rgba(212,160,60,0.3);" onclick="launch('http://127.0.0.1:5500/health','Intel Health')">🔍 Health Check</button>
+            <button class="action-btn" style="font-size:11px;padding:7px 12px;border-color:rgba(255,255,255,0.1);color:var(--fg-dim);" onclick="launch('http://127.0.0.1:5500/brain/agents','Agent List')">📋 Agent List (/brain/agents)</button>
+            <div style="margin-top:4px;font-size:10px;color:rgba(255,255,255,0.18);font-family:var(--font-mono);">cd goat-intel-server && python3 goat_intel.py</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- OWNER TOOLS -->
     <div class="section">
       <div class="section-header">
@@ -766,8 +829,54 @@ async function checkServices() {
   } catch(e) {}
 }
 
+async function bootIntelServer() {
+  log('Booting Intel Server on :5500...', 'warn');
+  const el = document.getElementById('intelStatusCrew');
+  if (el) el.textContent = 'Booting...';
+  try {
+    await fetch('http://127.0.0.1:5500/health', {signal: AbortSignal.timeout(500)});
+    log('Intel Server already running', 'ok');
+    if (el) el.textContent = '✅ Already online — http://127.0.0.1:5500';
+    return;
+  } catch(e) {}
+  try {
+    await fetch('/api/run', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({command:'cd /Users/be100radio/GOAT-Royalty-App/goat-intel-server && nohup python3 goat_intel.py >> /tmp/goat-intel.log 2>&1 &'}),
+      signal: AbortSignal.timeout(4000)
+    });
+  } catch(e) {
+    log('Cannot auto-boot from browser — run: cd goat-intel-server && python3 goat_intel.py', 'warn');
+  }
+  setTimeout(async () => {
+    try {
+      const r = await fetch('http://127.0.0.1:5500/health', {signal: AbortSignal.timeout(2500)});
+      if (r.ok || r.status < 500) {
+        log('Intel Server online', 'ok');
+        if (el) el.textContent = '✅ Intel Server ONLINE — http://127.0.0.1:5500';
+      } else throw new Error();
+    } catch(e) {
+      log('Intel Server still offline — start manually', 'warn');
+      if (el) el.textContent = '❌ Offline — start manually in terminal';
+    }
+  }, 4000);
+}
+
+async function checkIntelStatus() {
+  const el = document.getElementById('intelStatusCrew');
+  if (!el) return;
+  try {
+    const r = await fetch('http://127.0.0.1:5500/health', {signal: AbortSignal.timeout(2000)});
+    el.textContent = (r.ok || r.status < 500) ? '✅ ONLINE — http://127.0.0.1:5500' : '❌ OFFLINE — click Boot to start';
+  } catch(e) {
+    el.textContent = '❌ OFFLINE — click Boot to start';
+  }
+}
+
 window.addEventListener('load', () => {
   setTimeout(checkServices, 800);
+  setTimeout(checkIntelStatus, 1000);
+  setInterval(checkIntelStatus, 12000);
   log('DJ Speedy\'s Command Center loaded. Empire standing by.', 'ok');
 });
 </script>
