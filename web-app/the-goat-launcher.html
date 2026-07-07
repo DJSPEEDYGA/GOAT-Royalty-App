@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="css/goat-brand.css">
 <link rel="stylesheet" href="css/goat-theme.css">
 <link rel="stylesheet" href="css/goat-touch.css">
+<link rel="stylesheet" href="css/agent-upgrades.css">
+<script src="js/agent-upgrades.js" defer></script>
 <style>
 /* === GOAT FORCE AGENT THEME — THE GOAT / SUPREME COMMANDER === */
 /* === Devin 2026 Dark IDE Restyle === */
@@ -32,6 +34,11 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
   background: #121314;
+  background-image: url('assets/images/goat-og-bg-web.png');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
   color: #BBBEBF;
   margin: 0;
   min-height: 100vh;
@@ -771,6 +778,8 @@ h1, h2, h3 { text-shadow: none !important; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(131,132,133,0.7); background-clip: padding-box; }
 </style>
 
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body class="bg-icon">
 
@@ -785,7 +794,7 @@ h1, h2, h3 { text-shadow: none !important; }
 
 <nav class="goat-nav">
   <div class="nav-brand">
-    <img src="img/goat-hero-icon.png" alt="GOAT" style="height:36px;border-radius:8px;">
+    <img src="assets/images/the-goat-icon.png" alt="THE GOAT" style="height:36px;border-radius:8px;box-shadow:0 0 10px rgba(255,215,0,0.6);">
     <span style="font-weight:900;color:#fff;letter-spacing:0.5px;">GOAT Force AI</span>
   </div>
   <div class="nav-links">
@@ -801,18 +810,44 @@ h1, h2, h3 { text-shadow: none !important; }
 
 <div class="agent-hero">
   <div class="agent-hero-left">
-    <div class="agent-hero-emoji">🐐</div>
+    <div class="agent-hero-emoji"><img src="assets/images/the-goat-icon.png" alt="THE GOAT" id="goatHeroAvatar" style="height:72px;width:72px;border-radius:50%;object-fit:cover;border:3px solid #FFD700;box-shadow:0 0 24px rgba(255,215,0,0.7);cursor:pointer;transition:all 0.4s;" title="Click to cycle GOAT images" onclick="cycleGoatHeroAvatar()"></div>
     <div>
       <h1 class="agent-hero-name">THE GOAT</h1>
-      <p class="agent-hero-role">Supreme Commander — Agent 000 · GOAT Force · Answers Only to DJ Speedy & Waka Flocka</p>
+      <p class="agent-hero-role">Supreme Commander — Agent 001 · GOAT Force · Answers Only to DJ Speedy & Waka Flocka</p>
     </div>
   </div>
   <div class="agent-hero-badges">
-    <span class="hero-badge acc">AGENT-000</span>
+    <span class="hero-badge acc">AGENT-001</span>
     <span class="hero-badge gold">SUPREME</span>
     <span class="hero-badge green">● ONLINE</span>
     <span class="hero-badge codename">CODENAME: SUPREME COMMANDER</span>
   </div>
+</div>
+
+<!-- GOAT ART GALLERY STRIP -->
+<div id="goatArtStrip" style="display:flex;align-items:center;gap:10px;padding:8px 24px;background:rgba(0,0,0,0.5);border-bottom:1px solid rgba(255,215,0,0.1);overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(255,215,0,0.3) transparent;">
+  <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,215,0,0.5);flex-shrink:0;white-space:nowrap;">🎨 GOAT Art</span>
+  <img src="assets/goat/the-goat-1.webp"           alt="THE GOAT"        style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/the-goat-2.webp"           alt="THE GOAT 2"      style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-flying-cape.png"       alt="GOAT Cape"       style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-superman-city.webp"    alt="GOAT Superman"   style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-marvel-logo.webp"      alt="GOAT Marvel"     style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/waka-goat-flying.webp"      alt="Waka + GOAT"     style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/waka-goat-flying-2.webp"    alt="Waka + GOAT 2"   style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-og-fiery.png"          alt="OG Fiery GOAT"   style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-fiery-chaos.png"       alt="Fiery Chaos"     style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-logo-designed.png"     alt="GOAT Logo"       style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-app-icon-red.webp"     alt="App Icon"        style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-icon-app-mockup.webp"  alt="App Mockup"      style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/goat-and-moneypenny.png"    alt="GOAT+Ms.Penny"   style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(233,30,140,0.3);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#e91e8c';this.style.boxShadow='0 8px 20px rgba(233,30,140,0.3)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(233,30,140,0.3)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/kid-goat-13.png"            alt="Kid GOAT"        style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+  <img src="assets/goat/kid-goat-14.png"            alt="Kid GOAT 2"      style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="goatArtClick(this.src)">
+</div>
+
+<!-- Art lightbox for GOAT pages -->
+<div id="goatLightbox" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;backdrop-filter:blur(8px);">
+  <img id="goatLightboxImg" src="" alt="GOAT Art" style="max-width:90vw;max-height:88vh;border-radius:16px;border:3px solid #FFD700;box-shadow:0 0 60px rgba(255,215,0,0.4);">
+  <button onclick="document.getElementById('goatLightbox').style.display='none'" style="position:absolute;top:20px;right:28px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:22px;width:40px;height:40px;border-radius:50%;cursor:pointer;">✕</button>
 </div>
 
 <div class="ai-layout" style="border-radius:0 0 18px 18px;margin-top:0;">
@@ -820,12 +855,13 @@ h1, h2, h3 { text-shadow: none !important; }
   <div class="ai-sidebar">
     <div class="sidebar-bg-video">
       <video autoplay muted loop playsinline>
+        <source src="assets/video/main-goat-video-2.mp4" type="video/mp4">
         <source src="video/goat-animated-1.mp4" type="video/mp4">
       </video>
     </div>
 
     <div class="ai-logo">
-      <div class="logo-icon">🐐</div>
+      <div class="logo-icon"><img src="assets/images/the-goat-icon.png" alt="THE GOAT" style="width:44px;height:44px;border-radius:10px;object-fit:cover;border:2px solid #FFD700;box-shadow:0 0 12px rgba(255,215,0,0.5);"></div>
       <div class="logo-text">
         <span class="logo-title">THE GOAT</span>
         <span class="logo-sub">SUPREME COMMANDER · AGENT 000 · GOAT FORCE</span>
@@ -998,13 +1034,13 @@ h1, h2, h3 { text-shadow: none !important; }
   <!-- CHAT -->
   <div class="ai-chat">
     <div class="chat-header">
-      <div class="persona-avatar">🐐</div>
+      <div class="persona-avatar"><img src="assets/images/the-goat-icon.png" alt="THE GOAT" style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid #FFD700;box-shadow:0 0 14px rgba(255,215,0,0.6);"></div>
       <div class="agent-title">
         <h2>THE GOAT — SUPREME COMMANDER</h2>
-        <p>Agent 000 · Supreme Authority · GOAT Force · Reports to DJ Speedy & Waka Flocka</p>
+        <p>Agent 001 · Supreme Authority · GOAT Force · Reports to DJ Speedy & Waka Flocka</p>
       </div>
       <span class="codename-tag">CODENAME: SUPREME COMMANDER</span>
-      <span class="command-badge">Agent 000</span>
+      <span class="command-badge">Agent 001</span>
       <span class="engine-tag">Supreme</span>
       <span id="threadNameTag" class="engine-tag" style="cursor:pointer;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="Click to rename session" onclick="renameThread()">New Session</span>
       <span id="tokenCounter" class="engine-tag" style="font-family:var(--font-mono);min-width:60px;text-align:center;">0 tok</span>
@@ -1097,7 +1133,42 @@ const PROMPTS = [
   'What is the distribution status across all 282 DSPs for the full 5,954 track catalog?'
 ];
 
-const WELCOME = `THE GOAT — SUPREME COMMANDER online. Agent 000 reporting.
+// ── GOAT Art Strip functions ──────────────────────────────
+const goatHeroAvatarImgs = [
+  'assets/images/the-goat-icon.png',
+  'assets/goat/the-goat-1.webp',
+  'assets/goat/the-goat-2.webp',
+  'assets/goat/goat-flying-cape.png',
+  'assets/goat/goat-superman-city.webp',
+  'assets/goat/goat-marvel-logo.webp',
+  'assets/goat/waka-goat-flying.webp',
+  'assets/goat/goat-og-fiery.png',
+  'assets/goat/goat-app-icon-red.webp',
+];
+let goatHeroAvatarIdx = 0;
+function cycleGoatHeroAvatar() {
+  goatHeroAvatarIdx = (goatHeroAvatarIdx + 1) % goatHeroAvatarImgs.length;
+  const el = document.getElementById('goatHeroAvatar');
+  if (el) el.src = goatHeroAvatarImgs[goatHeroAvatarIdx];
+}
+setInterval(cycleGoatHeroAvatar, 5000);
+
+function goatArtClick(src) {
+  const lb = document.getElementById('goatLightbox');
+  const img = document.getElementById('goatLightboxImg');
+  if (lb && img) {
+    img.src = src;
+    lb.style.display = 'flex';
+  }
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const lb = document.getElementById('goatLightbox');
+    if (lb) lb.style.display = 'none';
+  }
+});
+
+const WELCOME = `THE GOAT — SUPREME COMMANDER online. Agent 001 reporting.
 
 I answer to two people: DJ Speedy and Waka Flocka Flame.
 Every other agent in this operation answers to me.
@@ -1118,7 +1189,7 @@ function showWelcome() {
   container.innerHTML = `
     <div class="msg assistant">
       <div class="msg-bubble">${escapeHtml(WELCOME)}</div>
-      <div class="msg-meta">THE GOAT · SUPREME COMMANDER · Agent 000 · Just now</div>
+      <div class="msg-meta">THE GOAT · SUPREME COMMANDER · Agent 001 · Just now</div>
     </div>
   `;
 }
@@ -1142,7 +1213,7 @@ function extractUiBlocks(text) {
 }
 function stripUiBlocks(text) { return text.replace(/```json\n?[\s\S]*?\n?```/g, '').trim(); }
 
-function addMessage(role, content, meta) {
+function addMessage(role, content, meta, imageUrl, imageAlt) {
   const container = document.getElementById('chatMessages');
   const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   const name = role === 'user' ? 'You' : 'THE GOAT' + (meta ? ` · ${meta}` : '');
@@ -1157,8 +1228,19 @@ function addMessage(role, content, meta) {
       uiHTML = '<div class="gen-ui-in-chat" style="margin-top:8px;">' + uiContainer.innerHTML + '</div>';
     }
   }
+  // Mascot / image block
+  let imgHTML = '';
+  if (imageUrl) {
+    imgHTML = `<div class="goat-mascot-reveal" style="margin:12px 0;text-align:center;">
+      <img src="${imageUrl}" alt="${imageAlt || 'GOAT Force Mascot'}"
+           style="max-width:100%;max-height:420px;border-radius:16px;border:3px solid var(--agent-accent,#d4a03c);box-shadow:0 0 32px rgba(212,160,60,0.5);cursor:pointer;"
+           onclick="this.style.maxHeight=this.style.maxHeight==='none'?'420px':'none'" />
+      <div style="font-size:11px;color:#888;margin-top:6px;">${imageAlt || 'GOAT Force Mascot'}</div>
+    </div>`;
+  }
   div.innerHTML = `
     <div class="msg-bubble">${nl2br(stripUiBlocks(content))}</div>
+    ${imgHTML}
     ${uiHTML}
     <div class="msg-meta">${name} · ${time}</div>
   `;
@@ -1206,7 +1288,7 @@ async function sendMessage() {
       totalTokens += estimateTokens(d.reply);
       updateTokenCounter();
       if (d.plan) injectPlanPreview(d.plan);
-      addMessage('assistant', d.reply, d.engine);
+      addMessage('assistant', d.reply, d.engine, d.image || null, d.image_alt || null);
       chatHistory.push({role: 'assistant', content: d.reply});
     } else {
       const errMsg = d.error || 'Response failed';
@@ -1639,7 +1721,7 @@ async function saveMemoryPrompt() {
           <button onclick="clearTerminal()" style="margin-left:auto;background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'JetBrains Mono',monospace;">clear</button>
         </div>
         <div class="terminal-panel-output" id="terminalOutput">
-          <p class="terminal-line sys">THE GOAT Terminal — SUPREME COMMANDER · AGENT-000 Online</p>
+          <p class="terminal-line sys">THE GOAT Terminal — SUPREME COMMANDER · AGENT-001 Online</p>
           <p class="terminal-line sys">Commands classified by safety: readonly · dangerous (confirm) · forbidden (blocked)</p>
           <p class="terminal-line sys">Terminal host: localhost:9999 — Run goat-intel-server terminal proxy to execute live commands.</p>
           <p class="terminal-line sys">─────────────────────────────────────────────────────</p>

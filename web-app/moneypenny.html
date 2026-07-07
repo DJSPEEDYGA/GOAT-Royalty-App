@@ -762,6 +762,8 @@ h1, h2, h3, .agent-hero-name, .nav-brand span {
 </style>
 
   <link rel="stylesheet" href="css/goat-touch.css">
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body class="bg-icon">
 
@@ -1111,7 +1113,7 @@ async function loadModelList() {
   const sel    = document.getElementById('modelSelect');
   const status = document.getElementById('modelStatus');
   try {
-    const r = await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(5000) });
+    const r = await fetch('http://localhost:11435/api/tags', { signal: AbortSignal.timeout(5000) });
     if (!r.ok) throw new Error('Ollama offline');
     const data   = await r.json();
     const models = (data.models || []).sort((a, b) => a.name.localeCompare(b.name));

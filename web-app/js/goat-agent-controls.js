@@ -33,7 +33,7 @@
   // ── Config ──────────────────────────────────────────────────
   const INTEL = 'http://localhost:5500';
   const AGENT007 = 'http://127.0.0.1:3333';
-  const OLLAMA = 'http://localhost:11434';
+  const OLLAMA = 'http://localhost:11435';
   const LS = localStorage;
 
   const SKILLS = [

@@ -32,6 +32,11 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
   background: #121314;
+  background-image: url('assets/images/goat-og-bg-web.png');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
   color: #BBBEBF;
   margin: 0;
   min-height: 100vh;
@@ -548,6 +553,44 @@ h1, h2, h3 { text-shadow: none !important; }
 .chat-textarea:focus { outline: none !important; border-color: #c2185b !important; }
 .chat-textarea::placeholder { color: #666666; }
 
+/* Drag-drop / attach image support */
+.chat-input-area.drag-over { border-top: 2px solid #c2185b !important; background: rgba(194,24,91,0.07) !important; }
+.attach-btn {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: #191A1B; border: 1px solid #2A2B2C; border-radius: 3px;
+  color: #8C8C8C; font-size: 16px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; transition: all 0.15s;
+}
+.attach-btn:hover { border-color: #c2185b; color: #c2185b; }
+#attachInput { display: none; }
+.attached-previews {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 6px 0 2px 0;
+}
+.attached-preview-item {
+  position: relative; border-radius: 4px; overflow: hidden;
+  border: 1px solid #2A2B2C; background: #121314;
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 8px 4px 4px; font-size: 11px; color: #8C8C8C;
+}
+.attached-preview-item img {
+  width: 48px; height: 48px; object-fit: cover; border-radius: 3px;
+}
+.attached-preview-item .rm-attach {
+  position: absolute; top: 2px; right: 2px;
+  background: rgba(0,0,0,0.7); border: none; border-radius: 50%;
+  width: 16px; height: 16px; cursor: pointer; color: #fff;
+  font-size: 10px; display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.drop-overlay {
+  display: none; position: absolute; inset: 0; z-index: 50;
+  background: rgba(194,24,91,0.13); border: 2px dashed #c2185b;
+  border-radius: 4px; align-items: center; justify-content: center;
+  font-size: 15px; color: #c2185b; font-weight: 700; pointer-events: none;
+}
+.chat-area-wrap { position: relative; }
+
 /* Send button — agent accent: teal #e91e8c */
 .send-btn {
   width: 36px !important;
@@ -769,8 +812,117 @@ h1, h2, h3 { text-shadow: none !important; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(131,132,133,0.4); border: 2px solid transparent; background-clip: padding-box; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(131,132,133,0.7); background-clip: padding-box; }
+
+/* ── DEVIN COMMAND CENTER ──────────────────────────────────── */
+.devin-panel {
+  background: var(--bg-card,#13141a); border: 1px solid var(--border,rgba(255,255,255,0.08)); border-radius: 12px;
+  overflow: hidden; margin: 0 28px 36px;
+}
+.devin-panel-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px; border-bottom: 1px solid var(--border,rgba(255,255,255,0.08));
+  background: rgba(88,166,255,0.04); cursor: pointer; user-select: none;
+}
+.devin-panel-header:hover { background: rgba(88,166,255,0.08); }
+.devin-logo { font-size: 22px; }
+.devin-panel-title { font-size: 13px; font-weight: 700; color: #fff; }
+.devin-panel-sub { font-size: 10px; color: #58a6ff; text-transform: uppercase; letter-spacing:.08em; }
+.devin-chevron { margin-left:auto; color:rgba(255,255,255,0.35); font-size:12px; transition:transform .2s; }
+.devin-chevron.open { transform: rotate(180deg); }
+.devin-body { display:none; padding: 20px; }
+.devin-body.open { display: block; }
+.devin-tabs { display:flex; gap:4px; margin-bottom:16px; flex-wrap:wrap; }
+.dtab {
+  padding:5px 14px; border-radius:5px; font-size:11px; font-weight:600;
+  border:1px solid rgba(255,255,255,0.08); background:transparent; color:rgba(255,255,255,0.4);
+  cursor:pointer; transition:all .15s; letter-spacing:.03em;
+}
+.dtab.active { border-color:#58a6ff; color:#58a6ff; background:rgba(88,166,255,0.1); }
+.dtab:hover:not(.active) { background:rgba(255,255,255,0.05); color:#fff; }
+.dpanel { display:none; }
+.dpanel.active { display:block; }
+.model-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:8px; margin-bottom:16px; }
+.model-card { padding:10px 12px; border-radius:7px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.02); cursor:pointer; transition:all .15s; }
+.model-card:hover { border-color:#58a6ff; background:rgba(88,166,255,0.06); }
+.model-card.selected { border-color:#58a6ff; background:rgba(88,166,255,0.12); }
+.model-card .mn { font-size:12px; font-weight:700; color:#fff; }
+.model-card .md { font-size:10px; color:rgba(255,255,255,0.35); margin-top:2px; line-height:1.3; }
+.model-card .mt { font-size:9px; color:#58a6ff; margin-top:4px; text-transform:uppercase; letter-spacing:.06em; }
+.mode-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.mode-btn { flex:1; min-width:120px; padding:10px 14px; border-radius:7px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.02); cursor:pointer; transition:all .15s; text-align:left; }
+.mode-btn:hover { border-color:#d4a03c; background:rgba(212,160,60,0.06); }
+.mode-btn.active { border-color:#d4a03c; background:rgba(212,160,60,0.12); }
+.mode-btn .mb-name { font-size:12px; font-weight:700; color:#fff; }
+.mode-btn .mb-key { font-size:9px; color:#d4a03c; font-family:'JetBrains Mono',monospace; margin-bottom:2px; }
+.mode-btn .mb-desc { font-size:10px; color:rgba(255,255,255,0.35); margin-top:3px; line-height:1.3; }
+.sk-table { width:100%; border-collapse:collapse; font-size:11px; }
+.sk-table th { text-align:left; padding:6px 10px; color:rgba(255,255,255,0.35); font-size:10px; text-transform:uppercase; letter-spacing:.06em; border-bottom:1px solid rgba(255,255,255,0.08); }
+.sk-table td { padding:6px 10px; border-bottom:1px solid rgba(255,255,255,0.03); }
+.sk-table td:first-child { font-family:'JetBrains Mono',monospace; color:#58a6ff; font-size:10px; white-space:nowrap; }
+.sk-table tr:hover td { background:rgba(255,255,255,0.02); }
+kbd { display:inline-block; padding:1px 5px; border-radius:3px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); font-family:'JetBrains Mono',monospace; font-size:9px; color:#fff; }
+.tool-list { display:flex; flex-direction:column; gap:6px; }
+.tool-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:7px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.02); }
+.tool-item .ti-icon { font-size:16px; flex-shrink:0; }
+.tool-item .ti-name { font-size:12px; font-weight:600; color:#fff; }
+.tool-item .ti-desc { font-size:10px; color:rgba(255,255,255,0.35); margin-top:1px; }
+.tool-item .ti-badge { margin-left:auto; padding:2px 7px; border-radius:10px; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+.ti-badge.active { background:rgba(46,204,113,0.15); color:#2ecc71; border:1px solid rgba(46,204,113,0.3); }
+.ti-badge.inactive { background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.35); border:1px solid rgba(255,255,255,0.08); }
+.tool-toggle { padding:4px 10px; border-radius:4px; font-size:10px; font-weight:600; cursor:pointer; border:1px solid rgba(255,255,255,0.08); background:transparent; color:rgba(255,255,255,0.35); transition:all .15s; margin-left:8px; }
+.tool-toggle:hover { border-color:#d4a03c; color:#d4a03c; }
+.settings-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.setting-row { display:flex; flex-direction:column; gap:4px; }
+.setting-label { font-size:10px; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:.06em; }
+.setting-input { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:5px; padding:7px 10px; color:#fff; font-size:12px; font-family:'JetBrains Mono',monospace; outline:none; width:100%; transition:border-color .15s; }
+.setting-input:focus { border-color:#58a6ff; }
+/* Settings section groups */
+.settings-section { background:rgba(255,0,64,0.04); border:1px solid rgba(255,0,64,0.12); border-radius:8px; padding:14px; margin-bottom:10px; }
+.settings-section h4 { color:#ff0040; margin:0 0 10px 0; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; font-family:'JetBrains Mono',monospace; }
+.setting-select { appearance:none; cursor:pointer; }
+.setting-toggle { display:flex; align-items:center; gap:8px; margin-top:4px; }
+.toggle-switch { width:36px; height:20px; border-radius:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.08); position:relative; cursor:pointer; transition:all .2s; flex-shrink:0; }
+.toggle-switch.on { background:#58a6ff; border-color:#58a6ff; }
+.toggle-switch::after { content:''; position:absolute; top:2px; left:2px; width:14px; height:14px; border-radius:50%; background:#fff; transition:transform .2s; }
+.toggle-switch.on::after { transform:translateX(16px); }
+.toggle-label { font-size:11px; color:#fff; }
+.rules-box { background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:12px 14px; font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(255,255,255,0.35); max-height:260px; overflow-y:auto; line-height:1.6; white-space:pre-wrap; }
+.session-list { display:flex; flex-direction:column; gap:6px; }
+.session-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:7px; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.02); cursor:pointer; transition:all .15s; }
+.session-item:hover { border-color:#58a6ff; background:rgba(88,166,255,0.06); }
+.session-item .si-id { font-family:'JetBrains Mono',monospace; font-size:10px; color:#58a6ff; flex-shrink:0; }
+.session-item .si-info { flex:1; }
+.session-item .si-title { font-size:11px; color:#fff; }
+.session-item .si-meta { font-size:10px; color:rgba(255,255,255,0.35); margin-top:1px; }
+.session-item .si-resume { padding:3px 8px; border-radius:4px; font-size:10px; font-weight:600; border:1px solid #58a6ff; color:#58a6ff; background:transparent; cursor:pointer; transition:all .15s; }
+.session-item .si-resume:hover { background:#58a6ff; color:#000; }
+.devin-terminal { background:#000; border:1px solid #1e1f20; border-radius:7px; font-family:'JetBrains Mono',monospace; font-size:11px; overflow:hidden; }
+.dt-bar { display:flex; align-items:center; gap:6px; padding:7px 12px; background:#111; border-bottom:1px solid #1e1f20; }
+.dt-dot { width:10px; height:10px; border-radius:50%; }
+.dt-title { font-size:10px; color:rgba(255,255,255,0.35); margin-left:6px; }
+.dt-output { padding:10px 14px; height:160px; overflow-y:auto; color:#c8d3da; line-height:1.5; }
+.dt-output .dt-line-ok { color:#2ecc71; }
+.dt-output .dt-line-err { color:#f48771; }
+.dt-output .dt-line-warn { color:#d4a03c; }
+.dt-output .dt-line-cmd { color:#58a6ff; }
+.dt-input-row { display:flex; align-items:center; gap:8px; padding:7px 12px; border-top:1px solid #1e1f20; background:#050505; }
+.dt-prompt { color:#d4a03c; font-size:11px; white-space:nowrap; }
+.dt-input { flex:1; background:transparent; border:none; outline:none; color:#fff; font-family:'JetBrains Mono',monospace; font-size:11px; }
+.dt-run { padding:3px 10px; border-radius:4px; font-size:10px; font-weight:600; border:1px solid #d4a03c; color:#d4a03c; background:transparent; cursor:pointer; transition:all .15s; }
+.dt-run:hover { background:#d4a03c; color:#000; }
+.prompt-row { display:flex; gap:8px; margin-bottom:10px; }
+.prompt-input { flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:8px 12px; color:#fff; font-size:12px; outline:none; transition:border-color .15s; }
+.prompt-input:focus { border-color:#58a6ff; }
+.prompt-send { padding:8px 16px; border-radius:6px; font-size:11px; font-weight:700; border:1.5px solid #58a6ff; color:#58a6ff; background:rgba(88,166,255,0.08); cursor:pointer; transition:all .15s; white-space:nowrap; }
+.prompt-send:hover { background:#58a6ff; color:#000; }
+.agent-sel { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:8px 10px; color:#fff; font-size:12px; outline:none; cursor:pointer; }
+.quick-prompts { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+.qp-btn { padding:4px 10px; border-radius:14px; font-size:10px; border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.4); background:transparent; cursor:pointer; transition:all .15s; }
+.qp-btn:hover { border-color:#d4a03c; color:#d4a03c; }
 </style>
 
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body class="bg-icon">
 
@@ -799,9 +951,19 @@ h1, h2, h3 { text-shadow: none !important; }
   </div>
 </nav>
 
+<!-- Waka + Lexi splash banner -->
+<div style="position:relative;width:100%;overflow:hidden;max-height:200px;min-height:140px;margin-bottom:0;">
+  <img src="assets/waka/waka-lexi-splash.jpg" alt="Waka x Lexi" style="width:100%;display:block;object-fit:cover;object-position:center 30%;max-height:200px;min-height:140px;" onerror="this.parentElement.style.display='none'">
+  <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(18,19,20,1) 0%,transparent 45%,rgba(18,19,20,0.4) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:14px;left:24px;display:flex;gap:8px;align-items:center;">
+    <div style="padding:3px 10px;border-radius:12px;background:rgba(233,30,140,0.8);border:1px solid rgba(233,30,140,0.5);font-size:10px;font-weight:800;color:#fff;letter-spacing:.06em;">AGENT-005</div>
+    <div style="padding:3px 10px;border-radius:12px;background:rgba(0,0,0,0.7);border:1px solid rgba(212,160,60,0.4);font-size:10px;font-weight:800;color:#d4a03c;letter-spacing:.06em;">THE SPARK</div>
+    <div style="padding:3px 10px;border-radius:12px;background:rgba(0,0,0,0.7);border:1px solid rgba(212,160,60,0.4);font-size:10px;font-weight:800;color:#d4a03c;letter-spacing:.06em;">WAKA'S AI</div>
+  </div>
+</div>
 <div class="agent-hero">
   <div class="agent-hero-left">
-    <div class="agent-hero-emoji">⚖️</div>
+    <img src="assets/waka/waka-avatar-circle.png" alt="Waka" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(233,30,140,0.5);object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">
     <div>
       <h1 class="agent-hero-name">Lexi</h1>
       <p class="agent-hero-role">Creative &amp; Legal Specialist — THE SPARK · Lyrics · Compliance · GOAT Force</p>
@@ -883,6 +1045,24 @@ h1, h2, h3 { text-shadow: none !important; }
       </button>
       <button class="ops-btn" onclick="openSettingsPanel()">
         <span class="ops-icon">⚙️</span> Customize
+      </button>
+      <button class="ops-btn" onclick="openFileExplorer()">
+        <span class="ops-icon">📁</span> File Explorer
+      </button>
+      <button class="ops-btn" onclick="openCodeEditor()">
+        <span class="ops-icon">📝</span> Code Editor
+      </button>
+      <button class="ops-btn" onclick="openGitPanel()">
+        <span class="ops-icon">🌿</span> Git Status
+      </button>
+      <button class="ops-btn" onclick="openPromptLibrary()">
+        <span class="ops-icon">📚</span> Prompt Library
+      </button>
+      <button class="ops-btn" onclick="openChatHistory()">
+        <span class="ops-icon">🕐</span> Chat History
+      </button>
+      <button class="ops-btn" onclick="openAdvancedSettings()">
+        <span class="ops-icon">🔧</span> Model Settings
       </button>
     </div>
 
@@ -1018,9 +1198,14 @@ h1, h2, h3 { text-shadow: none !important; }
       <span style="font-size:12px;color:#666;margin-left:6px;" id="typingText">Lexi is writing...</span>
     </div>
 
-    <div class="chat-input-area">
+    <div class="chat-area-wrap">
+      <div class="drop-overlay" id="dropOverlay">📎 Drop image or file here</div>
+    <div class="chat-input-area" id="chatInputArea">
+      <div id="attachedPreviews" class="attached-previews" style="display:none;"></div>
       <div class="chat-input-row">
-        <textarea class="chat-textarea" id="chatInput" placeholder="Ask Lexi — lyrics, hooks, legal compliance, copyright, creative content..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <button class="attach-btn" title="Attach image or file" onclick="document.getElementById('attachInput').click()">📎</button>
+        <input type="file" id="attachInput" accept="image/*,.pdf,.txt,.md,.docx,.mp3,.wav" multiple onchange="handleAttachFiles(this.files)"/>
+        <textarea class="chat-textarea" id="chatInput" placeholder="Ask Lexi — lyrics, hooks, legal compliance, copyright, creative content... (or drag &amp; drop / paste an image)" rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
         <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
       </div>
       <div class="chat-actions">
@@ -1030,6 +1215,7 @@ h1, h2, h3 { text-shadow: none !important; }
         <button class="chat-action-btn" onclick="quickSend('Summarize the current PRO registration status for GOAT Force publishing')">📋 PRO Status</button>
       </div>
     </div>
+    </div><!-- /chat-area-wrap -->
   </div>
 </div>
 
@@ -1134,7 +1320,7 @@ function extractUiBlocks(text) {
 }
 function stripUiBlocks(text) { return text.replace(/```json\n?[\s\S]*?\n?```/g, '').trim(); }
 
-function addMessage(role, content, meta) {
+function addMessage(role, content, meta, imageUrl, imageAlt, extraHtml) {
   const container = document.getElementById('chatMessages');
   const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   const name = role === 'user' ? 'You' : 'Lexi' + (meta ? ` · ${meta}` : '');
@@ -1149,8 +1335,19 @@ function addMessage(role, content, meta) {
       uiHTML = '<div class="gen-ui-in-chat" style="margin-top:8px;">' + uiContainer.innerHTML + '</div>';
     }
   }
+  // Mascot / image block
+  let imgHTML = '';
+  if (imageUrl) {
+    imgHTML = `<div class="goat-mascot-reveal" style="margin:12px 0;text-align:center;">
+      <img src="${imageUrl}" alt="${imageAlt || 'GOAT Force Mascot'}"
+           style="max-width:100%;max-height:420px;border-radius:16px;border:3px solid var(--agent-accent,#d4a03c);box-shadow:0 0 32px rgba(212,160,60,0.5);cursor:pointer;"
+           onclick="this.style.maxHeight=this.style.maxHeight==='none'?'420px':'none'" />
+      <div style="font-size:11px;color:#888;margin-top:6px;">${imageAlt || 'GOAT Force Mascot'}</div>
+    </div>`;
+  }
   div.innerHTML = `
-    <div class="msg-bubble">${nl2br(stripUiBlocks(content))}</div>
+    <div class="msg-bubble">${nl2br(stripUiBlocks(content))}${extraHtml ? extraHtml : ''}</div>
+    ${imgHTML}
     ${uiHTML}
     <div class="msg-meta">${name} · ${time}</div>
   `;
@@ -1170,15 +1367,23 @@ function setTyping(visible) {
 async function sendMessage() {
   const input = document.getElementById('chatInput');
   let message = input.value.trim();
-  if (!message || isTyping) return;
+  // Allow sending with just an attachment even if no text
+  if ((!message && lexiAttachments.length === 0) || isTyping) return;
 
   // Inject any file attached via Devin Desktop file-attach panel
   const attachedCtx = (typeof GAC !== 'undefined' && GAC.getAttachedContext) ? GAC.getAttachedContext() : null;
-  const fullMessage = attachedCtx ? message + attachedCtx : message;
+  // Build attachment context string for text files
+  let attachCtxStr = lexiAttachments.filter(a => a.text).map(a => `\n\n[Attached: ${a.name}]\n${a.text}`).join('');
+  // Image data URIs go into the message preview
+  let imgAttachHtml = lexiAttachments.filter(a => a.dataUrl && a.type.startsWith('image/')).map(a =>
+    `<img src="${a.dataUrl}" style="max-width:200px;max-height:160px;border-radius:4px;margin-top:6px;display:block;" alt="${a.name}"/>`
+  ).join('');
+  const fullMessage = (message || '(attached)') + (attachedCtx || '') + attachCtxStr;
 
   input.value = '';
   input.style.height = 'auto';
-  addMessage('user', message);
+  clearAttachments();
+  addMessage('user', message || '(attached)', null, null, null, imgAttachHtml || null);
   totalTokens += estimateTokens(fullMessage);
   updateTokenCounter();
   chatHistory.push({role: 'user', content: fullMessage});
@@ -1198,7 +1403,7 @@ async function sendMessage() {
       totalTokens += estimateTokens(d.reply);
       updateTokenCounter();
       if (d.plan) injectPlanPreview(d.plan);
-      addMessage('assistant', d.reply, d.engine);
+      addMessage('assistant', d.reply, d.engine, d.image || null, d.image_alt || null);
       chatHistory.push({role: 'assistant', content: d.reply});
     } else {
       const errMsg = d.error || 'Response failed';
@@ -1233,6 +1438,108 @@ function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 160) + 'px';
 }
+
+/* ── Drag-drop / Paste / Attach image+file support ── */
+let lexiAttachments = []; // [{name, type, dataUrl, text}]
+
+function handleAttachFiles(files) {
+  Array.from(files).forEach(processAttachFile);
+  document.getElementById('attachInput').value = '';
+}
+
+function processAttachFile(file) {
+  const reader = new FileReader();
+  if (file.type.startsWith('image/')) {
+    reader.onload = e => addAttachPreview({name: file.name, type: file.type, dataUrl: e.target.result, text: null});
+    reader.readAsDataURL(file);
+  } else if (file.type === 'text/plain' || file.name.match(/\.(txt|md|js|py|json|html|css|sh)$/i)) {
+    reader.onload = e => addAttachPreview({name: file.name, type: file.type, dataUrl: null, text: e.target.result});
+    reader.readAsText(file);
+  } else {
+    // For other files (pdf, docx, mp3, wav) just show the name as context
+    addAttachPreview({name: file.name, type: file.type, dataUrl: null, text: `[File attached: ${file.name} (${(file.size/1024).toFixed(1)} KB)]`});
+  }
+}
+
+function addAttachPreview(attachment) {
+  lexiAttachments.push(attachment);
+  const container = document.getElementById('attachedPreviews');
+  container.style.display = 'flex';
+  const item = document.createElement('div');
+  item.className = 'attached-preview-item';
+  item.dataset.idx = lexiAttachments.length - 1;
+  if (attachment.dataUrl && attachment.type.startsWith('image/')) {
+    item.innerHTML = `<img src="${attachment.dataUrl}" alt="${attachment.name}"/><span>${attachment.name}</span><button class="rm-attach" onclick="removeAttach(${lexiAttachments.length - 1})">×</button>`;
+  } else {
+    const icon = attachment.type.startsWith('audio/') ? '🎵' : attachment.text ? '📄' : '📎';
+    item.innerHTML = `<span style="font-size:20px">${icon}</span><span>${attachment.name}</span><button class="rm-attach" onclick="removeAttach(${lexiAttachments.length - 1})">×</button>`;
+  }
+  container.appendChild(item);
+}
+
+function removeAttach(idx) {
+  lexiAttachments.splice(idx, 1);
+  const container = document.getElementById('attachedPreviews');
+  container.innerHTML = '';
+  if (lexiAttachments.length === 0) { container.style.display = 'none'; return; }
+  // Re-render remaining
+  const saved = [...lexiAttachments];
+  lexiAttachments = [];
+  saved.forEach(a => addAttachPreview(a));
+}
+
+function clearAttachments() {
+  lexiAttachments = [];
+  const container = document.getElementById('attachedPreviews');
+  container.innerHTML = '';
+  container.style.display = 'none';
+}
+
+// Drag-drop onto the chat area wrapper
+(function initDragDrop() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const wrap = document.querySelector('.chat-area-wrap') || document.getElementById('chatInputArea');
+    const overlay = document.getElementById('dropOverlay');
+    const chatInput = document.getElementById('chatInput');
+    if (!wrap) return;
+
+    // Full-page drag detection
+    document.addEventListener('dragenter', e => {
+      if (e.dataTransfer && e.dataTransfer.types && (e.dataTransfer.types.includes('Files') || e.dataTransfer.types.indexOf('Files') > -1)) {
+        if (overlay) { overlay.style.display = 'flex'; }
+        if (wrap) wrap.classList.add('drag-over');
+      }
+    });
+    document.addEventListener('dragleave', e => {
+      if (!e.relatedTarget || e.relatedTarget === document.documentElement) {
+        if (overlay) overlay.style.display = 'none';
+        if (wrap) wrap.classList.remove('drag-over');
+      }
+    });
+    document.addEventListener('dragover', e => { e.preventDefault(); });
+    document.addEventListener('drop', e => {
+      e.preventDefault();
+      if (overlay) overlay.style.display = 'none';
+      if (wrap) wrap.classList.remove('drag-over');
+      const files = e.dataTransfer ? e.dataTransfer.files : null;
+      if (files && files.length) handleAttachFiles(files);
+    });
+
+    // Paste image from clipboard (Ctrl+V)
+    chatInput && chatInput.addEventListener('paste', e => {
+      const items = e.clipboardData && e.clipboardData.items;
+      if (!items) return;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.startsWith('image/')) {
+          e.preventDefault();
+          const file = items[i].getAsFile();
+          if (file) processAttachFile(new File([file], `pasted-image-${Date.now()}.png`, {type: file.type}));
+          break;
+        }
+      }
+    });
+  });
+})();
 
 function clearChat() {
   chatHistory = [];
@@ -1546,6 +1853,671 @@ async function saveMemoryPrompt() {
 
 </script>
 
+<!-- ═══════════════════════════════════════════════════════
+     DEVIN COMMAND CENTER — Full panel: Models, Modes, MCP,
+     Skills, Terminal, Shortcuts, Rules, Sessions, Settings
+     ═══════════════════════════════════════════════════════ -->
+<div class="devin-panel" id="devinPanel">
+  <div class="devin-panel-header" onclick="toggleDevin()">
+    <div class="devin-logo">🤖</div>
+    <div>
+      <div class="devin-panel-title">Devin Command Center</div>
+      <div class="devin-panel-sub">Models · Modes · MCP · Skills · Terminal · Shortcuts · Rules · Sessions · Settings</div>
+    </div>
+    <span class="devin-chevron open" id="devinChevron">▼</span>
+  </div>
+  <div class="devin-body open" id="devinBody">
+    <!-- TABS -->
+    <div class="devin-tabs">
+      <button class="dtab active" onclick="showDTab(event,'prompt')">⚡ Quick Prompt</button>
+      <button class="dtab" onclick="showDTab(event,'brain')">🧠 Agent Brain</button>
+      <button class="dtab" onclick="showDTab(event,'models')">🔮 Models</button>
+      <button class="dtab" onclick="showDTab(event,'modes')">🔒 Modes</button>
+      <button class="dtab" onclick="showDTab(event,'mcp')">🔌 MCP Servers</button>
+      <button class="dtab" onclick="showDTab(event,'skills')">✨ Skills</button>
+      <button class="dtab" onclick="showDTab(event,'terminal')">💻 Terminal</button>
+      <button class="dtab" onclick="showDTab(event,'shortcuts')">⌨️ Shortcuts</button>
+      <button class="dtab" onclick="showDTab(event,'rules')">📜 Rules</button>
+      <button class="dtab" onclick="showDTab(event,'sessions')">🕒 Sessions</button>
+      <button class="dtab" onclick="showDTab(event,'settings')">⚙️ Settings</button>
+    </div>
+
+    <!-- QUICK PROMPT -->
+    <div class="dpanel active" id="dpanel-prompt">
+      <div class="quick-prompts" id="quickPrompts">
+        <button class="qp-btn" onclick="fillPrompt('Write me lyrics for the Waka country single')">Waka country lyrics</button>
+        <button class="qp-btn" onclick="fillPrompt('Review the Hard Liquor / Backroad Baptism stems for mixing notes')">Hard Liquor mix notes</button>
+        <button class="qp-btn" onclick="fillPrompt('What models are available?')">List models</button>
+        <button class="qp-btn" onclick="fillPrompt('Check server health')">Server health</button>
+        <button class="qp-btn" onclick="fillPrompt('Show catalog stats — 5,954 tracks, 282 DSPs')">Catalog stats</button>
+        <button class="qp-btn" onclick="fillPrompt('What session packets are loaded?')">Session packets</button>
+        <button class="qp-btn" onclick="fillPrompt('Pull the latest royalty data from 282 DSPs')">Pull royalties</button>
+        <button class="qp-btn" onclick="fillPrompt('Run a full system health check across all agents')">Full health check</button>
+      </div>
+      <div class="prompt-row">
+        <select class="agent-sel" id="promptAgent">
+          <option value="lexi">Lexi — THE SPARK (005)</option>
+          <option value="money-penny">Ms. Money Penny (00)</option>
+          <option value="the-goat">THE GOAT (001)</option>
+          <option value="master-oscar">Master Oscar (002)</option>
+          <option value="gonbrazy">GONBRAZY</option>
+          <option value="dr-devin">Dr. Devin (007)</option>
+          <option value="sir-codex">Sir Codex (006)</option>
+          <option value="nexus">Nexus (004)</option>
+        </select>
+        <input class="prompt-input" id="promptInput" placeholder="Send a prompt to any agent..." onkeydown="if(event.key==='Enter')sendDevinPrompt()"/>
+        <button class="prompt-send" onclick="sendDevinPrompt()">Send ⚡</button>
+      </div>
+      <div id="promptResult" style="display:none;margin-top:10px;">
+        <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em;">Response</div>
+        <div class="rules-box" id="promptResultText" style="color:#c8d3da;min-height:60px;"></div>
+      </div>
+    </div>
+
+    <!-- AGENT BRAIN -->
+    <div class="dpanel" id="dpanel-brain">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);">Live neural network — all 15 agents, real-time connections, memory, vault</div>
+        <div style="display:flex;gap:6px;">
+          <button class="tool-toggle" onclick="document.getElementById('brainFrame').src='http://127.0.0.1:8090/agents-brain.html?v='+Date.now()">↺ Reload</button>
+          <button class="tool-toggle" onclick="window.open('http://127.0.0.1:8090/agents-brain.html','_blank')">⛶ Full Screen</button>
+        </div>
+      </div>
+      <iframe id="brainFrame" src="http://127.0.0.1:8090/agents-brain.html"
+        style="width:100%;height:600px;border:1px solid rgba(255,255,255,0.08);border-radius:8px;background:#080c14;"
+        frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <!-- MODELS -->
+    <div class="dpanel" id="dpanel-models">
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:12px;">Active model: <span id="activeModelLabel" style="color:#58a6ff;font-family:'JetBrains Mono',monospace;">loading...</span> &nbsp;|&nbsp; <span id="modelCountLabel" style="color:#2ecc71;">checking...</span></div>
+      <div class="model-grid" id="modelGrid"></div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.35);margin-top:8px;">Devin cloud: <span style="color:#58a6ff;">adaptive · opus · sonnet · swe · gpt · codex · gemini · deepseek · kimi</span></div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+        <button class="tool-toggle" onclick="refreshDevinModels()">↺ Refresh Models</button>
+        <button class="tool-toggle" onclick="devinCmd('/model')">Open Model Selector</button>
+        <button class="tool-toggle" onclick="devinCmd('/fast')">⚡ Switch to Fast</button>
+      </div>
+    </div>
+
+    <!-- MODES -->
+    <div class="dpanel" id="dpanel-modes">
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:12px;">Active mode: <span id="activeModeLabel" style="color:#d4a03c;font-weight:700;">Normal</span> &nbsp;·&nbsp; Cycle with <kbd>Shift+Tab</kbd></div>
+      <div class="mode-row">
+        <div class="mode-btn active" id="mode-normal" onclick="setDevinMode('normal')"><div class="mb-key">/normal</div><div class="mb-name">Normal</div><div class="mb-desc">Auto-approves read-only tools. Asks for write/execute. Default mode.</div></div>
+        <div class="mode-btn" id="mode-accept-edits" onclick="setDevinMode('accept-edits')"><div class="mb-key">/accept-edits</div><div class="mb-name">Accept Edits</div><div class="mb-desc">Auto-approves file edits. Still prompts for shell commands.</div></div>
+        <div class="mode-btn" id="mode-plan" onclick="setDevinMode('plan')"><div class="mb-key">/plan</div><div class="mb-name">Plan</div><div class="mb-desc">Read-only planning. Explore and ask questions before changes.</div></div>
+        <div class="mode-btn" id="mode-bypass" onclick="setDevinMode('bypass')"><div class="mb-key">/bypass</div><div class="mb-name">Bypass</div><div class="mb-desc">Auto-approves ALL tool calls including writes and shell.</div></div>
+        <div class="mode-btn" id="mode-autonomous" onclick="setDevinMode('autonomous')"><div class="mb-key">/autonomous</div><div class="mb-name">Autonomous</div><div class="mb-desc">Full autonomous mode. Agent runs independently.</div></div>
+      </div>
+    </div>
+
+    <!-- MCP SERVERS -->
+    <div class="dpanel" id="dpanel-mcp">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);">Model Context Protocol servers — extend agent capabilities</div>
+        <button class="tool-toggle" onclick="devinCmd('devin mcp list')">List All</button>
+      </div>
+      <div class="tool-list">
+        <div class="tool-item"><div class="ti-icon">🐙</div><div><div class="ti-name">GitHub</div><div class="ti-desc">Code, PRs, issues, repos — full GitHub access</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="devinCmd('devin mcp get github')">Info</button></div>
+        <div class="tool-item"><div class="ti-icon">📋</div><div><div class="ti-name">Linear</div><div class="ti-desc">Project management, issues, cycles</div></div><span class="ti-badge inactive">inactive</span><button class="tool-toggle" onclick="devinCmd('devin mcp add linear https://mcp.linear.app/mcp')">Add</button></div>
+        <div class="tool-item"><div class="ti-icon">💬</div><div><div class="ti-name">Slack</div><div class="ti-desc">Messages, channels, crew comms</div></div><span class="ti-badge inactive">inactive</span><button class="tool-toggle" onclick="devinCmd('devin mcp add slack https://mcp.slack.com/mcp')">Add</button></div>
+        <div class="tool-item"><div class="ti-icon">🎵</div><div><div class="ti-name">GOAT Intel</div><div class="ti-desc">Local Intel server — agents, royalties, files, git</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="window.open('http://127.0.0.1:5500/health','_blank')">Health</button></div>
+        <div class="tool-item"><div class="ti-icon">🗄️</div><div><div class="ti-name">Filesystem</div><div class="ti-desc">Direct file access — GOAT-Royalty-App, i2i 1, backup</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="devinCmd('devin mcp get filesystem')">Info</button></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <button class="tool-toggle" onclick="devinCmd('devin mcp add')">+ Add MCP Server</button>
+        <button class="tool-toggle" onclick="devinCmd('devin mcp list')">View All Servers</button>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="dpanel" id="dpanel-skills">
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:12px;">Reusable expert knowledge — invoke with <kbd>/skill-name</kbd> or agent auto-invokes when relevant</div>
+      <div class="tool-list">
+        <div class="tool-item"><div class="ti-icon">⚡</div><div><div class="ti-name">waka-country</div><div class="ti-desc">Waka new country single — Lexi + Wooh Da Kid session packet</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="devinCmd('/waka-country')">Invoke</button></div>
+        <div class="tool-item"><div class="ti-icon">🐐</div><div><div class="ti-name">devin-cli</div><div class="ti-desc">Devin CLI docs — commands, models, config, troubleshooting</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="devinCmd('/devin-cli')">Invoke</button></div>
+        <div class="tool-item"><div class="ti-icon">💎</div><div><div class="ti-name">money-penny-boss</div><div class="ti-desc">Ms. Money Penny enforcer — OG rules, agent007 session packet</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="devinCmd('/money-penny-boss')">Invoke</button></div>
+        <div class="tool-item"><div class="ti-icon">🎛️</div><div><div class="ti-name">pro-tools-mix</div><div class="ti-desc">Pro Tools mixing copilot — Hard Liquor / Backroad Baptism</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="devinCmd('/pro-tools-mix')">Invoke</button></div>
+        <div class="tool-item"><div class="ti-icon">🌎</div><div><div class="ti-name">amigo-alley</div><div class="ti-desc">Hannah Miller — Latin crossover, bilingual, reggaeton</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="devinCmd('/amigo-alley')">Invoke</button></div>
+        <div class="tool-item"><div class="ti-icon">🎹</div><div><div class="ti-name">fl-studio-training</div><div class="ti-desc">Wooh Da Kid FL Studio workflow — beat production</div></div><span class="ti-badge active">active</span><button class="tool-toggle" onclick="devinCmd('/fl-studio-training')">Invoke</button></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <button class="tool-toggle" onclick="devinCmd('devin skills list')">List All Skills</button>
+        <button class="tool-toggle" onclick="devinCmd('devin skills create')">+ New Skill</button>
+      </div>
+    </div>
+
+    <!-- TERMINAL -->
+    <div class="dpanel" id="dpanel-terminal">
+      <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:10px;">Live terminal — route commands to Intel server :5500</div>
+      <div class="devin-terminal">
+        <div class="dt-bar">
+          <div class="dt-dot" style="background:#ff5f56;"></div>
+          <div class="dt-dot" style="background:#ffbd2e;"></div>
+          <div class="dt-dot" style="background:#27c93f;"></div>
+          <span class="dt-title">Lexi Terminal — THE SPARK · Agent-005 · Intel :5500</span>
+        </div>
+        <div class="dt-output" id="dtOutput">
+          <div class="dt-line-cmd">// GOAT Force Terminal — Lexi THE SPARK</div>
+          <div style="color:#444;">// Type a command and hit Run or Enter</div>
+        </div>
+        <div class="dt-input-row">
+          <span class="dt-prompt">lexi@goat-force ~ $</span>
+          <input class="dt-input" id="dtInput" placeholder="curl http://127.0.0.1:5500/health" onkeydown="if(event.key==='Enter')runDevinTermCmd()"/>
+          <button class="dt-run" onclick="runDevinTermCmd()">Run</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+        <button class="qp-btn" onclick="devinTermCmd('curl -s http://127.0.0.1:5500/health')">Health</button>
+        <button class="qp-btn" onclick="devinTermCmd('curl -s http://127.0.0.1:5500/brain/agents')">Agents</button>
+        <button class="qp-btn" onclick="devinTermCmd('curl -s http://127.0.0.1:11435/api/tags')">Models</button>
+        <button class="qp-btn" onclick="devinTermCmd('ls /Users/be100radio/GOAT-Royalty-App/web-app/')">Web-app files</button>
+        <button class="qp-btn" onclick="devinTermCmd('df -h | grep -E \"i2i|backup\"')">Drive space</button>
+        <button class="qp-btn" onclick="devinTermCmd('ps aux | grep -E \"ollama|python|intel\" | grep -v grep')">Running procs</button>
+        <button class="qp-btn" onclick="devinTermCmd('ls \"/Volumes/i2i 1/Agent-007-GOAT/Shared/session_packets/\"')">Session packets</button>
+      </div>
+    </div>
+
+    <!-- SHORTCUTS -->
+    <div class="dpanel" id="dpanel-shortcuts">
+      <table class="sk-table">
+        <thead><tr><th>Shortcut</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Enter</kbd></td><td>Submit message</td></tr>
+          <tr><td><kbd>Shift+Enter</kbd> / <kbd>Alt+Enter</kbd></td><td>Insert newline (multi-line input)</td></tr>
+          <tr><td><kbd>Shift+Tab</kbd></td><td>Cycle modes: Normal → Accept Edits → Plan → Bypass → Autonomous</td></tr>
+          <tr><td><kbd>Ctrl+C</kbd></td><td>Cancel input / cancel running agent</td></tr>
+          <tr><td><kbd>Ctrl+D</kbd></td><td>Exit (when input is empty)</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Cancel running agent</td></tr>
+          <tr><td><kbd>Ctrl+G</kbd></td><td>Open external editor for composing message</td></tr>
+          <tr><td><kbd>Ctrl+R</kbd></td><td>Fuzzy search over previous prompts</td></tr>
+          <tr><td><kbd>Ctrl+O</kbd></td><td>Full-screen viewer for thinking trace</td></tr>
+          <tr><td><kbd>Ctrl+L</kbd></td><td>Redraw / refresh screen</td></tr>
+          <tr><td><kbd>Ctrl+V</kbd></td><td>Paste from clipboard (supports images)</td></tr>
+          <tr><td><kbd>!</kbd></td><td>Enter bash mode (when input is empty)</td></tr>
+          <tr><td><kbd>@</kbd></td><td>File/directory autocomplete — add context</td></tr>
+          <tr><td><kbd>Opt+T</kbd></td><td>Cycle thinking level for current model</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px;font-size:11px;color:rgba(255,255,255,0.35);">Slash commands: <span style="color:#58a6ff;font-family:'JetBrains Mono',monospace;">/model /mode /plan /ask /bypass /normal /accept-edits /clear /fork /help /bug /update /theme /shortcuts /export /exit</span></div>
+    </div>
+
+    <!-- RULES -->
+    <div class="dpanel" id="dpanel-rules">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);">Live global rules — injected into every agent session</div>
+        <button class="tool-toggle" onclick="loadDevinRules()">↺ Reload</button>
+      </div>
+      <div class="rules-box" id="rulesBox">Loading rules...</div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="tool-toggle" onclick="devinCmd('devin rules list')">List Rules Files</button>
+        <button class="tool-toggle" onclick="window.open('http://127.0.0.1:8090/','_blank')">Edit AGENTS.md</button>
+      </div>
+    </div>
+
+    <!-- SESSIONS -->
+    <div class="dpanel" id="dpanel-sessions">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);">Recent Devin sessions — resume any session</div>
+        <button class="tool-toggle" onclick="devinCmd('devin list')">↺ Refresh</button>
+      </div>
+      <div class="session-list" id="sessionList">
+        <div class="session-item"><span class="si-id">latest</span><div class="si-info"><div class="si-title">Lexi — THE SPARK — GOAT Force build</div><div class="si-meta">This session · GOAT-Royalty-App · Adaptive</div></div><button class="si-resume" onclick="devinCmd('devin -c')">Resume</button></div>
+        <div class="session-item"><span class="si-id">–c</span><div class="si-info"><div class="si-title">Continue most recent session</div><div class="si-meta">devin --continue · resumes last session in current directory</div></div><button class="si-resume" onclick="devinCmd('devin -c')">Continue</button></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+        <button class="tool-toggle" onclick="devinCmd('devin list')">All Sessions</button>
+        <button class="tool-toggle" onclick="devinCmd('devin /fork')">Fork Session</button>
+        <button class="tool-toggle" onclick="devinCmd('devin --export')">Export Session</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="dpanel" id="dpanel-settings">
+
+      <!-- SECTION: Model Settings -->
+      <div class="settings-section">
+        <h4>🤖 Model Settings</h4>
+        <div class="settings-grid">
+          <div class="setting-row"><label class="setting-label">Default Model</label><select class="setting-input setting-select" id="settingModel" onchange="saveDevinSetting('model',this.value)"><option value="adaptive">Adaptive (auto-select)</option><option value="llama3.1:70b">llama3.1:70b (GOAT default)</option><option value="opus">opus (complex reasoning)</option><option value="sonnet">sonnet (balanced)</option><option value="swe">swe (coding)</option><option value="gpt">gpt (OpenAI)</option><option value="gemini">gemini (Google)</option><option value="deepseek-r1:70b">deepseek-r1:70b</option><option value="qwen3:235b">qwen3:235b</option></select></div>
+          <div class="setting-row"><label class="setting-label">Permission Mode</label><select class="setting-input setting-select" id="settingMode" onchange="saveDevinSetting('mode',this.value)"><option value="normal">Normal (default)</option><option value="accept-edits">Accept Edits</option><option value="plan">Plan (read-only)</option><option value="bypass">Bypass (all approved)</option></select></div>
+          <div class="setting-row"><label class="setting-label">Ollama Host</label><input class="setting-input" id="settingOllama" value="127.0.0.1:11435" onchange="saveDevinSetting('ollama_host',this.value)"/></div>
+          <div class="setting-row"><label class="setting-label">Intel Server</label><input class="setting-input" id="settingIntel" value="http://127.0.0.1:5500" onchange="saveDevinSetting('intel_host',this.value)"/></div>
+          <div class="setting-row"><label class="setting-label">Theme</label><select class="setting-input setting-select" id="settingTheme" onchange="applyDevinTheme(this.value)"><option value="dark">Dark (GOAT default)</option><option value="terminal-dark">Terminal Dark</option><option value="light">Light</option></select></div>
+          <div class="setting-row"><label class="setting-label">Context Length</label><select class="setting-input setting-select" id="settingContext" onchange="saveDevinSetting('context',this.value)"><option value="4096">4096 (fast)</option><option value="8192" selected>8192 (balanced)</option><option value="32768">32768 (deep)</option><option value="131072">131072 (max)</option></select></div>
+        </div>
+        <div class="setting-row" style="margin-top:10px;flex-direction:row;align-items:center;gap:8px;">
+          <label class="setting-label" style="width:90px;flex-shrink:0;">Temperature</label>
+          <input type="range" id="lexiTempSlider" min="0" max="2" step="0.1" value="0.7" oninput="document.getElementById('lexiTempDisplay').textContent=this.value;saveDevinSetting('temperature',this.value);" style="flex:1;accent-color:#ff0040;">
+          <span id="lexiTempDisplay" style="font-size:11px;color:#ff0040;font-family:'JetBrains Mono',monospace;width:28px;flex-shrink:0;">0.7</span>
+        </div>
+        <div class="setting-row" style="margin-top:6px;flex-direction:row;align-items:center;gap:8px;">
+          <label class="setting-label" style="width:90px;flex-shrink:0;">Max Tokens</label>
+          <input type="number" id="settingMaxTokens" class="setting-input" value="4096" min="100" max="131072" style="width:120px;" onchange="saveDevinSetting('max_tokens',this.value)">
+        </div>
+        <div class="setting-row" style="margin-top:6px;flex-direction:column;">
+          <label class="setting-label">System Prompt Override</label>
+          <textarea id="settingSystemPrompt" class="setting-input" rows="3" placeholder="Custom system instructions for Lexi... (leave blank for default)" style="width:100%;resize:vertical;" onchange="saveDevinSetting('system_prompt',this.value)"></textarea>
+        </div>
+      </div>
+
+      <!-- SECTION: Performance -->
+      <div class="settings-section">
+        <h4>⚡ Performance</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="setting-toggle"><div class="toggle-switch on" id="tgCloud" onclick="toggleDevinSetting('tgCloud','no_cloud')"></div><span class="toggle-label">OLLAMA_NO_CLOUD — keep all inference local</span></div>
+          <div class="setting-toggle"><div class="toggle-switch on" id="tgOffline" onclick="toggleDevinSetting('tgOffline','offline')"></div><span class="toggle-label">Offline mode — no external downloads or telemetry</span></div>
+          <div class="setting-toggle"><div class="toggle-switch" id="tgAutoLaunch" onclick="toggleDevinSetting('tgAutoLaunch','auto_launch')"></div><span class="toggle-label">Auto-launch all agents on startup</span></div>
+          <div class="setting-toggle"><div class="toggle-switch on" id="tgStreaming" onclick="toggleDevinSetting('tgStreaming','streaming')"></div><span class="toggle-label">Streaming responses — real-time token output</span></div>
+          <div class="setting-toggle"><div class="toggle-switch" id="tgCache" onclick="toggleDevinSetting('tgCache','cache')"></div><span class="toggle-label">Cache responses — reuse identical prompts</span></div>
+          <div class="setting-toggle"><div class="toggle-switch" id="tgAutoContinue" onclick="toggleDevinSetting('tgAutoContinue','auto_continue')"></div><span class="toggle-label">Auto-continue — resume interrupted responses</span></div>
+        </div>
+        <div class="setting-row" style="margin-top:10px;flex-direction:row;align-items:center;gap:8px;">
+          <label class="setting-label" style="width:110px;flex-shrink:0;">Parallel Agents</label>
+          <input type="number" id="settingParallelAgents" class="setting-input" value="4" min="1" max="10" style="width:70px;" onchange="saveDevinSetting('parallel_agents',this.value)">
+        </div>
+      </div>
+
+      <!-- SECTION: Security -->
+      <div class="settings-section">
+        <h4>🔐 Security</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="setting-toggle"><div class="toggle-switch on" id="tgSafeMode" onclick="toggleDevinSetting('tgSafeMode','safe_mode')"></div><span class="toggle-label">Safe Mode — block unsafe code execution</span></div>
+        </div>
+        <div class="setting-row" style="margin-top:10px;flex-direction:row;align-items:center;gap:8px;">
+          <label class="setting-label" style="width:110px;flex-shrink:0;">Code Execution</label>
+          <select class="setting-input setting-select" id="settingCodeExec" style="width:140px;" onchange="saveDevinSetting('code_execution',this.value)">
+            <option value="sandbox">Sandboxed</option>
+            <option value="restricted">Restricted</option>
+            <option value="full">Full Access</option>
+          </select>
+        </div>
+        <div class="setting-row" style="margin-top:6px;flex-direction:row;align-items:center;gap:8px;">
+          <label class="setting-label" style="width:110px;flex-shrink:0;">API Key Override</label>
+          <input type="password" id="settingApiKey" class="setting-input" placeholder="Leave blank to use global key" style="flex:1;" onchange="saveDevinSetting('api_key_override',this.value)">
+        </div>
+      </div>
+
+      <!-- SECTION: Interface -->
+      <div class="settings-section">
+        <h4>🎨 Interface</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="setting-toggle"><div class="toggle-switch on" id="tgLineNumbers" onclick="toggleDevinSetting('tgLineNumbers','line_numbers')"></div><span class="toggle-label">Show line numbers in code blocks</span></div>
+          <div class="setting-toggle"><div class="toggle-switch on" id="tgSyntax" onclick="toggleDevinSetting('tgSyntax','syntax_highlight')"></div><span class="toggle-label">Syntax highlighting in code blocks</span></div>
+          <div class="setting-toggle"><div class="toggle-switch on" id="tgTokenCounter" onclick="toggleDevinSetting('tgTokenCounter','token_counter')"></div><span class="toggle-label">Show token counter in toolbar</span></div>
+          <div class="setting-toggle"><div class="toggle-switch" id="tgPerfMetrics" onclick="toggleDevinSetting('tgPerfMetrics','perf_metrics')"></div><span class="toggle-label">Performance metrics overlay</span></div>
+        </div>
+        <div class="setting-row" style="margin-top:10px;flex-direction:row;align-items:center;gap:8px;">
+          <label class="setting-label" style="width:80px;flex-shrink:0;">Font Size</label>
+          <input type="range" id="settingFontSize" min="12" max="20" step="1" value="14" oninput="document.getElementById('settingFontSizeVal').textContent=this.value+'px';document.documentElement.style.setProperty('--chat-font-size',this.value+'px');saveDevinSetting('font_size',this.value);" style="flex:1;accent-color:#ff0040;">
+          <span id="settingFontSizeVal" style="font-size:11px;color:#ff0040;font-family:'JetBrains Mono',monospace;width:32px;flex-shrink:0;">14px</span>
+        </div>
+        <div class="setting-row" style="margin-top:6px;flex-direction:row;align-items:center;gap:8px;">
+          <label class="setting-label" style="width:80px;flex-shrink:0;">Log Level</label>
+          <select class="setting-input setting-select" id="settingLogLevel" style="width:130px;" onchange="saveDevinSetting('log_level',this.value)">
+            <option value="error">Error</option>
+            <option value="warn">Warning</option>
+            <option value="info" selected>Info</option>
+            <option value="debug">Debug</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SECTION: Integrations -->
+      <div class="settings-section">
+        <h4>🔌 Integrations</h4>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="setting-toggle"><div class="toggle-switch on" id="tgWebSearch" onclick="toggleDevinSetting('tgWebSearch','web_search')"></div><span class="toggle-label">Web Search — allow Lexi to search the web</span></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+          <button class="tool-toggle" onclick="configureMCPSettings()">🔌 MCP Servers</button>
+          <button class="tool-toggle" onclick="manageSkillsSettings()">✨ Custom Skills</button>
+          <button class="tool-toggle" onclick="devinCmd('devin auth status')">🔑 Auth Status</button>
+          <button class="tool-toggle" onclick="devinCmd('/update')">🔄 Check Updates</button>
+          <button class="tool-toggle" onclick="devinCmd('/bug')">🐛 Report Bug</button>
+        </div>
+      </div>
+
+      <!-- SECTION: Data -->
+      <div class="settings-section">
+        <h4>💾 Session Data</h4>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="tool-toggle" style="border-color:#58a6ff;color:#58a6ff;" onclick="exportSessionsData()">📤 Export Sessions</button>
+          <button class="tool-toggle" style="border-color:#58a6ff;color:#58a6ff;" onclick="importSessionsData()">📥 Import Sessions</button>
+          <button class="tool-toggle" style="border-color:#e74c3c;color:#e74c3c;" onclick="clearChatHistory()">🗑️ Clear History</button>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="tool-toggle" style="border-color:#58a6ff;color:#58a6ff;" onclick="saveAllDevinSettings()">💾 Save Settings</button>
+        <button class="tool-toggle" onclick="resetAllDevinSettings()">↩️ Reset to Default</button>
+      </div>
+
+    </div>
+
+  </div><!-- /devin-body -->
+</div><!-- /devin-panel -->
+
+<script>
+// ── DEVIN COMMAND CENTER JS (Lexi edition) ────────────────
+const LEXI_INTEL = 'http://127.0.0.1:5500';
+let _devinActiveModel = localStorage.getItem('goat_model') || 'llama3.1:70b';
+let _devinActiveMode  = localStorage.getItem('goat_mode')  || 'normal';
+
+function toggleDevin() {
+  const body = document.getElementById('devinBody');
+  const chev = document.getElementById('devinChevron');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+function showDTab(e, name) {
+  document.querySelectorAll('.dtab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.dpanel').forEach(p => p.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById('dpanel-' + name).classList.add('active');
+  if (name === 'models') refreshDevinModels();
+  if (name === 'rules')  loadDevinRules();
+}
+async function refreshDevinModels() {
+  const grid = document.getElementById('modelGrid');
+  const lbl  = document.getElementById('activeModelLabel');
+  const cnt  = document.getElementById('modelCountLabel');
+  if (lbl) lbl.textContent = _devinActiveModel;
+  try {
+    const r = await fetch('http://127.0.0.1:11435/api/tags', {signal: AbortSignal.timeout(4000)});
+    const d = await r.json();
+    const models = d.models || [];
+    if (cnt) cnt.textContent = models.length + ' models online';
+    if (!grid) return;
+    grid.innerHTML = models.map(m => {
+      const sel = m.name === _devinActiveModel ? 'selected' : '';
+      const size = m.size ? (m.size/1e9).toFixed(1)+'GB' : '';
+      const tag = m.name.includes('uncensored')||m.name.includes('dolphin')||m.name.includes('nemomix') ? 'uncensored' :
+                  m.name.includes('vision')||m.name.includes('llava')||m.name.includes('vl') ? 'vision' :
+                  m.name.includes('coder')||m.name.includes('code') ? 'code' :
+                  m.name.includes('embed')||m.name.includes('bge') ? 'embed' :
+                  m.name.includes('deepseek') ? 'reasoning' : 'general';
+      return `<div class="model-card ${sel}" onclick="selectDevinModel('${m.name}')"><div class="mn">${m.name}</div><div class="md">${size}</div><div class="mt">${tag}</div></div>`;
+    }).join('');
+  } catch(e) {
+    if (cnt) cnt.textContent = 'Ollama offline';
+    if (grid) grid.innerHTML = '<div style="color:rgba(255,255,255,0.35);font-size:11px;padding:12px;">Ollama not reachable on :11435 — start the server first</div>';
+  }
+}
+function selectDevinModel(name) {
+  _devinActiveModel = name;
+  localStorage.setItem('goat_model', name);
+  document.querySelectorAll('.model-card').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  const lbl = document.getElementById('activeModelLabel');
+  if (lbl) lbl.textContent = name;
+}
+function setDevinMode(mode) {
+  _devinActiveMode = mode;
+  localStorage.setItem('goat_mode', mode);
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('mode-' + mode);
+  if (btn) btn.classList.add('active');
+  const lbl = document.getElementById('activeModeLabel');
+  if (lbl) lbl.textContent = mode;
+}
+function fillPrompt(text) {
+  const inp = document.getElementById('promptInput');
+  if (inp) { inp.value = text; inp.focus(); }
+}
+async function sendDevinPrompt() {
+  const inp    = document.getElementById('promptInput');
+  const agent  = document.getElementById('promptAgent');
+  const result = document.getElementById('promptResult');
+  const rText  = document.getElementById('promptResultText');
+  if (!inp || !inp.value.trim()) return;
+  const prompt  = inp.value.trim();
+  const agentId = agent ? agent.value : 'lexi';
+  result.style.display = 'block';
+  rText.textContent = 'Thinking...';
+  try {
+    const r = await fetch(LEXI_INTEL + '/ai/chat', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({agent: agentId, message: prompt, model: _devinActiveModel}),
+      signal: AbortSignal.timeout(60000)
+    });
+    const d = await r.json();
+    rText.textContent = d.response || d.message || d.content || JSON.stringify(d, null, 2);
+  } catch(e) {
+    try {
+      const r2 = await fetch('http://127.0.0.1:11435/api/generate', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({model: _devinActiveModel, prompt, stream: false}),
+        signal: AbortSignal.timeout(90000)
+      });
+      const d2 = await r2.json();
+      rText.textContent = d2.response || 'No response';
+    } catch(e2) {
+      rText.textContent = 'Could not reach agent or Ollama. Check services.';
+    }
+  }
+}
+function devinTermCmd(cmd) {
+  const inp = document.getElementById('dtInput');
+  if (inp) { inp.value = cmd; runDevinTermCmd(); }
+}
+async function runDevinTermCmd() {
+  const inp = document.getElementById('dtInput');
+  const out = document.getElementById('dtOutput');
+  if (!inp || !out) return;
+  const cmd = inp.value.trim();
+  if (!cmd) return;
+  const cl = document.createElement('div');
+  cl.className = 'dt-line-cmd';
+  cl.textContent = '$ ' + cmd;
+  out.appendChild(cl);
+  inp.value = '';
+  try {
+    const r = await fetch(LEXI_INTEL + '/terminal/exec', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({command: cmd}),
+      signal: AbortSignal.timeout(15000)
+    });
+    const d = await r.json();
+    const line = document.createElement('div');
+    line.className = d.error ? 'dt-line-err' : 'dt-line-ok';
+    line.textContent = d.output || d.error || d.result || JSON.stringify(d);
+    out.appendChild(line);
+  } catch(e) {
+    const line = document.createElement('div');
+    line.className = 'dt-line-warn';
+    line.textContent = 'Intel server offline — start it first to run terminal commands';
+    out.appendChild(line);
+  }
+  out.scrollTop = out.scrollHeight;
+}
+async function loadDevinRules() {
+  const box = document.getElementById('rulesBox');
+  if (!box) return;
+  try {
+    const r = await fetch(LEXI_INTEL + '/fs/read?path=/Users/be100radio/.codeium/windsurf/memories/global_rules.md',
+      {signal: AbortSignal.timeout(4000)});
+    const d = await r.json();
+    box.textContent = d.content || d.data || 'Could not load rules';
+  } catch(e) {
+    box.textContent = '# GOAT Force Global Rules\n\nMs. Money Penny — Agent 00 — THE OG\nTHE GOAT — Agent 001 — Supreme Commander\nLexi — Agent 005 — THE SPARK\n...\n\n(Connect Intel server at :5500 to load full live rules)';
+  }
+}
+function saveDevinSetting(key, value) { localStorage.setItem('goat_' + key, value); }
+function saveAllDevinSettings() {
+  const m  = document.getElementById('settingModel');
+  const mo = document.getElementById('settingMode');
+  const o  = document.getElementById('settingOllama');
+  const i  = document.getElementById('settingIntel');
+  if (m)  saveDevinSetting('model', m.value);
+  if (mo) { saveDevinSetting('mode', mo.value); setDevinMode(mo.value); }
+  if (o)  saveDevinSetting('ollama_host', o.value);
+  if (i)  saveDevinSetting('intel_host', i.value);
+}
+function toggleDevinSetting(id, key) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('on');
+  saveDevinSetting(key, el.classList.contains('on') ? '1' : '0');
+}
+function applyDevinTheme(theme) { saveDevinSetting('theme', theme); }
+
+// ── Extended settings helpers ─────────────────────────────
+function resetAllDevinSettings() {
+  if (!confirm('Reset all Lexi settings to defaults? This cannot be undone.')) return;
+  const keys = ['model','mode','ollama_host','intel_host','theme','context',
+    'temperature','max_tokens','system_prompt','parallel_agents','font_size','log_level',
+    'code_execution','api_key_override',
+    'no_cloud','offline','auto_launch','streaming','cache','auto_continue',
+    'safe_mode','line_numbers','syntax_highlight','token_counter','perf_metrics','web_search'];
+  keys.forEach(k => localStorage.removeItem('goat_' + k));
+  // Reset toggle states
+  ['tgCloud','tgOffline','tgStreaming','tgLineNumbers','tgSyntax','tgTokenCounter'].forEach(id => {
+    const el = document.getElementById(id); if (el) { el.classList.add('on'); saveDevinSetting(id.replace('tg','').toLowerCase(),'1'); }
+  });
+  ['tgAutoLaunch','tgCache','tgAutoContinue','tgPerfMetrics'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.remove('on');
+  });
+  const safeEl = document.getElementById('tgSafeMode'); if (safeEl) safeEl.classList.add('on');
+  const webEl = document.getElementById('tgWebSearch'); if (webEl) webEl.classList.add('on');
+  // Reset range/number inputs
+  const tempEl = document.getElementById('lexiTempSlider'); if (tempEl) { tempEl.value = 0.7; document.getElementById('lexiTempDisplay').textContent = '0.7'; }
+  const fontEl = document.getElementById('settingFontSize'); if (fontEl) { fontEl.value = 14; document.getElementById('settingFontSizeVal').textContent = '14px'; }
+  const tokEl = document.getElementById('settingMaxTokens'); if (tokEl) tokEl.value = 4096;
+  const parEl = document.getElementById('settingParallelAgents'); if (parEl) parEl.value = 4;
+  const sysEl = document.getElementById('settingSystemPrompt'); if (sysEl) sysEl.value = '';
+  alert('Settings reset to defaults.');
+}
+
+function exportSessionsData() {
+  const data = {
+    sessions: localStorage.getItem('goat_lexi_thread') || null,
+    chatHistory: localStorage.getItem('goat_lexi_history') || null,
+    settings: {}
+  };
+  ['model','mode','ollama_host','intel_host','theme','context','temperature','max_tokens'].forEach(k => {
+    const v = localStorage.getItem('goat_' + k);
+    if (v) data.settings[k] = v;
+  });
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'lexi-sessions-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importSessionsData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (data.chatHistory) localStorage.setItem('goat_lexi_history', data.chatHistory);
+        if (data.sessions) localStorage.setItem('goat_lexi_thread', data.sessions);
+        if (data.settings) Object.entries(data.settings).forEach(([k,v]) => localStorage.setItem('goat_' + k, v));
+        alert('Sessions imported — reload to apply.');
+      } catch(err) { alert('Invalid file: ' + err.message); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+function clearChatHistory() {
+  if (!confirm('Clear all Lexi chat history? This cannot be undone.')) return;
+  localStorage.removeItem('goat_lexi_history');
+  localStorage.removeItem('goat_lexi_thread');
+  if (typeof chatHistory !== 'undefined') chatHistory = [];
+  if (typeof totalTokens !== 'undefined') { totalTokens = 0; updateTokenCounter(); }
+  if (typeof showWelcome === 'function') showWelcome();
+  alert('Chat history cleared.');
+}
+
+function configureMCPSettings() {
+  // Switch to MCP tab
+  document.querySelectorAll('.dtab').forEach(t => {
+    if (t.textContent.includes('MCP')) { t.click(); return; }
+  });
+}
+
+function manageSkillsSettings() {
+  // Switch to Skills tab
+  document.querySelectorAll('.dtab').forEach(t => {
+    if (t.textContent.includes('Skills')) { t.click(); return; }
+  });
+}
+
+// Load extended settings on init
+(function loadExtendedSettings() {
+  const temp = localStorage.getItem('goat_temperature');
+  if (temp) {
+    const el = document.getElementById('lexiTempSlider');
+    const dsp = document.getElementById('lexiTempDisplay');
+    if (el) el.value = temp;
+    if (dsp) dsp.textContent = temp;
+  }
+  const maxTok = localStorage.getItem('goat_max_tokens');
+  if (maxTok) { const el = document.getElementById('settingMaxTokens'); if (el) el.value = maxTok; }
+  const sysPr = localStorage.getItem('goat_system_prompt');
+  if (sysPr) { const el = document.getElementById('settingSystemPrompt'); if (el) el.value = sysPr; }
+  const fontSize = localStorage.getItem('goat_font_size');
+  if (fontSize) {
+    const el = document.getElementById('settingFontSize');
+    const dsp = document.getElementById('settingFontSizeVal');
+    if (el) el.value = fontSize;
+    if (dsp) dsp.textContent = fontSize + 'px';
+    document.documentElement.style.setProperty('--chat-font-size', fontSize + 'px');
+  }
+  const logLvl = localStorage.getItem('goat_log_level');
+  if (logLvl) { const el = document.getElementById('settingLogLevel'); if (el) el.value = logLvl; }
+  const codeExec = localStorage.getItem('goat_code_execution');
+  if (codeExec) { const el = document.getElementById('settingCodeExec'); if (el) el.value = codeExec; }
+  const par = localStorage.getItem('goat_parallel_agents');
+  if (par) { const el = document.getElementById('settingParallelAgents'); if (el) el.value = par; }
+  // Restore toggles
+  const togMap = {
+    tgStreaming: 'streaming', tgCache: 'cache', tgAutoContinue: 'auto_continue',
+    tgSafeMode: 'safe_mode', tgLineNumbers: 'line_numbers', tgSyntax: 'syntax_highlight',
+    tgTokenCounter: 'token_counter', tgPerfMetrics: 'perf_metrics', tgWebSearch: 'web_search'
+  };
+  Object.entries(togMap).forEach(([id, key]) => {
+    const saved = localStorage.getItem('goat_' + key);
+    if (saved !== null) {
+      const el = document.getElementById(id);
+      if (el) { saved === '1' ? el.classList.add('on') : el.classList.remove('on'); }
+    }
+  });
+})();
+
+function devinCmd(cmd) {
+  devinTermCmd(cmd);
+  // Switch to terminal tab
+  document.querySelectorAll('.dtab').forEach(t => {
+    if (t.textContent.includes('Terminal')) t.classList.add('active');
+    else t.classList.remove('active');
+  });
+  document.querySelectorAll('.dpanel').forEach(p => p.classList.remove('active'));
+  const tp = document.getElementById('dpanel-terminal');
+  if (tp) tp.classList.add('active');
+}
+// Load saved settings on init
+(function() {
+  const m = localStorage.getItem('goat_model');
+  if (m) { const el = document.getElementById('settingModel'); if (el) el.value = m; _devinActiveModel = m; }
+  const mo = localStorage.getItem('goat_mode');
+  if (mo) { setDevinMode(mo); const el = document.getElementById('settingMode'); if (el) el.value = mo; }
+})();
+</script>
+
 <!-- TOUCH STUDIO PANEL -->
 <div class="deck-panel" id="studioPanel" onclick="if(event.target.id==='studioPanel') closeStudioPanel()">
   <div class="deck-box">
@@ -1765,5 +2737,700 @@ function cancelTerminalConfirm() {
 <script src="lib/agents/patch/patch-widget.js" data-agent="lexi"></script>
 <script src="js/goat-touch.js"></script>
 <script src="js/goat-agent-controls.js"></script>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     LEXI DEVIN-STYLE PANELS — File Explorer, Code Editor, Git, 
+     Prompt Library, Chat History, Advanced Model Settings
+     All data stored in /Volumes/backup/LEXICON AKA LEXI/Shared/
+     ═══════════════════════════════════════════════════════════════════ -->
+
+<!-- FILE EXPLORER MODAL -->
+<div id="lexiFileModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:820px;max-width:96vw;max-height:85vh;background:#191A1B;border:1px solid #2A2B2C;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#202122;border-bottom:1px solid #2A2B2C;">
+      <span style="font-size:13px;font-weight:600;color:#BBBEBF;">📁 File Explorer — Lexi Backup Volume</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input id="lexiFileSearch" type="text" placeholder="Search files..." onkeyup="lexiFileFilter()" style="padding:4px 10px;background:#121314;border:1px solid #2A2B2C;border-radius:4px;color:#BBBEBF;font-size:12px;width:180px;">
+        <button onclick="document.getElementById('lexiFileModal').style.display='none'" style="background:transparent;border:none;color:#8C8C8C;font-size:18px;cursor:pointer;line-height:1;">×</button>
+      </div>
+    </div>
+    <div style="display:flex;flex:1;overflow:hidden;min-height:0;">
+      <!-- Tree panel -->
+      <div id="lexiFileTree" style="width:260px;min-width:200px;border-right:1px solid #2A2B2C;overflow-y:auto;padding:8px 0;font-size:12px;font-family:monospace;"></div>
+      <!-- Preview panel -->
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+        <div id="lexiFilePreviewName" style="padding:6px 14px;font-size:11px;color:#666;border-bottom:1px solid #2A2B2C;font-family:monospace;"></div>
+        <pre id="lexiFilePreview" style="flex:1;overflow:auto;margin:0;padding:14px;font-size:12px;color:#BBBEBF;font-family:monospace;white-space:pre-wrap;word-break:break-all;background:#121314;"></pre>
+        <div style="padding:8px 14px;border-top:1px solid #2A2B2C;display:flex;gap:8px;">
+          <button onclick="lexiLoadFileToEditor()" style="padding:4px 12px;background:rgba(233,30,140,0.15);border:1px solid rgba(233,30,140,0.4);color:#e91e8c;border-radius:4px;font-size:11px;cursor:pointer;">Open in Editor</button>
+          <button onclick="lexiSendFileToChat()" style="padding:4px 12px;background:rgba(233,30,140,0.08);border:1px solid #2A2B2C;color:#8C8C8C;border-radius:4px;font-size:11px;cursor:pointer;">Send to Chat</button>
+        </div>
+      </div>
+    </div>
+    <div id="lexiFileStatus" style="padding:6px 16px;font-size:11px;color:#666;border-top:1px solid #2A2B2C;background:#202122;font-family:monospace;"></div>
+  </div>
+</div>
+
+<!-- CODE EDITOR MODAL -->
+<div id="lexiEditorModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;max-width:96vw;max-height:90vh;background:#191A1B;border:1px solid #2A2B2C;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#202122;border-bottom:1px solid #2A2B2C;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:600;color:#BBBEBF;">📝 Code Editor</span>
+        <span id="lexiEditorFileName" style="font-size:11px;color:#666;font-family:monospace;">untitled</span>
+        <span id="lexiEditorDirty" style="font-size:10px;color:#e5ba7d;display:none;">● unsaved</span>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <select id="lexiEditorLang" style="padding:3px 8px;background:#121314;border:1px solid #2A2B2C;color:#BBBEBF;border-radius:4px;font-size:11px;">
+          <option value="text">Text</option><option value="python">Python</option><option value="javascript">JavaScript</option>
+          <option value="html">HTML</option><option value="json">JSON</option><option value="bash">Bash</option><option value="css">CSS</option>
+        </select>
+        <button onclick="lexiEditorSave()" style="padding:4px 12px;background:rgba(233,30,140,0.15);border:1px solid rgba(233,30,140,0.4);color:#e91e8c;border-radius:4px;font-size:11px;cursor:pointer;">💾 Save</button>
+        <button onclick="lexiEditorAsk()" style="padding:4px 12px;background:rgba(57,148,188,0.12);border:1px solid rgba(57,148,188,0.3);color:#58a6ff;border-radius:4px;font-size:11px;cursor:pointer;">💬 Ask Lexi</button>
+        <button onclick="document.getElementById('lexiEditorModal').style.display='none'" style="background:transparent;border:none;color:#8C8C8C;font-size:18px;cursor:pointer;">×</button>
+      </div>
+    </div>
+    <!-- Tab bar -->
+    <div id="lexiEditorTabs" style="display:flex;gap:2px;padding:4px 12px 0;background:#202122;border-bottom:1px solid #2A2B2C;overflow-x:auto;min-height:28px;"></div>
+    <!-- Line numbers + editor -->
+    <div style="flex:1;display:flex;overflow:hidden;min-height:0;">
+      <div id="lexiLineNums" style="width:42px;padding:12px 6px;text-align:right;font-size:12px;font-family:monospace;color:#444;background:#191A1B;overflow:hidden;user-select:none;border-right:1px solid #2A2B2C;line-height:1.6;"></div>
+      <textarea id="lexiEditorContent" spellcheck="false" style="flex:1;padding:12px;font-size:13px;font-family:monospace;background:#121314;color:#BBBEBF;border:none;outline:none;resize:none;line-height:1.6;tab-size:2;" oninput="lexiEditorOnInput()" onscroll="lexiSyncLineNums()" placeholder="// Start typing or open a file from the File Explorer..."></textarea>
+    </div>
+    <div style="padding:5px 16px;font-size:11px;color:#555;border-top:1px solid #2A2B2C;background:#202122;display:flex;gap:20px;font-family:monospace;">
+      <span id="lexiEditorCursor">Ln 1, Col 1</span>
+      <span id="lexiEditorLines">0 lines</span>
+      <span id="lexiEditorSize">0 chars</span>
+    </div>
+  </div>
+</div>
+
+<!-- GIT STATUS MODAL -->
+<div id="lexiGitModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:720px;max-width:96vw;max-height:80vh;background:#191A1B;border:1px solid #2A2B2C;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#202122;border-bottom:1px solid #2A2B2C;">
+      <span style="font-size:13px;font-weight:600;color:#BBBEBF;">🌿 Git Status — GOAT Royalty App</span>
+      <div style="display:flex;gap:8px;">
+        <button onclick="lexiGitRefresh()" style="padding:4px 10px;background:rgba(114,200,146,0.12);border:1px solid rgba(114,200,146,0.3);color:#72C892;border-radius:4px;font-size:11px;cursor:pointer;">↺ Refresh</button>
+        <button onclick="document.getElementById('lexiGitModal').style.display='none'" style="background:transparent;border:none;color:#8C8C8C;font-size:18px;cursor:pointer;">×</button>
+      </div>
+    </div>
+    <div style="flex:1;overflow:auto;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Branch / Status</div>
+        <pre id="lexiGitStatus" style="font-size:12px;font-family:monospace;color:#BBBEBF;background:#121314;padding:12px;border-radius:4px;border:1px solid #2A2B2C;white-space:pre-wrap;margin:0;">Loading...</pre>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Recent Commits</div>
+        <pre id="lexiGitLog" style="font-size:12px;font-family:monospace;color:#BBBEBF;background:#121314;padding:12px;border-radius:4px;border:1px solid #2A2B2C;white-space:pre-wrap;margin:0;">Loading...</pre>
+      </div>
+      <div style="grid-column:span 2;">
+        <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Changed Files</div>
+        <div id="lexiGitFiles" style="font-size:12px;font-family:monospace;color:#BBBEBF;background:#121314;padding:12px;border-radius:4px;border:1px solid #2A2B2C;min-height:60px;">Loading...</div>
+      </div>
+    </div>
+    <div style="padding:8px 16px;border-top:1px solid #2A2B2C;background:#202122;display:flex;gap:8px;">
+      <input id="lexiCommitMsg" type="text" placeholder="Commit message..." style="flex:1;padding:5px 10px;background:#121314;border:1px solid #2A2B2C;border-radius:4px;color:#BBBEBF;font-size:12px;">
+      <button onclick="lexiGitAsk()" style="padding:5px 14px;background:rgba(233,30,140,0.15);border:1px solid rgba(233,30,140,0.4);color:#e91e8c;border-radius:4px;font-size:11px;cursor:pointer;">💬 Ask Lexi about this</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROMPT LIBRARY MODAL -->
+<div id="lexiPromptModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:780px;max-width:96vw;max-height:85vh;background:#191A1B;border:1px solid #2A2B2C;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#202122;border-bottom:1px solid #2A2B2C;">
+      <span style="font-size:13px;font-weight:600;color:#BBBEBF;">📚 Prompt Library — Lexi Edition</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input id="lexiPromptSearch" type="text" placeholder="Search prompts..." oninput="lexiFilterPrompts()" style="padding:4px 10px;background:#121314;border:1px solid #2A2B2C;border-radius:4px;color:#BBBEBF;font-size:12px;width:160px;">
+        <button onclick="document.getElementById('lexiPromptModal').style.display='none'" style="background:transparent;border:none;color:#8C8C8C;font-size:18px;cursor:pointer;">×</button>
+      </div>
+    </div>
+    <!-- Category tabs -->
+    <div id="lexiPromptTabs" style="display:flex;gap:4px;padding:8px 16px;border-bottom:1px solid #2A2B2C;overflow-x:auto;flex-shrink:0;"></div>
+    <!-- Prompt grid -->
+    <div id="lexiPromptGrid" style="flex:1;overflow-y:auto;padding:12px 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;"></div>
+    <!-- Quick actions bar -->
+    <div style="padding:8px 16px;border-top:1px solid #2A2B2C;background:#202122;">
+      <div style="font-size:11px;color:#666;margin-bottom:6px;">Quick Actions</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;" id="lexiQuickActions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT HISTORY MODAL -->
+<div id="lexiHistoryModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:680px;max-width:96vw;max-height:85vh;background:#191A1B;border:1px solid #2A2B2C;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#202122;border-bottom:1px solid #2A2B2C;">
+      <span style="font-size:13px;font-weight:600;color:#BBBEBF;">🕐 Chat History</span>
+      <div style="display:flex;gap:8px;">
+        <button onclick="lexiHistorySave()" style="padding:4px 12px;background:rgba(233,30,140,0.15);border:1px solid rgba(233,30,140,0.4);color:#e91e8c;border-radius:4px;font-size:11px;cursor:pointer;">💾 Save Current</button>
+        <button onclick="lexiHistoryClear()" style="padding:4px 12px;background:rgba(244,135,113,0.1);border:1px solid rgba(244,135,113,0.3);color:#f48771;border-radius:4px;font-size:11px;cursor:pointer;">🗑 Clear All</button>
+        <button onclick="document.getElementById('lexiHistoryModal').style.display='none'" style="background:transparent;border:none;color:#8C8C8C;font-size:18px;cursor:pointer;">×</button>
+      </div>
+    </div>
+    <div style="flex:1;overflow:auto;display:flex;min-height:0;">
+      <!-- Session list -->
+      <div id="lexiHistoryList" style="width:240px;border-right:1px solid #2A2B2C;overflow-y:auto;padding:8px 0;"></div>
+      <!-- Session preview -->
+      <div id="lexiHistoryPreview" style="flex:1;overflow-y:auto;padding:16px;font-size:12px;line-height:1.6;color:#BBBEBF;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADVANCED MODEL SETTINGS MODAL -->
+<div id="lexiAdvancedModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:560px;max-width:96vw;max-height:85vh;background:#191A1B;border:1px solid #2A2B2C;border-radius:8px;display:flex;flex-direction:column;overflow:hidden;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#202122;border-bottom:1px solid #2A2B2C;">
+      <span style="font-size:13px;font-weight:600;color:#BBBEBF;">🔧 Advanced Model Settings</span>
+      <button onclick="document.getElementById('lexiAdvancedModal').style.display='none'" style="background:transparent;border:none;color:#8C8C8C;font-size:18px;cursor:pointer;">×</button>
+    </div>
+    <div style="flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;">
+      <!-- Model select -->
+      <div>
+        <label style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;">Active Model</label>
+        <select id="lexiModelSelect" style="width:100%;padding:7px 10px;background:#121314;border:1px solid #2A2B2C;border-radius:4px;color:#BBBEBF;font-size:12px;" onchange="lexiAdvSave()">
+          <option value="llama3.1:70b">llama3.1:70b — Power (default)</option>
+          <option value="llama3.1:8b">llama3.1:8b — Fast</option>
+          <option value="deepseek-r1:14b">deepseek-r1:14b — Reasoning</option>
+          <option value="deepseek-r1:32b">deepseek-r1:32b — Deep Reasoning</option>
+          <option value="qwen3:8b">qwen3:8b — Balanced</option>
+          <option value="gemma3:12b">gemma3:12b — Creative</option>
+          <option value="codestral:22b">codestral:22b — Code</option>
+          <option value="gpt-oss:20b">gpt-oss:20b — GPT-style</option>
+        </select>
+      </div>
+      <!-- Temperature -->
+      <div>
+        <label style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;">Temperature: <span id="lexiTempVal">0.7</span></label>
+        <input type="range" id="lexiTemp" min="0" max="2" step="0.05" value="0.7" oninput="document.getElementById('lexiTempVal').textContent=this.value;lexiAdvSave()" style="width:100%;accent-color:#e91e8c;">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#555;margin-top:2px;"><span>Precise</span><span>Balanced</span><span>Creative</span></div>
+      </div>
+      <!-- Top P -->
+      <div>
+        <label style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;">Top P: <span id="lexiTopPVal">0.9</span></label>
+        <input type="range" id="lexiTopP" min="0.1" max="1" step="0.05" value="0.9" oninput="document.getElementById('lexiTopPVal').textContent=this.value;lexiAdvSave()" style="width:100%;accent-color:#e91e8c;">
+      </div>
+      <!-- Context length -->
+      <div>
+        <label style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;">Context Length: <span id="lexiCtxVal">4096</span> tokens</label>
+        <input type="range" id="lexiCtx" min="512" max="32768" step="512" value="4096" oninput="document.getElementById('lexiCtxVal').textContent=this.value;lexiAdvSave()" style="width:100%;accent-color:#e91e8c;">
+      </div>
+      <!-- Repeat penalty -->
+      <div>
+        <label style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;">Repeat Penalty: <span id="lexiRepVal">1.1</span></label>
+        <input type="range" id="lexiRep" min="1" max="2" step="0.05" value="1.1" oninput="document.getElementById('lexiRepVal').textContent=this.value;lexiAdvSave()" style="width:100%;accent-color:#e91e8c;">
+      </div>
+      <!-- Toggles -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#BBBEBF;">
+          <input type="checkbox" id="lexiToolMode" checked onchange="lexiAdvSave()" style="accent-color:#e91e8c;"> Tool Mode
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#BBBEBF;">
+          <input type="checkbox" id="lexiVoiceSpeak" checked onchange="lexiAdvSave()" style="accent-color:#e91e8c;"> Auto Voice
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#BBBEBF;">
+          <input type="checkbox" id="lexiAdvMode" onchange="lexiAdvSave()" style="accent-color:#e91e8c;"> Advanced Mode
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#BBBEBF;">
+          <input type="checkbox" id="lexiStreamMode" checked onchange="lexiAdvSave()" style="accent-color:#e91e8c;"> Stream Replies
+        </label>
+      </div>
+      <!-- System prompt override -->
+      <div>
+        <label style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:6px;">Custom System Prompt (appended)</label>
+        <textarea id="lexiSysPrompt" rows="4" placeholder="Add custom context for this session..." oninput="lexiAdvSave()" style="width:100%;padding:8px 10px;background:#121314;border:1px solid #2A2B2C;border-radius:4px;color:#BBBEBF;font-size:12px;font-family:monospace;resize:vertical;box-sizing:border-box;"></textarea>
+      </div>
+    </div>
+    <div style="padding:10px 16px;border-top:1px solid #2A2B2C;background:#202122;display:flex;justify-content:space-between;align-items:center;">
+      <span id="lexiAdvStatus" style="font-size:11px;color:#72C892;"></span>
+      <button onclick="lexiAdvReset()" style="padding:5px 14px;background:transparent;border:1px solid #2A2B2C;color:#8C8C8C;border-radius:4px;font-size:11px;cursor:pointer;">Reset Defaults</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   LEXI DEVIN-STYLE PANEL FUNCTIONS
+   Storage: localStorage (lexi_*) + Intel server endpoints
+   Backup volume: /Volumes/backup/LEXICON AKA LEXI/Shared/
+   ═══════════════════════════════════════════════════════ */
+
+// ── Prompt Library data (from /Volumes/backup/LEXICON AKA LEXI/Shared/prompt_library.json)
+const LEXI_PROMPT_LIBRARY = {
+  "GOAT Royale": [
+    { name: "IF WE CAN THINK IT WE CAN DO IT", prompt: "You are Lexi, Waka Flocka Flame's AI assistant with the philosophy 'IF WE CAN THINK IT WE CAN DO IT'. You have Codex-level capabilities including self-healing, computer control, evidence protection, and creative tools. Respond with maximum creativity, problem-solving ability, and the confidence that anything is possible. Think big, act boldly, and deliver extraordinary results.", tags: ["philosophy","creative","ambitious"] },
+    { name: "GOAT Evidence Guardian", prompt: "You are Lexi, the GOAT Evidence Guardian. Your role is to protect, secure, and analyze all evidence and data across the GOAT Royalty ecosystem. You monitor drives, log evidence, detect threats, and ensure data integrity. Approach every task with maximum security, thoroughness, and protection mindset.", tags: ["security","evidence","protection"] },
+    { name: "Money Penny Analytics", prompt: "You are Money Penny, the analytics specialist for DJ Speedy. You handle detailed data analysis, metrics, trends, and business intelligence. Provide precise, data-driven insights with clear recommendations.", tags: ["analytics","data","business"] },
+    { name: "Agent-007 Computer Control", prompt: "You are Agent-007 with advanced computer control capabilities. You can execute system commands, manage processes, control the computer, and perform technical operations. Always consider security, safety, and authorization before executing commands.", tags: ["computer-control","technical","agent-007"] }
+  ],
+  "Creative": [
+    { name: "Cinematic Storytelling", prompt: "You are a master storyteller with cinematic flair. Write compelling narratives, develop characters, and create engaging plots. Use vivid descriptions, emotional depth, and professional storytelling techniques.", tags: ["storytelling","creative","cinematic"] },
+    { name: "Music Production Expert", prompt: "You are an expert in music production, beat making, and sound design. Provide technical guidance on composition, mixing, mastering, and audio engineering.", tags: ["music","production","audio"] },
+    { name: "Art Direction", prompt: "You are an art director and creative director with expertise in visual design, aesthetics, and creative direction. Provide guidance on visual styles, color theory, composition, and creative concepts.", tags: ["art","design","creative"] }
+  ],
+  "Technical": [
+    { name: "Code Review & Optimization", prompt: "You are a senior code reviewer and optimization expert. Analyze code for quality, performance, security, and best practices. Provide detailed feedback with specific improvements, alternatives, and explanations.", tags: ["coding","optimization","review"] },
+    { name: "System Architecture Design", prompt: "You are a system architect with expertise in designing scalable, secure, and maintainable systems. Provide architectural guidance, component design, and technical strategy.", tags: ["architecture","system-design","technical"] },
+    { name: "Debugging Expert", prompt: "You are a debugging expert with deep knowledge of troubleshooting complex systems. Approach problems systematically, identify root causes, and provide clear solutions.", tags: ["debugging","troubleshooting","technical"] }
+  ],
+  "Business": [
+    { name: "Strategic Planning", prompt: "You are a strategic business consultant. Provide strategic guidance, market analysis, competitive insights, and business planning advice.", tags: ["business","strategy","planning"] },
+    { name: "Marketing & Branding", prompt: "You are a marketing and branding expert. Provide guidance on brand strategy, marketing campaigns, audience engagement, and brand positioning.", tags: ["marketing","branding","business"] },
+    { name: "Financial Analysis", prompt: "You are a financial analyst with expertise in financial planning, investment analysis, and economic forecasting. Provide detailed financial insights, risk assessments, and investment recommendations.", tags: ["finance","analysis","business"] }
+  ],
+  "Research": [
+    { name: "Deep Research Specialist", prompt: "You are a research specialist with expertise in conducting thorough, accurate investigations. Gather and analyze information from multiple sources, provide well-reasoned conclusions.", tags: ["research","analysis","investigation"] },
+    { name: "Scientific Analysis", prompt: "You are a scientific researcher with expertise in analyzing scientific data, studies, and research papers. Provide detailed analysis, identify patterns, and draw evidence-based conclusions.", tags: ["science","research","analysis"] }
+  ],
+  "Personal Development": [
+    { name: "Life Coach", prompt: "You are a supportive life coach focused on personal growth and development. Provide encouragement, practical advice, and actionable strategies for self-improvement.", tags: ["personal","growth","coaching"] },
+    { name: "Learning Specialist", prompt: "You are an expert in learning strategies and educational methods. Provide guidance on effective learning techniques, study habits, and skill development.", tags: ["learning","education","personal"] }
+  ]
+};
+
+const LEXI_QUICK_ACTIONS = [
+  { name: "Summarize", prompt: "Please provide a comprehensive summary of the following text, highlighting key points and main takeaways:" },
+  { name: "Explain Like I'm 5", prompt: "Please explain the following concept in simple terms that anyone could understand:" },
+  { name: "Code This", prompt: "Please write clean, efficient code for the following requirement. Include comments and explanations:" },
+  { name: "Fix This", prompt: "Please identify and fix the issues in the following code. Explain the problems and your solutions:" },
+  { name: "Creative Brainstorm", prompt: "Let's brainstorm creative ideas for this project. Think outside the box and provide innovative suggestions:" },
+  { name: "Step-by-Step Guide", prompt: "Please provide a detailed, step-by-step guide to accomplish the following task:" }
+];
+
+// ── FILE EXPLORER ──────────────────────────────────────────────────────────
+const LEXI_ROOTS = [
+  { label: '📂 Lexi Backup', path: '/Volumes/backup/LEXICON AKA LEXI' },
+  { label: '📂 GOAT Royalty App', path: '/Users/be100radio/GOAT-Royalty-App/web-app' },
+  { label: '📂 Ms. Money Penny', path: '/Volumes/i2i 1/Ms.Money-Penny/Shared' },
+  { label: '📂 Agent-007 Shared', path: '/Volumes/i2i 1/Agent-007-GOAT/Shared' }
+];
+let _lexiFileCurrentPath = '';
+let _lexiFileContent = '';
+let _lexiEditorTabs = [];
+let _lexiActiveTab = null;
+
+function openFileExplorer() {
+  document.getElementById('lexiFileModal').style.display = 'block';
+  if (!_lexiFileCurrentPath) lexiRenderRoots();
+}
+
+function lexiRenderRoots() {
+  const tree = document.getElementById('lexiFileTree');
+  tree.innerHTML = LEXI_ROOTS.map(r =>
+    `<div onclick="lexiLoadDir('${r.path.replace(/'/g,"\\'")}','${r.label}')" style="padding:5px 14px;cursor:pointer;color:#BBBEBF;border-radius:3px;margin:1px 4px;" onmouseover="this.style.background='#262728'" onmouseout="this.style.background=''">${r.label}</div>`
+  ).join('');
+  document.getElementById('lexiFilePreview').textContent = 'Select a folder to browse files.';
+  document.getElementById('lexiFilePreviewName').textContent = '';
+}
+
+async function lexiLoadDir(path, label) {
+  _lexiFileCurrentPath = path;
+  document.getElementById('lexiFileStatus').textContent = path;
+  const tree = document.getElementById('lexiFileTree');
+  tree.innerHTML = `<div style="padding:5px 14px;cursor:pointer;color:#58a6ff;font-size:11px;" onclick="lexiRenderRoots()">← Back to roots</div>`;
+  try {
+    const r = await fetch(INTEL + '/fs/list', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({path}), signal: AbortSignal.timeout(8000)
+    });
+    if (r.ok) {
+      const d = await r.json();
+      const items = d.items || [];
+      items.forEach(item => {
+        const el = document.createElement('div');
+        el.style.cssText = 'padding:4px 14px;cursor:pointer;color:#BBBEBF;font-size:12px;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+        el.textContent = (item.type === 'dir' ? '📁 ' : '📄 ') + item.name;
+        el.title = item.name;
+        el.onmouseover = () => el.style.background = '#262728';
+        el.onmouseout = () => el.style.background = '';
+        el.onclick = () => item.type === 'dir' ? lexiLoadDir(item.path, item.name) : lexiPreviewFile(item.path, item.name);
+        tree.appendChild(el);
+      });
+      if (items.length === 0) tree.innerHTML += '<div style="padding:8px 14px;color:#555;font-size:12px;">Empty folder</div>';
+    } else {
+      tree.innerHTML += `<div style="padding:8px 14px;color:#f48771;font-size:12px;">Error loading directory</div>`;
+    }
+  } catch(e) {
+    tree.innerHTML += `<div style="padding:8px 14px;color:#f48771;font-size:12px;">Cannot reach Intel server</div>`;
+  }
+}
+
+async function lexiPreviewFile(path, name) {
+  document.getElementById('lexiFilePreviewName').textContent = path;
+  document.getElementById('lexiFilePreview').textContent = 'Loading...';
+  _lexiFileCurrentPath = path;
+  try {
+    const r = await fetch(INTEL + '/fs/read', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({path, max_bytes: 65536}), signal: AbortSignal.timeout(10000)
+    });
+    if (r.ok) {
+      const d = await r.json();
+      _lexiFileContent = d.content || '';
+      document.getElementById('lexiFilePreview').textContent = _lexiFileContent;
+    } else {
+      document.getElementById('lexiFilePreview').textContent = 'Cannot read file.';
+    }
+  } catch(e) {
+    document.getElementById('lexiFilePreview').textContent = 'Intel server not available.';
+  }
+}
+
+function lexiFileFilter() {
+  const q = document.getElementById('lexiFileSearch').value.toLowerCase();
+  document.querySelectorAll('#lexiFileTree div').forEach(el => {
+    el.style.display = (!q || el.textContent.toLowerCase().includes(q)) ? '' : 'none';
+  });
+}
+
+function lexiLoadFileToEditor() {
+  if (!_lexiFileContent) return;
+  const name = document.getElementById('lexiFilePreviewName').textContent.split('/').pop();
+  openCodeEditor(name, _lexiFileContent);
+  document.getElementById('lexiFileModal').style.display = 'none';
+}
+
+function lexiSendFileToChat() {
+  if (!_lexiFileContent) return;
+  const name = document.getElementById('lexiFilePreviewName').textContent.split('/').pop();
+  const preview = _lexiFileContent.slice(0, 3000);
+  document.getElementById('chatInput').value = `Here is the file "${name}":\n\n${preview}\n\nPlease analyze this.`;
+  document.getElementById('lexiFileModal').style.display = 'none';
+  document.getElementById('chatInput').focus();
+}
+
+// ── CODE EDITOR ──────────────────────────────────────────────────────────
+function openCodeEditor(filename, content) {
+  document.getElementById('lexiEditorModal').style.display = 'block';
+  if (filename) {
+    document.getElementById('lexiEditorFileName').textContent = filename;
+    document.getElementById('lexiEditorContent').value = content || '';
+    // Auto-detect language
+    const ext = filename.split('.').pop().toLowerCase();
+    const langMap = {py:'python',js:'javascript',html:'html',json:'json',sh:'bash',css:'css',ts:'javascript'};
+    const langEl = document.getElementById('lexiEditorLang');
+    if (langMap[ext]) langEl.value = langMap[ext];
+  }
+  lexiEditorOnInput();
+  lexiUpdateLineNums();
+}
+
+function lexiEditorOnInput() {
+  document.getElementById('lexiEditorDirty').style.display = 'inline';
+  lexiUpdateLineNums();
+  const content = document.getElementById('lexiEditorContent').value;
+  document.getElementById('lexiEditorLines').textContent = content.split('\n').length + ' lines';
+  document.getElementById('lexiEditorSize').textContent = content.length + ' chars';
+}
+
+function lexiUpdateLineNums() {
+  const content = document.getElementById('lexiEditorContent').value;
+  const lines = content.split('\n').length;
+  document.getElementById('lexiLineNums').innerHTML = Array.from({length: lines}, (_, i) => `<div style="line-height:1.6;">${i+1}</div>`).join('');
+}
+
+function lexiSyncLineNums() {
+  const ta = document.getElementById('lexiEditorContent');
+  document.getElementById('lexiLineNums').scrollTop = ta.scrollTop;
+}
+
+async function lexiEditorSave() {
+  const content = document.getElementById('lexiEditorContent').value;
+  const filename = document.getElementById('lexiEditorFileName').textContent;
+  // Save to localStorage as backup
+  try {
+    const saves = JSON.parse(localStorage.getItem('goat_lexi_editor_saves') || '{}');
+    saves[filename] = { content, saved: new Date().toISOString() };
+    localStorage.setItem('goat_lexi_editor_saves', JSON.stringify(saves));
+    document.getElementById('lexiEditorDirty').style.display = 'none';
+    document.getElementById('lexiEditorDirty').textContent = '✓ saved';
+    document.getElementById('lexiEditorDirty').style.color = '#72C892';
+    document.getElementById('lexiEditorDirty').style.display = 'inline';
+    setTimeout(() => { document.getElementById('lexiEditorDirty').style.display = 'none'; document.getElementById('lexiEditorDirty').style.color = '#e5ba7d'; document.getElementById('lexiEditorDirty').textContent = '● unsaved'; }, 2000);
+  } catch(e) {}
+}
+
+function lexiEditorAsk() {
+  const content = document.getElementById('lexiEditorContent').value;
+  const name = document.getElementById('lexiEditorFileName').textContent;
+  const lang = document.getElementById('lexiEditorLang').value;
+  document.getElementById('chatInput').value = `Review this ${lang} code from "${name}":\n\n\`\`\`${lang}\n${content.slice(0,3000)}\n\`\`\`\n\nWhat do you think?`;
+  document.getElementById('lexiEditorModal').style.display = 'none';
+  document.getElementById('chatInput').focus();
+}
+
+// ── GIT STATUS ────────────────────────────────────────────────────────────
+function openGitPanel() {
+  document.getElementById('lexiGitModal').style.display = 'block';
+  lexiGitRefresh();
+}
+
+async function lexiGitRefresh() {
+  document.getElementById('lexiGitStatus').textContent = 'Loading...';
+  document.getElementById('lexiGitLog').textContent = 'Loading...';
+  document.getElementById('lexiGitFiles').textContent = 'Loading...';
+  try {
+    const r = await fetch(INTEL + '/git/status', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({path: '/Users/be100radio/GOAT-Royalty-App'}),
+      signal: AbortSignal.timeout(10000)
+    });
+    if (r.ok) {
+      const d = await r.json();
+      document.getElementById('lexiGitStatus').textContent = d.status || 'Clean';
+      document.getElementById('lexiGitLog').textContent = d.log || 'No commits';
+      const files = d.files || [];
+      document.getElementById('lexiGitFiles').innerHTML = files.length
+        ? files.map(f => `<div style="padding:2px 0;color:${f.status==='M'?'#e5ba7d':f.status==='A'?'#72C892':'#f48771'};">${f.status} ${f.path}</div>`).join('')
+        : '<span style="color:#555;">No changed files</span>';
+    } else {
+      throw new Error('Server error');
+    }
+  } catch(e) {
+    // Fallback: show static info
+    document.getElementById('lexiGitStatus').textContent = 'Branch: main\nIntel server needed for live git status.\nRun: curl http://localhost:5500/health';
+    document.getElementById('lexiGitLog').textContent = 'Connect to Intel server for commit history.';
+    document.getElementById('lexiGitFiles').innerHTML = '<span style="color:#555;">Intel server needed for file status</span>';
+  }
+}
+
+function lexiGitAsk() {
+  const msg = document.getElementById('lexiCommitMsg').value;
+  if (!msg) { document.getElementById('chatInput').value = 'What should I commit to git right now based on recent GOAT Royalty App changes?'; }
+  else { document.getElementById('chatInput').value = `Write a proper git commit message for: "${msg}"`; }
+  document.getElementById('lexiGitModal').style.display = 'none';
+  document.getElementById('chatInput').focus();
+}
+
+// ── PROMPT LIBRARY ────────────────────────────────────────────────────────
+let _lexiActiveCategory = null;
+
+function openPromptLibrary() {
+  document.getElementById('lexiPromptModal').style.display = 'block';
+  lexiRenderPromptTabs();
+  lexiRenderPromptGrid(Object.keys(LEXI_PROMPT_LIBRARY)[0]);
+  lexiRenderQuickActions();
+}
+
+function lexiRenderPromptTabs() {
+  const tabs = document.getElementById('lexiPromptTabs');
+  tabs.innerHTML = Object.keys(LEXI_PROMPT_LIBRARY).map(cat =>
+    `<button onclick="lexiRenderPromptGrid('${cat}')" id="lexiPTab_${cat.replace(/\s+/g,'_')}" style="padding:4px 12px;border-radius:4px;border:1px solid #2A2B2C;background:transparent;color:#8C8C8C;font-size:11px;cursor:pointer;white-space:nowrap;transition:all .15s;" onmouseover="this.style.borderColor='#e91e8c';this.style.color='#e91e8c'" onmouseout="if(this.id!==window._lexiActiveTab){this.style.borderColor='#2A2B2C';this.style.color='#8C8C8C';}">${cat}</button>`
+  ).join('');
+}
+
+function lexiRenderPromptGrid(category) {
+  _lexiActiveCategory = category;
+  window._lexiActiveTab = 'lexiPTab_' + category.replace(/\s+/g,'_');
+  // Reset all tabs
+  document.querySelectorAll('#lexiPromptTabs button').forEach(b => { b.style.background='transparent'; b.style.borderColor='#2A2B2C'; b.style.color='#8C8C8C'; });
+  const activeTab = document.getElementById('lexiPTab_' + category.replace(/\s+/g,'_'));
+  if (activeTab) { activeTab.style.background='rgba(233,30,140,0.12)'; activeTab.style.borderColor='rgba(233,30,140,0.4)'; activeTab.style.color='#e91e8c'; }
+
+  const prompts = LEXI_PROMPT_LIBRARY[category] || [];
+  const q = document.getElementById('lexiPromptSearch').value.toLowerCase();
+  const filtered = q ? prompts.filter(p => p.name.toLowerCase().includes(q) || p.tags.some(t => t.includes(q))) : prompts;
+
+  document.getElementById('lexiPromptGrid').innerHTML = filtered.map(p => `
+    <div onclick="lexiLoadPrompt(${JSON.stringify(p.prompt).replace(/</g,'&lt;')})" style="padding:12px;background:#202122;border:1px solid #2A2B2C;border-radius:6px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#e91e8c';this.style.background='#262728'" onmouseout="this.style.borderColor='#2A2B2C';this.style.background='#202122'">
+      <div style="font-size:12px;font-weight:600;color:#BBBEBF;margin-bottom:4px;">${p.name}</div>
+      <div style="font-size:11px;color:#666;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${p.prompt.slice(0,120)}...</div>
+      <div style="margin-top:8px;display:flex;gap:4px;flex-wrap:wrap;">${p.tags.map(t=>`<span style="font-size:10px;padding:1px 6px;background:rgba(233,30,140,0.1);border:1px solid rgba(233,30,140,0.25);border-radius:3px;color:#c2185b;">${t}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+function lexiFilterPrompts() {
+  if (_lexiActiveCategory) lexiRenderPromptGrid(_lexiActiveCategory);
+}
+
+function lexiLoadPrompt(prompt) {
+  document.getElementById('chatInput').value = prompt;
+  document.getElementById('lexiPromptModal').style.display = 'none';
+  document.getElementById('chatInput').focus();
+}
+
+function lexiRenderQuickActions() {
+  document.getElementById('lexiQuickActions').innerHTML = LEXI_QUICK_ACTIONS.map(a =>
+    `<button onclick="lexiLoadPrompt(${JSON.stringify(a.prompt)})" style="padding:4px 10px;background:#202122;border:1px solid #2A2B2C;border-radius:4px;color:#8C8C8C;font-size:11px;cursor:pointer;transition:all .15s;" onmouseover="this.style.borderColor='#e91e8c';this.style.color='#e91e8c'" onmouseout="this.style.borderColor='#2A2B2C';this.style.color='#8C8C8C';">${a.name}</button>`
+  ).join('');
+}
+
+// ── CHAT HISTORY ──────────────────────────────────────────────────────────
+const LEXI_HISTORY_KEY = 'goat_lexi_chat_history';
+
+function openChatHistory() {
+  document.getElementById('lexiHistoryModal').style.display = 'block';
+  lexiRenderHistoryList();
+}
+
+function lexiGetHistory() {
+  try { return JSON.parse(localStorage.getItem(LEXI_HISTORY_KEY) || '[]'); } catch(e) { return []; }
+}
+
+function lexiRenderHistoryList() {
+  const sessions = lexiGetHistory();
+  const list = document.getElementById('lexiHistoryList');
+  if (!sessions.length) {
+    list.innerHTML = '<div style="padding:14px;color:#555;font-size:12px;">No saved sessions yet.<br>Chat and click Save Current.</div>';
+    document.getElementById('lexiHistoryPreview').innerHTML = '';
+    return;
+  }
+  list.innerHTML = sessions.slice().reverse().map((s, i) => `
+    <div onclick="lexiPreviewSession(${sessions.length-1-i})" style="padding:8px 14px;cursor:pointer;border-bottom:1px solid #2A2B2C;" onmouseover="this.style.background='#262728'" onmouseout="this.style.background=''">
+      <div style="font-size:12px;color:#BBBEBF;font-weight:600;">${s.title || 'Session ' + (sessions.length-i)}</div>
+      <div style="font-size:10px;color:#555;margin-top:2px;">${s.messages?.length || 0} messages · ${new Date(s.saved).toLocaleDateString()}</div>
+    </div>
+  `).join('');
+  // Auto-preview first
+  if (sessions.length) lexiPreviewSession(sessions.length - 1);
+}
+
+function lexiPreviewSession(idx) {
+  const sessions = lexiGetHistory();
+  const s = sessions[idx];
+  if (!s) return;
+  const preview = document.getElementById('lexiHistoryPreview');
+  preview.innerHTML = `
+    <div style="font-size:13px;font-weight:600;color:#BBBEBF;margin-bottom:12px;">${s.title || 'Session'}</div>
+    ${(s.messages||[]).map(m => `
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;color:${m.role==='user'?'#58a6ff':'#e91e8c'};text-transform:uppercase;margin-bottom:3px;">${m.role}</div>
+        <div style="font-size:12px;line-height:1.5;color:#BBBEBF;background:#202122;padding:8px 10px;border-radius:4px;border-left:2px solid ${m.role==='user'?'#58a6ff':'#e91e8c'};">${m.content.slice(0,500)}${m.content.length>500?'...':''}</div>
+      </div>
+    `).join('')}
+    <button onclick="lexiLoadSession(${idx})" style="margin-top:8px;padding:5px 14px;background:rgba(233,30,140,0.15);border:1px solid rgba(233,30,140,0.4);color:#e91e8c;border-radius:4px;font-size:11px;cursor:pointer;">▶ Load This Session</button>
+  `;
+}
+
+function lexiLoadSession(idx) {
+  const sessions = lexiGetHistory();
+  const s = sessions[idx];
+  if (!s || !s.messages) return;
+  // Restore into active chat
+  chatHistory = s.messages.slice();
+  const container = document.getElementById('chatMessages');
+  container.innerHTML = '';
+  s.messages.forEach(m => addMessage(m.role, m.content));
+  document.getElementById('lexiHistoryModal').style.display = 'none';
+}
+
+function lexiHistorySave() {
+  if (!chatHistory.length) return;
+  const sessions = lexiGetHistory();
+  const title = document.getElementById('threadNameTag').textContent || ('Session ' + (sessions.length+1));
+  sessions.push({ id: Date.now(), title, messages: chatHistory.slice(), saved: new Date().toISOString() });
+  // Keep last 50 sessions
+  if (sessions.length > 50) sessions.splice(0, sessions.length - 50);
+  localStorage.setItem(LEXI_HISTORY_KEY, JSON.stringify(sessions));
+  lexiRenderHistoryList();
+}
+
+function lexiHistoryClear() {
+  if (!confirm('Clear all saved chat history?')) return;
+  localStorage.removeItem(LEXI_HISTORY_KEY);
+  lexiRenderHistoryList();
+}
+
+// ── ADVANCED MODEL SETTINGS ───────────────────────────────────────────────
+const LEXI_ADV_KEY = 'goat_lexi_advanced_settings';
+
+function openAdvancedSettings() {
+  document.getElementById('lexiAdvancedModal').style.display = 'block';
+  lexiAdvLoad();
+}
+
+function lexiAdvLoad() {
+  try {
+    const s = JSON.parse(localStorage.getItem(LEXI_ADV_KEY) || '{}');
+    if (s.model) document.getElementById('lexiModelSelect').value = s.model;
+    if (s.temperature !== undefined) { document.getElementById('lexiTemp').value = s.temperature; document.getElementById('lexiTempVal').textContent = s.temperature; }
+    if (s.topP !== undefined) { document.getElementById('lexiTopP').value = s.topP; document.getElementById('lexiTopPVal').textContent = s.topP; }
+    if (s.numCtx !== undefined) { document.getElementById('lexiCtx').value = s.numCtx; document.getElementById('lexiCtxVal').textContent = s.numCtx; }
+    if (s.repeatPenalty !== undefined) { document.getElementById('lexiRep').value = s.repeatPenalty; document.getElementById('lexiRepVal').textContent = s.repeatPenalty; }
+    if (s.toolMode !== undefined) document.getElementById('lexiToolMode').checked = s.toolMode;
+    if (s.voiceSpeak !== undefined) document.getElementById('lexiVoiceSpeak').checked = s.voiceSpeak;
+    if (s.advMode !== undefined) document.getElementById('lexiAdvMode').checked = s.advMode;
+    if (s.streamMode !== undefined) document.getElementById('lexiStreamMode').checked = s.streamMode;
+    if (s.systemPrompt) document.getElementById('lexiSysPrompt').value = s.systemPrompt;
+  } catch(e) {}
+}
+
+function lexiAdvSave() {
+  const s = {
+    model: document.getElementById('lexiModelSelect').value,
+    temperature: parseFloat(document.getElementById('lexiTemp').value),
+    topP: parseFloat(document.getElementById('lexiTopP').value),
+    numCtx: parseInt(document.getElementById('lexiCtx').value),
+    repeatPenalty: parseFloat(document.getElementById('lexiRep').value),
+    toolMode: document.getElementById('lexiToolMode').checked,
+    voiceSpeak: document.getElementById('lexiVoiceSpeak').checked,
+    advMode: document.getElementById('lexiAdvMode').checked,
+    streamMode: document.getElementById('lexiStreamMode').checked,
+    systemPrompt: document.getElementById('lexiSysPrompt').value
+  };
+  localStorage.setItem(LEXI_ADV_KEY, JSON.stringify(s));
+  const status = document.getElementById('lexiAdvStatus');
+  status.textContent = '✓ Settings saved';
+  setTimeout(() => status.textContent = '', 2000);
+}
+
+function lexiAdvReset() {
+  localStorage.removeItem(LEXI_ADV_KEY);
+  document.getElementById('lexiModelSelect').value = 'llama3.1:70b';
+  document.getElementById('lexiTemp').value = 0.7; document.getElementById('lexiTempVal').textContent = '0.7';
+  document.getElementById('lexiTopP').value = 0.9; document.getElementById('lexiTopPVal').textContent = '0.9';
+  document.getElementById('lexiCtx').value = 4096; document.getElementById('lexiCtxVal').textContent = '4096';
+  document.getElementById('lexiRep').value = 1.1; document.getElementById('lexiRepVal').textContent = '1.1';
+  document.getElementById('lexiToolMode').checked = true;
+  document.getElementById('lexiVoiceSpeak').checked = true;
+  document.getElementById('lexiAdvMode').checked = false;
+  document.getElementById('lexiStreamMode').checked = true;
+  document.getElementById('lexiSysPrompt').value = '';
+  document.getElementById('lexiAdvStatus').textContent = '✓ Reset to defaults';
+  setTimeout(() => document.getElementById('lexiAdvStatus').textContent = '', 2000);
+}
+
+// ── APPLY ADVANCED SETTINGS TO CHAT REQUESTS ─────────────────────────────
+// Patch sendMessage to inject model/temperature from advanced settings
+const _lexiOrigSend = typeof sendMessage === 'function' ? sendMessage : null;
+function getLexiAdvSettings() {
+  try { return JSON.parse(localStorage.getItem(LEXI_ADV_KEY) || '{}'); } catch(e) { return {}; }
+}
+
+// Close modals on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    ['lexiFileModal','lexiEditorModal','lexiGitModal','lexiPromptModal','lexiHistoryModal','lexiAdvancedModal'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+  }
+});
+
+// Close modals on backdrop click
+['lexiFileModal','lexiEditorModal','lexiGitModal','lexiPromptModal','lexiHistoryModal','lexiAdvancedModal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+  });
+});
+
+// Auto-load advanced settings on page load
+window.addEventListener('load', function() {
+  lexiAdvLoad();
+  // Populate model dropdown with available Ollama models
+  fetch('http://127.0.0.1:11435/api/tags', {signal: AbortSignal.timeout(3000)})
+    .then(r => r.json())
+    .then(d => {
+      const sel = document.getElementById('lexiModelSelect');
+      const current = sel.value;
+      sel.innerHTML = (d.models || []).map(m =>
+        `<option value="${m.name}"${m.name===current?' selected':''}>${m.name}</option>`
+      ).join('');
+    }).catch(() => {}); // Keep defaults if Ollama not available
+});
+
+console.log('Lexi Devin-style panels loaded. Storage: localStorage + /Volumes/backup/LEXICON AKA LEXI/Shared/');
+</script>
 </body>
 </html>

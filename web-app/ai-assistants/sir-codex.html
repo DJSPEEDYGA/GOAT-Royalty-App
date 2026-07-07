@@ -147,7 +147,7 @@
             try {
                 addMessage('Sir Codex is consulting the archives...', true);
 
-                const response = await fetch('http://localhost:11434/api/generate', {
+                const response = await fetch('http://localhost:11435/api/generate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -163,7 +163,7 @@
 
             } catch (error) {
                 chatMessages.lastChild.remove();
-                addMessage("Ensure Ollama is running on localhost:11434", true);
+                addMessage("Ensure Ollama is running on localhost:11435", true);
             }
         }
 

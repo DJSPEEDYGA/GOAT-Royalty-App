@@ -215,6 +215,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .panel-section:first-child{margin-top:0}
 </style>
   <link rel="stylesheet" href="css/goat-touch.css">
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body>
 <div id="shell">
@@ -342,7 +344,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
         <button onclick="launchAIApp('NVIDIA AI Workbench')" style="padding:10px 6px;background:rgba(118,185,0,0.1);border:1px solid rgba(118,185,0,0.3);border-radius:8px;color:var(--nvidia);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">NVIDIA<br>Workbench</button>
         <button onclick="launchAIApp('Ollama')" style="padding:10px 6px;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:8px;color:var(--blue);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">Ollama<br>Desktop</button>
-        <button onclick="window.open('http://127.0.0.1:11434','_blank')" style="padding:10px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--sub);font-size:11px;cursor:pointer;font-family:inherit">Ollama<br>API</button>
+        <button onclick="window.open('http://127.0.0.1:11435','_blank')" style="padding:10px 6px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--sub);font-size:11px;cursor:pointer;font-family:inherit">Ollama<br>API</button>
         <button onclick="window.open('http://127.0.0.1:8090','_blank')" style="padding:10px 6px;background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.2);border-radius:8px;color:var(--gold);font-size:11px;cursor:pointer;font-family:inherit">GOAT<br>App</button>
       </div>
 
@@ -364,7 +366,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 
 <script>
 const INTEL = 'http://127.0.0.1:5500';
-const OLLAMA = 'http://127.0.0.1:11434';
+const OLLAMA = 'http://127.0.0.1:11435';
 
 // ── AGENTS ──
 const AGENTS = [
@@ -616,7 +618,7 @@ async function checkStatus() {
   const checks = [
     {url:'http://127.0.0.1:8090/', id:'s-web-mac'},
     {url:'http://127.0.0.1:5500/health', id:'s-intel'},
-    {url:'http://127.0.0.1:11434/api/tags', id:'s-ollama'},
+    {url:'http://127.0.0.1:11435/api/tags', id:'s-ollama'},
     {url:'http://192.168.2.2:8090/', id:'s-nas'},
   ];
   for(const c of checks) {

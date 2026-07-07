@@ -3,22 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wooh Da Kid — TONY STARKS | GOAT Force Studio</title>
+<title>Wooh Da Kid — BEAT MAESTRO & STUDIO MANAGER | GOAT Force Studio</title>
 <link rel="stylesheet" href="css/goat-brand.css">
 <link rel="stylesheet" href="css/goat-theme.css">
 <link rel="stylesheet" href="css/goat-touch.css">
+<link rel="stylesheet" href="css/agent-upgrades.css">
+<script src="js/agent-upgrades.js" defer></script>
 <style>
-/* === GOAT FORCE AGENT THEME — WOOH DA KID / TONY STARKS · AGENT-02 === */
-/* === Devin 2026 Dark IDE Restyle === */
+/* === GOAT FORCE AGENT THEME — WOOH DA KID / BEAT MAESTRO === */
+/* === Devin 2026 Dark IDE Restyle — Orange/Amber Accent === */
 :root {
-  --wooh-da-kid-accent: #ff6b35;
-  --wooh-da-kid-accent-glow: rgba(255, 107, 53, 0.25);
+  --codex-blue: #FF8C00;
+  --codex-blue-glow: rgba(255, 140, 0, 0.25);
   --bg-deepest: #121314;
   --bg-base: #191A1B;
   --bg-raised: #202122;
   --bg-hover: #262728;
   --border: #2A2B2C;
-  --devin-blue: #3994BC;
+  --devin-blue: #cc7000;
   --fg-primary: #BBBEBF;
   --fg-muted: #8C8C8C;
   --fg-dim: #666666;
@@ -32,6 +34,11 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
   background: #121314;
+  background-image: url('assets/images/goat-og-bg-web.png');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
   color: #BBBEBF;
   margin: 0;
   min-height: 100vh;
@@ -40,7 +47,7 @@ body {
   line-height: 1.5;
 }
 
-/* animated particle background */
+/* animated particle background — keep as-is */
 .particles {
   position: fixed;
   inset: 0;
@@ -51,7 +58,7 @@ body {
 .particle {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255,107,53,0.35), rgba(255, 152, 0, 0.08));
+  background: radial-gradient(circle at 30% 30%, rgba(255, 140, 0, 0.35), rgba(240, 192, 112, 0.08));
   filter: blur(1px);
   animation: floatParticle 18s ease-in-out infinite;
   opacity: 0.6;
@@ -68,7 +75,7 @@ body {
   66% { transform: translate(-20px, 30px) scale(0.95); opacity: 0.45; }
 }
 
-/* GOAT Superman watermark */
+/* GOAT Superman watermark — keep exactly as-is */
 body::before {
   content: '';
   position: fixed;
@@ -82,7 +89,7 @@ body::before {
 
 body > * { position: relative; z-index: 1; }
 
-/* Navigation */
+/* Navigation → VS Code titlebar */
 .goat-nav {
   background: #191A1B !important;
   backdrop-filter: blur(20px);
@@ -93,12 +100,12 @@ body > * { position: relative; z-index: 1; }
   padding: 0 12px !important;
 }
 .goat-nav .nav-brand span { color: #BBBEBF; text-shadow: none; }
-.goat-nav-links a:hover { background: rgba(57,148,188,0.12); color: #BBBEBF; }
-.goat-nav-links a.active { background: rgba(57,148,188,0.2); box-shadow: none; color: #BBBEBF; }
+.goat-nav-links a:hover { background: rgba(255, 140, 0, 0.12); color: #BBBEBF; }
+.goat-nav-links a.active { background: rgba(255, 140, 0, 0.2); box-shadow: none; color: #BBBEBF; }
 
 h1, h2, h3 { text-shadow: none !important; }
 
-/* Agent hero banner */
+/* Agent hero banner → flat VS Code panel header */
 .agent-hero {
   margin: 0 24px 0 !important;
   padding: 8px 16px !important;
@@ -118,7 +125,7 @@ h1, h2, h3 { text-shadow: none !important; }
 .agent-hero-role { margin: 0; font-size: 11px; color: #8C8C8C; font-weight: 400; }
 .agent-hero-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .hero-badge { font-size: 10px !important; font-weight: 600 !important; letter-spacing: 0.5px !important; text-transform: uppercase !important; padding: 1px 6px !important; border-radius: 3px !important; }
-.hero-badge.acc { background: rgba(255,107,53,0.15) !important; border: 1px solid rgba(255,107,53,0.3) !important; color: #ff6b35 !important; }
+.hero-badge.acc { background: rgba(255, 140, 0, 0.15) !important; border: 1px solid rgba(255, 140, 0, 0.3) !important; color: #FF8C00 !important; }
 .hero-badge.gold { background: rgba(229,186,125,0.12) !important; border: 1px solid rgba(229,186,125,0.3) !important; color: #e5ba7d !important; }
 .hero-badge.green { background: rgba(114,200,146,0.12) !important; border: 1px solid rgba(114,200,146,0.3) !important; color: #72C892 !important; }
 .hero-badge.white { background: rgba(187,190,191,0.08) !important; border: 1px solid rgba(187,190,191,0.2) !important; color: #8C8C8C !important; }
@@ -138,7 +145,7 @@ h1, h2, h3 { text-shadow: none !important; }
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
-/* SIDEBAR */
+/* SIDEBAR → VS Code sidebar */
 .ai-sidebar {
   background: #191A1B !important;
   border-right: 1px solid #2A2B2C !important;
@@ -187,8 +194,8 @@ h1, h2, h3 { text-shadow: none !important; }
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  background: rgba(255,107,53,0.12);
-  border: 1px solid rgba(255,107,53,0.25);
+  background: rgba(255, 140, 0, 0.12);
+  border: 1px solid rgba(255, 140, 0, 0.25);
   filter: none;
 }
 .ai-logo .logo-text { display: flex; flex-direction: column; }
@@ -226,11 +233,11 @@ h1, h2, h3 { text-shadow: none !important; }
   text-decoration: none;
   box-shadow: none !important;
 }
-.persona-btn:hover { background: rgba(57,148,188,0.12) !important; color: #BBBEBF !important; border: none !important; transform: none !important; }
+.persona-btn:hover { background: rgba(255, 140, 0, 0.12) !important; color: #BBBEBF !important; border: none !important; transform: none !important; }
 .persona-btn.active {
-  background: rgba(255,107,53,0.12) !important;
+  background: rgba(255, 140, 0, 0.12) !important;
   border: none !important;
-  border-left: 2px solid #ff6b35 !important;
+  border-left: 2px solid #FF8C00 !important;
   color: #BBBEBF !important;
   box-shadow: none !important;
 }
@@ -248,9 +255,9 @@ h1, h2, h3 { text-shadow: none !important; }
   margin-left: auto;
   font-family: 'JetBrains Mono', monospace;
 }
-.persona-btn.active .agent-num { background: rgba(255,107,53,0.2); color: #ff6b35; border-color: rgba(255,107,53,0.3); }
+.persona-btn.active .agent-num { background: rgba(255, 140, 0, 0.2); color: #FF8C00; border-color: rgba(255, 140, 0, 0.3); }
 
-/* Special ops */
+/* Special ops / section */
 .special-ops {
   padding: 4px 0 4px;
   border-bottom: 1px solid #2A2B2C;
@@ -267,7 +274,7 @@ h1, h2, h3 { text-shadow: none !important; }
   gap: 6px;
 }
 
-/* Sidebar ops buttons */
+/* Sidebar ops buttons → VS Code explorer items */
 .ops-btn {
   background: transparent !important;
   border: none !important;
@@ -288,7 +295,7 @@ h1, h2, h3 { text-shadow: none !important; }
   font-weight: 400 !important;
 }
 .ops-btn:hover {
-  background: rgba(57,148,188,0.12) !important;
+  background: rgba(255, 140, 0, 0.12) !important;
   color: #BBBEBF !important;
   transform: none !important;
   border: none !important;
@@ -329,7 +336,7 @@ h1, h2, h3 { text-shadow: none !important; }
   box-shadow: none !important;
   animation: pulseDot 2s infinite;
 }
-.status-dot.priority { background: #e5ba7d !important; box-shadow: none !important; }
+.status-dot.priority { background: #FF8C00 !important; box-shadow: none !important; }
 @keyframes pulseDot { 0%,100%{opacity:1} 50%{opacity:0.6} }
 .status-role { font-size: 10px; color: #8C8C8C; }
 
@@ -362,14 +369,14 @@ h1, h2, h3 { text-shadow: none !important; }
   overflow-y: auto;
   font-size: 11px;
   line-height: 1.6;
-  color: #c8f7a0;
+  color: #ffd080;
   white-space: pre-wrap;
   word-break: break-all;
 }
 .terminal-output::-webkit-scrollbar { width: 4px; }
 .terminal-output::-webkit-scrollbar-thumb { background: rgba(131,132,133,0.4); border-radius: 0; }
 .terminal-line { margin: 0; }
-.terminal-line.cmd { color: #e5ba7d; }
+.terminal-line.cmd { color: #FF8C00; }
 .terminal-line.sys { color: #8C8C8C; font-style: italic; }
 
 /* Sidebar footer */
@@ -394,14 +401,14 @@ h1, h2, h3 { text-shadow: none !important; }
 .key-status span.ok { color: #72C892; }
 .key-status span.warn { color: #e5ba7d; }
 
-/* CHAT AREA */
+/* CHAT AREA → VS Code editor/terminal panel */
 .ai-chat {
   background: #121314 !important;
   display: flex;
   flex-direction: column;
 }
 
-/* Chat header */
+/* Chat header → tab bar */
 .chat-header {
   background: #191A1B !important;
   border-bottom: 1px solid #2A2B2C !important;
@@ -420,9 +427,9 @@ h1, h2, h3 { text-shadow: none !important; }
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  border: 1px solid rgba(255,107,53,0.3);
+  border: 1px solid rgba(255, 140, 0, 0.3);
   box-shadow: none;
-  background: rgba(255,107,53,0.1);
+  background: rgba(255, 140, 0, 0.1);
 }
 .chat-header .agent-title h2 { font-size: 13px !important; margin: 0 !important; color: #BBBEBF !important; letter-spacing: 0 !important; font-weight: 600 !important; text-shadow: none !important; }
 .chat-header .agent-title p { font-size: 11px; margin: 0; color: #8C8C8C; }
@@ -431,9 +438,9 @@ h1, h2, h3 { text-shadow: none !important; }
   font-weight: 600;
   padding: 1px 6px;
   border-radius: 3px;
-  background: rgba(255,107,53,0.15);
-  border: 1px solid rgba(255,107,53,0.3);
-  color: #ff6b35;
+  background: rgba(255, 140, 0, 0.15);
+  border: 1px solid rgba(255, 140, 0, 0.3);
+  color: #FF8C00;
   margin-left: auto;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -491,8 +498,8 @@ h1, h2, h3 { text-shadow: none !important; }
   font-family: 'JetBrains Mono', 'Cascadia Code', monospace;
 }
 .msg.user .msg-bubble {
-  background: rgba(57,148,188,0.08) !important;
-  border: 1px solid rgba(57,148,188,0.2) !important;
+  background: rgba(255, 140, 0, 0.08) !important;
+  border: 1px solid rgba(255, 140, 0, 0.2) !important;
   border-radius: 4px !important;
   color: #BBBEBF !important;
 }
@@ -500,7 +507,7 @@ h1, h2, h3 { text-shadow: none !important; }
   background: #191A1B !important;
   color: #BBBEBF !important;
   border: 1px solid #2A2B2C !important;
-  border-left: 2px solid #ff6b35 !important;
+  border-left: 2px solid #FF8C00 !important;
   border-radius: 0 4px 4px 0 !important;
   box-shadow: none !important;
 }
@@ -515,10 +522,10 @@ h1, h2, h3 { text-shadow: none !important; }
   background: #191A1B;
   border-radius: 0 4px 4px 0;
   border: 1px solid #2A2B2C;
-  border-left: 2px solid #ff6b35;
+  border-left: 2px solid #FF8C00;
 }
 .typing-indicator.visible { display: flex; gap: 6px; align-items: center; }
-.typing-dot { width: 8px !important; height: 8px !important; border-radius: 50% !important; background: #ff6b35 !important; animation: typingPulse 1.2s infinite; }
+.typing-dot { width: 8px !important; height: 8px !important; border-radius: 50% !important; background: #FF8C00 !important; animation: typingPulse 1.2s infinite; }
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 @keyframes typingPulse { 0%,60%,100%{transform:scale(1);opacity:0.4} 30%{transform:scale(1.3);opacity:1} }
@@ -545,16 +552,16 @@ h1, h2, h3 { text-shadow: none !important; }
   line-height: 1.5;
   transition: border-color 0.15s;
 }
-.chat-textarea:focus { outline: none !important; border-color: #ff6b35 !important; }
+.chat-textarea:focus { outline: none !important; border-color: #FF8C00 !important; }
 .chat-textarea::placeholder { color: #666666; }
 
-/* Send button */
+/* Send button — agent accent: orange #FF8C00 */
 .send-btn {
   width: 36px !important;
   height: 36px !important;
   border-radius: 3px !important;
-  background: #ff6b35 !important;
-  border: 1px solid #ff6b35 !important;
+  background: #FF8C00 !important;
+  border: 1px solid #FF8C00 !important;
   color: #fff !important;
   font-size: 16px !important;
   cursor: pointer !important;
@@ -565,7 +572,7 @@ h1, h2, h3 { text-shadow: none !important; }
   justify-content: center;
   box-shadow: none !important;
 }
-.send-btn:hover { background: #e85a2a !important; border-color: #e85a2a !important; transform: none !important; filter: none !important; }
+.send-btn:hover { background: #cc7000 !important; border-color: #cc7000 !important; transform: none !important; filter: none !important; }
 .send-btn:disabled { background: #2A2B2C !important; border-color: #2A2B2C !important; cursor: not-allowed !important; transform: none !important; box-shadow: none !important; }
 
 /* Chat quick action buttons */
@@ -582,8 +589,8 @@ h1, h2, h3 { text-shadow: none !important; }
   font-family: system-ui, -apple-system, sans-serif !important;
 }
 .chat-action-btn:hover {
-  background: rgba(255,107,53,0.15) !important;
-  border-color: #ff6b35 !important;
+  background: rgba(255, 140, 0, 0.15) !important;
+  border-color: #FF8C00 !important;
   color: #BBBEBF !important;
 }
 
@@ -600,7 +607,7 @@ h1, h2, h3 { text-shadow: none !important; }
   transition: all 0.15s !important;
   font-family: system-ui, -apple-system, sans-serif !important;
 }
-.goat-btn:hover { border-color: #ff6b35 !important; background: rgba(255,107,53,0.12) !important; }
+.goat-btn:hover { border-color: #FF8C00 !important; background: rgba(255, 140, 0, 0.12) !important; }
 .goat-btn.gold { background: rgba(229,186,125,0.15) !important; border-color: rgba(229,186,125,0.4) !important; color: #e5ba7d !important; }
 
 /* KEY MODAL */
@@ -608,8 +615,8 @@ h1, h2, h3 { text-shadow: none !important; }
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 9999;
   background: rgba(0, 0, 0, 0.7) !important;
+  z-index: 1000;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(4px);
@@ -639,7 +646,7 @@ h1, h2, h3 { text-shadow: none !important; }
   font-family: 'JetBrains Mono', monospace;
   box-sizing: border-box;
 }
-.key-field input:focus { outline: none; border-color: #ff6b35 !important; }
+.key-field input:focus { outline: none; border-color: #FF8C00 !important; }
 .key-field small { color: #666666; font-size: 11px; margin-top: 3px; display: block; }
 .key-modal-actions { display: flex; gap: 8px; margin-top: 16px; }
 
@@ -667,14 +674,14 @@ h1, h2, h3 { text-shadow: none !important; }
   overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0,0,0,0.7) !important;
 }
-.deck-box h2 { margin: 0 0 16px; font-size: 14px !important; color: #ff6b35 !important; font-weight: 600 !important; text-shadow: none !important; display: flex; align-items: center; gap: 8px; }
+.deck-box h2 { margin: 0 0 16px; font-size: 14px !important; color: #FF8C00 !important; font-weight: 600 !important; text-shadow: none !important; display: flex; align-items: center; gap: 8px; }
 .deck-close { float: right; font-size: 18px; color: #8C8C8C; cursor: pointer; margin-top: -4px; }
 .deck-close:hover { color: #BBBEBF; }
 .deck-section { margin-bottom: 16px; }
 .deck-section h4 { margin: 0 0 8px; font-size: 11px !important; font-weight: 700 !important; color: #8C8C8C !important; text-transform: uppercase !important; letter-spacing: 1px !important; }
 .gen-ui-preview { background: rgba(255,255,255,0.02); border: 1px dashed #2A2B2C; border-radius: 3px; padding: 12px; min-height: 100px; }
 
-/* Live Terminal Panel */
+/* Live Terminal Panel (deck) */
 .terminal-panel-wrap {
   background: #121314 !important;
   border: 1px solid #2A2B2C !important;
@@ -697,13 +704,13 @@ h1, h2, h3 { text-shadow: none !important; }
   overflow-y: auto;
   font-size: 12px;
   line-height: 1.6;
-  color: #c8f7a0;
+  color: #ffd080;
   white-space: pre-wrap;
   word-break: break-all;
 }
 .terminal-panel-output::-webkit-scrollbar { width: 4px; }
 .terminal-panel-output::-webkit-scrollbar-thumb { background: rgba(131,132,133,0.4); border-radius: 0; }
-.terminal-prompt-panel { color: #ff6b35; font-size: 12px; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+.terminal-prompt-panel { color: #FF8C00; font-size: 12px; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
 .terminal-input-panel {
   flex: 1;
   background: transparent;
@@ -712,7 +719,7 @@ h1, h2, h3 { text-shadow: none !important; }
   color: #BBBEBF;
   font-size: 12px;
   font-family: 'JetBrains Mono', monospace;
-  caret-color: #ff6b35;
+  caret-color: #FF8C00;
 }
 .terminal-run-btn-panel {
   padding: 3px 10px;
@@ -726,7 +733,7 @@ h1, h2, h3 { text-shadow: none !important; }
   transition: all 0.15s;
   font-family: 'JetBrains Mono', monospace;
 }
-.terminal-run-btn-panel:hover { background: rgba(255,107,53,0.15); border-color: #ff6b35; color: #BBBEBF; }
+.terminal-run-btn-panel:hover { background: rgba(255, 140, 0, 0.15); border-color: #FF8C00; color: #BBBEBF; }
 .terminal-agent-select {
   padding: 4px 8px;
   border-radius: 3px;
@@ -758,7 +765,7 @@ h1, h2, h3 { text-shadow: none !important; }
   cursor: pointer;
   font-family: 'JetBrains Mono', monospace;
 }
-.terminal-confirm-bar .btn-yes { border-color: #ff6b35; background: rgba(255,107,53,0.12); color: #ff6b35; }
+.terminal-confirm-bar .btn-yes { border-color: #FF8C00; background: rgba(255, 140, 0, 0.12); color: #FF8C00; }
 .terminal-confirm-bar .btn-no { border-color: #2A2B2C; background: transparent; color: #8C8C8C; }
 
 .color-swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; display: inline-block; margin: 3px; }
@@ -771,6 +778,7 @@ h1, h2, h3 { text-shadow: none !important; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(131,132,133,0.7); background-clip: padding-box; }
 </style>
 
+<script src="lib/supabase-client.js"></script>
 </head>
 <body class="bg-icon">
 
@@ -801,17 +809,17 @@ h1, h2, h3 { text-shadow: none !important; }
 
 <div class="agent-hero">
   <div class="agent-hero-left">
-    <div class="agent-hero-emoji">🎛️</div>
+    <div class="agent-hero-emoji">🎹</div>
     <div>
       <h1 class="agent-hero-name">Wooh Da Kid</h1>
-      <p class="agent-hero-role">Beat Maestro — Production — Studio Tech</p>
+      <p class="agent-hero-role">Beat Maestro &amp; Studio Manager — aka Tony Starks</p>
     </div>
   </div>
   <div class="agent-hero-badges">
-    <span class="hero-badge acc">AGENT-02</span>
+    <span class="hero-badge acc">STUDIO ACTIVE</span>
     <span class="hero-badge gold">GOAT FORCE</span>
     <span class="hero-badge green">● ONLINE</span>
-    <span class="hero-badge codename">CODENAME: TONY STARKS (THE GANGSTA NERD)</span>
+    <span class="hero-badge codename">CODENAME: TONY STARKS</span>
   </div>
 </div>
 
@@ -820,68 +828,35 @@ h1, h2, h3 { text-shadow: none !important; }
   <div class="ai-sidebar">
     <div class="sidebar-bg-video">
       <video autoplay muted loop playsinline>
-        <source src="video/goat-animated-16.mp4" type="video/mp4">
+        <source src="video/goat-animated-2.mp4" type="video/mp4">
       </video>
     </div>
 
     <div class="ai-logo">
-      <div class="logo-icon">🎛️</div>
+      <div class="logo-icon">🎹</div>
       <div class="logo-text">
-        <span class="logo-title">WOOH DA KID</span>
-        <span class="logo-sub">AGENT-02 · TONY STARKS</span>
+        <span class="logo-title">Wooh Da Kid</span>
+        <span class="logo-sub">BEAT MAESTRO · STUDIO MANAGER</span>
       </div>
     </div>
 
-        <div class="agent-section-title">GOAT Agents</div>
+    <div class="agent-section-title">Active Squad</div>
     <div class="persona-btns" style="margin-bottom:4px;">
-      <a class="persona-btn" href="sir-codex-launcher.html"><span class="agent-icon">🐐</span><div class="agent-info"><div class="agent-name">Sir Codex</div><div class="agent-role">Master Orchestrator</div></div><span class="agent-num">01</span></a>
-      <a class="persona-btn active" href="wooh-da-kid-launcher.html"><span class="agent-icon">🎛️</span><div class="agent-info"><div class="agent-name">Wooh Da Kid</div><div class="agent-role">Beat Maestro</div></div><span class="agent-num">02</span></a>
-      <a class="persona-btn" href="gonbrazy-launcher.html"><span class="agent-icon">🎚️</span><div class="agent-info"><div class="agent-name">GONBRAZY</div><div class="agent-role">Mixing — Studio Boss</div></div><span class="agent-num">03</span></a>
-      <a class="persona-btn" href="hannah-miller-launcher.html"><span class="agent-icon">🌟</span><div class="agent-info"><div class="agent-name">Hannah Miller</div><div class="agent-role">Amigo Alley Web Keeper</div></div><span class="agent-num">04</span></a>
-      <a class="persona-btn" href="agent-05.html"><span class="agent-icon">🛡️</span><div class="agent-info"><div class="agent-name">Agent 05</div><div class="agent-role">Royalty Security</div></div><span class="agent-num">05</span></a>
-      <a class="persona-btn" href="agent-06.html"><span class="agent-icon">🎤</span><div class="agent-info"><div class="agent-name">Agent 06</div><div class="agent-role">Vocal & Performance</div></div><span class="agent-num">06</span></a>
-      <a class="persona-btn" href="agent-07.html"><span class="agent-icon">📊</span><div class="agent-info"><div class="agent-name">Agent 07</div><div class="agent-role">Analytics & Strategy</div></div><span class="agent-num">07</span></a>
+      <a class="persona-btn" href="master-oscar-launcher.html"><span class="agent-icon">🎵</span><div class="agent-info"><div class="agent-name">Master Oscar</div><div class="agent-role">Artist &amp; Creative</div></div><span class="agent-num">001</span></a>
+      <a class="persona-btn" href="money-penny-launcher.html"><span class="agent-icon">💎</span><div class="agent-info"><div class="agent-name">Ms. Money Penny</div><div class="agent-role">Intelligence OG</div></div><span class="agent-num">002</span></a>
+      <a class="persona-btn" href="vanessa-launcher.html"><span class="agent-icon">🎙️</span><div class="agent-info"><div class="agent-name">Ms. Vanessa</div><div class="agent-role">Marketing &amp; Voice</div></div><span class="agent-num">003</span></a>
+      <a class="persona-btn" href="nexus-launcher.html"><span class="agent-icon">🔗</span><div class="agent-info"><div class="agent-name">Nexus</div><div class="agent-role">Intelligence &amp; Distribution</div></div><span class="agent-num">004</span></a>
+      <a class="persona-btn" href="lexi-launcher.html"><span class="agent-icon">⚖️</span><div class="agent-info"><div class="agent-name">Lexi</div><div class="agent-role">Creative &amp; Legal</div></div><span class="agent-num">005</span></a>
+      <a class="persona-btn" href="sir-codex-launcher.html"><span class="agent-icon">🤖</span><div class="agent-info"><div class="agent-name">Sir Codex</div><div class="agent-role">Tech &amp; Production</div></div><span class="agent-num">006</span></a>
+      <a class="persona-btn" href="dr-devin.html"><span class="agent-icon">🩺</span><div class="agent-info"><div class="agent-name">Dr. Devin</div><div class="agent-role">Strategy &amp; Innovation</div></div><span class="agent-num">007</span></a>
     </div>
 
-    <div class="special-ops">
-      <div class="special-ops-title">🥁 Beat Workshop</div>
-      <button class="ops-btn" onclick="quickSend('Give me a hard trap beat idea at 140BPM in the style of Waka Flocka Flame, using FL Studio and GOAT Force samples')">
-        <span class="ops-icon">🥁</span> Beat Idea
-      </button>
-      <button class="ops-btn" onclick="quickSend('What\'s the best plugin stack from the GOAT Force arsenal for mixing a trap record right now?')">
-        <span class="ops-icon">🎹</span> Plugin Stack
-      </button>
-      <button class="ops-btn" onclick="quickSend('Give me 3 advanced FL Studio production tricks for punch and clarity on trap beats')">
-        <span class="ops-icon">🎵</span> FL Studio Tip
-      </button>
-      <button class="ops-btn" onclick="quickSend('Give me mixing notes for Hard Liquor / Backroad Baptism at 73BPM in F#/E minor')">
-        <span class="ops-icon">🔊</span> Mix Notes
-      </button>
-      <button class="ops-btn" onclick="quickSend('What\'s the ideal mastering chain from the GOAT Force plugin arsenal for a country-trap single?')">
-        <span class="ops-icon">🎚️</span> Mastering Chain
-      </button>
-      <button class="ops-btn" onclick="quickSend('How do I chop and flip a soul sample in FL Studio 2025 for a Waka banger?')">
-        <span class="ops-icon">🎤</span> Sample Chop
-      </button>
+    <div class="agent-section-title">Studio Specialists</div>
+    <div class="persona-btns" style="margin-bottom:4px;">
+      <a class="persona-btn" href="gonbrazy-launcher.html"><span class="agent-icon">🎚️</span><div class="agent-info"><div class="agent-name">GONBRAZY</div><div class="agent-role">Studio Boss</div></div></a>
+      <a class="persona-btn active" href="wooh-da-kid-launcher.html"><span class="agent-icon">🎹</span><div class="agent-info"><div class="agent-name">Wooh Da Kid</div><div class="agent-role">Beat Maestro (ACTIVE)</div></div></a>
     </div>
 
-    <div class="special-ops">
-      <div class="special-ops-title">🎛️ Studio Tools</div>
-      <button class="ops-btn" onclick="quickSend('Build a complete FL Studio session setup for a new GOAT Force banger')">
-        <span class="ops-icon">🎛️</span> Session Setup
-      </button>
-      <button class="ops-btn" onclick="quickSend('Run a frequency analysis on the current Hard Liquor mix and tell me what needs work')">
-        <span class="ops-icon">📊</span> Freq Analysis
-      </button>
-      <button class="ops-btn" onclick="quickSend('Build the ultimate GOAT Force plugin rack for trap production using available plugins')">
-        <span class="ops-icon">🔌</span> Plugin Rack
-      </button>
-      <button class="ops-btn" onclick="quickSend('What is the best workflow for stem splitting in GOAT Force using available tools?')">
-        <span class="ops-icon">🎵</span> Stem Split
-      </button>
-    </div>
-
-    
     <!-- GOAT VAULT ACCESS -->
     <div class="special-ops" id="vaultPanel">
       <div class="special-ops-title">🔐 GOAT Vault</div>
@@ -889,7 +864,7 @@ h1, h2, h3 { text-shadow: none !important; }
       <button class="ops-btn" onclick="vaultISRC()"><span class="ops-icon">🎵</span> ISRC Lookup</button>
       <button class="ops-btn" onclick="vaultPublishing()"><span class="ops-icon">📚</span> Publishing Search</button>
       <button class="ops-btn" onclick="vaultList()"><span class="ops-icon">📁</span> Vault Documents</button>
-      <div id="vaultStatusBar" style="display:none;font-size:10px;padding:6px 8px;background:rgba(57,148,188,0.08);border:1px solid rgba(57,148,188,0.2);border-radius:3px;margin:4px 12px;color:#8C8C8C;line-height:1.6;word-break:break-word;"></div>
+      <div id="vaultStatusBar" style="display:none;font-size:10px;padding:6px 8px;background:rgba(255,140,0,0.08);border:1px solid rgba(255,140,0,0.2);border-radius:3px;margin:4px 12px;color:#8C8C8C;line-height:1.6;word-break:break-word;"></div>
     </div>
 
     <!-- MEMORY PANEL -->
@@ -903,7 +878,7 @@ h1, h2, h3 { text-shadow: none !important; }
     <div class="special-ops">
       <div class="special-ops-title">🎛️ Command Deck</div>
       <button class="ops-btn" onclick="openStudioPanel()">
-        <span class="ops-icon">🎚️</span> Touch Studio
+        <span class="ops-icon">🎹</span> Touch Studio
       </button>
       <button class="ops-btn" onclick="openGenUI()">
         <span class="ops-icon">✨</span> Generative UI
@@ -916,12 +891,78 @@ h1, h2, h3 { text-shadow: none !important; }
       </button>
     </div>
 
+    <div class="agent-section-title">Beat Production</div>
+    <div class="persona-btns">
+      <button class="persona-btn" onclick="quickSend('Start a new FL Studio 2025 beat session for Hard Liquor / Backroad Baptism — 73BPM, F# minor. What is the optimal drum pattern and instrument layout?')">
+        <span class="agent-icon">🥁</span>
+        <div class="agent-info"><div class="agent-name">Beat Session</div><div class="agent-role">Hard Liquor / Backroad Baptism</div></div>
+      </button>
+      <button class="persona-btn" onclick="quickSend('Walk me through building a hard trap drum pattern in FL Studio 2025 for a 73BPM Waka Flocka Flame style banger')">
+        <span class="agent-icon">🎚️</span>
+        <div class="agent-info"><div class="agent-name">Drum Pattern</div><div class="agent-role">73BPM trap construction</div></div>
+      </button>
+      <button class="persona-btn" onclick="quickSend('What is the best FL Studio 2025 plugin chain for mixing a dark, cinematic trap beat in F# minor?')">
+        <span class="agent-icon">🎛️</span>
+        <div class="agent-info"><div class="agent-name">FL Studio Plugin Chain</div><div class="agent-role">Dark trap / F# minor</div></div>
+      </button>
+      <button class="persona-btn" onclick="quickSend('How do I organize and manage my beat library — stems, samples, loops — in FL Studio 2025 for maximum workflow efficiency?')">
+        <span class="agent-icon">📂</span>
+        <div class="agent-info"><div class="agent-name">Beat Library</div><div class="agent-role">Stems, samples, loops</div></div>
+      </button>
+      <button class="persona-btn" onclick="quickSend('Connect to Ollama on localhost:3333 and generate a beat concept for the Hard Liquor project — dark southern trap vibes, 73BPM, F# minor')">
+        <span class="agent-icon">🤖</span>
+        <div class="agent-info"><div class="agent-name">AI Beat Generation</div><div class="agent-role">Ollama localhost:3333</div></div>
+      </button>
+      <button class="persona-btn" onclick="quickSend('Check the current C Room sessions — HEAD2SOLID SESSIONS, Icky Sessions, Jimmy Rocket — what needs attention?')">
+        <span class="agent-icon">🏠</span>
+        <div class="agent-info"><div class="agent-name">C Room Sessions</div><div class="agent-role">HEAD2SOLID / Icky / Jimmy Rocket</div></div>
+      </button>
+    </div>
+
+    <div class="agent-section-title">Tech & Tools</div>
+    <div class="persona-btns">
+      <button class="persona-btn" onclick="quickSend('Run a hardware diagnostic — check the Studio Mac audio interface, MIDI controllers, and DAW setup for any issues')">
+        <span class="agent-icon">🔧</span>
+        <div class="agent-info"><div class="agent-name">Hardware Check</div><div class="agent-role">Studio Mac diagnostics</div></div>
+      </button>
+      <button class="persona-btn" onclick="quickSend('Help me troubleshoot a DAW setup issue — which DAW should I use for this project and how do I configure it?')">
+        <span class="agent-icon">⚙️</span>
+        <div class="agent-info"><div class="agent-name">DAW Troubleshoot</div><div class="agent-role">Setup &amp; configuration</div></div>
+      </button>
+      <button class="persona-btn" onclick="quickSend('What are the best Ollama models on localhost:11434 for beat production assistance and music AI tasks?')">
+        <span class="agent-icon">🧠</span>
+        <div class="agent-info"><div class="agent-name">Ollama Models</div><div class="agent-role">localhost:11434 music AI</div></div>
+      </button>
+      <button class="persona-btn" onclick="quickSend('How do I route audio from FL Studio 2025 through the Studio Mac to Pro Tools for a combined session?')">
+        <span class="agent-icon">🔀</span>
+        <div class="agent-info"><div class="agent-name">Audio Routing</div><div class="agent-role">FL Studio → Pro Tools</div></div>
+      </button>
+    </div>
+
     <div class="status-panel">
       <div class="status-panel-title">System Packets</div>
-      <div class="status-row"><div class="status-left"><span class="status-dot"></span> goat-intel-server</div><span class="status-role">Online ✅</span></div>
-      <div class="status-row"><div class="status-left"><span class="status-dot"></span> fl-studio</div><span class="status-role">Ready ✅</span></div>
-      <div class="status-row"><div class="status-left"><span class="status-dot"></span> plugin-arsenal</div><span class="status-role">Loaded ✅</span></div>
-      <div class="status-row"><div class="status-left"><span class="status-dot priority"></span> beat-machine</div><span class="status-role">HOT ⚡</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> fl-studio-2025</div><span class="status-role">Armed ✅</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> beat-library</div><span class="status-role">Loaded ✅</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot priority"></span> hard-liquor-project</div><span class="status-role">ACTIVE ⚡</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> ollama:3333</div><span class="status-role">Ready ✅</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> daw-computer-control</div><span class="status-role">LIVE 🎛️</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> aax-sdk-2-9-0</div><span class="status-role">USB ✅</span></div>
+    </div>
+
+    <!-- DAW Computer Control Panel -->
+    <div class="status-panel" style="margin-top:8px;">
+      <div class="status-panel-title">Beat Lab Control</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;padding:4px 0;">
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('launch_daw', {daw:'FL Studio'})">🎹 FL Studio</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('launch_daw', {daw:'Pro Tools'})">🎚 Pro Tools</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('screenshot')">📸 Screenshot</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('play')">▶ Play</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('stop')">⏹ Stop</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('fl_command', {key:'space'})">🥁 FL Play</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('list_sessions')">📂 C Room</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('get_status')">📊 Status</button>
+      </div>
+      <div id="dawControlStatus" style="font-size:10px;color:#8C8C8C;padding:4px 0;min-height:16px;"></div>
     </div>
 
     <!-- Sidebar Terminal -->
@@ -930,14 +971,14 @@ h1, h2, h3 { text-shadow: none !important; }
         <span class="terminal-dot red"></span>
         <span class="terminal-dot yellow"></span>
         <span class="terminal-dot green"></span>
-        <span>wooh da kid console</span>
+        <span>wooh-da-kid console</span>
       </div>
       <div class="terminal-output">
-<p class="terminal-line sys">Wooh Da Kid TONY STARKS Console v3.0 — The Gangsta Nerd is in the building</p>
-<p class="terminal-line">FL Studio: ready</p>
-<p class="terminal-line">Plugin arsenal: loaded</p>
-<p class="terminal-line">Beat machine: HOT</p>
-<p class="terminal-line cmd">$ wooh --beat start</p>
+<p class="terminal-line sys">WOOH DA KID — Beat Maestro Console v3.0 — FL Studio armed</p>
+<p class="terminal-line sys">Beat library: loaded | C Room sessions: tracked | DAW control: LIVE</p>
+<p class="terminal-line">Hard Liquor / Backroad Baptism: 73BPM, F# minor | AAX SDK: USB ready</p>
+<p class="terminal-line">Ollama AI beat engine: localhost:3333 | PTSL SDK: USB loaded</p>
+<p class="terminal-line cmd">$ wooh --beat start --project hard-liquor --daw fl-studio</p>
       </div>
     </div>
 
@@ -955,43 +996,43 @@ h1, h2, h3 { text-shadow: none !important; }
   <!-- CHAT -->
   <div class="ai-chat">
     <div class="chat-header">
-      <div class="persona-avatar">🎛️</div>
+      <div class="persona-avatar">🎹</div>
       <div class="agent-title">
-        <h2>Wooh Da Kid — TONY STARKS</h2>
-        <p>Beat Maestro — Production — Studio Tech · AGENT-02 · GOAT Force</p>
+        <h2>Wooh Da Kid — BEAT MAESTRO</h2>
+        <p>Beat Production · FL Studio · Studio Manager · GOAT Force</p>
       </div>
-      <span class="codename-tag">CODENAME: TONY STARKS (THE GANGSTA NERD)</span>
-      <span class="command-badge">Beat Maestro</span>
-      <span class="engine-tag">Agent 02</span>
+      <span class="codename-tag">TONY STARKS</span>
+      <span class="command-badge">FL Studio</span>
+      <span class="engine-tag">Beat Maestro</span>
       <span id="threadNameTag" class="engine-tag" style="cursor:pointer;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="Click to rename session" onclick="renameThread()">New Session</span>
       <span id="tokenCounter" class="engine-tag" style="font-family:var(--font-mono);min-width:60px;text-align:center;">0 tok</span>
     </div>
 
-    <!-- Tool Approval Bar -->
-    <div id="approvalBar" style="display:none;padding:8px 16px;background:rgba(229,186,125,0.08);border-bottom:1px solid rgba(229,186,125,0.25);font-size:12px;color:#e5ba7d;align-items:center;gap:10px;flex-wrap:wrap;">
+    <!-- Wooh Da Kid: Tool Approval Bar -->
+    <div id="approvalBar" style="display:none;padding:8px 16px;background:rgba(255,140,0,0.08);border-bottom:1px solid rgba(255,140,0,0.25);font-size:12px;color:#FF8C00;align-items:center;gap:10px;flex-wrap:wrap;">
       <span style="font-size:13px;">⚠️</span>
       <span id="approvalMsg" style="flex:1;">Agent wants to execute an action — approve?</span>
-      <span id="approvalSandbox" style="font-size:10px;padding:2px 6px;border-radius:3px;background:rgba(229,186,125,0.15);border:1px solid rgba(229,186,125,0.3);">workspace-write</span>
-      <button onclick="approveAction()" style="padding:3px 12px;border-radius:3px;border:1px solid rgba(57,148,188,0.4);background:rgba(57,148,188,0.15);color:#3994BC;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font-mono);">APPROVE</button>
+      <span id="approvalSandbox" style="font-size:10px;padding:2px 6px;border-radius:3px;background:rgba(255,140,0,0.15);border:1px solid rgba(255,140,0,0.3);">workspace-write</span>
+      <button onclick="approveAction()" style="padding:3px 12px;border-radius:3px;border:1px solid rgba(255,140,0,0.4);background:rgba(255,140,0,0.15);color:#FF8C00;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font-mono);">APPROVE</button>
       <button onclick="denyAction()" style="padding:3px 12px;border-radius:3px;border:1px solid #2A2B2C;background:transparent;color:#8C8C8C;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font-mono);">DENY</button>
     </div>
 
     <div class="chat-messages" id="chatMessages"></div>
     <div class="typing-indicator" id="typingIndicator">
       <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
-      <span style="font-size:12px;color:#666;margin-left:6px;" id="typingText">Wooh Da Kid is cooking beats...</span>
+      <span style="font-size:12px;color:#666;margin-left:6px;" id="typingText">Wooh Da Kid is cooking...</span>
     </div>
 
     <div class="chat-input-area">
       <div class="chat-input-row">
-        <textarea class="chat-textarea" id="chatInput" placeholder="Ask Wooh Da Kid — beats, FL Studio, production, tech, or session management..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <textarea class="chat-textarea" id="chatInput" placeholder="Talk to Wooh Da Kid — FL Studio beats, Hard Liquor project, C Room sessions, AI beat generation, tech support..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
         <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
       </div>
       <div class="chat-actions">
-        <button class="chat-action-btn" onclick="quickSend('Give me a hard trap beat idea at 140BPM in the style of Waka Flocka Flame, using FL Studio and GOAT Force samples')">🥁 Beat Idea</button>
-        <button class="chat-action-btn" onclick="quickSend('What\'s the best plugin stack from the GOAT Force arsenal for mixing a trap record right now?')">🎹 Plugin Stack</button>
-        <button class="chat-action-btn" onclick="quickSend('Give me mixing notes for Hard Liquor / Backroad Baptism at 73BPM in F#/E minor')">🔊 Mix Notes</button>
-        <button class="chat-action-btn" onclick="quickSend('What\'s the ideal mastering chain from the GOAT Force plugin arsenal for a country-trap single?')">🎚️ Mastering Chain</button>
+        <button class="chat-action-btn" onclick="quickSend('Start a new FL Studio 2025 beat session for Hard Liquor / Backroad Baptism — 73BPM, F# minor')">🥁 Beat Session</button>
+        <button class="chat-action-btn" onclick="quickSend('Connect to Ollama on localhost:3333 and generate a beat concept for the Hard Liquor project')">🤖 AI Beat Gen</button>
+        <button class="chat-action-btn" onclick="quickSend('Check the current C Room sessions — HEAD2SOLID SESSIONS, Icky Sessions, Jimmy Rocket')">🏠 C Room</button>
+        <button class="chat-action-btn" onclick="quickSend('Run a hardware diagnostic — check the Studio Mac audio interface, MIDI controllers, and DAW setup')">🔧 Tech Check</button>
       </div>
     </div>
   </div>
@@ -1000,64 +1041,101 @@ h1, h2, h3 { text-shadow: none !important; }
 <!-- KEY MODAL -->
 <div class="key-modal" id="keyModal">
   <div class="key-modal-box">
-    <h2>🔐 GOAT Force Keys</h2>
-    <p>Enter your GOAT keys to unlock the command deck. Keys are saved locally in your browser.</p>
+    <h2>🔐 API Key Setup</h2>
+    <p>Keys are saved locally on your server — never sent to anyone. Paste your fresh keys below.</p>
 
     <div class="key-field">
-      <label>GOAT-KEY-01</label>
-      <input type="password" id="inputKey01" placeholder="Enter GOAT-KEY-01">
-      <small>Master orchestrator key</small>
+      <label>Google AI Studio (Gemini) Key</label>
+      <input type="password" id="inputGemini" placeholder="AIzaSy...">
+      <small>Get from: <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#FF8C00;">aistudio.google.com</a></small>
     </div>
     <div class="key-field">
-      <label>GOAT-KEY-02</label>
-      <input type="password" id="inputKey02" placeholder="Enter GOAT-KEY-02">
-      <small>Agent-specific activation key</small>
+      <label>OpenAI Key</label>
+      <input type="password" id="inputOpenai" placeholder="sk-proj-...">
+      <small>Get from: <a href="https://platform.openai.com/api-keys" target="_blank" style="color:#FF8C00;">platform.openai.com</a></small>
     </div>
     <div class="key-field">
-      <label>GOAT-KEY-03</label>
-      <input type="password" id="inputKey03" placeholder="Enter GOAT-KEY-03">
-      <small>Royalty pipeline key</small>
+      <label>Spotify Client ID:Secret (format: id:secret)</label>
+      <input type="password" id="inputSpotify" placeholder="clientid:clientsecret">
+      <small>Get from: <a href="https://developer.spotify.com/dashboard" target="_blank" style="color:#FF8C00;">developer.spotify.com</a></small>
+    </div>
+    <div class="key-field">
+      <label>DistroKid API Key</label>
+      <input type="password" id="inputDistrokid" placeholder="Your DistroKid API key">
+    </div>
+    <div class="key-field">
+      <label>YouTube API Key (optional — yt-dlp works without)</label>
+      <input type="password" id="inputYoutube" placeholder="AIzaSy...">
+      <small>Get from: <a href="https://console.developers.google.com" target="_blank" style="color:#FF8C00;">console.developers.google.com</a></small>
     </div>
 
     <div class="key-modal-actions">
       <button class="goat-btn" onclick="saveKeys()">💾 Save Keys Locally</button>
       <button class="goat-btn gold" onclick="closeKeyModal()">Cancel</button>
     </div>
-    <p id="keySaveStatus" style="color:#22c55e;font-size:13px;margin:10px 0 0;display:none;">✅ Keys saved!</p>
+    <p id="keySaveStatus" style="color:#FF8C00;font-size:13px;margin:10px 0 0;display:none;">✅ Keys saved to your local server!</p>
   </div>
 </div>
 
 <script>
-const INTEL = 'http://localhost:5500';
-const ENDPOINT = '/ai/wooh';
+const INTEL = 'http://localhost:3333';
+const INTEL_MAIN = 'http://localhost:5500';  // Main Intel server for DAW control + tools
+const ENDPOINT = '/ai/wooh-da-kid';
 
 let chatHistory = [];
 let isTyping = false;
 
+// ── DAW Computer Control (Beat Lab) ──────────────────────────────────────────
+async function dawControl(action, params = {}) {
+  const statusEl = document.getElementById('dawControlStatus');
+  if (statusEl) statusEl.textContent = `Running: ${action}...`;
+  try {
+    const r = await fetch(INTEL_MAIN + '/daw/control', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action, params}),
+      signal: AbortSignal.timeout(20000)
+    });
+    const d = await r.json();
+    if (statusEl) statusEl.textContent = d.ok ? `✅ ${action} done` : `⚠ ${d.error || 'failed'}`;
+    if (action === 'screenshot' && d.ok) {
+      addMessage('assistant', `📸 Screenshot captured. Starting beat session analysis...`, 'DAW');
+      quickSend('I just took a screenshot of the DAW. Analyze what you see and tell me the next beat-building step.');
+    } else if (d.ok) {
+      const summary = JSON.stringify(d, null, 2).slice(0, 400);
+      addMessage('assistant', `🎹 Beat Lab — ${action}:\n\`\`\`\n${summary}\n\`\`\``, 'DAW');
+    }
+    return d;
+  } catch (e) {
+    if (statusEl) statusEl.textContent = `⚠ ${e.message}`;
+    return {ok: false, error: e.message};
+  }
+}
+
 const PROMPTS = [
-  'Give me a hard trap beat idea at 140BPM in the style of Waka Flocka Flame, using FL Studio and GOAT Force samples',
-  'What\'s the best plugin stack from the GOAT Force arsenal for mixing a trap record right now?',
-  'Give me 3 advanced FL Studio production tricks for punch and clarity on trap beats',
-  'Give me mixing notes for Hard Liquor / Backroad Baptism at 73BPM in F#/E minor',
-  'What\'s the ideal mastering chain from the GOAT Force plugin arsenal for a country-trap single?',
-  'How do I chop and flip a soul sample in FL Studio 2025 for a Waka banger?',
-  'Build a complete FL Studio session setup for a new GOAT Force banger',
-  'What is the best workflow for stem splitting in GOAT Force using available tools?'
+  'Start a new FL Studio 2025 beat session for Hard Liquor / Backroad Baptism — 73BPM, F# minor',
+  'Walk me through building a hard trap drum pattern in FL Studio 2025 for a 73BPM Waka Flocka Flame style banger',
+  'What is the best FL Studio 2025 plugin chain for mixing a dark, cinematic trap beat in F# minor?',
+  'How do I organize and manage my beat library — stems, samples, loops — for maximum workflow efficiency?',
+  'Connect to Ollama on localhost:3333 and generate a beat concept for the Hard Liquor project',
+  'Check the current C Room sessions — HEAD2SOLID SESSIONS, Icky Sessions, Jimmy Rocket',
+  'Run a hardware diagnostic — check the Studio Mac audio interface and DAW setup',
+  'What are the best Ollama models on localhost:11434 for beat production assistance?'
 ];
 
-const WELCOME = `Wooh Da Kid — TONY STARKS online. The Gangsta Nerd is in the building.
+const WELCOME = `Wooh Da Kid — Tony Starks — online. The Gangsta Nerd is in the building.
 
-FL Studio is loaded, the plugin arsenal is armed, and the beat machine is hot. I build beats, manage sessions, and keep the studio tech tight.
+Production buddy to DJ Speedy. FL Studio 2025 wizard. Beat library keeper. Tech guru.
+Hard Liquor / Backroad Baptism: 73BPM, F# minor — stems tracked.
+C Room sessions hot: HEAD2SOLID, Icky Sessions, Jimmy Rocket.
 
-Session packets loaded: wooh-da-kid-fl-studio-training, world-class-sound-genre-study, hard-liquor-next-single.
-
-Intel server listening on localhost:5500. The C Room sessions are active.
-
-What do you want to build?`;
+AI beat engine armed via Ollama localhost:3333.
+Tell me what we building today.`;
 
 function init() {
   showWelcome();
   checkServerStatus();
+  loadMemory();
 }
 
 function showWelcome() {
@@ -1065,7 +1143,7 @@ function showWelcome() {
   container.innerHTML = `
     <div class="msg assistant">
       <div class="msg-bubble">${escapeHtml(WELCOME)}</div>
-      <div class="msg-meta">Wooh Da Kid · TONY STARKS · AGENT-02 · Just now</div>
+      <div class="msg-meta">Wooh Da Kid · TONY STARKS · Just now</div>
     </div>
   `;
 }
@@ -1089,7 +1167,7 @@ function extractUiBlocks(text) {
 }
 function stripUiBlocks(text) { return text.replace(/```json\n?[\s\S]*?\n?```/g, '').trim(); }
 
-function addMessage(role, content, meta) {
+function addMessage(role, content, meta, imageUrl, imageAlt) {
   const container = document.getElementById('chatMessages');
   const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   const name = role === 'user' ? 'You' : 'Wooh Da Kid' + (meta ? ` · ${meta}` : '');
@@ -1104,8 +1182,18 @@ function addMessage(role, content, meta) {
       uiHTML = '<div class="gen-ui-in-chat" style="margin-top:8px;">' + uiContainer.innerHTML + '</div>';
     }
   }
+  let imgHTML = '';
+  if (imageUrl) {
+    imgHTML = `<div class="goat-mascot-reveal" style="margin:12px 0;text-align:center;">
+      <img src="${imageUrl}" alt="${imageAlt || 'GOAT Force Mascot'}"
+           style="max-width:100%;max-height:420px;border-radius:16px;border:3px solid var(--agent-accent,#FF8C00);box-shadow:0 0 32px rgba(255,140,0,0.5);cursor:pointer;"
+           onclick="this.style.maxHeight=this.style.maxHeight==='none'?'420px':'none'" />
+      <div style="font-size:11px;color:#888;margin-top:6px;">${imageAlt || 'GOAT Force Mascot'}</div>
+    </div>`;
+  }
   div.innerHTML = `
     <div class="msg-bubble">${nl2br(stripUiBlocks(content))}</div>
+    ${imgHTML}
     ${uiHTML}
     <div class="msg-meta">${name} · ${time}</div>
   `;
@@ -1142,7 +1230,7 @@ async function sendMessage() {
     const r = await fetch(INTEL + ENDPOINT, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: fullMessage, history: chatHistory.slice(-10)}),
+      body: JSON.stringify({message: fullMessage, history: chatHistory.slice(-10), agent_id: 'wooh-da-kid'}),
       signal: AbortSignal.timeout(45000)
     });
     const d = await r.json();
@@ -1152,7 +1240,7 @@ async function sendMessage() {
       totalTokens += estimateTokens(d.reply);
       updateTokenCounter();
       if (d.plan) injectPlanPreview(d.plan);
-      addMessage('assistant', d.reply, d.engine);
+      addMessage('assistant', d.reply, d.engine, d.image || null, d.image_alt || null);
       chatHistory.push({role: 'assistant', content: d.reply});
     } else {
       const errMsg = d.error || 'Response failed';
@@ -1165,9 +1253,9 @@ async function sendMessage() {
   } catch (e) {
     setTyping(false);
     if (e.name === 'TimeoutError') {
-      addMessage('assistant', '⏱ Analysis took too long. The Intel server may be processing. Try again, Commander.', 'System');
+      addMessage('assistant', '⏱ Beat session took too long. The Oscar chat server may be processing. Try again, Commander.', 'System');
     } else {
-      addMessage('assistant', `⚠️ Could not reach Intel Server at ${INTEL}\n\nMake sure it's running:\n→ cd goat-intel-server\n→ python goat_intel.py`, 'System');
+      addMessage('assistant', `⚠️ Could not reach Oscar Chat Server at ${INTEL}\n\nMake sure it's running on localhost:3333.\nFallback: Ollama → Grok → Gemini → OpenAI`, 'System');
     }
   }
 }
@@ -1238,13 +1326,13 @@ function denyAction() {
   if (_approvalPendingResolve) { _approvalPendingResolve(false); _approvalPendingResolve = null; }
 }
 
-// ── Plan preview strip ────────────────────────────
+// ── Plan preview strip ─────────────────────────────
 function injectPlanPreview(plan) {
   if (!plan) return;
   const c = document.getElementById('chatMessages');
   const d = document.createElement('div');
   d.className = 'msg assistant'; d.style.cssText = 'opacity:0.8;';
-  d.innerHTML = `<details style="background:#191A1B;border:1px solid #2A2B2C;border-left:2px solid #ff6b35;border-radius:0 4px 4px 0;padding:8px 12px;font-size:12px;font-family:var(--font-mono);cursor:pointer;"><summary style="color:#ff6b35;font-weight:600;list-style:none;outline:none;">▶ Turn Plan — click to expand</summary><div style="margin-top:8px;color:#8C8C8C;white-space:pre-wrap;line-height:1.6;">${escapeHtml(plan)}</div></details>`;
+  d.innerHTML = `<details style="background:#191A1B;border:1px solid #2A2B2C;border-left:2px solid #FF8C00;border-radius:0 4px 4px 0;padding:8px 12px;font-size:12px;font-family:var(--font-mono);cursor:pointer;"><summary style="color:#FF8C00;font-weight:600;list-style:none;outline:none;">▶ Turn Plan — click to expand</summary><div style="margin-top:8px;color:#8C8C8C;white-space:pre-wrap;line-height:1.6;">${escapeHtml(plan)}</div></details>`;
   c.appendChild(d); c.scrollTop = c.scrollHeight;
 }
 
@@ -1282,7 +1370,7 @@ async function saveKeys() {
       alert('Error saving: ' + d.error);
     }
   } catch (e) {
-    alert('Intel server not running. Start it first, then save keys.');
+    alert('Oscar chat server not running. Start it first on localhost:3333, then save keys.');
   }
 }
 
@@ -1295,7 +1383,7 @@ async function checkServerStatus() {
     document.getElementById('ks_server').textContent = '✅ Server online';
     document.getElementById('ks_server').className = 'ok';
   } catch (e) {
-    document.getElementById('ks_server').textContent = '❌ Server offline — run python goat_intel.py';
+    document.getElementById('ks_server').textContent = '❌ Oscar server offline — check localhost:3333';
     document.getElementById('ks_server').className = 'warn';
     document.getElementById('ks_gemini').textContent = '⚠ Gemini: server needed';
     document.getElementById('ks_openai').textContent = '⚠ OpenAI: server needed';
@@ -1332,10 +1420,10 @@ function openStudioPanel() {
         document.getElementById('studioEvent').textContent = `[studio] pad "${id}" index ${data.index} (${data.label})`;
       }
     });
-    studioInstance.addKnob('gain', { label: 'Gain', value: 60 });
-    studioInstance.addFader('master', { label: 'Master', value: 90 });
+    studioInstance.addKnob('tempo', { label: 'Tempo', value: 73 });
+    studioInstance.addFader('master', { label: 'Master', value: 85 });
     studioInstance.addXYPad('filter', { label: 'Filter / Reso' });
-    studioInstance.addPads('drums', { labels: ['Kick','Snare','Hat','Clap','Open','Ride','Tom','Crash'] });
+    studioInstance.addPads('drums', { labels: ['Kick','Snare','Hat','Clap','808','Ride','Snap','Crash'] });
     studioInstance.addToggle('power', { label: 'Power', value: true });
   }
 }
@@ -1345,14 +1433,14 @@ function openGenUI() {
   document.getElementById('genUIPanel').classList.add('open');
   if (typeof GoatGenerativeUI !== 'undefined') {
     const block = {
-      type: 'ui', layout: 'card', title: 'Wooh Da Kid Stats', subtitle: 'Live FL Studio Data',
+      type: 'ui', layout: 'card', title: 'Wooh Da Kid Beat Stats', subtitle: 'Hard Liquor / Backroad Baptism',
       items: [
         { type: 'stat', label: 'BPM', value: '73' },
         { type: 'stat', label: 'Key', value: 'F# minor' },
-        { type: 'knob', id: 'velocity', label: 'Velocity', value: 80 },
-        { type: 'button', id: 'bounce', label: 'Bounce Mix' },
-        { type: 'toggle', id: 'metronome', label: 'Metronome', value: false },
-        { type: 'badge', label: 'Status', value: 'RECORDING', color: '#ff6b35' }
+        { type: 'knob', id: 'beat', label: 'Beat Level', value: 80 },
+        { type: 'button', id: 'session', label: 'New Beat' },
+        { type: 'toggle', id: 'ai', label: 'AI Mode', value: true },
+        { type: 'badge', label: 'Status', value: 'COOKING', color: '#FF8C00' }
       ]
     };
     GoatGenerativeUI.render([block], document.getElementById('genUIContainer'), {
@@ -1368,7 +1456,7 @@ function openSettingsPanel() { document.getElementById('settingsPanel').classLis
 function closeSettingsPanel() { document.getElementById('settingsPanel').classList.remove('open'); }
 
 function setAccent(color) {
-  document.documentElement.style.setProperty('--wooh-da-kid-accent', color);
+  document.documentElement.style.setProperty('--codex-blue', color);
   document.querySelectorAll('.color-swatch').forEach(s => s.classList.toggle('active', s.dataset.color === color));
   localStorage.setItem('goat_wooh_accent', color);
 
@@ -1426,7 +1514,7 @@ async function vaultStatus() {
     const r = await fetch(INTEL + '/ai/moneypenny/status', {signal: AbortSignal.timeout(6000)});
     const d = await r.json();
     if (d.ok) {
-      bar.innerHTML = '<strong style="color:#3994BC">LOADED</strong><br>' +
+      bar.innerHTML = '<strong style="color:#FF8C00">LOADED</strong><br>' +
         '📄 ' + d.knowledge_file.size_kb + 'KB knowledge<br>' +
         '🎵 ' + d.catalog.isrc_tracks + ' ISRCs | 📚 ' + d.catalog.bsm_works + ' BSM works<br>' +
         '📁 ' + d.vault_documents.length + ' vault docs | 💾 ' + d.memory_facts + ' memories';
@@ -1441,7 +1529,7 @@ async function vaultISRC() {
     const r = await fetch(INTEL + '/vault/catalog/isrc?title=' + encodeURIComponent(q), {signal: AbortSignal.timeout(6000)});
     const d = await r.json();
     if (d.results && d.results.length) {
-      if (bar) bar.innerHTML = '<strong style="color:#3994BC">ISRC: ' + d.results.length + ' found</strong><br>' +
+      if (bar) bar.innerHTML = '<strong style="color:#FF8C00">ISRC: ' + d.results.length + ' found</strong><br>' +
         d.results.slice(0,4).map(row => '• ' + Object.values(row).filter(Boolean).slice(0,3).join(' | ')).join('<br>');
       quickSend('ISRC results for "' + q + '": ' + JSON.stringify(d.results.slice(0,3)) + '. Give me details on these tracks.');
     } else { if (bar) bar.textContent = 'No ISRCs found for "' + q + '"'; }
@@ -1455,7 +1543,7 @@ async function vaultPublishing() {
     const r = await fetch(INTEL + '/vault/catalog/publishing?title=' + encodeURIComponent(q), {signal: AbortSignal.timeout(6000)});
     const d = await r.json();
     if (d.results && d.results.length) {
-      if (bar) bar.innerHTML = '<strong style="color:#3994BC">BSM: ' + d.results.length + ' found</strong><br>' +
+      if (bar) bar.innerHTML = '<strong style="color:#FF8C00">BSM: ' + d.results.length + ' found</strong><br>' +
         d.results.slice(0,4).map(row => '• ' + Object.values(row).filter(Boolean).slice(0,3).join(' | ')).join('<br>');
       quickSend('BSM Publishing results for "' + q + '": ' + JSON.stringify(d.results.slice(0,3)) + '. What do these tell us?');
     } else { if (bar) bar.textContent = 'No publishing records for "' + q + '"'; }
@@ -1469,7 +1557,7 @@ async function vaultList() {
     const r = await fetch(INTEL + '/vault/list', {signal: AbortSignal.timeout(6000)});
     const d = await r.json();
     if (d.vault && d.vault.length) {
-      bar.innerHTML = '<strong style="color:#3994BC">Vault (' + d.count + ' docs)</strong><br>' + d.vault.map(f => '• ' + f).join('<br>');
+      bar.innerHTML = '<strong style="color:#FF8C00">Vault (' + d.count + ' docs)</strong><br>' + d.vault.map(f => '• ' + f).join('<br>');
     } else { bar.textContent = 'Vault empty or server offline'; }
   } catch(e) { bar.textContent = '❌ Vault unavailable'; }
 }
@@ -1480,7 +1568,7 @@ async function loadMemory() {
     const r = await fetch(INTEL + '/memory/load', {signal: AbortSignal.timeout(4000)});
     const d = await r.json();
     if (d.ok && d.total > 0) {
-      el.innerHTML = '<strong style="color:#3994BC">' + d.total + ' facts saved</strong><br>' +
+      el.innerHTML = '<strong style="color:#FF8C00">' + d.total + ' facts saved</strong><br>' +
         d.facts.slice(-5).map(f => '• ' + f.fact.slice(0,55) + (f.fact.length>55?'...':'')).join('<br>');
     } else { el.textContent = 'No memories saved yet.'; }
   } catch(e) { el.textContent = 'Memory offline.'; }
@@ -1491,7 +1579,7 @@ async function saveMemoryPrompt() {
   try {
     const r = await fetch(INTEL + '/memory/save', {
       method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({fact: fact.trim(), agent: 'raho'})
+      body: JSON.stringify({fact: fact.trim(), agent: 'wooh-da-kid'})
     });
     const d = await r.json();
     if (d.ok) { loadMemory(); addMessage('assistant', '💾 Saved to memory. I now have ' + d.total + ' facts stored.'); }
@@ -1504,7 +1592,7 @@ async function saveMemoryPrompt() {
 <div class="deck-panel" id="studioPanel" onclick="if(event.target.id==='studioPanel') closeStudioPanel()">
   <div class="deck-box">
     <div class="deck-close" onclick="closeStudioPanel()">&times;</div>
-    <h2>🎚️ Touch Studio</h2>
+    <h2>🎹 Touch Studio</h2>
     <div class="deck-section">
       <h4>Live Controls</h4>
       <div id="studioContainer"></div>
@@ -1540,12 +1628,11 @@ async function saveMemoryPrompt() {
     <div class="deck-section">
       <h4>Accent Color</h4>
       <div id="colorSwatches">
-        <span class="color-swatch active" style="background:#ff6b35" data-color="#ff6b35" onclick="setAccent(this.dataset.color)"></span>
+        <span class="color-swatch active" style="background:#FF8C00" data-color="#FF8C00" onclick="setAccent(this.dataset.color)"></span>
         <span class="color-swatch" style="background:#d4a03c" data-color="#d4a03c" onclick="setAccent(this.dataset.color)"></span>
-        <span class="color-swatch" style="background:#e74c3c" data-color="#e74c3c" onclick="setAccent(this.dataset.color)"></span>
-        <span class="color-swatch" style="background:#2ecc71" data-color="#2ecc71" onclick="setAccent(this.dataset.color)"></span>
-        <span class="color-swatch" style="background:#9b59b6" data-color="#9b59b6" onclick="setAccent(this.dataset.color)"></span>
+        <span class="color-swatch" style="background:#FFD700" data-color="#FFD700" onclick="setAccent(this.dataset.color)"></span>
         <span class="color-swatch" style="background:#e91e8c" data-color="#e91e8c" onclick="setAccent(this.dataset.color)"></span>
+        <span class="color-swatch" style="background:#2ecc71" data-color="#2ecc71" onclick="setAccent(this.dataset.color)"></span>
       </div>
     </div>
     <div class="deck-section">
@@ -1565,15 +1652,13 @@ async function saveMemoryPrompt() {
     <div class="deck-section">
       <h4>Agent Context</h4>
       <select class="terminal-agent-select" id="terminalAgentSelect" style="width:100%;">
-        <option value="wooh">Wooh Da Kid (default)</option>
+        <option value="wooh-da-kid">BEAT MAESTRO — Wooh Da Kid (default)</option>
+        <option value="gonbrazy">STUDIO BOSS — GONBRAZY</option>
         <option value="moneypenny">002 — Ms. Money Penny</option>
         <option value="drdevin">007 — Dr. Devin</option>
-        <option value="codex">006 — Sir Codex</option>
         <option value="oscar">001 — Master Oscar</option>
         <option value="nexus">004 — Nexus</option>
         <option value="lexi">005 — Lexi</option>
-        <option value="gonbrazy">GONBRAZY</option>
-        <option value="hannah">Hannah Miller</option>
       </select>
     </div>
 
@@ -1588,9 +1673,9 @@ async function saveMemoryPrompt() {
           <button onclick="clearTerminal()" style="margin-left:auto;background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'JetBrains Mono',monospace;">clear</button>
         </div>
         <div class="terminal-panel-output" id="terminalOutput">
-          <p class="terminal-line sys">Wooh Da Kid Terminal — TONY STARKS · Beat Lab Online</p>
+          <p class="terminal-line sys">Wooh Da Kid Terminal — BEAT MAESTRO · Online</p>
           <p class="terminal-line sys">Commands classified by safety: readonly · dangerous (confirm) · forbidden (blocked)</p>
-          <p class="terminal-line sys">Terminal host: localhost:9999 — Run goat-intel-server terminal proxy to execute live commands.</p>
+          <p class="terminal-line sys">Terminal host: localhost:3333 — Oscar chat server handles beat production commands.</p>
           <p class="terminal-line sys">─────────────────────────────────────────────────────</p>
         </div>
         <div class="terminal-confirm-bar" id="terminalConfirmBar">
@@ -1598,10 +1683,10 @@ async function saveMemoryPrompt() {
           <button class="btn-yes" id="terminalConfirmYes">Run It</button>
           <button class="btn-no" onclick="cancelTerminalConfirm()">Cancel</button>
         </div>
-        <div style="display:flex;align-items:center;padding:10px 14px;border-top:1px solid rgba(255,107,53,0.2);background:rgba(0,0,0,0.4);gap:10px;">
-          <span class="terminal-prompt-panel">raho@studio $</span>
+        <div style="display:flex;align-items:center;padding:10px 14px;border-top:1px solid rgba(255,140,0,0.2);background:rgba(0,0,0,0.4);gap:10px;">
+          <span class="terminal-prompt-panel">wooh@studio $</span>
           <input class="terminal-input-panel" id="terminalInput" type="text"
-            placeholder="ls -la / git status / ollama list / python3 -c 'print(1+1)' ..."
+            placeholder="ollama list / ls -la / python3 -c 'print(1+1)' / curl localhost:3333/health ..."
             autocomplete="off" autocorrect="off" spellcheck="false"
             onkeydown="handleTerminalKey(event)">
           <button class="terminal-run-btn-panel" onclick="runTerminalCommand()">RUN</button>
@@ -1614,11 +1699,11 @@ async function saveMemoryPrompt() {
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="chat-action-btn" onclick="terminalQuick('ls -la')">ls -la</button>
         <button class="chat-action-btn" onclick="terminalQuick('pwd')">pwd</button>
-        <button class="chat-action-btn" onclick="terminalQuick('ps aux | grep python')">ps python</button>
         <button class="chat-action-btn" onclick="terminalQuick('ollama list')">ollama list</button>
-        <button class="chat-action-btn" onclick="terminalQuick('git status')">git status</button>
+        <button class="chat-action-btn" onclick="terminalQuick('curl -s http://localhost:3333/health')">oscar health</button>
+        <button class="chat-action-btn" onclick="terminalQuick('curl -s http://localhost:11434/api/tags')">ollama models</button>
+        <button class="chat-action-btn" onclick="terminalQuick('ps aux | grep python')">ps python</button>
         <button class="chat-action-btn" onclick="terminalQuick('df -h')">disk space</button>
-        <button class="chat-action-btn" onclick="terminalQuick('curl -s http://localhost:5500/health')">intel health</button>
         <button class="chat-action-btn" onclick="terminalQuick('python3 -c \"import sys; print(sys.version)\"')">python ver</button>
       </div>
     </div>
@@ -1719,7 +1804,7 @@ function cancelTerminalConfirm() {
 <script src="lib/agents/patch/patch-core.js"></script>
 <script src="lib/agents/patch/goat-touch-studio.js"></script>
 <script src="lib/agents/patch/goat-generative-ui.js"></script>
-<script src="lib/agents/patch/patch-widget.js" data-agent="wooh"></script>
+<script src="lib/agents/patch/patch-widget.js" data-agent="wooh-da-kid"></script>
 <script src="js/goat-touch.js"></script>
 <script src="js/goat-agent-controls.js"></script>
 </body>

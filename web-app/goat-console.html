@@ -562,6 +562,8 @@ button{font-family:inherit;cursor:pointer}
 .spinning{animation:spin 1s linear infinite}
 </style>
   <link rel="stylesheet" href="css/goat-touch.css">
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body>
 
@@ -1232,7 +1234,7 @@ nvcc --version</div>
             <div class="health-bar"><div class="health-fill" id="intelBar" style="width:0%"></div></div>
           </div>
           <div style="margin-bottom:10px">
-            <div class="health-row"><span class="health-label">Ollama (port 11434)</span><span class="health-val" id="ollamaStatus">Checking...</span></div>
+            <div class="health-row"><span class="health-label">Ollama (port 11435)</span><span class="health-val" id="ollamaStatus">Checking...</span></div>
             <div class="health-bar"><div class="health-fill" id="ollamaBar" style="width:0%"></div></div>
           </div>
           <div style="margin-bottom:10px">
@@ -1595,7 +1597,7 @@ async function checkServices() {
   } catch { setServiceStatus('intel', false); }
   // Ollama
   try {
-    await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(2000) });
+    await fetch('http://localhost:11435/api/tags', { signal: AbortSignal.timeout(2000) });
     setServiceStatus('ollama', true);
   } catch { setServiceStatus('ollama', false); }
 }

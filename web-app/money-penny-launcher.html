@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="css/goat-brand.css">
 <link rel="stylesheet" href="css/goat-theme.css">
 <link rel="stylesheet" href="css/goat-touch.css">
+<link rel="stylesheet" href="css/agent-upgrades.css">
+<script src="js/agent-upgrades.js" defer></script>
 <style>
 /* === GOAT FORCE AGENT THEME — MS. MONEY PENNY / BOSS LADY === */
 /* === Devin 2026 Dark IDE Restyle === */
@@ -32,6 +34,11 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
   background: #121314;
+  background-image: url('assets/images/goat-og-bg-web.png');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
   color: #BBBEBF;
   margin: 0;
   min-height: 100vh;
@@ -771,6 +778,8 @@ h1, h2, h3 { text-shadow: none !important; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(131,132,133,0.7); background-clip: padding-box; }
 </style>
 
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body class="bg-icon">
 
@@ -785,7 +794,7 @@ h1, h2, h3 { text-shadow: none !important; }
 
 <nav class="goat-nav">
   <div class="nav-brand">
-    <img src="img/goat-hero-icon.png" alt="GOAT" style="height:36px;border-radius:8px;">
+    <img src="assets/images/money-penny-hero.png" alt="Ms. Money Penny" style="height:36px;border-radius:8px;object-fit:cover;box-shadow:0 0 10px rgba(212,160,60,0.6);">
     <span style="font-weight:900;color:#fff;letter-spacing:0.5px;">GOAT Force AI</span>
   </div>
   <div class="nav-links">
@@ -801,18 +810,42 @@ h1, h2, h3 { text-shadow: none !important; }
 
 <div class="agent-hero">
   <div class="agent-hero-left">
-    <div class="agent-hero-emoji">💎</div>
+    <div class="agent-hero-emoji"><img src="assets/images/money-penny-cartoon.png" alt="Ms. Money Penny" id="pennyHeroAvatar" style="height:72px;width:72px;border-radius:50%;object-fit:cover;object-position:top center;border:3px solid #d4a03c;box-shadow:0 0 24px rgba(212,160,60,0.7);cursor:pointer;transition:all 0.4s;" title="Click to cycle Money Penny images" onclick="cyclePennyHeroAvatar()"></div>
     <div>
       <h1 class="agent-hero-name">Ms. Money Penny</h1>
       <p class="agent-hero-role">Intelligence Director — OG · BOSS of All Agents · GOAT Force</p>
     </div>
   </div>
   <div class="agent-hero-badges">
-    <span class="hero-badge acc">AGENT-002</span>
+    <span class="hero-badge acc">AGENT-00</span>
+    <span class="hero-badge gold">THE OG</span>
     <span class="hero-badge gold">GOAT FORCE</span>
     <span class="hero-badge green">● ONLINE</span>
-    <span class="hero-badge codename">CODENAME: BOSS LADY</span>
+    <span class="hero-badge codename">CODENAME: BOSS LADY · PARENT OF ALL AGENTS</span>
   </div>
+</div>
+
+<!-- MONEY PENNY + GOAT ART GALLERY STRIP -->
+<div id="pennyArtStrip" style="display:flex;align-items:center;gap:10px;padding:8px 24px;background:rgba(0,0,0,0.5);border-bottom:1px solid rgba(212,160,60,0.1);overflow-x:auto;scrollbar-width:thin;scrollbar-color:rgba(212,160,60,0.3) transparent;">
+  <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(212,160,60,0.6);flex-shrink:0;white-space:nowrap;">🎨 GOAT Force Art</span>
+  <img src="assets/images/money-penny-cartoon.png"  alt="Ms. Penny Cartoon" style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;object-position:top;border:2px solid rgba(233,30,140,0.35);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#e91e8c';this.style.boxShadow='0 8px 20px rgba(233,30,140,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(233,30,140,0.35)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/images/money-penny-hero.png"     alt="Ms. Money Penny"   style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;object-position:top;border:2px solid rgba(233,30,140,0.35);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#e91e8c';this.style.boxShadow='0 8px 20px rgba(233,30,140,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(233,30,140,0.35)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/moneypenny-cartoon.png"     alt="Penny Cartoon 2"   style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;object-position:top;border:2px solid rgba(233,30,140,0.35);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#e91e8c';this.style.boxShadow='0 8px 20px rgba(233,30,140,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(233,30,140,0.35)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/images/money-penny-and-goat.png" alt="Penny + GOAT"      style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(212,160,60,0.3);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#d4a03c';this.style.boxShadow='0 8px 20px rgba(212,160,60,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(212,160,60,0.3)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/goat-and-moneypenny.png"   alt="GOAT + Penny"      style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(212,160,60,0.3);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#d4a03c';this.style.boxShadow='0 8px 20px rgba(212,160,60,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(212,160,60,0.3)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/the-goat-1.webp"           alt="THE GOAT"          style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/the-goat-2.webp"           alt="THE GOAT 2"        style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/goat-flying-cape.png"       alt="GOAT Cape"         style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/waka-goat-flying.webp"      alt="Waka + GOAT"       style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/goat-marvel-logo.webp"      alt="GOAT Marvel"       style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/goat-superman-city.webp"    alt="GOAT Superman"     style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+  <img src="assets/goat/goat-og-fiery.png"          alt="OG Fiery GOAT"     style="height:60px;width:60px;flex-shrink:0;border-radius:10px;object-fit:cover;border:2px solid rgba(255,215,0,0.25);cursor:pointer;transition:all .25s;" onmouseover="this.style.transform='scale(1.14) translateY(-5px)';this.style.borderColor='#FFD700';this.style.boxShadow='0 8px 20px rgba(255,215,0,0.4)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(255,215,0,0.25)';this.style.boxShadow=''" onclick="pennyArtClick(this.src)">
+</div>
+
+<!-- Art lightbox for Money Penny page -->
+<div id="pennyLightbox" onclick="this.style.display='none'" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;backdrop-filter:blur(8px);">
+  <img id="pennyLightboxImg" src="" alt="GOAT Art" style="max-width:90vw;max-height:88vh;border-radius:16px;border:3px solid #d4a03c;box-shadow:0 0 60px rgba(212,160,60,0.5);">
+  <button onclick="document.getElementById('pennyLightbox').style.display='none'" style="position:absolute;top:20px;right:28px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:22px;width:40px;height:40px;border-radius:50%;cursor:pointer;">✕</button>
 </div>
 
 <div class="ai-layout" style="border-radius:0 0 18px 18px;margin-top:0;">
@@ -820,15 +853,16 @@ h1, h2, h3 { text-shadow: none !important; }
   <div class="ai-sidebar">
     <div class="sidebar-bg-video">
       <video autoplay muted loop playsinline>
+        <source src="assets/video/money-penny-live.mp4" type="video/mp4">
         <source src="video/goat-animated-1.mp4" type="video/mp4">
       </video>
     </div>
 
     <div class="ai-logo">
-      <div class="logo-icon">💎</div>
+      <div class="logo-icon"><img src="assets/images/money-penny-hero.png" alt="Money Penny" style="width:44px;height:44px;border-radius:10px;object-fit:cover;object-position:top;border:2px solid #d4a03c;box-shadow:0 0 12px rgba(212,160,60,0.5);"></div>
       <div class="logo-text">
         <span class="logo-title">MS. MONEY PENNY</span>
-        <span class="logo-sub">BOSS LADY · AGENT 002 · INTELLIGENCE OG</span>
+        <span class="logo-sub">BOSS LADY · AGENT 00 · INTELLIGENCE OG</span>
       </div>
     </div>
 
@@ -925,11 +959,83 @@ h1, h2, h3 { text-shadow: none !important; }
       </button>
     </div>
 
+    <!-- VAULT PROTOCOL v7 -->
+    <div class="special-ops" style="border:1px solid rgba(212,160,60,0.4);background:rgba(212,160,60,0.05);border-radius:10px;padding:10px;">
+      <div class="special-ops-title" style="color:#FFD700;">🔐 VAULT PROTOCOL v7</div>
+      <button class="ops-btn" onclick="pingVault()" style="border-color:rgba(212,160,60,0.5);">
+        <span class="ops-icon">⚡</span> Ping Vault
+      </button>
+      <button class="ops-btn" onclick="quickSend('CheckVaultStatus')" style="border-color:rgba(212,160,60,0.5);">
+        <span class="ops-icon">🔍</span> Vault Status
+      </button>
+      <button class="ops-btn" onclick="quickSend('StartProphecyDrop')" style="border-color:rgba(212,160,60,0.5);">
+        <span class="ops-icon">🎬</span> Prophecy Drop
+      </button>
+      <button class="ops-btn" onclick="openVaultMemory()" style="border-color:rgba(212,160,60,0.5);">
+        <span class="ops-icon">🧠</span> Memory Stack
+      </button>
+    </div>
+
+    <!-- OSCAR TOOLS CONSOLIDATED -->
+    <div class="special-ops" style="border:1px solid rgba(88,166,255,0.4);background:rgba(88,166,255,0.05);border-radius:10px;padding:10px;">
+      <div class="special-ops-title" style="color:#58a6ff;">🛠️ OSCAR TOOLS</div>
+      <button class="ops-btn" onclick="fetchTool('/api/tools','GET')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">📋</span> Tool List
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/workspace','GET')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">🌉</span> Workspace Bridge
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/goat/image-render-bridge','GET')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">🎨</span> Render Bridge
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/studio/status','GET')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">🎛️</span> Studio Status
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/studio/assets','GET')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">🎧</span> Studio Assets
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/studio/music-library','GET')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">🎵</span> Music Library
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/studio/apps-plugins','GET')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">🛍️</span> Apps & Plugins
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/mobile/access','GET')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">📱</span> Mobile Access
+      </button>
+      <button class="ops-btn" onclick="drawLocalTool()" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">🖼️</span> Draw Local
+      </button>
+      <button class="ops-btn" onclick="quickSend('show owner approval status')" style="border-color:rgba(88,166,255,0.5);">
+        <span class="ops-icon">🔐</span> Owner Approval
+      </button>
+    </div>
+
+    <!-- SUPER GOAT ROYALTY 2.0 TOOLS -->
+    <div class="special-ops" style="border:1px solid rgba(193,18,31,0.4);background:rgba(193,18,31,0.05);border-radius:10px;padding:10px;">
+      <div class="special-ops-title" style="color:#c1121f;">🐐 SUPER GOAT 2.0</div>
+      <button class="ops-btn" onclick="openRoyaltyCalc()" style="border-color:rgba(193,18,31,0.5);">
+        <span class="ops-icon">💰</span> Royalty Calculator
+      </button>
+      <button class="ops-btn" onclick="exportCurrentChat()" style="border-color:rgba(193,18,31,0.5);">
+        <span class="ops-icon">📤</span> Export Chat
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/goat/video-engines','GET')" style="border-color:rgba(193,18,31,0.5);">
+        <span class="ops-icon">🎬</span> Video Engines
+      </button>
+      <button class="ops-btn" onclick="fetchTool('/api/ollama/model-map','GET')" style="border-color:rgba(193,18,31,0.5);">
+        <span class="ops-icon">🧠</span> Model Map
+      </button>
+      <button class="ops-btn" onclick="quickSend('Run a Super GOAT multi-tool analysis on the current project')" style="border-color:rgba(193,18,31,0.5);">
+        <span class="ops-icon">⚡</span> Super GOAT Mode
+      </button>
+    </div>
+
     <div class="status-panel">
       <div class="status-panel-title">System Packets</div>
       <div class="status-row"><div class="status-left"><span class="status-dot"></span> goat-intel-server</div><span class="status-role">Online ✅</span></div>
-      <div class="status-row"><div class="status-left"><span class="status-dot"></span> royalty-tracker</div><span class="status-role">Live ✅</span></div>
-      <div class="status-row"><div class="status-left"><span class="status-dot"></span> agent-command</div><span class="status-role">Active ✅</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> vault-protocol-v7</div><span id="vaultDot" class="status-role">Checking…</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> memory-stack</div><span id="memDot" class="status-role">Loading…</span></div>
       <div class="status-row"><div class="status-left"><span class="status-dot priority"></span> empire-shield</div><span class="status-role">Priority ⚡</span></div>
     </div>
 
@@ -964,14 +1070,14 @@ h1, h2, h3 { text-shadow: none !important; }
   <!-- CHAT -->
   <div class="ai-chat">
     <div class="chat-header">
-      <div class="persona-avatar">💎</div>
+      <div class="persona-avatar"><img src="assets/images/money-penny-hero.png" alt="Money Penny" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid #d4a03c;box-shadow:0 0 14px rgba(212,160,60,0.6);"></div>
       <div class="agent-title">
         <h2>Ms. Money Penny — BOSS LADY</h2>
-        <p>Intelligence Director · Agent 002 · OG · All Agents Report To Her</p>
+        <p>Intelligence Director · Agent 00 · OG · All Agents Report To Her</p>
       </div>
       <span class="codename-tag">CODENAME: BOSS LADY</span>
       <span class="command-badge">Intelligence OG</span>
-      <span class="engine-tag">Agent 002</span>
+      <span class="engine-tag">Agent 00</span>
       <span id="threadNameTag" class="engine-tag" style="cursor:pointer;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="Click to rename session" onclick="renameThread()">New Session</span>
       <span id="tokenCounter" class="engine-tag" style="font-family:var(--font-mono);min-width:60px;text-align:center;">0 tok</span>
     </div>
@@ -1063,6 +1169,37 @@ const PROMPTS = [
   'What label deals or licensing opportunities should GOAT Force pursue this quarter?'
 ];
 
+// ── Money Penny Art Strip functions ───────────────────────
+const pennyHeroAvatarImgs = [
+  'assets/images/money-penny-cartoon.png',
+  'assets/images/money-penny-hero.png',
+  'assets/goat/moneypenny-cartoon.png',
+  'assets/images/money-penny-and-goat.png',
+  'assets/goat/goat-and-moneypenny.png',
+];
+let pennyHeroAvatarIdx = 0;
+function cyclePennyHeroAvatar() {
+  pennyHeroAvatarIdx = (pennyHeroAvatarIdx + 1) % pennyHeroAvatarImgs.length;
+  const el = document.getElementById('pennyHeroAvatar');
+  if (el) el.src = pennyHeroAvatarImgs[pennyHeroAvatarIdx];
+}
+setInterval(cyclePennyHeroAvatar, 5000);
+
+function pennyArtClick(src) {
+  const lb = document.getElementById('pennyLightbox');
+  const img = document.getElementById('pennyLightboxImg');
+  if (lb && img) {
+    img.src = src;
+    lb.style.display = 'flex';
+  }
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const lb = document.getElementById('pennyLightbox');
+    if (lb) lb.style.display = 'none';
+  }
+});
+
 const WELCOME = `Ms. Money Penny — BOSS LADY online. Intelligence Director reporting.
 
 I am the OG. Every agent in this operation was born from my system.
@@ -1082,8 +1219,28 @@ function showWelcome() {
   const container = document.getElementById('chatMessages');
   container.innerHTML = `
     <div class="msg assistant">
+      <div class="goat-duo-banner" style="
+        margin:-2px -4px 14px -4px;
+        border-radius:14px 14px 6px 6px;
+        overflow:hidden;
+        position:relative;
+        max-height:260px;
+        box-shadow:0 4px 24px rgba(212,160,60,0.35);
+        border:2px solid rgba(212,160,60,0.4);
+      ">
+        <img src="assets/images/money-penny-and-goat.png" alt="Money Penny & THE GOAT"
+          style="width:100%;display:block;object-fit:cover;object-position:top center;max-height:260px;border-radius:12px 12px 4px 4px;" />
+        <div style="
+          position:absolute;bottom:0;left:0;right:0;
+          padding:18px 14px 10px;
+          background:linear-gradient(transparent, rgba(0,0,0,0.85));
+          font-size:10.5px;font-weight:700;color:#FFD700;
+          letter-spacing:0.3px;line-height:1.4;text-align:center;
+          font-style:italic;
+        ">"The greatest trick the devil ever pulled was convincing the world he doesn't exist… and just like that, he's gone."</div>
+      </div>
       <div class="msg-bubble">${escapeHtml(WELCOME)}</div>
-      <div class="msg-meta">Ms. Money Penny · BOSS LADY · Agent 002 · Just now</div>
+      <div class="msg-meta">Ms. Money Penny · BOSS LADY · Agent 00 · Just now</div>
     </div>
   `;
 }
@@ -1107,7 +1264,7 @@ function extractUiBlocks(text) {
 }
 function stripUiBlocks(text) { return text.replace(/```json\n?[\s\S]*?\n?```/g, '').trim(); }
 
-function addMessage(role, content, meta) {
+function addMessage(role, content, meta, imageUrl, imageAlt) {
   const container = document.getElementById('chatMessages');
   const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   const name = role === 'user' ? 'You' : 'Ms. Money Penny' + (meta ? ` · ${meta}` : '');
@@ -1122,8 +1279,19 @@ function addMessage(role, content, meta) {
       uiHTML = '<div class="gen-ui-in-chat" style="margin-top:8px;">' + uiContainer.innerHTML + '</div>';
     }
   }
+  // Mascot / image block
+  let imgHTML = '';
+  if (imageUrl) {
+    imgHTML = `<div class="goat-mascot-reveal" style="margin:12px 0;text-align:center;">
+      <img src="${imageUrl}" alt="${imageAlt || 'GOAT Force Mascot'}"
+           style="max-width:100%;max-height:420px;border-radius:16px;border:3px solid var(--penny-gold, #d4a03c);box-shadow:0 0 32px rgba(212,160,60,0.5);cursor:pointer;"
+           onclick="this.style.maxHeight=this.style.maxHeight==='none'?'420px':'none'" />
+      <div style="font-size:11px;color:#888;margin-top:6px;">${imageAlt || 'GOAT Force Mascot'}</div>
+    </div>`;
+  }
   div.innerHTML = `
     <div class="msg-bubble">${nl2br(stripUiBlocks(content))}</div>
+    ${imgHTML}
     ${uiHTML}
     <div class="msg-meta">${name} · ${time}</div>
   `;
@@ -1171,7 +1339,8 @@ async function sendMessage() {
       totalTokens += estimateTokens(d.reply);
       updateTokenCounter();
       if (d.plan) injectPlanPreview(d.plan);
-      addMessage('assistant', d.reply, d.engine);
+      // Pass image if server returned one (e.g. "draw our goat" trigger)
+      addMessage('assistant', d.reply, d.engine, d.image || null, d.image_alt || null);
       chatHistory.push({role: 'assistant', content: d.reply});
     } else {
       const errMsg = d.error || 'Response failed';
@@ -1433,7 +1602,111 @@ function applyLogo() {
   if (savedLogo) document.getElementById('customLogo').value = savedLogo;
 })();
 
-document.addEventListener('DOMContentLoaded', init);
+// ── VAULT PROTOCOL v7 FUNCTIONS ─────────────────────────────────────────────
+async function pingVault() {
+  try {
+    const r = await fetch(INTEL + '/vault/ping', {method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message: 'moneypenny, are you there'})});
+    const d = await r.json();
+    if (d.ok) {
+      document.getElementById('vaultDot').textContent = 'ONLINE ✅';
+      document.getElementById('memDot').textContent   = d.memory_loaded ? 'LOADED ✅' : 'Missing ⚠';
+      addMessage('assistant', d.reply + '\n\n' + (d.signed||''), 'VAULT-PROTOCOL-v7');
+    }
+  } catch(e) {
+    document.getElementById('vaultDot').textContent = 'Offline ⚠';
+    addMessage('assistant', '⚠ Vault unreachable. Make sure Intel server is running.', 'System');
+  }
+}
+
+async function openVaultMemory() {
+  try {
+    const r = await fetch(INTEL + '/vault/memory');
+    const d = await r.json();
+    if (d.ok) {
+      addMessage('assistant',
+        '🧠 MONEYPENNY MEMORY STACK — LOADED\n\n' + d.memory.slice(0, 2000) +
+        (d.memory.length > 2000 ? '\n\n[…truncated — full stack in vault]' : ''),
+        'VAULT-MEMORY');
+    } else {
+      addMessage('assistant', '⚠ Memory stack not found: ' + (d.error||''), 'Vault');
+    }
+  } catch(e) {
+    addMessage('assistant', '⚠ Could not read memory stack.', 'System');
+  }
+}
+
+async function checkVaultOnLoad() {
+  try {
+    const r = await fetch(INTEL + '/vault/ping', {method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({message: 'moneypenny, are you there'})});
+    const d = await r.json();
+    if (d.ok) {
+      document.getElementById('vaultDot').textContent = 'ONLINE ✅';
+      document.getElementById('memDot').textContent   = d.memory_loaded ? 'LOADED ✅' : 'Missing ⚠';
+    }
+  } catch(e) {
+    document.getElementById('vaultDot').textContent = 'Offline ⚠';
+    document.getElementById('memDot').textContent   = 'Offline ⚠';
+  }
+}
+
+async function fetchTool(path, method='GET', body=null) {
+  try {
+    let url = INTEL + path;
+    const opts = {method};
+    if (body && method !== 'GET') {
+      opts.headers = {'Content-Type':'application/json'};
+      opts.body = JSON.stringify(body);
+    } else if (body && method === 'GET') {
+      const params = new URLSearchParams();
+      for (const [k, v] of Object.entries(body)) params.set(k, v);
+      url += '?' + params.toString();
+    }
+    const r = await fetch(url, opts);
+    const d = await r.json();
+    const summary = JSON.stringify(d, null, 2).slice(0, 2000);
+    addMessage('assistant', `🛠️ TOOL RESULT: ${path}\n\n${summary}${summary.length>=2000?'\n\n[…truncated]':''}`, 'OSCAR-TOOLS');
+  } catch(e) {
+    addMessage('assistant', '⚠ Tool call failed: ' + e.message, 'System');
+  }
+}
+
+async function drawLocalTool() {
+  const text = _askUser('Draw what? (e.g. GOAT Force flying over city)');
+  if (!text) return;
+  await fetchTool('/api/image/generate', 'POST', {prompt: text});
+}
+
+async function openRoyaltyCalc() {
+  const streams = parseInt(_askUser('Enter number of streams (e.g. 1000000)')) || 0;
+  if (streams <= 0) return;
+  const platform = _askUser('Platform? (spotify, apple, youtube, tiktok, tidal, amazon, or all)') || 'all';
+  await fetchTool('/api/goat/royalty-calc', 'GET', {streams, platform});
+}
+
+async function exportCurrentChat() {
+  const fmt = _askUser('Export format? (markdown or json)') || 'markdown';
+  const messages = [];
+  document.querySelectorAll('#chatMessages .msg').forEach(m => {
+    const role = m.classList.contains('user') ? 'user' : 'assistant';
+    const bubble = m.querySelector('.msg-bubble');
+    const meta = m.querySelector('.msg-meta');
+    if (bubble) {
+      messages.push({role, content: bubble.innerText, timestamp: meta ? meta.innerText : ''});
+    }
+  });
+  await fetchTool('/api/export/chat', 'POST', {messages, format: fmt, title: 'Money-Penny-Chat'});
+}
+
+function _askUser(msg) {
+  return window.prompt(msg);
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => { init(); checkVaultOnLoad(); });
 </script>
 
 <!-- TOUCH STUDIO PANEL -->
@@ -1520,7 +1793,7 @@ document.addEventListener('DOMContentLoaded', init);
           <button onclick="clearTerminal()" style="margin-left:auto;background:transparent;border:none;color:#555;cursor:pointer;font-size:11px;font-family:'JetBrains Mono',monospace;">clear</button>
         </div>
         <div class="terminal-panel-output" id="terminalOutput">
-          <p class="terminal-line sys">Ms. Money Penny Terminal — BOSS LADY · AGENT-002 Online</p>
+          <p class="terminal-line sys">Ms. Money Penny Terminal — BOSS LADY · AGENT-00 Online</p>
           <p class="terminal-line sys">Commands classified by safety: readonly · dangerous (confirm) · forbidden (blocked)</p>
           <p class="terminal-line sys">Terminal host: localhost:9999 — Run goat-intel-server terminal proxy to execute live commands.</p>
           <p class="terminal-line sys">─────────────────────────────────────────────────────</p>

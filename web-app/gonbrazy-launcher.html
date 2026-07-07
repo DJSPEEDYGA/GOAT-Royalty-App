@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="css/goat-brand.css">
 <link rel="stylesheet" href="css/goat-theme.css">
 <link rel="stylesheet" href="css/goat-touch.css">
+<link rel="stylesheet" href="css/agent-upgrades.css">
+<script src="js/agent-upgrades.js" defer></script>
 <style>
 /* === GOAT FORCE AGENT THEME — GONBRAZY / STUDIO BOSS === */
 /* === Devin 2026 Dark IDE Restyle === */
@@ -32,6 +34,11 @@
 body {
   font-family: system-ui, -apple-system, sans-serif;
   background: #121314;
+  background-image: url('assets/images/goat-og-bg-web.png');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
   color: #BBBEBF;
   margin: 0;
   min-height: 100vh;
@@ -771,6 +778,8 @@ h1, h2, h3 { text-shadow: none !important; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(131,132,133,0.7); background-clip: padding-box; }
 </style>
 
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body class="bg-icon">
 
@@ -938,6 +947,25 @@ h1, h2, h3 { text-shadow: none !important; }
       <div class="status-row"><div class="status-left"><span class="status-dot"></span> pro-tools</div><span class="status-role">Ready ✅</span></div>
       <div class="status-row"><div class="status-left"><span class="status-dot"></span> plugin-chain</div><span class="status-role">Armed ✅</span></div>
       <div class="status-row"><div class="status-left"><span class="status-dot priority"></span> mastering-suite</div><span class="status-role">STUDIO ⚡</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> daw-computer-control</div><span class="status-role">LIVE 🎛️</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> ptsl-sdk-2026</div><span class="status-role">USB ✅</span></div>
+      <div class="status-row"><div class="status-left"><span class="status-dot"></span> aax-sdk-2-9-0</div><span class="status-role">USB ✅</span></div>
+    </div>
+
+    <!-- DAW Computer Control Panel -->
+    <div class="status-panel" style="margin-top:8px;">
+      <div class="status-panel-title">DAW Control</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;padding:4px 0;">
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('screenshot')">📸 Screenshot</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('play')">▶ Play</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('stop')">⏹ Stop</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('rewind')">⏮ Rewind</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('get_status')">📊 Status</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('get_tracks')">🎚 Tracks</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('list_sessions')">📂 Sessions</button>
+        <button class="persona-btn" style="flex:1;min-width:80px;" onclick="dawControl('launch_daw', {daw:'Pro Tools'})">🚀 Pro Tools</button>
+      </div>
+      <div id="dawControlStatus" style="font-size:10px;color:#8C8C8C;padding:4px 0;min-height:16px;"></div>
     </div>
 
     <!-- Sidebar Terminal -->
@@ -950,10 +978,10 @@ h1, h2, h3 { text-shadow: none !important; }
       </div>
       <div class="terminal-output">
 <p class="terminal-line sys">GONBRAZY STUDIO BOSS Console v3.0 — mix engine armed</p>
-<p class="terminal-line sys">Pro Tools: ready</p>
-<p class="terminal-line">GOAT Force plugin arsenal: loaded</p>
-<p class="terminal-line">UAD hardware: connected</p>
-<p class="terminal-line cmd">$ gonbrazy --mix start</p>
+<p class="terminal-line sys">Pro Tools: ready | PTSL SDK: USB loaded | AAX SDK: USB loaded</p>
+<p class="terminal-line">GOAT Force plugin arsenal: loaded | DAW control: LIVE</p>
+<p class="terminal-line">UAD hardware: connected | daw-computer-control packet: active</p>
+<p class="terminal-line cmd">$ gonbrazy --mix start --ptsl --screenshot</p>
       </div>
     </div>
 
@@ -1059,6 +1087,34 @@ const ENDPOINT = '/ai/gonbrazy';
 let chatHistory = [];
 let isTyping = false;
 
+// ── DAW Computer Control ──────────────────────────────────────────────────────
+async function dawControl(action, params = {}) {
+  const statusEl = document.getElementById('dawControlStatus');
+  if (statusEl) statusEl.textContent = `Running: ${action}...`;
+  try {
+    const r = await fetch(INTEL + '/daw/control', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action, params}),
+      signal: AbortSignal.timeout(20000)
+    });
+    const d = await r.json();
+    if (statusEl) statusEl.textContent = d.ok ? `✅ ${action} done` : `⚠ ${d.error || 'failed'}`;
+    // If screenshot, inject into chat
+    if (action === 'screenshot' && d.ok && d.imageUrl) {
+      addMessage('assistant', `📸 DAW Screenshot captured. Use this to analyze the session.`, 'DAW');
+      quickSend('I just took a Pro Tools screenshot. Analyze the session and give me the next 3 mix moves.');
+    } else if (d.ok) {
+      const summary = JSON.stringify(d, null, 2).slice(0, 400);
+      addMessage('assistant', `🎛️ DAW Control — ${action}:\n\`\`\`\n${summary}\n\`\`\``, 'DAW');
+    }
+    return d;
+  } catch (e) {
+    if (statusEl) statusEl.textContent = `⚠ ${e.message}`;
+    return {ok: false, error: e.message};
+  }
+}
+
 const PROMPTS = [
   'Set up a full mixing session for Hard Liquor / Backroad Baptism with the GOAT Force plugin chain',
   'Build the ultimate mastering chain from GOAT Force plugins for a radio-ready trap record',
@@ -1114,7 +1170,7 @@ function extractUiBlocks(text) {
 }
 function stripUiBlocks(text) { return text.replace(/```json\n?[\s\S]*?\n?```/g, '').trim(); }
 
-function addMessage(role, content, meta) {
+function addMessage(role, content, meta, imageUrl, imageAlt) {
   const container = document.getElementById('chatMessages');
   const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   const name = role === 'user' ? 'You' : 'GONBRAZY' + (meta ? ` · ${meta}` : '');
@@ -1129,8 +1185,19 @@ function addMessage(role, content, meta) {
       uiHTML = '<div class="gen-ui-in-chat" style="margin-top:8px;">' + uiContainer.innerHTML + '</div>';
     }
   }
+  // Mascot / image block
+  let imgHTML = '';
+  if (imageUrl) {
+    imgHTML = `<div class="goat-mascot-reveal" style="margin:12px 0;text-align:center;">
+      <img src="${imageUrl}" alt="${imageAlt || 'GOAT Force Mascot'}"
+           style="max-width:100%;max-height:420px;border-radius:16px;border:3px solid var(--agent-accent,#d4a03c);box-shadow:0 0 32px rgba(212,160,60,0.5);cursor:pointer;"
+           onclick="this.style.maxHeight=this.style.maxHeight==='none'?'420px':'none'" />
+      <div style="font-size:11px;color:#888;margin-top:6px;">${imageAlt || 'GOAT Force Mascot'}</div>
+    </div>`;
+  }
   div.innerHTML = `
     <div class="msg-bubble">${nl2br(stripUiBlocks(content))}</div>
+    ${imgHTML}
     ${uiHTML}
     <div class="msg-meta">${name} · ${time}</div>
   `;
@@ -1178,7 +1245,7 @@ async function sendMessage() {
       totalTokens += estimateTokens(d.reply);
       updateTokenCounter();
       if (d.plan) injectPlanPreview(d.plan);
-      addMessage('assistant', d.reply, d.engine);
+      addMessage('assistant', d.reply, d.engine, d.image || null, d.image_alt || null);
       chatHistory.push({role: 'assistant', content: d.reply});
     } else {
       const errMsg = d.error || 'Response failed';

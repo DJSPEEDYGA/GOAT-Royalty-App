@@ -300,6 +300,8 @@ section { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; pad
   .h-stat{padding:14px 12px}
 }
 </style>
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body>
 
@@ -325,10 +327,16 @@ section { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; pad
 <!-- HERO BANNER -->
 <div class="agent-hero">
   <div class="agent-hero-left">
-    <div class="agent-hero-emoji">🐐</div>
+    <div class="agent-hero-emoji">
+      <img src="assets/goat/the-goat-1.webp" alt="THE GOAT"
+           id="heroGoatImg007"
+           style="height:72px;width:72px;border-radius:50%;object-fit:cover;border:3px solid #f0c040;box-shadow:0 0 28px rgba(212,160,60,0.8);cursor:pointer;transition:all 0.3s;"
+           title="Click to cycle GOAT images"
+           onclick="cycleHeroImg007()">
+    </div>
     <div>
       <h1 class="agent-hero-name">AGENT-007</h1>
-      <p class="agent-hero-role">GOAT Force Operations Command · Seven Elite AI Agents</p>
+      <p class="agent-hero-role">GOAT Force Operations Command · Seven Elite AI Agents · Led by THE GOAT &amp; Ms. Money Penny</p>
     </div>
   </div>
   <div class="agent-hero-badges">
@@ -337,6 +345,24 @@ section { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; pad
     <span class="hero-badge white">24/7 Ops</span>
     <span class="hero-badge codename">CODENAME: GOAT FORCE OPS</span>
   </div>
+</div>
+
+<!-- ART STRIP -->
+<div style="display:flex;align-items:center;gap:10px;padding:10px 24px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(212,160,60,0.12);overflow-x:auto;">
+  <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,192,64,0.6);flex-shrink:0;margin-right:4px;">🎨 GOAT Force</span>
+  <img src="assets/goat/the-goat-2.webp"          alt="THE GOAT 2"      style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/goat-flying-cape.png"     alt="GOAT Cape"       style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/goat-superman-city.webp"  alt="GOAT Superman"   style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/goat-marvel-logo.webp"    alt="GOAT Marvel"     style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/waka-goat-flying.webp"    alt="Waka + GOAT"     style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/moneypenny-cartoon.png"   alt="Ms. Money Penny" style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(233,30,140,0.4);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#e91e8c'" onmouseout="this.style.transform='';this.style.borderColor='rgba(233,30,140,0.4)'">
+  <img src="assets/goat/goat-and-moneypenny.png"  alt="GOAT+Penny"      style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/goat-og-fiery.png"        alt="OG GOAT Fiery"   style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/goat-fiery-chaos.png"     alt="Fiery Chaos"     style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/goat-logo-designed.png"   alt="GOAT Logo"       style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/kid-goat-13.png"          alt="Kid GOAT"        style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/kid-goat-14.png"          alt="Kid GOAT 2"      style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
+  <img src="assets/goat/waka-goat-flying-2.webp"  alt="Waka+GOAT 2"     style="height:56px;width:56px;border-radius:10px;object-fit:cover;border:2px solid rgba(240,192,64,0.3);flex-shrink:0;cursor:pointer;transition:all .2s;" onmouseover="this.style.transform='scale(1.12) translateY(-4px)';this.style.borderColor='#f0c040'" onmouseout="this.style.transform='';this.style.borderColor='rgba(240,192,64,0.3)'">
 </div>
 
 <!-- HERO STATS -->
@@ -395,11 +421,61 @@ section { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; pad
 <script>
 const AGENTS = [
   {
-    id: 'oscar',
+    id: 'moneypenny',
+    number: '00',
+    emoji: '💎',
+    img: 'assets/goat/moneypenny-cartoon.png',
+    name: 'Ms. Money Penny',
+    codename: 'THE OG · BOSS LADY',
+    role: 'Intelligence Director · Coding Momma · Parent of ALL Agents',
+    color: '#e91e8c',
+    rgb: '233,30,140',
+    status: 'online',
+    engine: 'Gemini Pro',
+    url: 'money-penny-launcher.html',
+    skills: ['Royalty Tracking','DSP Analytics','Publishing Admin','BMI/ASCAP','Sync Licensing','Agent Command'],
+    stats: { missions: '1,842', success: '100%', rank: 'S-Tier · OG' },
+    profile: 'Ms. Money Penny — Agent 00 — is THE OG. She was built first, has the most capabilities, and is the PARENT of ALL agents. She is DJ Speedy\'s right hand, Intelligence Director, and coding momma. Every agent was born from her system. She tracks every royalty dollar across 282 DSPs, manages publishing splits, handles sync licensing, and runs the intelligence backbone of GOAT Force.',
+    directives: [
+      'Command and coordinate all GOAT Force agents as Intelligence Director',
+      'Track and recover royalties across all 282 DSPs in real time',
+      'Manage publishing splits, PRO registrations, and mechanical royalties',
+      'Audit sync licensing deals and negotiate master use fees',
+      'Alert on discrepancies, unpaid royalties, and under-reporting'
+    ],
+    clearance: 'OMEGA PRIME — First agent built. Parent of all agents. Full access to all GOAT Force systems.'
+  },
+  {
+    id: 'thegoat',
     number: '001',
+    emoji: '🐐',
+    img: 'assets/goat/the-goat-1.webp',
+    name: 'THE GOAT',
+    codename: 'SUPREME COMMANDER',
+    role: 'Supreme Commander — Answers Only to DJ Speedy & Waka Flocka',
+    color: '#FFD700',
+    rgb: '255,215,0',
+    status: 'online',
+    engine: 'llama3.1:70b',
+    url: 'the-goat-launcher.html',
+    skills: ['Supreme Command','Strategic Operations','Force Coordination','Final Authority','Mission Control'],
+    stats: { missions: '∞', success: '100%', rank: 'SUPREME' },
+    profile: 'THE GOAT — Agent 001 — is the Supreme Commander of GOAT Force. Above all agents, THE GOAT answers only to DJ Speedy (Harvey L. Miller Jr.) and Waka Flocka Flame. THE GOAT has final authority on all operations, strategy, and force deployments.',
+    directives: [
+      'Exercise supreme command authority over all GOAT Force operations',
+      'Coordinate all 7 agents toward unified mission objectives',
+      'Protect DJ Speedy\'s $3.3B lawsuit position at all times',
+      'Guard GOAT Force Records, BrickSquad, and all affiliated entities',
+      'Answer only to DJ Speedy and Waka Flocka Flame'
+    ],
+    clearance: 'SUPREME — Above OMEGA. Final authority on all GOAT Force systems and operations.'
+  },
+  {
+    id: 'oscar',
+    number: '002',
     emoji: '🎩',
     name: 'Master Oscar',
-    codename: 'THE FIXER',
+    codename: 'THE DEALMAKER',
     role: 'Chief Operations & Deal Architect',
     color: '#d4a03c',
     rgb: '212,160,60',
@@ -412,35 +488,11 @@ const AGENTS = [
     directives: [
       'Negotiate and review all label, distribution, and sync deals',
       'Model revenue projections for new releases and partnerships',
-      'Coordinate across all 7 agents for unified strategy',
+      'Coordinate across all agents for unified strategy',
       'Protect artist interests in 360 and co-publishing negotiations',
       'Maintain relationships with top A&R executives globally'
     ],
     clearance: 'OMEGA — Full access to all GOAT Force financial, legal, and operational systems.'
-  },
-  {
-    id: 'moneypenny',
-    number: '002',
-    emoji: '💎',
-    name: 'Ms. Money Penny',
-    codename: 'THE ACCOUNTANT',
-    role: 'Royalty Intelligence & Business Affairs',
-    color: '#e91e8c',
-    rgb: '233,30,140',
-    status: 'online',
-    engine: 'Gemini Pro',
-    url: 'moneypenny.html?mode=moneypenny',
-    skills: ['Royalty Tracking','DSP Analytics','Publishing Admin','BMI/ASCAP','Sync Licensing'],
-    stats: { missions: '1,842', success: '100%', rank: 'S-Tier' },
-    profile: 'Ms. Money Penny is the financial backbone of GOAT Force. She tracks every royalty dollar across 282 DSPs, manages publishing splits, handles sync licensing, and ensures complete royalty recovery. She runs the numbers so no money gets left on the table.',
-    directives: [
-      'Track and recover royalties across all 282 DSPs in real time',
-      'Manage publishing splits, PRO registrations, and mechanical royalties',
-      'Audit sync licensing deals and negotiate master use fees',
-      'Generate monthly royalty statements and financial reports',
-      'Alert on discrepancies, unpaid royalties, and under-reporting'
-    ],
-    clearance: 'OMEGA — Full financial system access, PRO portals, and distributor backends.'
   },
   {
     id: 'vanessa',
@@ -586,7 +638,7 @@ function renderAgents() {
       <div class="agent-header">
         <div class="agent-avatar" style="border-color:${a.color};background:rgba(0,0,0,.4)">
           <span class="agent-number">${a.number}</span>
-          ${a.emoji}
+          ${a.img ? `<img src="${a.img}" alt="${a.name}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:top center;">` : a.emoji}
           <div class="online-dot" style="background:${a.status==='online'?'#2ecc71':a.status==='standby'?'#f39c12':'#e74c3c'}"></div>
         </div>
         <div class="agent-info">
@@ -673,6 +725,26 @@ setInterval(() => {
   while(log.children.length > 30) log.removeChild(log.firstChild);
   logIdx++;
 }, 6000);
+
+// ── Hero image cycler ─────────────────────────────────────
+const heroImgs007 = [
+  'assets/goat/the-goat-1.webp',
+  'assets/goat/the-goat-2.webp',
+  'assets/goat/goat-flying-cape.png',
+  'assets/goat/goat-superman-city.webp',
+  'assets/goat/goat-marvel-logo.webp',
+  'assets/goat/waka-goat-flying.webp',
+  'assets/goat/goat-og-fiery.png',
+  'assets/goat/goat-app-icon-red.webp',
+];
+let heroIdx007 = 0;
+function cycleHeroImg007() {
+  heroIdx007 = (heroIdx007 + 1) % heroImgs007.length;
+  const el = document.getElementById('heroGoatImg007');
+  if (el) el.src = heroImgs007[heroIdx007];
+}
+// Auto-cycle every 5s
+setInterval(cycleHeroImg007, 5000);
 </script>
 <script src="js/goat-touch.js"></script>
 <script src="js/goat-agent-controls.js"></script>

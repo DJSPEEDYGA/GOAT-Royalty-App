@@ -6,7 +6,7 @@
       "name": "Ms. Money Penny",
       "defaultModelDir": "/Volumes/i2i 1/Money-Penny-Models/USB-Uncensored-LLM-main/Portable-AI-USB-main/models",
       "defaultDataDir": "/Volumes/i2i 1/Money-Penny-Models/USB-Uncensored-LLM-main",
-      "ollamaHost": "localhost:11434",
+      "ollamaHost": "localhost:11435",
       "chatServerPort": 8090,
       "terminalHost": "localhost:9999"
     },
@@ -14,7 +14,7 @@
       "name": "AGENT-007",
       "defaultModelDir": "/Volumes/i2i 1/Agent-007-GOAT/Portable-AI-USB-main/models",
       "defaultDataDir": "/Volumes/i2i 1/Agent-007-GOAT",
-      "ollamaHost": "localhost:11434",
+      "ollamaHost": "localhost:11435",
       "chatServerPort": 3333,
       "terminalHost": "localhost:9999"
     },
@@ -22,7 +22,7 @@
       "name": "OSCAR",
       "defaultModelDir": "/Volumes/i2i 1/Money-Penny-Models/USB-Uncensored-LLM-main/Portable-AI-USB-main/models",
       "defaultDataDir": "/Volumes/i2i 1/Money-Penny-Models/USB-Uncensored-LLM-main",
-      "ollamaHost": "localhost:11434",
+      "ollamaHost": "localhost:11435",
       "chatServerPort": 8090,
       "terminalHost": "localhost:9999"
     },
@@ -30,7 +30,7 @@
       "name": "Nexus",
       "defaultModelDir": "/Volumes/i2i 1/Agent-007-GOAT/Portable-AI-USB-main/models",
       "defaultDataDir": "/Volumes/i2i 1/Agent-007-GOAT",
-      "ollamaHost": "localhost:11434",
+      "ollamaHost": "localhost:11435",
       "chatServerPort": 3333,
       "terminalHost": "localhost:9999"
     },
@@ -38,7 +38,7 @@
       "name": "Sir Codex",
       "defaultModelDir": "/Volumes/i2i 1/Agent-007-GOAT/Portable-AI-USB-main/models",
       "defaultDataDir": "/Volumes/i2i 1/Agent-007-GOAT",
-      "ollamaHost": "localhost:11434",
+      "ollamaHost": "localhost:11435",
       "chatServerPort": 3333,
       "terminalHost": "localhost:9999"
     },
@@ -46,7 +46,7 @@
       "name": "Dr. Devin (Patch)",
       "defaultModelDir": "/Volumes/i2i 1/Agent-007-GOAT/Portable-AI-USB-main/models",
       "defaultDataDir": "/Users/be100radio/GOAT-Royalty-App",
-      "ollamaHost": "localhost:11434",
+      "ollamaHost": "localhost:11435",
       "chatServerPort": 8090,
       "terminalHost": "localhost:9999"
     }

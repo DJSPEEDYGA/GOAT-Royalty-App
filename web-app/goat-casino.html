@@ -3,1527 +3,595 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOAT Casino</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>GOAT Royalty Casino — Play Like The Greatest</title>
+<link rel="stylesheet" href="css/goat-brand.css">
+<link rel="stylesheet" href="css/goat-theme.css">
 <style>
-/* ════════════════════════════════════════════
-   GOAT CASINO — Stake.com layout blueprint
-   Dark navy · teal accent · GOAT branding
-════════════════════════════════════════════ */
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  /* Stake-accurate dark navy palette */
-  --bg:        #0e0f14;
-  --bg2:       #1a1d27;
-  --bg3:       #22253a;
-  --bg4:       #2c3050;
-  --bg5:       #353a60;
-
-  /* Stake teal accent — but GOAT-shifted to warm teal/gold */
-  --teal:      #00d4aa;
-  --teal2:     #00b896;
-  --teal3:     #00f5c4;
-  --teal-dim:  rgba(0,212,170,0.12);
-  --teal-glow: rgba(0,212,170,0.28);
-
-  /* GOAT gold secondary */
-  --gold:      #f5c842;
-  --gold2:     #e8b020;
-  --gold-dim:  rgba(245,200,66,0.12);
-
-  /* GOAT red for alerts / badges */
-  --red:       #e63946;
-  --red-dim:   rgba(230,57,70,0.15);
-
-  --green:     #2ec97e;
-  --purple:    #9b59b6;
-  --orange:    #f97316;
-
-  --border:    rgba(255,255,255,0.055);
-  --border2:   rgba(255,255,255,0.10);
-  --border-t:  rgba(0,212,170,0.18);
-
-  --text:      #e8eaf5;
-  --text2:     #6b7099;
-  --text3:     #3a3f60;
-
-  --sidebar-w: 220px;
-  --topbar-h:  56px;
+:root {
+  --gold: #FFD700;
+  --gold-dim: #d4a03c;
+  --red: #c1121f;
+  --bg: #050507;
+  --bg-panel: rgba(255,255,255,0.045);
+  --border: rgba(255,255,255,0.09);
+  --text: #f5f5f7;
+  --muted: #9ca3af;
+  --teal: #00d4aa;
 }
 
-html,body{
-  background:var(--bg);color:var(--text);
-  font-family:'Inter',system-ui,sans-serif;
-  font-size:13px;min-height:100vh;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(193,18,31,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 100% 0%, rgba(212,160,60,0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, rgba(0,212,170,0.07) 0%, transparent 40%),
+    #050507;
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* GOAT Superman subtle watermark — Stake uses no watermark,
-   but this is GOAT branded so we keep it extremely faint */
-body::before{
-  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:url('assets/goat-superman.jpg') center 35%/480px no-repeat;
-  opacity:.022;filter:grayscale(100%);
+/* Animated gold particle layer */
+.casino-particles {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
 }
-body>*{position:relative;z-index:1}
-
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px}
-
-/* ══════════════════════════════════════
-   BOURRÉ ANNOUNCEMENT STRIP (top ticker)
-   Exactly like Stake's promo ribbon
-══════════════════════════════════════ */
-.promo-ribbon{
-  background:linear-gradient(90deg,#0a2018,#0d3020,#0a2018);
-  border-bottom:1px solid rgba(0,212,170,0.2);
-  padding:8px 20px;
-  display:flex;align-items:center;justify-content:center;gap:14px;
-  font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);
-  cursor:pointer;position:sticky;top:0;z-index:200;
-  overflow:hidden;
+.casino-particle {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255,215,0,0.25), transparent 70%);
+  animation: casinoFloat 20s ease-in-out infinite;
+  opacity: 0;
 }
-.promo-ribbon::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent 0%,rgba(0,212,170,0.05) 50%,transparent 100%);
-  background-size:200% 100%;
-  animation:ribbonShine 4s ease-in-out infinite;
-}
-@keyframes ribbonShine{0%,100%{background-position:200% 0}50%{background-position:0% 0}}
-.ribbon-pill{
-  background:linear-gradient(135deg,#ff6b00,#ff9a00);
-  color:#fff;font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
-  padding:2px 8px;border-radius:3px;flex-shrink:0;
-}
-.ribbon-text strong{color:var(--teal)}
-.ribbon-cta{
-  color:var(--teal);font-weight:700;font-size:11px;
-  border:1px solid rgba(0,212,170,0.35);border-radius:4px;
-  padding:3px 10px;transition:all .15s;flex-shrink:0;
-}
-.ribbon-cta:hover{background:var(--teal-dim)}
-
-/* ══════════════════════════════════════
-   TOP NAVIGATION BAR — Stake style
-══════════════════════════════════════ */
-.topbar{
-  height:var(--topbar-h);
-  background:var(--bg2);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;
-  padding:0 16px;gap:8px;
-  position:sticky;top:36px;z-index:150;
+.casino-particle:nth-child(1) { width:300px;height:300px;top:5%;left:3%;animation-delay:0s;opacity:.18; }
+.casino-particle:nth-child(2) { width:200px;height:200px;top:55%;left:12%;animation-delay:5s;opacity:.12; }
+.casino-particle:nth-child(3) { width:400px;height:400px;top:20%;left:68%;animation-delay:10s;opacity:.10; }
+.casino-particle:nth-child(4) { width:150px;height:150px;top:78%;left:82%;animation-delay:15s;opacity:.15; }
+.casino-particle:nth-child(5) { width:250px;height:250px;top:42%;left:44%;animation-delay:7s;opacity:.09; }
+@keyframes casinoFloat {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(25px,-40px) scale(1.1); }
+  66% { transform: translate(-18px,28px) scale(0.92); }
 }
 
-/* Logo */
-.logo-wrap{
-  display:flex;align-items:center;gap:9px;
-  text-decoration:none;margin-right:6px;flex-shrink:0;
+/* Watermark GOAT */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: url('assets/goat/goat-superman-city.webp') center center / 600px no-repeat;
+  opacity: 0.025; filter: grayscale(100%);
 }
-.logo-mark{
-  width:34px;height:34px;border-radius:8px;
-  background:linear-gradient(135deg,var(--teal3),var(--teal2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;font-weight:900;color:#0e0f14;flex-shrink:0;
-  box-shadow:0 2px 14px var(--teal-glow);
+body > * { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+.casino-nav {
+  background: rgba(5,5,7,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,215,0,0.15);
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 0;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.6);
 }
-.logo-name{
-  font-size:17px;font-weight:900;letter-spacing:.5px;
-  color:#fff;text-transform:uppercase;
+.casino-nav-brand {
+  display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0;
+  margin-right: 20px;
 }
-.logo-name span{
-  background:linear-gradient(135deg,var(--teal),var(--teal3));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+.casino-nav-brand img { height: 32px; border-radius: 6px; }
+.casino-nav-brand span {
+  font-weight: 900; font-size: 15px; letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #FFD700, #f0c040, #fff);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.casino-nav-links {
+  display: flex; align-items: center; gap: 2px; flex: 1; overflow-x: auto;
+}
+.casino-nav-links a {
+  color: #9ca3af; text-decoration: none; font-size: 12px; font-weight: 500;
+  padding: 4px 10px; border-radius: 4px; transition: all 0.15s; white-space: nowrap;
+}
+.casino-nav-links a:hover { color: #fff; background: rgba(255,215,0,0.08); }
+.casino-nav-links a.active { color: var(--gold); background: rgba(255,215,0,0.12); }
+.casino-nav-right {
+  display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: auto;
+}
+.nav-wallet-pill {
+  background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.25);
+  border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 700;
+  color: var(--gold); cursor: pointer;
+}
+.nav-vip-btn {
+  background: linear-gradient(135deg, var(--red), #8b0000);
+  border: none; border-radius: 6px; padding: 6px 14px;
+  font-size: 11px; font-weight: 800; color: #fff; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  box-shadow: 0 0 12px rgba(193,18,31,0.4);
+}
+.nav-vip-btn:hover { filter: brightness(1.15); }
+
+/* ── HERO BANNER ── */
+.casino-hero {
+  position: relative; overflow: hidden;
+  min-height: 220px;
+  background: linear-gradient(135deg,
+    rgba(193,18,31,0.25) 0%,
+    rgba(5,5,7,0.8) 40%,
+    rgba(212,160,60,0.15) 100%);
+  border-bottom: 1px solid rgba(255,215,0,0.12);
+  display: flex; align-items: center; padding: 0 40px;
+  gap: 40px;
+}
+.casino-hero-bg {
+  position: absolute; inset: 0; z-index: 0; overflow: hidden;
+}
+.casino-hero-bg img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 30%;
+  opacity: 0.12; filter: saturate(1.3);
+}
+.casino-hero-content {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; gap: 32px; flex: 1;
+}
+.casino-hero-goat {
+  width: 140px; height: 140px; flex-shrink: 0;
+  border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 40px rgba(255,215,0,0.5), 0 0 80px rgba(255,215,0,0.2);
+  animation: heroGlow 3s ease-in-out infinite;
+  cursor: pointer;
+}
+@keyframes heroGlow {
+  0%,100% { box-shadow: 0 0 40px rgba(255,215,0,0.5), 0 0 80px rgba(255,215,0,0.2); }
+  50% { box-shadow: 0 0 60px rgba(255,215,0,0.8), 0 0 120px rgba(255,215,0,0.35); }
+}
+.casino-hero-text { flex: 1; }
+.casino-hero-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px;
+}
+.casino-hero-title {
+  font-size: clamp(28px, 4vw, 52px); font-weight: 900; line-height: 1.05;
+  background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, #fff 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 8px;
+}
+.casino-hero-sub {
+  font-size: 14px; color: rgba(245,245,247,0.6); max-width: 480px; line-height: 1.5;
+}
+.casino-hero-stats {
+  display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap;
+}
+.casino-hero-stat { text-align: center; }
+.casino-hero-stat .val {
+  font-size: 22px; font-weight: 900; color: var(--gold); display: block;
+}
+.casino-hero-stat .lbl {
+  font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+}
+.casino-hero-imgs {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: 12px; align-items: center;
+}
+.casino-hero-img-stack {
+  display: flex; gap: 10px;
+}
+.casino-hero-img-stack img {
+  width: 80px; height: 80px; object-fit: cover; border-radius: 12px;
+  border: 2px solid rgba(255,215,0,0.3);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.casino-hero-img-stack img:hover {
+  transform: scale(1.08) translateY(-4px);
+  border-color: var(--gold);
 }
 
-/* Top nav tabs — Casino | Sports | Originals */
-.topnav{display:flex;gap:1px;margin-left:4px;flex-shrink:0}
-.topnav-btn{
-  padding:8px 16px;border-radius:6px;
-  font-size:12px;font-weight:600;color:var(--text2);
-  background:none;border:none;font-family:inherit;
-  cursor:pointer;transition:all .15s;white-space:nowrap;
-  display:flex;align-items:center;gap:6px;
+/* ── QUICK STATS BAR ── */
+.casino-stats-bar {
+  display: flex; align-items: center; gap: 0;
+  background: rgba(0,0,0,0.4);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; padding: 0 20px;
 }
-.topnav-btn:hover{color:var(--text);background:rgba(255,255,255,0.04)}
-.topnav-btn.act{color:#fff;background:rgba(255,255,255,0.06)}
-.topnav-btn .tn-ico{font-size:14px}
-
-/* Promo tag inline */
-.tn-badge{
-  font-size:8px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-  padding:1px 5px;border-radius:2px;
-  background:var(--red-dim);color:var(--red);
+.casino-stat-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 20px; border-right: 1px solid var(--border);
+  flex-shrink: 0;
 }
-
-.tb-spacer{flex:1}
-
-/* Search */
-.tb-search{
-  display:flex;align-items:center;gap:7px;
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:8px;padding:7px 12px;width:190px;
-  transition:border-color .15s;
+.casino-stat-item .s-val {
+  font-size: 16px; font-weight: 900; color: var(--gold);
 }
-.tb-search:focus-within{border-color:var(--teal-glow)}
-.tb-search input{
-  background:none;border:none;color:var(--text);
-  font-size:12px;font-family:inherit;width:100%;outline:none;
+.casino-stat-item .s-lbl {
+  font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em;
 }
-.tb-search input::placeholder{color:var(--text3)}
-
-/* Wallet / balance */
-.wallet-chip{
-  display:flex;align-items:center;gap:9px;
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:8px;padding:6px 12px;cursor:pointer;
-  transition:border-color .15s;flex-shrink:0;
+.casino-stat-live::before {
+  content: ''; display: inline-block; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--teal);
+  box-shadow: 0 0 6px var(--teal); animation: pulse-live 1.5s ease-in-out infinite;
+  margin-right: 6px;
 }
-.wallet-chip:hover{border-color:var(--border-t)}
-.wallet-ico{font-size:15px}
-.wallet-val{font-size:13px;font-weight:700;color:var(--teal)}
-.wallet-label{font-size:9px;color:var(--text2);letter-spacing:.5px}
-
-/* Auth buttons */
-.tb-btn{
-  padding:8px 18px;border-radius:8px;
-  font-size:12px;font-weight:700;cursor:pointer;
-  font-family:inherit;transition:all .15s;border:none;flex-shrink:0;
-}
-.btn-login{
-  background:transparent;color:var(--text);
-  border:1px solid var(--border2);
-}
-.btn-login:hover{background:var(--bg3)}
-.btn-register{
-  background:linear-gradient(135deg,var(--teal),var(--teal2));
-  color:#0e0f14;
-  box-shadow:0 2px 14px var(--teal-glow);
-}
-.btn-register:hover{opacity:.92;transform:translateY(-1px)}
-
-/* ══════════════════════════════════════
-   PAGE LAYOUT — sidebar + content
-══════════════════════════════════════ */
-.page-shell{
-  display:flex;
-  min-height:calc(100vh - var(--topbar-h) - 36px);
+@keyframes pulse-live {
+  0%,100% { opacity: 1; } 50% { opacity: 0.4; }
 }
 
-/* ══════════════════════════════════════
-   LEFT SIDEBAR — exact Stake structure
-══════════════════════════════════════ */
-.sidebar{
-  width:var(--sidebar-w);
-  background:var(--bg2);
-  border-right:1px solid var(--border);
-  flex-shrink:0;
-  display:flex;flex-direction:column;
-  overflow-y:auto;
-  position:sticky;
-  top:calc(var(--topbar-h) + 36px);
-  height:calc(100vh - var(--topbar-h) - 36px);
+/* ── CASINO IFRAME WRAPPER ── */
+.casino-embed-wrap {
+  position: relative;
+  background: #050505;
+  border-top: 1px solid rgba(255,215,0,0.08);
 }
-.sidebar::-webkit-scrollbar{display:none}
-
-/* Sidebar section label */
-.sb-label{
-  font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--text3);padding:14px 16px 6px;
+.casino-embed-wrap iframe {
+  width: 100%; min-height: calc(100vh - 270px);
+  border: none; display: block;
 }
-
-/* Nav item */
-.sb-item{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 14px;
-  font-size:12px;font-weight:500;color:var(--text2);
-  cursor:pointer;transition:all .12s;
-  text-decoration:none;position:relative;
+/* Loading overlay */
+.casino-loading {
+  position: absolute; inset: 0; z-index: 10;
+  background: #050507;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 20px; transition: opacity 0.4s;
 }
-.sb-item:hover{background:rgba(255,255,255,0.035);color:var(--text)}
-.sb-item.act{
-  background:rgba(0,212,170,0.07);color:#fff;
+.casino-loading.hidden { opacity: 0; pointer-events: none; }
+.casino-loading-goat {
+  width: 100px; height: 100px; border-radius: 50%;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 30px rgba(255,215,0,0.5);
+  animation: heroGlow 2s ease-in-out infinite;
+  object-fit: cover;
 }
-.sb-item.act::before{
-  content:'';position:absolute;left:0;top:3px;bottom:3px;
-  width:2.5px;border-radius:0 2px 2px 0;
-  background:var(--teal);
+.casino-loading-text {
+  font-size: 16px; font-weight: 700; color: var(--gold); letter-spacing: 0.05em;
 }
-
-.sb-ico{
-  width:28px;height:28px;border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;flex-shrink:0;
-  background:var(--bg3);
+.casino-loading-bar {
+  width: 200px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
 }
-.sb-item.act .sb-ico{background:rgba(0,212,170,0.15)}
-.sb-item:hover .sb-ico{background:var(--bg4)}
-.sb-ico-img{width:16px;height:16px;object-fit:contain}
-
-.sb-badge{
-  margin-left:auto;font-size:8px;font-weight:800;letter-spacing:.5px;
-  padding:2px 6px;border-radius:3px;flex-shrink:0;text-transform:uppercase;
+.casino-loading-fill {
+  height: 100%; background: linear-gradient(90deg, var(--red), var(--gold));
+  border-radius: 2px; animation: loadFill 1.5s ease-in-out infinite;
 }
-.badge-hot{background:var(--red-dim);color:var(--red)}
-.badge-new{background:rgba(46,201,126,0.18);color:var(--green)}
-.badge-live{
-  background:rgba(0,212,170,0.18);color:var(--teal);
-  animation:pulse 1.5s ease-in-out infinite;
-}
-.badge-exc{background:var(--gold-dim);color:var(--gold)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-
-.sb-divider{height:1px;background:var(--border);margin:4px 14px}
-
-/* Sidebar live feed block */
-.sb-live{
-  margin:10px 12px;
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:10px;padding:11px;
-}
-.sb-live-hdr{
-  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--teal);display:flex;align-items:center;gap:6px;margin-bottom:8px;
-}
-.live-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:pulse 1s ease-in-out infinite}
-.lf-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:5px 0;border-bottom:1px solid var(--border);font-size:10px;
-}
-.lf-row:last-child{border-bottom:none}
-.lf-user{color:var(--teal);font-weight:600}
-.lf-game{color:var(--text);font-weight:500}
-.lf-win{font-weight:700}
-.lf-win.up{color:var(--teal)}
-.lf-win.dn{color:var(--text2)}
-
-/* Sidebar search box */
-.sb-search{
-  display:flex;align-items:center;gap:7px;
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:8px;padding:8px 12px;margin:10px 12px 4px;
-  transition:border-color .15s;
-}
-.sb-search:focus-within{border-color:var(--teal-glow)}
-.sb-search input{
-  background:none;border:none;color:var(--text);
-  font-size:11px;font-family:inherit;width:100%;outline:none;
-}
-.sb-search input::placeholder{color:var(--text3)}
-
-/* ══════════════════════════════════════
-   MAIN CONTENT AREA
-══════════════════════════════════════ */
-.main{flex:1;overflow:hidden}
-
-/* ── Sub-navigation tabs inside main (Stake style) */
-.sub-nav{
-  display:flex;align-items:center;gap:2px;
-  padding:14px 20px 0;border-bottom:1px solid var(--border);
-  overflow-x:auto;
-}
-.sub-nav::-webkit-scrollbar{display:none}
-.sn-btn{
-  padding:9px 16px;border-radius:6px 6px 0 0;
-  font-size:12px;font-weight:600;color:var(--text2);
-  background:none;border:none;font-family:inherit;
-  cursor:pointer;transition:all .12s;white-space:nowrap;
-  border-bottom:2px solid transparent;
-  margin-bottom:-1px;
-}
-.sn-btn:hover{color:var(--text)}
-.sn-btn.act{
-  color:#fff;
-  border-bottom-color:var(--teal);
+@keyframes loadFill {
+  0% { width: 0%; } 70% { width: 90%; } 100% { width: 100%; }
 }
 
-/* Category filter pills — like Stake's scrollable tag row */
-.cat-bar{
-  display:flex;gap:7px;padding:14px 20px 12px;
-  overflow-x:auto;flex-wrap:nowrap;
+/* ── GOAT ART GALLERY STRIP ── */
+.casino-art-strip {
+  background: rgba(0,0,0,0.5);
+  border-top: 1px solid rgba(255,215,0,0.1);
+  border-bottom: 1px solid rgba(255,215,0,0.1);
+  padding: 16px 20px;
+  overflow-x: auto;
+  display: flex; align-items: center; gap: 12px;
 }
-.cat-bar::-webkit-scrollbar{display:none}
-.cat-pill{
-  display:flex;align-items:center;gap:6px;
-  padding:7px 14px;border-radius:20px;
-  font-size:11px;font-weight:600;white-space:nowrap;
-  cursor:pointer;flex-shrink:0;
-  background:var(--bg3);border:1px solid var(--border);
-  color:var(--text2);transition:all .15s;
+.casino-art-strip::-webkit-scrollbar { height: 4px; }
+.casino-art-strip::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 2px; }
+.art-strip-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold-dim); flex-shrink: 0; margin-right: 8px;
 }
-.cat-pill:hover{border-color:var(--border2);color:var(--text);background:var(--bg4)}
-.cat-pill.act{
-  background:var(--teal-dim);
-  border-color:rgba(0,212,170,0.35);
-  color:var(--teal);
+.art-strip-img {
+  height: 72px; width: 72px; flex-shrink: 0;
+  border-radius: 10px; object-fit: cover;
+  border: 2px solid rgba(255,215,0,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  cursor: pointer; transition: all 0.2s;
 }
-.cat-pill .cp-ico{font-size:13px}
-
-/* ── Banner / promo cards row (Stake's hero area) */
-.banners{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:10px;
-  padding:0 20px 4px;
-}
-@media(max-width:900px){.banners{grid-template-columns:1fr 1fr}}
-
-.banner-card{
-  border-radius:12px;overflow:hidden;
-  position:relative;cursor:pointer;
-  height:160px;display:block;text-decoration:none;
-  transition:transform .2s,box-shadow .2s;
-}
-.banner-card:hover{transform:translateY(-2px)}
-.bc-bg{width:100%;height:100%;object-fit:cover}
-.bc-color{width:100%;height:100%}
-.bc-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(160deg,transparent 30%,rgba(0,0,0,0.75) 100%);
-}
-.bc-content{
-  position:absolute;bottom:0;left:0;right:0;padding:14px 16px;
-}
-.bc-tag{
-  font-size:8px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
-  margin-bottom:4px;
-}
-.bc-title{font-size:16px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.2px}
-.bc-sub{font-size:10px;color:rgba(255,255,255,0.6);margin-top:2px}
-
-/* BOURRÉ banner — featured first slot, spans 2 cols */
-.banner-bourre{
-  grid-column:span 2;
-  background:linear-gradient(135deg,#060d18,#0a1e30,#0d3040,#1a4a60);
-  border:1px solid rgba(0,212,170,0.25);
-  box-shadow:0 4px 32px rgba(0,212,170,0.1);
-}
-.banner-bourre:hover{
-  box-shadow:0 8px 48px rgba(0,212,170,0.22)!important;
-}
-.banner-bourre .bc-overlay{
-  background:linear-gradient(90deg,rgba(0,0,0,0.6) 0%,transparent 60%);
-}
-.bc-bourre-inner{
-  position:absolute;inset:0;
-  display:flex;align-items:center;
-  padding:0 28px;gap:20px;
-}
-.bc-bourre-emoji{font-size:50px;line-height:1;flex-shrink:0}
-.bc-bourre-text{}
-.bc-bourre-eyebrow{
-  font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--teal);margin-bottom:4px;
-}
-.bc-bourre-title{
-  font-size:24px;font-weight:900;color:#fff;letter-spacing:-.4px;line-height:1.1;
-}
-.bc-bourre-title em{
-  font-style:normal;
-  color:var(--gold);
-}
-.bc-bourre-desc{
-  font-size:11px;color:rgba(255,255,255,0.6);margin-top:5px;max-width:300px;line-height:1.5;
-}
-.bc-bourre-btn{
-  position:absolute;right:22px;bottom:18px;
-  padding:8px 18px;border-radius:8px;
-  background:linear-gradient(135deg,var(--teal),var(--teal2));
-  color:#0e0f14;font-size:11px;font-weight:800;
-  border:none;cursor:pointer;font-family:inherit;
-  box-shadow:0 2px 14px var(--teal-glow);
-  transition:all .2s;
-}
-.bc-bourre-btn:hover{transform:scale(1.04)}
-
-/* ── Section header */
-.sec-hdr{
-  padding:20px 20px 12px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.sec-hdr-l{display:flex;align-items:center;gap:10px}
-.sec-ico{
-  width:30px;height:30px;border-radius:7px;
-  display:flex;align-items:center;justify-content:center;font-size:15px;
-  background:var(--bg3);flex-shrink:0;
-}
-.sec-title{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px}
-.sec-count{font-size:10px;color:var(--text2);font-weight:500}
-.sec-all{
-  font-size:11px;font-weight:600;color:var(--teal);
-  text-decoration:none;cursor:pointer;
-}
-.sec-all:hover{text-decoration:underline}
-
-/* ── Game grid — Stake's compact card layout */
-.game-grid{
-  padding:0 20px 6px;
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
-  gap:8px;
-}
-.game-grid.lg{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
-
-.game-card{
-  border-radius:9px;overflow:hidden;
-  position:relative;cursor:pointer;
-  background:var(--bg3);
-  transition:transform .18s,box-shadow .18s;
-  text-decoration:none;display:block;
-  border:1px solid var(--border);
-}
-.game-card:hover{
-  transform:translateY(-3px) scale(1.02);
-  box-shadow:0 8px 26px rgba(0,212,170,0.14);
-  border-color:rgba(0,212,170,0.3);
+.art-strip-img:hover {
+  transform: scale(1.12) translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 24px rgba(255,215,0,0.3);
 }
 
-.gc-thumb{
-  width:100%;aspect-ratio:3/2;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
+/* ── LIGHTBOX ── */
+.art-lightbox {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
 }
-.gc-thumb-art{width:100%;height:100%;object-fit:cover;transition:transform .3s}
-.game-card:hover .gc-thumb-art{transform:scale(1.07)}
-
-/* Placeholder art for games without images */
-.gc-placeholder{
-  width:100%;height:100%;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:5px;
+.art-lightbox.open { display: flex; }
+.art-lightbox img {
+  max-width: 90vw; max-height: 88vh; border-radius: 16px;
+  border: 3px solid var(--gold); box-shadow: 0 0 60px rgba(255,215,0,0.4);
 }
-.gc-placeholder-icon{font-size:28px;line-height:1}
-.gc-placeholder-name{font-size:9px;font-weight:700;color:rgba(255,255,255,0.5);text-align:center;padding:0 4px}
-
-.gc-badge{
-  position:absolute;top:6px;left:6px;
-  font-size:7px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-  padding:2px 5px;border-radius:2px;
-}
-.gcb-hot{background:var(--red);color:#fff}
-.gcb-new{background:var(--green);color:#0e0f14}
-.gcb-live{background:var(--teal);color:#0e0f14}
-.gcb-exc{background:var(--gold);color:#0e0f14}
-.gcb-orig{background:var(--purple);color:#fff}
-
-/* Play overlay on hover */
-.gc-play-overlay{
-  position:absolute;inset:0;
-  background:rgba(10,12,22,0.72);
-  display:flex;align-items:center;justify-content:center;gap:8px;flex-direction:column;
-  opacity:0;transition:opacity .18s;
-}
-.game-card:hover .gc-play-overlay{opacity:1}
-.gc-play-btn{
-  padding:7px 18px;border-radius:6px;
-  background:linear-gradient(135deg,var(--teal),var(--teal2));
-  color:#0e0f14;font-size:10px;font-weight:800;
-  border:none;cursor:pointer;font-family:inherit;
-  box-shadow:0 2px 10px var(--teal-glow);
-}
-.gc-demo-btn{
-  font-size:9px;font-weight:600;color:rgba(255,255,255,0.6);
-  background:none;border:none;cursor:pointer;font-family:inherit;
+.art-lightbox-close {
+  position: absolute; top: 20px; right: 28px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  color: #fff; font-size: 22px; width: 40px; height: 40px;
+  border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
 
-.gc-info{padding:7px 9px;background:var(--bg2)}
-.gc-name{font-size:11px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gc-provider{font-size:9px;color:var(--text2);margin-top:1px}
-
-/* Horizontal scroll row */
-.game-scroll-wrap{padding:0 20px 4px;overflow:hidden}
-.game-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
-.game-scroll::-webkit-scrollbar{display:none}
-.game-scroll .game-card{flex-shrink:0;width:140px;scroll-snap-align:start}
-
-/* ── Live bets table — Stake's signature feed */
-.bets-table-wrap{
-  margin:0 20px 8px;
-  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
-  overflow:hidden;
+/* ── FOOTER ── */
+.casino-footer {
+  background: rgba(0,0,0,0.7);
+  border-top: 1px solid rgba(255,215,0,0.08);
+  padding: 20px 40px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
 }
-.bets-table-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:11px 16px;border-bottom:1px solid var(--border);
+.casino-footer-brand {
+  display: flex; align-items: center; gap: 10px;
 }
-.bth-title{
-  font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--teal);display:flex;align-items:center;gap:7px;
+.casino-footer-brand img { height: 32px; border-radius: 6px; }
+.casino-footer-brand span { font-size: 13px; color: var(--muted); }
+.casino-footer-links {
+  display: flex; gap: 16px; flex-wrap: wrap;
 }
-.bth-tabs{display:flex;gap:2px}
-.bth-tab{
-  padding:4px 10px;border-radius:4px;
-  font-size:10px;font-weight:600;color:var(--text2);
-  background:none;border:none;font-family:inherit;cursor:pointer;transition:all .12s;
+.casino-footer-links a {
+  font-size: 11px; color: var(--muted); text-decoration: none;
+  transition: color 0.15s;
 }
-.bth-tab:hover{color:var(--text)}
-.bth-tab.act{background:var(--bg3);color:var(--text)}
-
-.bets-table{width:100%;border-collapse:collapse}
-.bets-table th{
-  font-size:8.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;
-  color:var(--text3);padding:6px 16px;text-align:left;
-  border-bottom:1px solid var(--border);
-}
-.bets-table td{
-  padding:8px 16px;font-size:11px;
-  border-bottom:1px solid var(--border);vertical-align:middle;
-}
-.bets-table tr:last-child td{border-bottom:none}
-.bets-table tr{cursor:pointer;transition:background .1s}
-.bets-table tr:hover td{background:rgba(255,255,255,0.025)}
-.bt-user{color:var(--teal);font-weight:600}
-.bt-game{color:var(--text);font-weight:500}
-.bt-time{color:var(--text2)}
-.bt-wager{color:var(--text);font-weight:600}
-.bt-mult{color:var(--text2);font-size:9px}
-.bt-win.up{color:var(--teal);font-weight:700}
-.bt-win.dn{color:var(--text2)}
-
-/* ── Providers strip */
-.providers-strip{
-  display:flex;gap:8px;padding:0 20px 14px;overflow-x:auto;flex-wrap:nowrap;
-}
-.providers-strip::-webkit-scrollbar{display:none}
-.provider-chip{
-  display:flex;align-items:center;gap:7px;
-  padding:7px 14px;border-radius:8px;
-  background:var(--bg3);border:1px solid var(--border);
-  font-size:10px;font-weight:600;color:var(--text2);
-  cursor:pointer;flex-shrink:0;transition:all .12s;white-space:nowrap;
-}
-.provider-chip:hover{border-color:var(--border2);color:var(--text);background:var(--bg4)}
-.provider-chip.act{border-color:rgba(0,212,170,0.3);color:var(--teal);background:var(--teal-dim)}
-.prov-ico{font-size:13px}
-
-/* ── Promo cards row */
-.promo-row{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:10px;margin:0 20px 8px;
-}
-.promo-card{
-  background:var(--bg2);border:1px solid var(--border);border-radius:10px;
-  padding:16px;display:flex;align-items:flex-start;gap:12px;
-  cursor:pointer;transition:all .15s;
-}
-.promo-card:hover{border-color:var(--border-t);background:var(--bg3)}
-.promo-ico{
-  width:42px;height:42px;border-radius:10px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:20px;
-}
-.promo-title{font-size:12px;font-weight:700;color:var(--text)}
-.promo-desc{font-size:10px;color:var(--text2);margin-top:2px;line-height:1.45}
-.promo-tag{
-  display:inline-block;margin-top:5px;
-  font-size:8px;font-weight:700;padding:2px 6px;border-radius:2px;
-  text-transform:uppercase;letter-spacing:.5px;
-}
-.ptag-teal{background:var(--teal-dim);color:var(--teal)}
-.ptag-gold{background:var(--gold-dim);color:var(--gold)}
-.ptag-red{background:var(--red-dim);color:var(--red)}
-
-/* ── VIP bar */
-.vip-bar{
-  margin:16px 20px 4px;
-  background:linear-gradient(135deg,#0d1a2e,#12233a,#0d1a2e);
-  border:1px solid rgba(0,212,170,0.18);
-  border-radius:12px;padding:18px 24px;
-  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
-  position:relative;overflow:hidden;
-}
-.vip-bar::before{
-  content:'';position:absolute;right:-60px;top:-60px;
-  width:200px;height:200px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,212,170,0.08) 0%,transparent 70%);
-  pointer-events:none;
-}
-.vip-left{flex:1;min-width:200px}
-.vip-title{
-  font-size:15px;font-weight:800;margin-bottom:3px;
-  background:linear-gradient(135deg,var(--teal),var(--teal3));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.vip-sub{font-size:11px;color:var(--text2);line-height:1.5}
-.vip-tiers{display:flex;gap:10px;flex-wrap:wrap}
-.vip-tier{
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:8px;padding:10px 14px;min-width:100px;text-align:center;
-  cursor:pointer;transition:all .15s;
-}
-.vip-tier:hover{border-color:var(--border-t)}
-.vt-ico{font-size:18px;margin-bottom:3px}
-.vt-name{font-size:10px;font-weight:700;color:var(--text2)}
-.vip-btn{
-  padding:10px 22px;border-radius:8px;
-  background:linear-gradient(135deg,var(--teal),var(--teal2));
-  color:#0e0f14;font-size:12px;font-weight:800;
-  border:none;cursor:pointer;font-family:inherit;
-  box-shadow:0 2px 14px var(--teal-glow);
-  transition:all .2s;flex-shrink:0;
-}
-.vip-btn:hover{transform:translateY(-1px);opacity:.92}
-
-/* ── Footer */
-.footer{
-  padding:32px 20px;
-  border-top:1px solid var(--border);
-  margin-top:24px;
-}
-.footer-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:24px;margin-bottom:24px;
-}
-.footer-col-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text2);margin-bottom:10px}
-.footer-link{display:block;font-size:11px;color:var(--text3);margin-bottom:7px;text-decoration:none;cursor:pointer}
-.footer-link:hover{color:var(--text2)}
-.footer-bottom{
-  border-top:1px solid var(--border);padding-top:16px;
-  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
-}
-.footer-legal{font-size:10px;color:var(--text3);line-height:1.6}
-.footer-badges{display:flex;gap:8px;flex-wrap:wrap}
-.f-badge{
-  background:var(--bg3);border:1px solid var(--border);
-  border-radius:5px;padding:4px 10px;font-size:9px;font-weight:600;color:var(--text2);
+.casino-footer-links a:hover { color: var(--gold); }
+.casino-footer-note {
+  font-size: 10px; color: rgba(156,163,175,0.5); text-align: right;
 }
 
-/* ══════════════════════════════════════
-   SCROLLBAR ANIMATION FOR LIVE TICKER
-══════════════════════════════════════ */
-@keyframes tickerScroll{
-  0%{transform:translateY(0)}
-  100%{transform:translateY(-50%)}
+/* Responsive */
+@media (max-width: 768px) {
+  .casino-hero { min-height: 160px; padding: 20px; gap: 16px; }
+  .casino-hero-goat { width: 80px; height: 80px; }
+  .casino-hero-imgs { display: none; }
+  .casino-hero-title { font-size: 24px; }
+  .casino-footer { padding: 16px 20px; }
 }
-
-/* ══════════════════════════════════════
-   CHAT WIDGET BUTTON (Stake style)
-══════════════════════════════════════ */
-.chat-fab{
-  position:fixed;right:20px;bottom:24px;z-index:500;
-  width:48px;height:48px;border-radius:50%;
-  background:linear-gradient(135deg,var(--teal),var(--teal2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;cursor:pointer;
-  box-shadow:0 4px 20px var(--teal-glow);
-  transition:transform .2s;border:none;
-  color:#0e0f14;
-}
-.chat-fab:hover{transform:scale(1.08)}
-.chat-fab-badge{
-  position:absolute;top:-2px;right:-2px;
-  width:16px;height:16px;border-radius:50%;
-  background:var(--red);color:#fff;
-  font-size:8px;font-weight:800;
-  display:flex;align-items:center;justify-content:center;
-}
-
 </style>
 </head>
 <body>
 
-<!-- ════ BOURRÉ PROMO RIBBON ════ -->
-<div class="promo-ribbon" style="cursor:pointer;" onclick="window.open('http://casino.72.61.193.184.nip.io/','_blank')">
-  <span class="ribbon-pill">LIVE</span>
-  <span class="ribbon-text">
-    <strong>Ultimate Bourré</strong> is LIVE — Louisiana's #1 card game, only on GOAT Casino
-  </span>
-  <span class="ribbon-cta">Play Now →</span>
+<!-- Ambient particles -->
+<div class="casino-particles">
+  <div class="casino-particle"></div>
+  <div class="casino-particle"></div>
+  <div class="casino-particle"></div>
+  <div class="casino-particle"></div>
+  <div class="casino-particle"></div>
 </div>
 
-<!-- ════ TOP NAV BAR ════ -->
-<header class="topbar">
-  <a class="logo-wrap" href="index.html">
-    <div class="logo-mark">🐐</div>
-    <div>
-      <div class="logo-name">GOAT <span>Casino</span></div>
-    </div>
+<!-- ── NAVIGATION ── -->
+<nav class="casino-nav">
+  <a class="casino-nav-brand" href="goat-launcher-hub.html">
+    <img src="assets/images/the-goat-icon.png" alt="GOAT Force">
+    <span>GOAT FORCE</span>
   </a>
-
-  <nav class="topnav">
-    <button class="topnav-btn act"><span class="tn-ico">🎰</span> Casino</button>
-    <button class="topnav-btn"><span class="tn-ico">⚽</span> Sports</button>
-    <button class="topnav-btn">
-      <span class="tn-ico">⭐</span> Originals
-      <span class="tn-badge">HOT</span>
-    </button>
-    <button class="topnav-btn"><span class="tn-ico">🏆</span> Races</button>
-    <button class="topnav-btn"><span class="tn-ico">🎁</span> Promotions</button>
-  </nav>
-
-  <div class="tb-spacer"></div>
-
-  <!-- Search -->
-  <div class="tb-search">
-    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--text3)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" placeholder="Search games…">
+  <div class="casino-nav-links">
+    <a href="goat-launcher-hub.html">Hub</a>
+    <a href="the-goat-launcher.html">THE GOAT</a>
+    <a href="money-penny-launcher.html">Ms. Money Penny</a>
+    <a href="master-oscar-launcher.html">Master Oscar</a>
+    <a href="agent-007.html">Agent 007</a>
+    <a href="goat-casino.html" class="active">🎰 Casino</a>
+    <a href="goat-celebrity-lounge.html">Celebrity Lounge</a>
+    <a href="studio-hub.html">Studio Hub</a>
+    <a href="agent-status.html">Agent Status</a>
+    <a href="halito-chat.html">Halito Chat</a>
   </div>
+  <div class="casino-nav-right">
+    <span class="nav-wallet-pill" id="navWallet">25,000 USDT-D</span>
+    <button class="nav-vip-btn" onclick="openVip()">VIP ACCESS</button>
+  </div>
+</nav>
 
-  <!-- Wallet -->
-  <div class="wallet-chip">
-    <span class="wallet-ico">💰</span>
-    <div>
-      <div class="wallet-val">$1,247.50</div>
-      <div class="wallet-label">BALANCE</div>
+<!-- ── HERO BANNER ── -->
+<section class="casino-hero">
+  <div class="casino-hero-bg">
+    <img src="assets/goat/goat-marvel-logo.webp" alt="" aria-hidden="true">
+  </div>
+  <div class="casino-hero-content">
+    <img class="casino-hero-goat"
+         src="assets/goat/the-goat-2.webp"
+         alt="THE GOAT"
+         id="heroGoatImg"
+         onclick="cycleHeroGoat()"
+         title="Click to cycle GOAT images">
+    <div class="casino-hero-text">
+      <div class="casino-hero-eyebrow">🐐 GOAT Royalty · VIP Casino · Play Like The Greatest</div>
+      <h1 class="casino-hero-title">GOAT Royalty Casino</h1>
+      <p class="casino-hero-sub">29 live games · Ultimate Bourré · Crash · Dice · Slots · VIP tables · Brick Squad private rooms — fastest payouts in the game.</p>
+      <div class="casino-hero-stats">
+        <div class="casino-hero-stat"><span class="val">29</span><span class="lbl">Live Games</span></div>
+        <div class="casino-hero-stat"><span class="val">12.8k</span><span class="lbl">Players Online</span></div>
+        <div class="casino-hero-stat"><span class="val">1.6%</span><span class="lbl">House Edge</span></div>
+        <div class="casino-hero-stat"><span class="val">VIP</span><span class="lbl">Instant Access</span></div>
+        <div class="casino-hero-stat"><span class="val">$3.3B</span><span class="lbl">Portfolio</span></div>
+      </div>
     </div>
   </div>
-
-  <button class="tb-btn btn-login">Sign In</button>
-  <button class="tb-btn btn-register">Register</button>
-</header>
-
-<!-- ════ PAGE SHELL ════ -->
-<div class="page-shell">
-
-  <!-- ════ LEFT SIDEBAR ════ -->
-  <aside class="sidebar">
-
-    <!-- Search inside sidebar -->
-    <div class="sb-search">
-      <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--text3)"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" placeholder="Search…">
+  <div class="casino-hero-imgs">
+    <div class="casino-hero-img-stack">
+      <img src="assets/goat/goat-flying-cape.png"     alt="GOAT" onclick="lightbox(this.src)">
+      <img src="assets/goat/goat-superman-city.webp"  alt="GOAT Superman" onclick="lightbox(this.src)">
+      <img src="assets/goat/waka-goat-flying.webp"    alt="Waka + GOAT" onclick="lightbox(this.src)">
     </div>
-
-    <div class="sb-label">Casino</div>
-
-    <a href="#" class="sb-item act">
-      <div class="sb-ico">🏠</div>
-      Lobby
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">⭐</div>
-      GOAT Originals
-      <span class="sb-badge badge-exc">EXC</span>
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🎰</div>
-      Slots
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">📺</div>
-      Live Casino
-      <span class="sb-badge badge-live">LIVE</span>
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🃏</div>
-      Ultimate Bourré
-      <span class="sb-badge badge-hot">HOT</span>
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">♠️</div>
-      Blackjack
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🎡</div>
-      Roulette
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">💣</div>
-      Mines
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🪂</div>
-      Crash
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">⚡</div>
-      Plinko
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🎲</div>
-      Dice
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🃏</div>
-      Video Poker
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">💎</div>
-      Bonus Buy
-      <span class="sb-badge badge-new">NEW</span>
-    </a>
-
-    <div class="sb-divider"></div>
-
-    <div class="sb-label">Sports</div>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">⚽</div>
-      Soccer
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🏀</div>
-      NBA
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🏈</div>
-      NFL
-      <span class="sb-badge badge-live">LIVE</span>
-    </a>
-    <a href="#" class="sb-item">
-      <div class="sb-ico">🎮</div>
-      Esports
-    </a>
-
-    <div class="sb-divider"></div>
-
-    <!-- Live feed block -->
-    <div class="sb-live">
-      <div class="sb-live-hdr">
-        <div class="live-dot"></div>
-        Live Wins
-      </div>
-      <div class="lf-row">
-        <span class="lf-user">goat_***</span>
-        <span class="lf-game">Mines</span>
-        <span class="lf-win up">+$842</span>
-      </div>
-      <div class="lf-row">
-        <span class="lf-user">king_***</span>
-        <span class="lf-game">Plinko</span>
-        <span class="lf-win up">+$4,200</span>
-      </div>
-      <div class="lf-row">
-        <span class="lf-user">fly_***</span>
-        <span class="lf-game">Bourré</span>
-        <span class="lf-win up">+$320</span>
-      </div>
-      <div class="lf-row">
-        <span class="lf-user">ace_***</span>
-        <span class="lf-game">Crash</span>
-        <span class="lf-win dn">−$50</span>
-      </div>
-      <div class="lf-row">
-        <span class="lf-user">ben_***</span>
-        <span class="lf-game">Blackjack</span>
-        <span class="lf-win up">+$1,600</span>
-      </div>
+    <div class="casino-hero-img-stack">
+      <img src="assets/goat/goat-marvel-logo.webp"    alt="GOAT Marvel" onclick="lightbox(this.src)">
+      <img src="assets/goat/goat-app-icon-red.webp"   alt="GOAT Icon" onclick="lightbox(this.src)">
+      <img src="assets/goat/the-goat-1.webp"          alt="THE GOAT" onclick="lightbox(this.src)">
     </div>
+  </div>
+</section>
 
-  </aside>
-
-  <!-- ════ MAIN CONTENT ════ -->
-  <main class="main">
-
-    <!-- Sub-nav tabs -->
-    <div class="sub-nav">
-      <button class="sn-btn act">🏠 Lobby</button>
-      <button class="sn-btn">⭐ Originals</button>
-      <button class="sn-btn">🎰 Slots</button>
-      <button class="sn-btn">📺 Live Dealer</button>
-      <button class="sn-btn">🃏 Table Games</button>
-      <button class="sn-btn">🎰 Bonus Buy</button>
-      <button class="sn-btn">⚡ New Releases</button>
-      <button class="sn-btn">🔥 Popular</button>
-    </div>
-
-    <!-- Category filter pills -->
-    <div class="cat-bar">
-      <div class="cat-pill act"><span class="cp-ico">🏆</span> All Games</div>
-      <div class="cat-pill"><span class="cp-ico">⭐</span> Originals</div>
-      <div class="cat-pill"><span class="cp-ico">🃏</span> Bourré</div>
-      <div class="cat-pill"><span class="cp-ico">💣</span> Crash</div>
-      <div class="cat-pill"><span class="cp-ico">💰</span> Slots</div>
-      <div class="cat-pill"><span class="cp-ico">📺</span> Live</div>
-      <div class="cat-pill"><span class="cp-ico">♠️</span> Blackjack</div>
-      <div class="cat-pill"><span class="cp-ico">🎡</span> Roulette</div>
-      <div class="cat-pill"><span class="cp-ico">🎲</span> Table</div>
-      <div class="cat-pill"><span class="cp-ico">🛒</span> Bonus Buy</div>
-      <div class="cat-pill"><span class="cp-ico">🎯</span> New</div>
-    </div>
-
-    <!-- ═══ HERO BANNERS ═══ -->
-    <div class="banners">
-
-      <!-- BOURRÉ — spans 2 cols -->
-      <a href="http://casino.72.61.193.184.nip.io/" target="_blank" rel="noopener" class="banner-card banner-bourre">
-        <div class="bc-bourre-inner">
-          <div class="bc-bourre-emoji">🃏</div>
-          <div class="bc-bourre-text">
-            <div class="bc-bourre-eyebrow">GOAT Exclusive · Now Live</div>
-            <div class="bc-bourre-title">Ultimate <em>Bourré</em></div>
-            <div class="bc-bourre-desc">Louisiana's legendary card game, reimagined. Go all-in, bluff your way to the pot, and become the GOAT.</div>
-          </div>
-        </div>
-        <button class="bc-bourre-btn">Play Now →</button>
-      </a>
-
-      <!-- Promo card 2 -->
-      <a href="#" class="banner-card" style="background:linear-gradient(135deg,#0e0f14,#1a1040,#2a1860);border:1px solid rgba(155,89,182,0.25)">
-        <div class="bc-overlay" style="background:linear-gradient(160deg,transparent 20%,rgba(0,0,0,0.8) 100%)"></div>
-        <div class="bc-content">
-          <div class="bc-tag" style="color:var(--purple)">WEEKLY RACE</div>
-          <div class="bc-title">$100K Prize Pool</div>
-          <div class="bc-sub">Top 50 players split the pot</div>
-        </div>
-      </a>
-
-    </div>
-
-    <!-- ═══ GOAT ORIGINALS ═══ -->
-    <div class="sec-hdr">
-      <div class="sec-hdr-l">
-        <div class="sec-ico">⭐</div>
-        <div>
-          <div class="sec-title">GOAT Originals</div>
-          <div class="sec-count">13 exclusive games</div>
-        </div>
-      </div>
-      <a class="sec-all" href="#">See All</a>
-    </div>
-
-    <div class="game-grid lg">
-      <!-- Bourré -->
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#0d2035,#1a4060,#0d2035)">
-          <div class="gc-placeholder">
-            <div class="gc-placeholder-icon">🃏</div>
-            <div class="gc-placeholder-name">ULTIMATE BOURRÉ</div>
-          </div>
-        </div>
-        <span class="gc-badge gcb-exc">EXCLUSIVE</span>
-        <div class="gc-play-overlay">
-          <button class="gc-play-btn">Play Now</button>
-          <button class="gc-demo-btn">Demo</button>
-        </div>
-        <div class="gc-info">
-          <div class="gc-name">Ultimate Bourré</div>
-          <div class="gc-provider">GOAT Originals</div>
-        </div>
-      </a>
-      <!-- Crash -->
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a0d0a,#3d1808,#1a0d0a)">
-          <div class="gc-placeholder">
-            <div class="gc-placeholder-icon">📈</div>
-            <div class="gc-placeholder-name">CRASH</div>
-          </div>
-        </div>
-        <span class="gc-badge gcb-hot">HOT</span>
-        <div class="gc-play-overlay">
-          <button class="gc-play-btn">Play Now</button>
-          <button class="gc-demo-btn">Demo</button>
-        </div>
-        <div class="gc-info">
-          <div class="gc-name">Crash</div>
-          <div class="gc-provider">GOAT Originals</div>
-        </div>
-      </a>
-      <!-- Mines -->
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#0a1a0d,#1a3d18,#0a1a0d)">
-          <div class="gc-placeholder">
-            <div class="gc-placeholder-icon">💣</div>
-            <div class="gc-placeholder-name">MINES</div>
-          </div>
-        </div>
-        <span class="gc-badge gcb-live">LIVE</span>
-        <div class="gc-play-overlay">
-          <button class="gc-play-btn">Play Now</button>
-          <button class="gc-demo-btn">Demo</button>
-        </div>
-        <div class="gc-info">
-          <div class="gc-name">Mines</div>
-          <div class="gc-provider">GOAT Originals</div>
-        </div>
-      </a>
-      <!-- Plinko -->
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#0d0a2e,#1a1460,#0d0a2e)">
-          <div class="gc-placeholder">
-            <div class="gc-placeholder-icon">⚡</div>
-            <div class="gc-placeholder-name">PLINKO</div>
-          </div>
-        </div>
-        <span class="gc-badge gcb-orig">ORIG</span>
-        <div class="gc-play-overlay">
-          <button class="gc-play-btn">Play Now</button>
-          <button class="gc-demo-btn">Demo</button>
-        </div>
-        <div class="gc-info">
-          <div class="gc-name">Plinko</div>
-          <div class="gc-provider">GOAT Originals</div>
-        </div>
-      </a>
-      <!-- Dice -->
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a1a0a,#3d3d08,#1a1a0a)">
-          <div class="gc-placeholder">
-            <div class="gc-placeholder-icon">🎲</div>
-            <div class="gc-placeholder-name">DICE</div>
-          </div>
-        </div>
-        <span class="gc-badge gcb-orig">ORIG</span>
-        <div class="gc-play-overlay">
-          <button class="gc-play-btn">Play Now</button>
-          <button class="gc-demo-btn">Demo</button>
-        </div>
-        <div class="gc-info">
-          <div class="gc-name">Dice</div>
-          <div class="gc-provider">GOAT Originals</div>
-        </div>
-      </a>
-      <!-- Limbo -->
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a0a1a,#40083d,#1a0a1a)">
-          <div class="gc-placeholder">
-            <div class="gc-placeholder-icon">🌀</div>
-            <div class="gc-placeholder-name">LIMBO</div>
-          </div>
-        </div>
-        <span class="gc-badge gcb-orig">ORIG</span>
-        <div class="gc-play-overlay">
-          <button class="gc-play-btn">Play Now</button>
-          <button class="gc-demo-btn">Demo</button>
-        </div>
-        <div class="gc-info">
-          <div class="gc-name">Limbo</div>
-          <div class="gc-provider">GOAT Originals</div>
-        </div>
-      </a>
-    </div>
-
-    <!-- ═══ POPULAR NOW ═══ -->
-    <div class="sec-hdr">
-      <div class="sec-hdr-l">
-        <div class="sec-ico">🔥</div>
-        <div>
-          <div class="sec-title">Popular Now</div>
-          <div class="sec-count">3,000+ games</div>
-        </div>
-      </div>
-      <a class="sec-all" href="#">See All</a>
-    </div>
-
-    <!-- Provider filter -->
-    <div class="providers-strip">
-      <div class="provider-chip act"><span class="prov-ico">🏆</span> All</div>
-      <div class="provider-chip"><span class="prov-ico">🎮</span> Pragmatic Play</div>
-      <div class="provider-chip"><span class="prov-ico">🎯</span> Hacksaw</div>
-      <div class="provider-chip"><span class="prov-ico">⚡</span> Nolimit City</div>
-      <div class="provider-chip"><span class="prov-ico">🌐</span> Evolution</div>
-      <div class="provider-chip"><span class="prov-ico">🎰</span> NetEnt</div>
-      <div class="provider-chip"><span class="prov-ico">🎲</span> Play'n GO</div>
-      <div class="provider-chip"><span class="prov-ico">💎</span> Red Tiger</div>
-    </div>
-
-    <div class="game-grid">
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a0a0d,#3d1218)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🐐</div><div class="gc-placeholder-name">GATES OF GOAT</div></div>
-        </div>
-        <span class="gc-badge gcb-hot">HOT</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Play</button></div>
-        <div class="gc-info"><div class="gc-name">Gates of GOAT</div><div class="gc-provider">Pragmatic Play</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#0a1a0d,#124028)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🌿</div><div class="gc-placeholder-name">SWEET BONANZA</div></div>
-        </div>
-        <span class="gc-badge gcb-hot">HOT</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Play</button></div>
-        <div class="gc-info"><div class="gc-name">Sweet Bonanza</div><div class="gc-provider">Pragmatic Play</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#0d0a2e,#1e1460)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🍬</div><div class="gc-placeholder-name">SUGAR RUSH</div></div>
-        </div>
-        <span class="gc-badge gcb-new">NEW</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Play</button></div>
-        <div class="gc-info"><div class="gc-name">Sugar Rush 1000</div><div class="gc-provider">Pragmatic Play</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a1209,#3d2a0a)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🐙</div><div class="gc-placeholder-name">MENTAL</div></div>
-        </div>
-        <span class="gc-badge gcb-exc">EXC</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Play</button></div>
-        <div class="gc-info"><div class="gc-name">Mental</div><div class="gc-provider">Nolimit City</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a0d2e,#3d1860)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🔪</div><div class="gc-placeholder-name">TOMBSTONE RIP</div></div>
-        </div>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Play</button></div>
-        <div class="gc-info"><div class="gc-name">Tombstone RIP</div><div class="gc-provider">Nolimit City</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#0a1a14,#143d2a)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🌊</div><div class="gc-placeholder-name">MONEY TRAIN 4</div></div>
-        </div>
-        <span class="gc-badge gcb-hot">HOT</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Play</button></div>
-        <div class="gc-info"><div class="gc-name">Money Train 4</div><div class="gc-provider">Relax Gaming</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a0909,#3d1212)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🃏</div><div class="gc-placeholder-name">NO LIMIT CITY</div></div>
-        </div>
-        <span class="gc-badge gcb-new">NEW</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Play</button></div>
-        <div class="gc-info"><div class="gc-name">San Quentin xWays</div><div class="gc-provider">Nolimit City</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#091a12,#0f3d20)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">💰</div><div class="gc-placeholder-name">BOOK OF SHADOWS</div></div>
-        </div>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Play</button></div>
-        <div class="gc-info"><div class="gc-name">Book of Shadows</div><div class="gc-provider">Nolimit City</div></div>
-      </a>
-    </div>
-
-    <!-- ═══ LIVE BETS TABLE ═══ -->
-    <div class="bets-table-wrap">
-      <div class="bets-table-hdr">
-        <div class="bth-title">
-          <div class="live-dot"></div>
-          All Bets
-        </div>
-        <div class="bth-tabs">
-          <button class="bth-tab act">All</button>
-          <button class="bth-tab">My Bets</button>
-          <button class="bth-tab">High Rollers</button>
-          <button class="bth-tab">Rare Wins</button>
-        </div>
-      </div>
-      <table class="bets-table">
-        <thead>
-          <tr>
-            <th>Player</th>
-            <th>Game</th>
-            <th>Time</th>
-            <th>Wager</th>
-            <th>Multiplier</th>
-            <th>Payout</th>
-          </tr>
-        </thead>
-        <tbody id="bets-body">
-          <tr><td class="bt-user">goat_fly***</td><td class="bt-game">🃏 Ultimate Bourré</td><td class="bt-time">just now</td><td class="bt-wager">$100.00</td><td class="bt-mult">×8.2</td><td class="bt-win up">$820.00</td></tr>
-          <tr><td class="bt-user">king_b***</td><td class="bt-game">📈 Crash</td><td class="bt-time">5s ago</td><td class="bt-wager">$500.00</td><td class="bt-mult">×1.34</td><td class="bt-win dn">−$330.00</td></tr>
-          <tr><td class="bt-user">ace_***</td><td class="bt-game">💣 Mines</td><td class="bt-time">12s ago</td><td class="bt-wager">$50.00</td><td class="bt-mult">×24.00</td><td class="bt-win up">$1,200.00</td></tr>
-          <tr><td class="bt-user">ben_r***</td><td class="bt-game">🎰 Gates of GOAT</td><td class="bt-time">18s ago</td><td class="bt-wager">$200.00</td><td class="bt-mult">×412.5</td><td class="bt-win up">$82,500.00</td></tr>
-          <tr><td class="bt-user">nova_***</td><td class="bt-game">⚡ Plinko</td><td class="bt-time">24s ago</td><td class="bt-wager">$25.00</td><td class="bt-mult">×0.5</td><td class="bt-win dn">−$12.50</td></tr>
-          <tr><td class="bt-user">flash_***</td><td class="bt-game">🎡 Roulette</td><td class="bt-time">31s ago</td><td class="bt-wager">$150.00</td><td class="bt-mult">×36.00</td><td class="bt-win up">$5,400.00</td></tr>
-          <tr><td class="bt-user">wolf_***</td><td class="bt-game">♠️ Blackjack</td><td class="bt-time">38s ago</td><td class="bt-wager">$300.00</td><td class="bt-mult">×2.00</td><td class="bt-win up">$600.00</td></tr>
-          <tr><td class="bt-user">rio_***</td><td class="bt-game">🌀 Limbo</td><td class="bt-time">45s ago</td><td class="bt-wager">$10.00</td><td class="bt-mult">×100.00</td><td class="bt-win up">$1,000.00</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- ═══ LIVE CASINO ═══ -->
-    <div class="sec-hdr">
-      <div class="sec-hdr-l">
-        <div class="sec-ico">📺</div>
-        <div>
-          <div class="sec-title">Live Casino</div>
-          <div class="sec-count">50+ live tables</div>
-        </div>
-      </div>
-      <a class="sec-all" href="#">See All</a>
-    </div>
-
-    <div class="game-grid">
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#0d1a2e,#1a304a)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">♠️</div><div class="gc-placeholder-name">LIVE BLACKJACK</div></div>
-        </div>
-        <span class="gc-badge gcb-live">LIVE</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Join Table</button></div>
-        <div class="gc-info"><div class="gc-name">Live Blackjack</div><div class="gc-provider">Evolution Gaming</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a0d2e,#301a4a)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🎡</div><div class="gc-placeholder-name">LIVE ROULETTE</div></div>
-        </div>
-        <span class="gc-badge gcb-live">LIVE</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Join Table</button></div>
-        <div class="gc-info"><div class="gc-name">Lightning Roulette</div><div class="gc-provider">Evolution Gaming</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#0a1a14,#122e20)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🃏</div><div class="gc-placeholder-name">LIVE BACCARAT</div></div>
-        </div>
-        <span class="gc-badge gcb-live">LIVE</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Join Table</button></div>
-        <div class="gc-info"><div class="gc-name">Speed Baccarat</div><div class="gc-provider">Evolution Gaming</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a1209,#302010)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🎰</div><div class="gc-placeholder-name">CRAZY TIME</div></div>
-        </div>
-        <span class="gc-badge gcb-hot">HOT</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Join Table</button></div>
-        <div class="gc-info"><div class="gc-name">Crazy Time</div><div class="gc-provider">Evolution Gaming</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#1a0a14,#301224)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🐐</div><div class="gc-placeholder-name">GOAT LIVE</div></div>
-        </div>
-        <span class="gc-badge gcb-exc">EXC</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Join Table</button></div>
-        <div class="gc-info"><div class="gc-name">GOAT Live Poker</div><div class="gc-provider">GOAT Originals</div></div>
-      </a>
-      <a href="#" class="game-card">
-        <div class="gc-thumb" style="background:linear-gradient(135deg,#091418,#0d2030)">
-          <div class="gc-placeholder"><div class="gc-placeholder-icon">🎯</div><div class="gc-placeholder-name">DEAL OR NO DEAL</div></div>
-        </div>
-        <span class="gc-badge gcb-live">LIVE</span>
-        <div class="gc-play-overlay"><button class="gc-play-btn">Join Table</button></div>
-        <div class="gc-info"><div class="gc-name">Deal or No Deal</div><div class="gc-provider">Evolution Gaming</div></div>
-      </a>
-    </div>
-
-    <!-- ═══ PROMOTIONS ═══ -->
-    <div class="sec-hdr">
-      <div class="sec-hdr-l">
-        <div class="sec-ico">🎁</div>
-        <div>
-          <div class="sec-title">Promotions</div>
-        </div>
-      </div>
-      <a class="sec-all" href="#">All Promos</a>
-    </div>
-
-    <div class="promo-row">
-      <div class="promo-card">
-        <div class="promo-ico" style="background:var(--teal-dim)">🏁</div>
-        <div>
-          <div class="promo-title">Weekly Crypto Race</div>
-          <div class="promo-desc">$100,000 prize pool. Top 50 leaderboard players split the pot every Sunday.</div>
-          <span class="promo-tag ptag-teal">EVERY WEEK</span>
-        </div>
-      </div>
-      <div class="promo-card">
-        <div class="promo-ico" style="background:var(--gold-dim)">⚡</div>
-        <div>
-          <div class="promo-title">Rakeback — Instant</div>
-          <div class="promo-desc">Earn 3.5% lifetime rakeback on every bet, paid instantly — no wagering requirement.</div>
-          <span class="promo-tag ptag-gold">INSTANT</span>
-        </div>
-      </div>
-      <div class="promo-card">
-        <div class="promo-ico" style="background:var(--red-dim)">🔥</div>
-        <div>
-          <div class="promo-title">Bourré Tournament</div>
-          <div class="promo-desc">Daily Ultimate Bourré sit-and-go tournaments. $10K guaranteed every day.</div>
-          <span class="promo-tag ptag-red">DAILY</span>
-        </div>
-      </div>
-      <div class="promo-card">
-        <div class="promo-ico" style="background:rgba(155,89,182,0.15)">👑</div>
-        <div>
-          <div class="promo-title">VIP Rewards</div>
-          <div class="promo-desc">Exclusive reload bonuses, personal host, and high-limit tables for VIP members.</div>
-          <span class="promo-tag" style="background:rgba(155,89,182,0.15);color:var(--purple)">VIP ONLY</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ VIP BAR ═══ -->
-    <div class="vip-bar">
-      <div class="vip-left">
-        <div class="vip-title">GOAT VIP Program</div>
-        <div class="vip-sub">Earn exclusive rewards, rakeback bonuses, and personal VIP management as you climb the ranks.</div>
-      </div>
-      <div class="vip-tiers">
-        <div class="vip-tier">
-          <div class="vt-ico">🥉</div>
-          <div class="vt-name">Bronze</div>
-        </div>
-        <div class="vip-tier">
-          <div class="vt-ico">🥈</div>
-          <div class="vt-name">Silver</div>
-        </div>
-        <div class="vip-tier" style="border-color:var(--border-t)">
-          <div class="vt-ico">🥇</div>
-          <div class="vt-name">Gold</div>
-        </div>
-        <div class="vip-tier" style="border-color:rgba(155,89,182,0.3)">
-          <div class="vt-ico">💎</div>
-          <div class="vt-name">Diamond</div>
-        </div>
-        <div class="vip-tier" style="border-color:rgba(245,200,66,0.3)">
-          <div class="vt-ico">🐐</div>
-          <div class="vt-name">GOAT</div>
-        </div>
-      </div>
-      <button class="vip-btn">Join VIP</button>
-    </div>
-
-    <!-- ═══ FOOTER ═══ -->
-    <footer class="footer">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-col-title">Casino</div>
-          <a class="footer-link" href="#">Slots</a>
-          <a class="footer-link" href="#">Live Casino</a>
-          <a class="footer-link" href="#">Table Games</a>
-          <a class="footer-link" href="#">Originals</a>
-          <a class="footer-link" href="#">Bonus Buy</a>
-        </div>
-        <div>
-          <div class="footer-col-title">Sports</div>
-          <a class="footer-link" href="#">Soccer</a>
-          <a class="footer-link" href="#">Basketball</a>
-          <a class="footer-link" href="#">Football</a>
-          <a class="footer-link" href="#">Esports</a>
-          <a class="footer-link" href="#">Live Betting</a>
-        </div>
-        <div>
-          <div class="footer-col-title">Promotions</div>
-          <a class="footer-link" href="#">Weekly Race</a>
-          <a class="footer-link" href="#">Rakeback</a>
-          <a class="footer-link" href="#">Challenges</a>
-          <a class="footer-link" href="#">VIP Club</a>
-        </div>
-        <div>
-          <div class="footer-col-title">Support</div>
-          <a class="footer-link" href="#">Live Chat</a>
-          <a class="footer-link" href="#">Help Center</a>
-          <a class="footer-link" href="#">Responsible Gaming</a>
-          <a class="footer-link" href="#">Provably Fair</a>
-        </div>
-        <div>
-          <div class="footer-col-title">About</div>
-          <a class="footer-link" href="#">About GOAT</a>
-          <a class="footer-link" href="#">Affiliates</a>
-          <a class="footer-link" href="#">Blog</a>
-          <a class="footer-link" href="#">Careers</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div class="footer-legal">
-          © 2025 GOAT Force Entertainment. All rights reserved. · Gambling can be addictive. Play responsibly. 18+
-        </div>
-        <div class="footer-badges">
-          <span class="f-badge">18+</span>
-          <span class="f-badge">Provably Fair</span>
-          <span class="f-badge">Crypto Accepted</span>
-          <span class="f-badge">🔒 SSL Encrypted</span>
-        </div>
-      </div>
-    </footer>
-
-  </main>
+<!-- ── LIVE STATS BAR ── -->
+<div class="casino-stats-bar">
+  <div class="casino-stat-item">
+    <span class="casino-stat-live"></span>
+    <div><div class="s-val" id="statPlayers">12,847</div><div class="s-lbl">Players Live</div></div>
+  </div>
+  <div class="casino-stat-item">
+    <div><div class="s-val" id="statBets">$284,391</div><div class="s-lbl">Wagered Today</div></div>
+  </div>
+  <div class="casino-stat-item">
+    <div><div class="s-val" id="statWins">$231,862</div><div class="s-lbl">Paid Out Today</div></div>
+  </div>
+  <div class="casino-stat-item">
+    <div><div class="s-val">29</div><div class="s-lbl">Games Online</div></div>
+  </div>
+  <div class="casino-stat-item">
+    <div><div class="s-val">VIP-GOAT-ROYALTY</div><div class="s-lbl">VIP Invite Code</div></div>
+  </div>
+  <div class="casino-stat-item">
+    <div><div class="s-val">OSCAR-TOOLS</div><div class="s-lbl">Operator Code</div></div>
+  </div>
+  <div class="casino-stat-item">
+    <div><div class="s-val" id="statTime">—</div><div class="s-lbl">Local Time</div></div>
+  </div>
 </div>
 
-<!-- ════ CHAT FAB ════ -->
-<button class="chat-fab" title="Live Support">
-  💬
-  <span class="chat-fab-badge">3</span>
-</button>
+<!-- ── GOAT ART STRIP ── -->
+<div class="casino-art-strip">
+  <span class="art-strip-label">🎨 GOAT Art</span>
+  <img class="art-strip-img" src="assets/goat/the-goat-2.webp"           alt="THE GOAT 2"         onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/the-goat-1.webp"           alt="THE GOAT"           onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-flying-cape.png"      alt="GOAT Cape"          onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-marvel-logo.webp"     alt="GOAT Marvel"        onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-superman-city.webp"   alt="GOAT Superman"      onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/waka-goat-flying.webp"     alt="Waka + GOAT"        onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/waka-goat-flying-2.webp"   alt="Waka + GOAT 2"      onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-app-icon-red.webp"    alt="App Icon"           onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-icon-app-mockup.webp" alt="App Mockup"         onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-og-fiery.png"         alt="OG Fiery GOAT"      onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-fiery-chaos.png"      alt="Fiery Chaos GOAT"   onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-logo-designed.png"    alt="GOAT Logo"          onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/goat-and-moneypenny.png"   alt="GOAT + Money Penny" onclick="lightbox(this.src)">
+  <img class="art-strip-img" src="assets/goat/moneypenny-cartoon.png"    alt="Ms. Money Penny"    onclick="lightbox(this.src)">
+</div>
+
+<!-- ── CASINO EMBED ── -->
+<div class="casino-embed-wrap">
+  <!-- Loading overlay -->
+  <div class="casino-loading" id="casinoLoading">
+    <img class="casino-loading-goat"
+         src="assets/goat/goat-flying-cape.png"
+         alt="Loading..." id="loadingGoatImg">
+    <div class="casino-loading-text">LOADING GOAT ROYALTY CASINO...</div>
+    <div class="casino-loading-bar"><div class="casino-loading-fill"></div></div>
+  </div>
+  <iframe
+    id="casinoFrame"
+    src="casino/index.html"
+    title="GOAT Royalty Casino"
+    allowfullscreen
+    onload="casinoLoaded()">
+  </iframe>
+</div>
+
+<!-- ── LIGHTBOX ── -->
+<div class="art-lightbox" id="artLightbox" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="GOAT Art">
+  <button class="art-lightbox-close" onclick="closeLightbox()">✕</button>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="casino-footer">
+  <div class="casino-footer-brand">
+    <img src="assets/images/the-goat-icon.png" alt="GOAT Force">
+    <span>© 2026 GOAT Force Records · Speedy Productions Inc · DJ Speedy (Harvey L. Miller Jr.)</span>
+  </div>
+  <div class="casino-footer-links">
+    <a href="goat-launcher-hub.html">Hub</a>
+    <a href="the-goat-launcher.html">THE GOAT</a>
+    <a href="money-penny-launcher.html">Ms. Money Penny</a>
+    <a href="agent-007.html">Agent 007</a>
+    <a href="goat-celebrity-lounge.html">Celebrity Lounge</a>
+    <a href="goat-vault.html">Vault</a>
+    <a href="agent-status.html">Status</a>
+  </div>
+  <div class="casino-footer-note">
+    Demo mode — 25,000 USDT-D sandbox balance · VIP code: VIP-GOAT-ROYALTY<br>
+    Operator code: OSCAR-TOOLS · Real-money rails pending licensing
+  </div>
+</footer>
 
 <script>
-// ── Interactive sub-nav tabs
-document.querySelectorAll('.sn-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.sn-btn').forEach(b => b.classList.remove('act'));
-    btn.classList.add('act');
-  });
-});
-
-// ── Interactive category pills
-document.querySelectorAll('.cat-pill').forEach(pill => {
-  pill.addEventListener('click', () => {
-    document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('act'));
-    pill.classList.add('act');
-  });
-});
-
-// ── Interactive sidebar items
-document.querySelectorAll('.sb-item').forEach(item => {
-  item.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('act'));
-    item.classList.add('act');
-  });
-});
-
-// ── Interactive provider chips
-document.querySelectorAll('.provider-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('.provider-chip').forEach(c => c.classList.remove('act'));
-    chip.classList.add('act');
-  });
-});
-
-// ── Interactive top nav
-document.querySelectorAll('.topnav-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.topnav-btn').forEach(b => b.classList.remove('act'));
-    btn.classList.add('act');
-  });
-});
-
-// ── Bet table tabs
-document.querySelectorAll('.bth-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.bth-tab').forEach(t => t.classList.remove('act'));
-    tab.classList.add('act');
-  });
-});
-
-// ── VIP tier hover
-document.querySelectorAll('.vip-tier').forEach(tier => {
-  tier.addEventListener('click', () => {
-    document.querySelectorAll('.vip-tier').forEach(t => t.style.borderColor = '');
-    tier.style.borderColor = 'var(--teal)';
-    tier.style.background = 'var(--teal-dim)';
-  });
-});
-
-// ── Live bet feed auto-update simulation
-const games = [
-  ['🃏 Ultimate Bourré','GOAT'],['📈 Crash','GOAT'],['💣 Mines','GOAT'],
-  ['⚡ Plinko','GOAT'],['🎲 Dice','GOAT'],['♠️ Blackjack','Evolution'],
-  ['🎡 Roulette','Evolution'],['🎰 Sweet Bonanza','Pragmatic'],
-  ['🍬 Sugar Rush','Pragmatic'],['💎 Mental','Nolimit City']
+// ── Hero GOAT image cycler ──────────────────────────────────
+const heroGoatImages = [
+  'assets/goat/the-goat-2.webp',
+  'assets/goat/the-goat-1.webp',
+  'assets/goat/goat-flying-cape.png',
+  'assets/goat/goat-superman-city.webp',
+  'assets/goat/goat-marvel-logo.webp',
+  'assets/goat/goat-app-icon-red.webp',
+  'assets/goat/goat-og-fiery.png',
 ];
-const names = ['fly','king','ace','nova','wolf','rio','ben','max','jay','leo','fox','sky'];
-function rndUser(){ return names[Math.floor(Math.random()*names.length)]+'_'+'*'.repeat(3); }
-function rndWager(){ return (Math.random()*500+10).toFixed(2); }
-function rndMult(){ const m = [0.5,1.2,1.5,2,3,5,8,12,24,50,100,412.5]; return m[Math.floor(Math.random()*m.length)]; }
-
-function addBetRow(){
-  const tbody = document.getElementById('bets-body');
-  if(!tbody) return;
-  const game = games[Math.floor(Math.random()*games.length)];
-  const w = parseFloat(rndWager());
-  const m = rndMult();
-  const payout = (w * m).toFixed(2);
-  const win = m >= 1;
-  const row = document.createElement('tr');
-  row.innerHTML = `
-    <td class="bt-user">${rndUser()}</td>
-    <td class="bt-game">${game[0]}</td>
-    <td class="bt-time">just now</td>
-    <td class="bt-wager">$${w.toFixed(2)}</td>
-    <td class="bt-mult">×${m}</td>
-    <td class="bt-win ${win?'up':'dn'}">${win?'+':'−'}$${payout}</td>
-  `;
-  row.style.animation = 'fadeIn .3s ease';
-  tbody.insertBefore(row, tbody.firstChild);
-  if(tbody.children.length > 12) tbody.removeChild(tbody.lastChild);
-
-  // Update sidebar live feed too
-  const liveRows = document.querySelectorAll('.lf-row');
-  if(liveRows.length > 0){
-    const r = liveRows[0];
-    r.querySelector('.lf-user').textContent = rndUser();
-    r.querySelector('.lf-game').textContent = game[0].replace(/^\S+\s/,'');
-    const lw = r.querySelector('.lf-win');
-    lw.textContent = (win?'+':'-')+'$'+payout;
-    lw.className = 'lf-win '+(win?'up':'dn');
-  }
+let heroGoatIdx = 0;
+function cycleHeroGoat() {
+  heroGoatIdx = (heroGoatIdx + 1) % heroGoatImages.length;
+  document.getElementById('heroGoatImg').src = heroGoatImages[heroGoatIdx];
 }
 
-setInterval(addBetRow, 2200);
+// ── Lightbox ────────────────────────────────────────────────
+function lightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('artLightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('artLightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-// Fade-in animation for new rows
-const style = document.createElement('style');
-style.textContent = '@keyframes fadeIn{from{opacity:0;background:rgba(0,212,170,0.05)}to{opacity:1;background:transparent}}';
-document.head.appendChild(style);
+// ── Casino loaded ───────────────────────────────────────────
+function casinoLoaded() {
+  setTimeout(() => {
+    document.getElementById('casinoLoading').classList.add('hidden');
+  }, 600);
+}
+
+// ── Open VIP modal (pass code into iframe) ──────────────────
+function openVip() {
+  const frame = document.getElementById('casinoFrame');
+  try {
+    // Try to focus the VIP code input inside the iframe
+    frame.contentWindow.document.getElementById('vip-code') &&
+      frame.contentWindow.document.getElementById('vip-code').scrollIntoView({ behavior: 'smooth' });
+  } catch(e) {}
+  // Fallback: scroll to bottom where VIP section is
+  frame.contentWindow.location.hash = '#vip-access';
+}
+
+// ── Live stats ticker ───────────────────────────────────────
+function updateCasinoStats() {
+  const players = document.getElementById('statPlayers');
+  const bets    = document.getElementById('statBets');
+  const wins    = document.getElementById('statWins');
+  const time    = document.getElementById('statTime');
+  if (players) {
+    const base = 12847;
+    players.textContent = (base + Math.floor(Math.random() * 200 - 100)).toLocaleString();
+  }
+  if (bets) {
+    const b = 284391 + Math.floor(Math.random() * 5000);
+    bets.textContent = '$' + b.toLocaleString();
+  }
+  if (wins) {
+    const w = 231862 + Math.floor(Math.random() * 4000);
+    wins.textContent = '$' + w.toLocaleString();
+  }
+  if (time) {
+    time.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+  // Sync wallet display from iframe if possible
+  try {
+    const bal = document.getElementById('casinoFrame').contentWindow.state?.wallet;
+    if (bal && document.getElementById('navWallet')) {
+      document.getElementById('navWallet').textContent =
+        parseFloat(bal).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDT-D';
+    }
+  } catch(e) {}
+}
+setInterval(updateCasinoStats, 3000);
+updateCasinoStats();
+
+// ── Auto-cycle loading goat image ──────────────────────────
+const loadGoatImgs = heroGoatImages;
+let loadGoatIdx = 0;
+setInterval(() => {
+  const el = document.getElementById('loadingGoatImg');
+  if (el && !document.getElementById('casinoLoading').classList.contains('hidden')) {
+    loadGoatIdx = (loadGoatIdx + 1) % loadGoatImgs.length;
+    el.src = loadGoatImgs[loadGoatIdx];
+  }
+}, 800);
 </script>
+
 </body>
 </html>

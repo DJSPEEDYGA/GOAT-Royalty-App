@@ -430,6 +430,8 @@
     .tb-btn.ghost{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
   </style>
   <link rel="stylesheet" href="css/goat-touch.css">
+
+<script src="lib/supabase-client.js"></script>
 </head>
 <body>
 
@@ -477,6 +479,132 @@
       <div class="platform-stat">
         <div class="number">10+</div>
         <div class="label">Platforms</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MIXING BOARD SHOWCASE ══ -->
+  <section id="mixing-board-section" style="background:linear-gradient(180deg,#030205 0%,#080c14 100%);padding:60px 20px 40px;overflow:hidden;">
+    <div style="max-width:1400px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:40px;">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(212,160,60,0.08);border:1px solid rgba(212,160,60,0.35);color:var(--gold);padding:5px 18px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">
+          🎛️ STUDIO ARSENAL
+        </div>
+        <h2 style="font-size:2.4rem;font-weight:900;color:var(--gold);margin-bottom:12px;letter-spacing:-0.5px;">World-Class Mixing Boards</h2>
+        <p style="color:#b8b0a0;font-size:1.1rem;max-width:640px;margin:0 auto;">GOAT Force runs the same consoles as the pros. Click any board to open the virtual SSL console.</p>
+      </div>
+
+      <!-- HERO CONSOLE — Trinity (Image 1) full-width banner -->
+      <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:18px;overflow:hidden;border:2px solid rgba(212,160,60,0.4);box-shadow:0 0 60px rgba(212,160,60,0.12);margin-bottom:24px;position:relative;group;" onmouseover="this.style.borderColor='var(--gold)';this.querySelector('.board-overlay').style.opacity='1'" onmouseout="this.style.borderColor='rgba(212,160,60,0.4)';this.querySelector('.board-overlay').style.opacity='0'">
+        <img src="assets/mixing-boards/trinity-console.jpg" alt="Trinity SSL Console" style="width:100%;height:320px;object-fit:cover;object-position:center 40%;display:block;">
+        <div class="board-overlay" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,2,5,0.9) 0%,rgba(3,2,5,0.2) 60%,transparent 100%);opacity:0;transition:opacity 0.3s;display:flex;align-items:flex-end;padding:28px;">
+          <div>
+            <div style="font-size:1.5rem;font-weight:800;color:var(--gold);">🎛️ Open GOAT Virtual Console</div>
+            <div style="color:#b8b0a0;font-size:0.95rem;margin-top:6px;">32-channel SSL 9000K · Full faders, EQ, compressors, metering & DAW launch</div>
+          </div>
+          <div style="margin-left:auto;padding:12px 28px;background:var(--gold);color:#000;font-weight:800;border-radius:10px;font-size:1rem;">OPEN →</div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(3,2,5,0.85),transparent);padding:20px 28px;">
+          <div style="font-size:1.2rem;font-weight:800;color:var(--gold);">Trinity Recording Console · GOAT Force Studio</div>
+          <div style="color:#b8b0a0;font-size:0.85rem;margin-top:4px;">Click to launch virtual mixer → </div>
+        </div>
+      </div>
+
+      <!-- CONSOLE GRID — 3 columns -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:24px;">
+
+        <!-- SSL Duality Studio shot -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/ssl-duality-studio.jpg" alt="SSL Duality Console" style="width:100%;height:200px;object-fit:cover;display:block;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">SSL Duality Delta</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">Solid State Logic · Oxford, England</div>
+          </div>
+        </div>
+
+        <!-- Neve 8078 -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/neve-8078.jpg" alt="Neve 8078" style="width:100%;height:200px;object-fit:cover;object-position:center 30%;display:block;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">Neve 8078 Console</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">AMS Neve · Legendary Analog</div>
+          </div>
+        </div>
+
+        <!-- Avid S6L -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/avid-s6l.webp" alt="Avid S6L" style="width:100%;height:200px;object-fit:cover;display:block;background:#111;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">Avid S6L</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">Pro Tools Control Surface · Live &amp; Studio</div>
+          </div>
+        </div>
+
+        <!-- Avid S6 (4carousel) -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/avid-s6-console.webp" alt="Avid S6 Console" style="width:100%;height:200px;object-fit:cover;display:block;background:#111;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">Avid S6 Console</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">Modular Mix Engine · Pro Tools HDX</div>
+          </div>
+        </div>
+
+        <!-- SSL AWS 924 -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/ssl-aws-924.jpg" alt="SSL AWS 924" style="width:100%;height:200px;object-fit:cover;display:block;background:#111;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">SSL AWS 924 Delta</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">Analog Workstation Series · 24-Channel</div>
+          </div>
+        </div>
+
+        <!-- SSL Origin -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/ssl-origin-mixer.webp" alt="SSL Origin" style="width:100%;height:200px;object-fit:cover;display:block;background:#111;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">SSL Origin</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">Pure SSL Analog · 32/48 Channel</div>
+          </div>
+        </div>
+
+        <!-- SSL Console 1 (R(1).jpeg) -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/ssl-console-1.jpg" alt="SSL Console Studio" style="width:100%;height:200px;object-fit:cover;display:block;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">SSL Studio Console</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">Classic Recording Studio Setup</div>
+          </div>
+        </div>
+
+        <!-- SSL Origin Side/Front -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/ssl-origin-front.webp" alt="SSL Origin Front" style="width:100%;height:200px;object-fit:cover;display:block;background:#111;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">SSL Origin · Full View</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">Retro Gear Shop · Classic Analog Path</div>
+          </div>
+        </div>
+
+        <!-- SSL Origin Side -->
+        <div onclick="window.open('ssl-mixer.html','_blank')" style="cursor:pointer;border-radius:14px;overflow:hidden;border:1px solid rgba(212,160,60,0.2);transition:all 0.25s;position:relative;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(212,160,60,0.2)'" onmouseout="this.style.borderColor='rgba(212,160,60,0.2)';this.style.transform='none';this.style.boxShadow='none'">
+          <img src="assets/mixing-boards/ssl-origin-side.webp" alt="SSL Origin Side" style="width:100%;height:200px;object-fit:cover;display:block;background:#111;">
+          <div style="padding:14px 16px;background:#0d1420;">
+            <div style="font-size:13px;font-weight:800;color:var(--gold);">SSL Origin · Angle</div>
+            <div style="font-size:11px;color:#7a7060;margin-top:3px;">Analog Mastery · Oxford England</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA strip -->
+      <div style="background:linear-gradient(135deg,rgba(212,160,60,0.08),rgba(193,18,31,0.06));border:1px solid rgba(212,160,60,0.25);border-radius:14px;padding:20px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+        <div style="font-size:1.8rem;">🎛️</div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:1rem;font-weight:800;color:var(--gold);">Launch the GOAT Virtual Console</div>
+          <div style="font-size:0.85rem;color:#7a7060;margin-top:3px;">32 channels · Full EQ &amp; compression · Real-time meters · DAW launch buttons</div>
+        </div>
+        <a href="ssl-mixer.html" style="padding:12px 28px;background:linear-gradient(135deg,var(--gold),#c49030);color:#000;font-weight:800;border-radius:10px;text-decoration:none;font-size:0.95rem;white-space:nowrap;flex-shrink:0;">Open Mixer →</a>
+        <a href="beat-maker.html" style="padding:12px 24px;background:transparent;border:1px solid rgba(212,160,60,0.4);color:var(--gold);font-weight:700;border-radius:10px;text-decoration:none;font-size:0.95rem;white-space:nowrap;flex-shrink:0;">Beat Maker</a>
       </div>
     </div>
   </section>
@@ -985,6 +1113,94 @@
       <!-- GENERATED TRACKS -->
       <div id="generatedTracks" style="margin-top:24px"></div>
     </div>
+
+    <!-- GOAT SOUND KIT / DRUM PADS -->
+    <div style="max-width:900px;margin:32px auto 0;background:rgba(13,20,32,0.75);border:1px solid rgba(212,160,60,0.2);border-radius:24px;padding:32px;backdrop-filter:blur(12px)">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div style="width:48px;height:48px;border-radius:12px;background:rgba(212,160,60,0.15);border:1px solid rgba(212,160,60,0.35);display:flex;align-items:center;justify-content:center;font-size:22px">🥁</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:var(--gold)">GOAT Sound Kit</div>
+          <div style="font-size:11px;color:var(--text-muted)">Curated from Cash Money AP Drum Kit · Tap pads or use keyboard keys A S D F G H J K</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button onclick="browseSoundLibrary()" style="padding:8px 16px;background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.25);border-radius:10px;color:#58a6ff;font-size:12px;font-weight:600;cursor:pointer">🗂️ Browse Library</button>
+          <button onclick="toggleSequencer()" id="seqToggle" style="padding:8px 16px;background:rgba(212,160,60,0.1);border:1px solid rgba(212,160,60,0.3);border-radius:10px;color:var(--gold);font-size:12px;font-weight:600;cursor:pointer">▶ Play Loop</button>
+          <button onclick="clearSequencer()" style="padding:8px 16px;background:rgba(193,18,31,0.08);border:1px solid rgba(193,18,31,0.25);border-radius:10px;color:#c1121f;font-size:12px;font-weight:600;cursor:pointer">Clear</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
+        <div class="drum-pad" data-key="a" data-sound="sounds/kick.wav" data-name="KICK" style="padding:20px;background:rgba(0,0,0,.35);border:1px solid rgba(212,160,60,0.2);border-radius:14px;text-align:center;cursor:pointer;transition:all .08s" onmousedown="hitPad(this)">
+          <div style="font-size:24px;margin-bottom:6px">🔥</div>
+          <div style="font-size:12px;font-weight:700;color:var(--gold)">KICK</div>
+          <div style="font-size:10px;color:var(--text-muted)">A</div>
+        </div>
+        <div class="drum-pad" data-key="s" data-sound="sounds/snare.wav" data-name="SNARE" style="padding:20px;background:rgba(0,0,0,.35);border:1px solid rgba(212,160,60,0.2);border-radius:14px;text-align:center;cursor:pointer;transition:all .08s" onmousedown="hitPad(this)">
+          <div style="font-size:24px;margin-bottom:6px">👏</div>
+          <div style="font-size:12px;font-weight:700;color:var(--gold)">SNARE</div>
+          <div style="font-size:10px;color:var(--text-muted)">S</div>
+        </div>
+        <div class="drum-pad" data-key="d" data-sound="sounds/hat.wav" data-name="HI-HAT" style="padding:20px;background:rgba(0,0,0,.35);border:1px solid rgba(212,160,60,0.2);border-radius:14px;text-align:center;cursor:pointer;transition:all .08s" onmousedown="hitPad(this)">
+          <div style="font-size:24px;margin-bottom:6px">🎩</div>
+          <div style="font-size:12px;font-weight:700;color:var(--gold)">HI-HAT</div>
+          <div style="font-size:10px;color:var(--text-muted)">D</div>
+        </div>
+        <div class="drum-pad" data-key="f" data-sound="sounds/808.wav" data-name="808" style="padding:20px;background:rgba(0,0,0,.35);border:1px solid rgba(212,160,60,0.2);border-radius:14px;text-align:center;cursor:pointer;transition:all .08s" onmousedown="hitPad(this)">
+          <div style="font-size:24px;margin-bottom:6px">🌊</div>
+          <div style="font-size:12px;font-weight:700;color:var(--gold)">808</div>
+          <div style="font-size:10px;color:var(--text-muted)">F</div>
+        </div>
+        <div class="drum-pad" data-key="g" data-sound="sounds/clap.wav" data-name="CLAP" style="padding:20px;background:rgba(0,0,0,.35);border:1px solid rgba(212,160,60,0.2);border-radius:14px;text-align:center;cursor:pointer;transition:all .08s" onmousedown="hitPad(this)">
+          <div style="font-size:24px;margin-bottom:6px">👏</div>
+          <div style="font-size:12px;font-weight:700;color:var(--gold)">CLAP</div>
+          <div style="font-size:10px;color:var(--text-muted)">G</div>
+        </div>
+        <div class="drum-pad" data-key="h" data-sound="sounds/crash.wav" data-name="CRASH" style="padding:20px;background:rgba(0,0,0,.35);border:1px solid rgba(212,160,60,0.2);border-radius:14px;text-align:center;cursor:pointer;transition:all .08s" onmousedown="hitPad(this)">
+          <div style="font-size:24px;margin-bottom:6px">💥</div>
+          <div style="font-size:12px;font-weight:700;color:var(--gold)">CRASH</div>
+          <div style="font-size:10px;color:var(--text-muted)">H</div>
+        </div>
+        <div class="drum-pad" data-key="j" data-sound="sounds/perc.wav" data-name="PERC" style="padding:20px;background:rgba(0,0,0,.35);border:1px solid rgba(212,160,60,0.2);border-radius:14px;text-align:center;cursor:pointer;transition:all .08s" onmousedown="hitPad(this)">
+          <div style="font-size:24px;margin-bottom:6px">🪘</div>
+          <div style="font-size:12px;font-weight:700;color:var(--gold)">PERC</div>
+          <div style="font-size:10px;color:var(--text-muted)">J</div>
+        </div>
+        <div class="drum-pad" data-key="k" data-sound="sounds/fx.wav" data-name="FX" style="padding:20px;background:rgba(0,0,0,.35);border:1px solid rgba(212,160,60,0.2);border-radius:14px;text-align:center;cursor:pointer;transition:all .08s" onmousedown="hitPad(this)">
+          <div style="font-size:24px;margin-bottom:6px">✨</div>
+          <div style="font-size:12px;font-weight:700;color:var(--gold)">FX</div>
+          <div style="font-size:10px;color:var(--text-muted)">K</div>
+        </div>
+      </div>
+
+      <!-- 8-step sequencer -->
+      <div style="margin-bottom:12px;font-size:12px;font-weight:700;color:var(--text-secondary)">8-STEP SEQUENCER <span style="font-weight:400;color:var(--text-muted)">(click steps to toggle)</span></div>
+      <div id="sequencer" style="display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-bottom:10px">
+        <!-- generated by JS -->
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <label style="font-size:12px;color:var(--text-secondary)">BPM</label>
+        <input type="range" id="seqBpm" min="60" max="180" value="120" style="flex:1" oninput="document.getElementById('seqBpmVal').textContent=this.value">
+        <span id="seqBpmVal" style="font-size:12px;color:var(--gold);width:30px">120</span>
+      </div>
+
+      <div id="soundLibraryPanel" style="display:none;margin-top:24px;background:rgba(0,0,0,.3);border:1px solid rgba(88,166,255,0.15);border-radius:14px;padding:16px;max-height:300px;overflow:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="font-size:13px;font-weight:700;color:#58a6ff">Sound Library Browser</div>
+          <select id="librarySelect" onchange="loadSoundLibrary(this.value)" style="background:#060a0f;border:1px solid rgba(88,166,255,0.25);border-radius:6px;padding:5px 10px;color:var(--text-primary);font-size:12px">
+            <option value="dj_speedy">DJ SPEEDY</option>
+            <option value="dj_speedy_sounds">DJ SPEEDY SOUNDS</option>
+          </select>
+        </div>
+        <div id="soundLibraryList" style="font-size:12px;color:var(--text-secondary)"></div>
+      </div>
+    </div>
+
+    <style>
+      .drum-pad.active-pad { transform: scale(0.95); border-color: var(--gold) !important; background: rgba(212,160,60,0.25) !important; }
+      .step { height: 48px; border-radius: 8px; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.08); cursor: pointer; transition: all .1s; }
+      .step.on { background: rgba(212,160,60,0.35); border-color: rgba(212,160,60,0.6); }
+      .step.current { box-shadow: 0 0 12px rgba(212,160,60,0.7); border-color: var(--gold); }
+    </style>
 
     <!-- LEXI AI ASSISTANT PANEL -->
     <div style="max-width:900px;margin:24px auto 0;background:rgba(243,156,18,0.04);border:1px solid rgba(243,156,18,0.18);border-radius:18px;padding:24px">
@@ -1646,7 +1862,7 @@
 
     async function loadStudioModels() {
       try {
-        const r = await fetch('http://127.0.0.1:11434/api/tags', {signal: AbortSignal.timeout(4000)});
+        const r = await fetch('http://127.0.0.1:11435/api/tags', {signal: AbortSignal.timeout(4000)});
         const d = await r.json();
         const sel = document.getElementById('studioModelSelect');
         const current = localStorage.getItem('goat_ollama_model') || 'llama3.1:8b';
@@ -1698,9 +1914,126 @@
       }
     }
 
+    // ── GOAT SOUND KIT / DRUM PADS ─────────────────────
+    const padSounds = {};
+    let seqSteps = Array(8).fill(false);
+    let seqPlaying = false;
+    let seqInterval = null;
+    let seqIndex = 0;
+
+    function initPads() {
+      document.querySelectorAll('.drum-pad').forEach(pad => {
+        const src = pad.dataset.sound;
+        padSounds[pad.dataset.key] = new Audio(src);
+      });
+      renderSequencer();
+      document.addEventListener('keydown', e => {
+        const key = e.key.toLowerCase();
+        if ('asdfghjk'.includes(key)) {
+          const pad = document.querySelector(`.drum-pad[data-key="${key}"]`);
+          if (pad) hitPad(pad);
+        }
+      });
+    }
+
+    function hitPad(pad) {
+      const key = pad.dataset.key;
+      const audio = padSounds[key];
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+      pad.classList.add('active-pad');
+      setTimeout(() => pad.classList.remove('active-pad'), 100);
+    }
+
+    function renderSequencer() {
+      const grid = document.getElementById('sequencer');
+      grid.innerHTML = '';
+      seqSteps.forEach((on, i) => {
+        const step = document.createElement('div');
+        step.className = 'step' + (on ? ' on' : '');
+        step.dataset.index = i;
+        step.onclick = () => {
+          seqSteps[i] = !seqSteps[i];
+          step.classList.toggle('on');
+        };
+        grid.appendChild(step);
+      });
+    }
+
+    function toggleSequencer() {
+      const btn = document.getElementById('seqToggle');
+      if (seqPlaying) {
+        clearInterval(seqInterval);
+        seqPlaying = false;
+        btn.textContent = '▶ Play Loop';
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('current'));
+      } else {
+        seqPlaying = true;
+        btn.textContent = '⏹ Stop';
+        const bpm = parseInt(document.getElementById('seqBpm').value) || 120;
+        const ms = 60000 / bpm / 2;
+        seqInterval = setInterval(() => {
+          const steps = document.querySelectorAll('.step');
+          steps.forEach(s => s.classList.remove('current'));
+          const current = steps[seqIndex];
+          current.classList.add('current');
+          if (seqSteps[seqIndex]) {
+            const pad = document.querySelector('.drum-pad[data-key="a"]');
+            if (pad) hitPad(pad);
+          }
+          seqIndex = (seqIndex + 1) % 8;
+        }, ms);
+      }
+    }
+
+    function clearSequencer() {
+      seqSteps = Array(8).fill(false);
+      renderSequencer();
+    }
+
+    async function browseSoundLibrary() {
+      const panel = document.getElementById('soundLibraryPanel');
+      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+      if (panel.style.display === 'block') {
+        await loadSoundLibrary(document.getElementById('librarySelect').value);
+      }
+    }
+
+    async function loadSoundLibrary(library) {
+      const list = document.getElementById('soundLibraryList');
+      list.innerHTML = 'Loading...';
+      try {
+        const r = await fetch(`${INTEL_STUDIO}/api/studio/music-library`);
+        const d = await r.json();
+        const lib = d.libraries?.[library];
+        if (!lib) {
+          list.innerHTML = 'Library not found';
+          return;
+        }
+        if (!lib.exists) {
+          list.innerHTML = 'Library not available';
+          return;
+        }
+        list.innerHTML = lib.folders.slice(0, 50).map(f => {
+          return `<div style="padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)">📁 ${escapeHtml(f.name)}</div>`;
+        }).join('') + (lib.folders.length > 50 ? `<div style="padding:6px 0;color:var(--text-muted)">... and ${lib.folders.length - 50} more</div>` : '');
+      } catch (e) {
+        list.innerHTML = 'Error loading library: ' + e.message;
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
     // Init
     loadStudioModels();
     checkStudioStatus();
+    initPads();
   </script>
   <script src="js/goat-touch.js"></script>
   <script src="js/goat-agent-controls.js"></script>
